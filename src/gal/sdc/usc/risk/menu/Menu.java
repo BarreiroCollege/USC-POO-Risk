@@ -21,6 +21,7 @@ public class Menu {
         try {
             File fichero = Recursos.get("comandos.csv");
             File fichero2 = Recursos.get("jugadores.csv");
+            File fichero3 = Recursos.get("asignaciones.csv") 
             FileReader lector = new FileReader(fichero);
             bufferLector = new BufferedReader(lector);
             while ((orden = bufferLector.readLine()) != null) {
@@ -102,15 +103,6 @@ public class Menu {
      */
     public void asignarPaises(File file) {
         
-        int i;
-        //Se recorre la lista de paises para comprobar si el introducido es correcto
-        for(i=0;i<=42;++i){
-        if(file!=Paises(nombre,continente,x,y)){
-        System.out.println("\nPor favor introduzca un país correcto.");
-        }
-            }
-        else()
-        
         // Código necesario para asignar países
         
         
@@ -122,8 +114,18 @@ public class Menu {
      */
     public void asignarPaises(String nombrePais, String nombreJugador) {
         // Código necesario para asignar un país a un jugador
+        int i;
+        for(i=0;i<42;++i){ //El num de paises es 42
+        //nombreJugador.Pais[i]=nombrePais[i];
+        }
     }
 
+    /**
+     * 
+     */
+    public void crearMapa(){
+    //Codigo necesario para crear el mapa
+    }
     /**
      * @param file
      */
@@ -139,6 +141,9 @@ public class Menu {
      */
     private void crearJugador(String nombre, String color) {
         // Código necesario para crear a un jugador a partir de su nombre y color
+        if(nombre!='Gondorff' && nombre!='Hooker' && nombre!='Lonnegan'){
+            printf("\nNombre no admitido.");
+    }
 
     }
 }
