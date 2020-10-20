@@ -4,6 +4,8 @@ import gal.sdc.usc.risk.menu.comandos.CrearMapa;
 import gal.sdc.usc.risk.util.Colores;
 import gal.sdc.usc.risk.util.Colores.Color;
 import gal.sdc.usc.risk.util.Recursos;
+import gal.sdc.usc.risk.tablero.Paises;
+import gal.sdc.usc.risk.tablero.Pais;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,6 +20,7 @@ public class Menu {
         BufferedReader bufferLector;
         try {
             File fichero = Recursos.get("comandos.csv");
+            File fichero2 = Recursos.get("jugadores.csv");
             FileReader lector = new FileReader(fichero);
             bufferLector = new BufferedReader(lector);
             while ((orden = bufferLector.readLine()) != null) {
@@ -63,6 +66,15 @@ public class Menu {
                             System.out.println("\nComando incorrecto.");
                         }
                         break;
+                    case "ver":
+                        if(partes.length ==2){
+                            if (partes[1].equals("mapa")){
+                                //verMapa //CREAR LAS FUNCIOMES DE VER!   
+                            }
+                        }else{
+                        System.out.println("\nComando incorrecto.");
+                        }
+                        break;
                     case "asignar":
                         if (partes.length != 3) {
                             System.out.println("\nComando incorrecto.");
@@ -89,7 +101,19 @@ public class Menu {
      * @param file
      */
     public void asignarPaises(File file) {
+        
+        int i;
+        //Se recorre la lista de paises para comprobar si el introducido es correcto
+        for(i=0;i<=42;++i){
+        if(file!=Paises(nombre,continente,x,y)){
+        System.out.println("\nPor favor introduzca un país correcto.");
+        }
+            }
+        else()
+        
         // Código necesario para asignar países
+        
+        
     }
 
     /**
@@ -104,7 +128,9 @@ public class Menu {
      * @param file
      */
     private void crearJugador(File file) {
+        
         // Código necesario para crear a los jugadores del RISK
+        
 
     }
 
