@@ -13,6 +13,14 @@ public class Mapa {
     private final List<Continente> continentes;
     private final HashMap<Celda, Pais> paises;
 
+    public List<Continente> getContinentes() {
+        return continentes;
+    }
+
+    public HashMap<Celda, Pais> getPaises() {
+        return paises;
+    }
+
     private Mapa(List<Continente> continentes, HashMap<Celda, Pais> paises) {
         this.continentes = continentes;
         this.paises = paises;
