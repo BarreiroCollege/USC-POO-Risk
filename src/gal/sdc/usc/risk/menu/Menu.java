@@ -4,6 +4,8 @@ import gal.sdc.usc.risk.menu.comandos.CrearMapa;
 import gal.sdc.usc.risk.util.Colores;
 import gal.sdc.usc.risk.util.Colores.Color;
 import gal.sdc.usc.risk.util.Recursos;
+import gal.sdc.usc.risk.tablero.Paises;
+import gal.sdc.usc.risk.tablero.Pais;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,6 +20,8 @@ public class Menu {
         BufferedReader bufferLector;
         try {
             File fichero = Recursos.get("comandos.csv");
+            File fichero2 = Recursos.get("jugadores.csv");
+            File fichero3 = Recursos.get("asignaciones.csv") 
             FileReader lector = new FileReader(fichero);
             bufferLector = new BufferedReader(lector);
             while ((orden = bufferLector.readLine()) != null) {
@@ -63,6 +67,15 @@ public class Menu {
                             System.out.println("\nComando incorrecto.");
                         }
                         break;
+                    case "ver":
+                        if(partes.length ==2){
+                            if (partes[1].equals("mapa")){
+                                //verMapa //CREAR LAS FUNCIOMES DE VER!   
+                            }
+                        }else{
+                        System.out.println("\nComando incorrecto.");
+                        }
+                        break;
                     case "asignar":
                         if (partes.length != 3) {
                             System.out.println("\nComando incorrecto.");
@@ -89,7 +102,10 @@ public class Menu {
      * @param file
      */
     public void asignarPaises(File file) {
+        
         // Código necesario para asignar países
+        
+        
     }
 
     /**
@@ -98,13 +114,25 @@ public class Menu {
      */
     public void asignarPaises(String nombrePais, String nombreJugador) {
         // Código necesario para asignar un país a un jugador
+        int i;
+        for(i=0;i<42;++i){ //El num de paises es 42
+        //nombreJugador.Pais[i]=nombrePais[i];
+        }
     }
 
+    /**
+     * 
+     */
+    public void crearMapa(){
+    //Codigo necesario para crear el mapa
+    }
     /**
      * @param file
      */
     private void crearJugador(File file) {
+        
         // Código necesario para crear a los jugadores del RISK
+        
 
     }
 
@@ -113,6 +141,9 @@ public class Menu {
      */
     private void crearJugador(String nombre, String color) {
         // Código necesario para crear a un jugador a partir de su nombre y color
+        if(nombre!='Gondorff' && nombre!='Hooker' && nombre!='Lonnegan'){
+            printf("\nNombre no admitido.");
+    }
 
     }
 }
