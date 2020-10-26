@@ -82,10 +82,12 @@ public class Colores {
     public String toString() {
         final String RESET = "\u001B[0m";
 
-        if (this.colorTexto == null) {
+        if (this.colorTexto == null && this.colorFondo == null) {
             return RESET + this.texto + RESET;
         } else if (this.colorFondo == null) {
             return colorTexto(this.colorTexto) + this.texto + RESET;
+        } else if (this.colorTexto == null) {
+            return new Colores(this.texto, Color.NEGRO, this.colorFondo).toString();
         } else {
             return colorFondo(this.colorFondo) + colorTexto(this.colorTexto) + this.texto + RESET;
         }

@@ -10,6 +10,19 @@ public enum Continentes {
     AMERICASUR("America del Sur", Color.ROJO),
     AUSTRALIA("Australia", Color.AZUL);
 
+    private final String nombre;
+    private final Color color;
+
     Continentes(String nombre, Color color) {
+        this.nombre = nombre;
+        this.color = color;
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 }
