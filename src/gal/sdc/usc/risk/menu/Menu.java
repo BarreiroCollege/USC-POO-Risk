@@ -22,9 +22,6 @@ public class Menu {
         BufferedReader bufferLector;
         try {
             File fichero = Recursos.get("comandos.csv");
-            File fichero2 = Recursos.get("jugadores.csv");
-            File fichero3 = Recursos.get("asignaciones.csv");
-
             FileReader lector = new FileReader(fichero);
             bufferLector = new BufferedReader(lector);
             Scanner input = new Scanner(System.in);
