@@ -1,5 +1,6 @@
 package gal.sdc.usc.risk.menu;
 
+import gal.sdc.usc.risk.menu.comandos.mapa.CrearMapa;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
 import gal.sdc.usc.risk.util.Colores.Color;
@@ -8,43 +9,39 @@ import gal.sdc.usc.risk.util.Recursos;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.Scanner;
 
-public class Menu {
-    private Partida partida;
 
-
+public class Menu extends Partida {
     public Menu() {
-        // Inicialización de algunos atributos
-
         // Iniciar juego
-        String orden = null;
-        BufferedReader bufferLector;
+        String orden;
+
         try {
+            BufferedReader bufferLector;
             File fichero = Recursos.get("comandos.csv");
             FileReader lector = new FileReader(fichero);
             bufferLector = new BufferedReader(lector);
-            Scanner input = new Scanner(System.in);
 
-            while (true) {
+            while ((orden = bufferLector.readLine()) != null) {
                 System.out.print(new Colores("$> ", Color.AMARILLO));
-                if (bufferLector != null) {
-                    orden = bufferLector.readLine();
-                }
-                if (orden == null) {
-                    if (bufferLector != null) {
-                        bufferLector.close();
-                        bufferLector = null;
-                    }
-                    orden = input.nextLine();
-                } else {
-                    System.out.println(orden);
-                }
+                System.out.println(orden);
 
                 if (!orden.isEmpty()) {
                     this.derivar(orden);
                 }
-                orden = null;
+            }
+            bufferLector.close();
+
+            Scanner input = new Scanner(System.in);
+            while (true) {
+                System.out.print(new Colores("$> ", Color.AMARILLO));
+                orden = input.nextLine();
+
+                if (!orden.isEmpty()) {
+                    this.derivar(orden);
+                }
             }
         } catch (Exception excepcion) {
             excepcion.printStackTrace();
@@ -78,8 +75,9 @@ public class Menu {
             case "crear":
                 if (partes.length == 2) {
                     if (partes[1].equals("mapa")) {
-                        if (partida == null) {
-                            partida = new Partida();
+                        if (super.mapa == null) {
+                            super.mapa = new CrearMapa().getMapa();
+                            super.jugadores = new HashMap<>();
                         } else {
                             Resultado.error(Errores.MAPA_YA_CREADO);
                         }
@@ -99,7 +97,7 @@ public class Menu {
             case "ver":
                 if (partes.length == 2) {
                     if (partes[1].equals("mapa")) {
-                        System.out.println(partida.getMapa());
+                        System.out.println(super.getMapa());
                     }
                 } else {
                     Resultado.error(Errores.COMANDO_INCORRECTO);
@@ -120,6 +118,7 @@ public class Menu {
                 break;
             default:
                 Resultado.error(Errores.COMANDO_INCORRECTO);
+                break;
         }
     }
 
