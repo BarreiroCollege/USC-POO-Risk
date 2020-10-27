@@ -1,11 +1,11 @@
-package gal.sdc.usc.risk.tablero;
+package gal.sdc.usc.risk.tablero.valores;
 
 public enum Paises {
     ALASKA("Alaska", Continentes.AMERICANORTE, 0, 0),
     TNOROESTE("TNoroeste", Continentes.AMERICANORTE, 1, 0),
     GROELANDIA("Groenlan", Continentes.AMERICANORTE, 2, 0),
     ISLANDIA("Islandia", Continentes.EUROPA, 4, 0),
-    ESCANDINAVIA("Escan", Continentes.EUROPA, 5, 0),
+    ESCANDINAVIA("Escandina", Continentes.EUROPA, 5, 0),
     SIBERIA("Siberia", Continentes.ASIA, 6, 0),
     YAKUSTSK("Yakustsk", Continentes.ASIA, 7, 0),
     KAMCHATKA("Kamchatka", Continentes.ASIA, 8, 0),
@@ -23,7 +23,7 @@ public enum Paises {
     EUROPAOCC("EurOcc", Continentes.EUROPA, 5, 2),
     EUROPASUR("EurSur", Continentes.EUROPA, 6, 2),
     URALES("Urales", Continentes.ASIA, 7, 2),
-    MONGOLIA("Mongola", Continentes.ASIA, 8, 2),
+    MONGOLIA("Mongolia", Continentes.ASIA, 8, 2),
     JAPON("Japón", Continentes.ASIA, 9, 2),
 
     AMERICACENTRAL("AmeCentral", Continentes.AMERICANORTE, 1, 3),
@@ -31,14 +31,14 @@ public enum Paises {
     CHINA("China", Continentes.ASIA, 8, 3),
 
     VENEZUELA("Venezuela", Continentes.AMERICASUR, 1, 4),
-    AFNORTE("AfNorte", Continentes.AFRICA, 5, 4),
+    ANORTE("ANorte", Continentes.AFRICA, 5, 4),
     EGIPTO("Egipto", Continentes.AFRICA, 6, 4),
     OMEDIO("OMedio", Continentes.ASIA, 7, 4),
     INDIA("India", Continentes.ASIA, 8, 4),
     SASIATICO("SAsiático", Continentes.ASIA, 9, 4),
 
     PERU("Perú", Continentes.AMERICASUR, 1, 5),
-    Brasil("Brasil", Continentes.AMERICASUR, 2, 5),
+    BRASIL("Brasil", Continentes.AMERICASUR, 2, 5),
     CONGO("Congo", Continentes.AFRICA, 5, 5),
     AORIENTAL("AOriental", Continentes.AFRICA, 6, 5),
 

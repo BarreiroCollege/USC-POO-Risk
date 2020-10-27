@@ -3,13 +3,15 @@ package gal.sdc.usc.risk.menu.comandos;
 import gal.sdc.usc.risk.menu.Comando;
 import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Continente;
-import gal.sdc.usc.risk.tablero.Continentes;
 import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Pais;
-import gal.sdc.usc.risk.tablero.Paises;
+import gal.sdc.usc.risk.tablero.valores.Continentes;
+import gal.sdc.usc.risk.tablero.valores.Paises;
 
 
 public class CrearMapa implements Comando {
+    private final Mapa mapa;
+
     public CrearMapa() {
         Mapa.Builder preMapa = new Mapa.Builder();
 
@@ -17,7 +19,8 @@ public class CrearMapa implements Comando {
         for (Continentes continente : Continentes.values()) {
             Continente.Builder preContinente = new Continente.Builder(continente)
                     .withNombre(continente.getNombre())
-                    .withColor(continente.getColor());
+                    .withColor(continente.getColor())
+                    .withEjercitos(continente.getEjercitos());
 
             // Luego países del continente
             for (Paises pais : Paises.values()) {
@@ -35,17 +38,23 @@ public class CrearMapa implements Comando {
                         .withCelda(celda)
                         .build();
                 preContinente.withPais(nuevoPais);
-                preMapa.withPais(celda, nuevoPais);
+                preMapa.withPais(nuevoPais);
             }
 
             Continente nuevoContinente = preContinente.build();
-            for (Pais pais : nuevoContinente.getPaises()) {
-                pais.setContinente(nuevoContinente);
+            for (Pais pais : nuevoContinente.getPaises().values()) {
+                if (!pais.setContinente(nuevoContinente)) {
+                    // TODO
+                }
             }
             preMapa.withContinente(nuevoContinente);
         }
 
-        Mapa mapa = preMapa.build();
+        this.mapa = preMapa.build();
         System.out.println(mapa);
     }
- }
+
+    public Mapa getMapa() {
+        return this.mapa;
+    }
+}

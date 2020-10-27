@@ -9,19 +9,6 @@ public class Colores {
     private final Color colorTexto;
     private final Color colorFondo;
 
-    // Lista de colores disponibles
-    public enum Color {
-        NEGRO,
-        ROJO,
-        VERDE,
-        AMARILLO,
-        AZUL,
-        MORADO,
-        CELESTE,
-        BLANCO
-    }
-
-
     // Constructores de la clase
     // El primero simplemente pone el texto con el color por defecto
     // El segundo añade color a la fuente del texto
@@ -31,6 +18,7 @@ public class Colores {
         this.colorTexto = null;
         this.colorFondo = null;
     }
+
 
     public Colores(String texto, Color colorTexto) {
         this.texto = texto;
@@ -91,5 +79,17 @@ public class Colores {
         } else {
             return colorFondo(this.colorFondo) + colorTexto(this.colorTexto) + this.texto + RESET;
         }
+    }
+
+    // Lista de colores disponibles
+    public enum Color {
+        NEGRO,
+        ROJO,
+        VERDE,
+        AMARILLO,
+        AZUL,
+        MORADO,
+        CELESTE,
+        BLANCO
     }
 }
