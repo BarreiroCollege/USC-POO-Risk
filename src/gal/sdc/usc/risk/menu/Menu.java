@@ -20,8 +20,6 @@ public class Menu {
         BufferedReader bufferLector;
         try {
             File fichero = Recursos.get("comandos.csv");
-            File fichero2 = Recursos.get("jugadores.csv");
-            File fichero3 = Recursos.get("asignaciones.csv") 
             FileReader lector = new FileReader(fichero);
             bufferLector = new BufferedReader(lector);
             while ((orden = bufferLector.readLine()) != null) {
@@ -141,9 +139,8 @@ public class Menu {
      */
     private void crearJugador(String nombre, String color) {
         // Código necesario para crear a un jugador a partir de su nombre y color
-        if(nombre!='Gondorff' && nombre!='Hooker' && nombre!='Lonnegan'){
-            printf("\nNombre no admitido.");
+        //if((nombre!='Gondorff') && (nombre!='Hooker') && (nombre!='Lonnegan')){
+        //    printf("\nNombre no admitido.");
+            
     }
-
     }
-}
