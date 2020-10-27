@@ -10,7 +10,7 @@ package gal.sdc.usc.risk.menu;
 public class Jugadores2 implements Comando{
 public void crearJugador(String nombre, String color){
     ArrayList Yugadores= new ArrayList<>();
-    if((Yugadores.includes( nombre))=true){
+    if((Yugadores.includes( nombre))==true){
     System.out.println("Jugador ya existente\n");
     }
     else{
