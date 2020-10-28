@@ -1,7 +1,9 @@
 package gal.sdc.usc.risk.tablero;
 
+import gal.sdc.usc.risk.tablero.valores.EnlacesMaritimos;
 import gal.sdc.usc.risk.util.Colores;
 
+import java.awt.*;
 import java.util.HashMap;
 
 public class Mapa {
@@ -24,6 +26,33 @@ public class Mapa {
 
     public HashMap<Celda, Pais> getPaisesPorCeldas() {
         return paises;
+    }
+
+    public Pais getPaisPorNombre(String nombre) {
+        if (nombre == null) {
+            return null;
+        }
+
+        for (Pais pais : this.paises.values()) {
+            if (pais.getAbreviatura().toLowerCase().equals(nombre.toLowerCase()) ||
+                    pais.getNombre().toLowerCase().equals(nombre.toLowerCase())) {
+                return pais;
+            }
+        }
+        return null;
+    }
+
+    public Continente getContinentePorNombre(String nombre) {
+        if (nombre == null) {
+            return null;
+        }
+
+        for (Continente continente : this.continentes.values()) {
+            if (continente.getNombre().toLowerCase().equals(nombre.toLowerCase())) {
+                return continente;
+            }
+        }
+        return null;
     }
 
     private void asignarFronteras() {
@@ -60,6 +89,12 @@ public class Mapa {
                     preFronteras.withOeste(aux);
                 }
 
+                for (EnlacesMaritimos enlace : EnlacesMaritimos.values()) {
+                    if (enlace.getPais1().getNombre().equals(pais.getNombre())) {
+                        preFronteras.withMaritima(this.getPaisPorNombre(enlace.getPais2().getNombre()));
+                    }
+                }
+
                 if (!pais.setFronteras(preFronteras.build())) {
                     // TODO
                 }
@@ -71,36 +106,46 @@ public class Mapa {
 
     private String linea(int i) {
         StringBuilder out = new StringBuilder();
-        for (int k = 0; k < Mapa.MAX_PAISES_X; k++) {
+        for (int j = 0; j < Mapa.MAX_PAISES_X; j++) {
             if (i == 0) {
-                if (k == 0) {
+                if (j == 0) {
                     out.append("╔");
                 }
                 out.append("════════════");
-                if ((k + 1) == Mapa.MAX_PAISES_X) {
+                if ((j + 1) == Mapa.MAX_PAISES_X) {
                     out.append("╗");
                 } else {
                     out.append("╤");
                 }
             } else if (i == Mapa.MAX_PAISES_Y) {
-                if (k == 0) {
+                if (j == 0) {
                     out.append("╚");
                 }
                 out.append("════════════");
-                if ((k + 1) == Mapa.MAX_PAISES_X) {
+                if ((j + 1) == Mapa.MAX_PAISES_X) {
                     out.append("╝");
                 } else {
                     out.append("╧");
                 }
             } else {
-                if (k == 0) {
+                if (j == 0) {
                     out.append("╟");
                 }
-                out.append("────────────");
-                if ((k + 1) == Mapa.MAX_PAISES_X) {
+                out.append("──────");
+                if (((i == 3 || i == 4) && (j == 5 || j == 6)) || ((i == 5 || i == 6) && j == 9)) {
+                    out.append(new Colores("┃", Colores.Color.ROJO));
+                } else {
+                    out.append("─");
+                }
+                out.append("─────");
+                if ((j + 1) == Mapa.MAX_PAISES_X) {
                     out.append("╢");
                 } else {
-                    out.append("┼");
+                    if (i == 5 && j == 3) {
+                        out.append(new Colores("┃", Colores.Color.ROJO));
+                    } else {
+                        out.append("┼");
+                    }
                 }
             }
         }
@@ -127,16 +172,28 @@ public class Mapa {
                 celda = new Celda.Builder().withX(j).withY(i).build();
                 pais = this.paises.get(celda);
 
-                if (j == 0) {
+                if ((i == 0 && (j == 0 || j == 3 || j == 4 || j == 9 || j == 10)) || (i == 4 && j == 5) || (i == 5 && j == 3)) {
+                    texto = new Colores("━", Colores.Color.ROJO).toString();
+                } else if ((i == 4 && j == 4)) {
+                    texto = new Colores("┏", Colores.Color.ROJO).toString();
+                } else if ((i == 5 && j == 4)) {
+                    texto = new Colores("┛", Colores.Color.ROJO).toString();
+                } else if (j == 0) {
                     texto = "║";
                 } else {
                     texto = "│";
                 }
 
                 if (pais == null) {
-                    texto += String.format(" %-18s ", new Colores(""));
+                    if ((i == 0 && (j == 3 || j == 9 || j == 10)) || (i == 4 && j == 4) || (i == 5 && j == 3)) {
+                        texto += new Colores("━━━━━━━━━━━━", Colores.Color.ROJO);
+                    } else if ((i == 3 && (j == 5 || j == 6)) || (i == 5 && j == 9)) {
+                        texto += new Colores("      ┃     ", Colores.Color.ROJO);
+                    } else {
+                        texto += String.format(" %-18s ", new Colores(""));
+                    }
                 } else {
-                    nombreTemporal = new StringBuilder(pais.getNombre());
+                    nombreTemporal = new StringBuilder(pais.getAbreviatura());
                     while (nombreTemporal.length() < Pais.MAX_LENGTH_NOMBRE) {
                         nombreTemporal.append(" ");
                     }
@@ -144,7 +201,11 @@ public class Mapa {
                 }
 
                 if ((j + 1) == Mapa.MAX_PAISES_X) {
-                    texto += "║\n";
+                    if (i == 0) {
+                        texto += new Colores("━", Colores.Color.ROJO).toString() + "\n";
+                    } else {
+                        texto += "║\n";
+                    }
                 }
 
                 out.append(texto);
@@ -154,16 +215,22 @@ public class Mapa {
                 celda = new Celda.Builder().withX(j).withY(i).build();
                 pais = null;
 
-                if (j == 0) {
+                if ((i == 4 && j == 4)) {
+                    texto = new Colores("┃", Colores.Color.ROJO).toString();
+                } else if (j == 0) {
                     texto = "║";
                 } else {
                     texto = "│";
                 }
 
                 if (pais == null) {
-                    texto += String.format(" %-18s ", new Colores(""));
+                    if ((i == 3 && (j == 5 || j == 6)) || (i == 5 && j == 9)) {
+                        texto += new Colores("      ┃     ", Colores.Color.ROJO);
+                    } else {
+                        texto += String.format(" %-18s ", new Colores(""));
+                    }
                 } else {
-                    nombreTemporal = new StringBuilder(pais.getNombre());
+                    nombreTemporal = new StringBuilder(pais.getAbreviatura());
                     while (nombreTemporal.length() < Pais.MAX_LENGTH_NOMBRE) {
                         nombreTemporal.append(" ");
                     }

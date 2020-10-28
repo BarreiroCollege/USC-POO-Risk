@@ -1,63 +1,65 @@
 package gal.sdc.usc.risk.tablero.valores;
 
 public enum Paises {
-    ALASKA("Alaska", Continentes.AMERICANORTE, 0, 0),
-    TNOROESTE("TNoroeste", Continentes.AMERICANORTE, 1, 0),
-    GROELANDIA("Groenlan", Continentes.AMERICANORTE, 2, 0),
-    ISLANDIA("Islandia", Continentes.EUROPA, 4, 0),
-    ESCANDINAVIA("Escandina", Continentes.EUROPA, 5, 0),
-    SIBERIA("Siberia", Continentes.ASIA, 6, 0),
-    YAKUSTSK("Yakustsk", Continentes.ASIA, 7, 0),
-    KAMCHATKA("Kamchatka", Continentes.ASIA, 8, 0),
+    ALASKA("Alaska", "Alaska", Continentes.AMERICANORTE, 0, 0),
+    TNOROESTE("Territorios del Noroeste", "TNoroeste", Continentes.AMERICANORTE, 1, 0),
+    GROELANDIA("Groenlandia", "Groenlan", Continentes.AMERICANORTE, 2, 0),
+    ISLANDIA("Islandia", "Islandia", Continentes.EUROPA, 4, 0),
+    ESCANDINAVIA("Escandinavia", "Escandina", Continentes.EUROPA, 5, 0),
+    SIBERIA("Siberia", "Siberia", Continentes.ASIA, 6, 0),
+    YAKUSTSK("Yakustsk", "Yakustsk", Continentes.ASIA, 7, 0),
+    KAMCHATKA("Kamchatka", "Kamchatka", Continentes.ASIA, 8, 0),
 
-    ALBERTA("Alberta", Continentes.AMERICANORTE, 0, 1),
-    ONTARIO("Ontario", Continentes.AMERICANORTE, 1, 1),
-    QUEBEC("Quebec", Continentes.AMERICANORTE, 2, 1),
-    GRANBRETANA("GBretaña", Continentes.EUROPA, 5, 1),
-    EUROPANORTE("EurNorte", Continentes.EUROPA, 6, 1),
-    RUSIA("Rusia", Continentes.EUROPA, 7, 1),
-    IRKUTSK("Irkutsk", Continentes.ASIA, 8, 1),
+    ALBERTA("Alberta", "Alberta", Continentes.AMERICANORTE, 0, 1),
+    ONTARIO("Ontario", "Ontario", Continentes.AMERICANORTE, 1, 1),
+    QUEBEC("Quebec", "Quebec", Continentes.AMERICANORTE, 2, 1),
+    GRANBRETANA("Gran Bretaña", "GBretaña", Continentes.EUROPA, 5, 1),
+    EUROPANORTE("Europa del Norte", "EurNorte", Continentes.EUROPA, 6, 1),
+    RUSIA("Rusia", "Rusia", Continentes.EUROPA, 7, 1),
+    IRKUTSK("Irkutsk", "Irkutsk", Continentes.ASIA, 8, 1),
 
-    USAOESTE("USAOeste", Continentes.AMERICANORTE, 0, 2),
-    USAESTE("USAEste", Continentes.AMERICANORTE, 1, 2),
-    EUROPAOCC("EurOcc", Continentes.EUROPA, 5, 2),
-    EUROPASUR("EurSur", Continentes.EUROPA, 6, 2),
-    URALES("Urales", Continentes.ASIA, 7, 2),
-    MONGOLIA("Mongolia", Continentes.ASIA, 8, 2),
-    JAPON("Japón", Continentes.ASIA, 9, 2),
+    USAOESTE("Estados Unidos del Oeste", "USAOeste", Continentes.AMERICANORTE, 0, 2),
+    USAESTE("Estadoos Unidos del Este", "USAEste", Continentes.AMERICANORTE, 1, 2),
+    EUROPAOCC("Europa Occidental", "EurOcc", Continentes.EUROPA, 5, 2),
+    EUROPASUR("Europa del Sur", "EurSur", Continentes.EUROPA, 6, 2),
+    URALES("Urales", "Urales", Continentes.ASIA, 7, 2),
+    MONGOLIA("Mongolia", "Mongolia", Continentes.ASIA, 8, 2),
+    JAPON("Japón", "Japón", Continentes.ASIA, 9, 2),
 
-    AMERICACENTRAL("AmeCentral", Continentes.AMERICANORTE, 1, 3),
-    AFGANISTAN("Afgan", Continentes.ASIA, 7, 3),
-    CHINA("China", Continentes.ASIA, 8, 3),
+    AMERICACENTRAL("América Central", "AmeCentral", Continentes.AMERICANORTE, 1, 3),
+    AFGANISTAN("Afganistán", "Afgan", Continentes.ASIA, 7, 3),
+    CHINA("China", "China", Continentes.ASIA, 8, 3),
 
-    VENEZUELA("Venezuela", Continentes.AMERICASUR, 1, 4),
-    ANORTE("ANorte", Continentes.AFRICA, 5, 4),
-    EGIPTO("Egipto", Continentes.AFRICA, 6, 4),
-    OMEDIO("OMedio", Continentes.ASIA, 7, 4),
-    INDIA("India", Continentes.ASIA, 8, 4),
-    SASIATICO("SAsiático", Continentes.ASIA, 9, 4),
+    VENEZUELA("Venezuela", "Venezuela", Continentes.AMERICASUR, 1, 4),
+    ANORTE("África del Norte", "ANorte", Continentes.AFRICA, 5, 4),
+    EGIPTO("Egipto", "Egipto", Continentes.AFRICA, 6, 4),
+    OMEDIO("Oriente Medio", "OMedio", Continentes.ASIA, 7, 4),
+    INDIA("India", "India", Continentes.ASIA, 8, 4),
+    SASIATICO("Sureste Asiático", "SAsiático", Continentes.ASIA, 9, 4),
 
-    PERU("Perú", Continentes.AMERICASUR, 1, 5),
-    BRASIL("Brasil", Continentes.AMERICASUR, 2, 5),
-    CONGO("Congo", Continentes.AFRICA, 5, 5),
-    AORIENTAL("AOriental", Continentes.AFRICA, 6, 5),
+    PERU("Perú", "Perú", Continentes.AMERICASUR, 1, 5),
+    BRASIL("Brasil", "Brasil", Continentes.AMERICASUR, 2, 5),
+    CONGO("Congo", "Congo", Continentes.AFRICA, 5, 5),
+    AORIENTAL("Australia Oriental", "AOriental", Continentes.AFRICA, 6, 5),
 
-    ARGENTINA("Argentina", Continentes.AMERICASUR, 1, 6),
-    SUDAFRICA("Sudáfrica", Continentes.AFRICA, 6, 6),
-    MADAGASCAR("Madagasca", Continentes.AFRICA, 7, 6),
-    INDONESIA("Indonesia", Continentes.AUSTRALIA, 9, 6),
-    NGUINEA("NGuinea", Continentes.AUSTRALIA, 10, 6),
+    ARGENTINA("Argentina", "Argentina", Continentes.AMERICASUR, 1, 6),
+    SUDAFRICA("Sudáfrica", "Sudáfrica", Continentes.AFRICA, 6, 6),
+    MADAGASCAR("Madagascar", "Madagasca", Continentes.AFRICA, 7, 6),
+    INDONESIA("Indonesia", "Indonesia", Continentes.AUSTRALIA, 9, 6),
+    NGUINEA("Nueva Guinea", "NGuinea", Continentes.AUSTRALIA, 10, 6),
 
-    AUSOCCID("AusOccid", Continentes.AUSTRALIA, 9, 7),
-    AUSORIENT("AusOrient", Continentes.AUSTRALIA, 10, 7);
+    AUSOCCID("Australia Occidental", "AusOccid", Continentes.AUSTRALIA, 9, 7),
+    AUSORIENT("Australia Oriental", "AusOrient", Continentes.AUSTRALIA, 10, 7);
 
     private final String nombre;
+    private final String abreviatura;
     private final Continentes continente;
     private final int x;
     private final int y;
 
-    Paises(String nombre, Continentes continente, int x, int y) {
+    Paises(String nombre, String abreviatura, Continentes continente, int x, int y) {
         this.nombre = nombre;
+        this.abreviatura = abreviatura;
         this.continente = continente;
         this.x = x;
         this.y = y;
@@ -65,6 +67,10 @@ public enum Paises {
 
     public String getNombre() {
         return this.nombre;
+    }
+
+    public String getAbreviatura() {
+        return this.abreviatura;
     }
 
     public Continentes getContinente() {

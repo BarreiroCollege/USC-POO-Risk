@@ -8,6 +8,7 @@ public class Pais {
 
     private final Paises identificador;
     private final String nombre;
+    private final String abreviatura;
     private final Celda celda;
     private Continente continente;
 
@@ -16,9 +17,10 @@ public class Pais {
     private Jugador jugador = null;
     private Integer ejercitos = null;
 
-    private Pais(Paises identificador, String nombre, Celda celda) {
+    private Pais(Paises identificador, String nombre, String abreviatura, Celda celda) {
         this.identificador = identificador;
         this.nombre = nombre;
+        this.abreviatura = abreviatura;
         this.celda = celda;
     }
 
@@ -31,7 +33,11 @@ public class Pais {
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
+    }
+
+    public String getAbreviatura() {
+        return this.abreviatura;
     }
 
     public Continente getContinente() {
@@ -50,7 +56,7 @@ public class Pais {
     }
 
     public boolean setFronteras(Fronteras fronteras) {
-        if (fronteras == null) {
+        if (this.fronteras == null) {
             this.fronteras = fronteras;
             return true;
         }
@@ -81,6 +87,7 @@ public class Pais {
     public String toString() {
         return "Pais{" +
                 "nombre='" + nombre + '\'' +
+                ", abreviatura='" + abreviatura + '\'' +
                 ", continente=" + (continente != null ? continente.getNombre() : continente) +
                 ", celda=" + celda +
                 '}';
@@ -89,6 +96,7 @@ public class Pais {
     public static class Builder {
         private final Paises pais;
         private String nombre;
+        private String abreviatura;
         private Celda celda = null;
 
         public Builder(Paises pais) {
@@ -97,6 +105,11 @@ public class Pais {
 
         public Builder withNombre(String nombre) {
             this.nombre = nombre;
+            return this;
+        }
+
+        public Builder withAbreviatura(String nombre) {
+            this.abreviatura = nombre;
             return this;
         }
 
@@ -110,10 +123,12 @@ public class Pais {
                 // TODO
             } else if (this.nombre == null) {
                 // TODO
+            } else if (this.abreviatura == null) {
+                // TODO
             } else if (this.celda == null) {
                 // TODO
             } else {
-                return new Pais(pais, nombre, celda);
+                return new Pais(pais, nombre, abreviatura, celda);
             }
             return null;
         }

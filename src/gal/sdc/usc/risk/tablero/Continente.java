@@ -79,7 +79,7 @@ public class Continente {
         }
 
         public Builder withPais(Pais pais) {
-            this.paises.put(pais.getNombre(), pais);
+            this.paises.put(pais.getAbreviatura(), pais);
             return this;
         }
 

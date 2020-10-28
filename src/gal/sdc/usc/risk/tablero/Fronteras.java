@@ -66,11 +66,11 @@ public class Fronteras {
     @Override
     public String toString() {
         return "Fronteras{" +
-                "norte=" + norte.getNombre() +
-                ", sur=" + sur.getNombre() +
-                ", este=" + este.getNombre() +
-                ", oeste=" + oeste.getNombre() +
-                ", maritimas=" + maritimas.stream().map(Pais::getNombre) +
+                "norte=" + norte.getAbreviatura() +
+                ", sur=" + sur.getAbreviatura() +
+                ", este=" + este.getAbreviatura() +
+                ", oeste=" + oeste.getAbreviatura() +
+                ", maritimas=" + maritimas.stream().map(Pais::getAbreviatura) +
                 '}';
     }
 

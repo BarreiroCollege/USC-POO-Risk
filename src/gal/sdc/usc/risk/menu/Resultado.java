@@ -20,6 +20,10 @@ public class Resultado {
         System.out.println(new Resultado(Colores.Color.ROJO, texto));
     }
 
+    public static void correcto(String out) {
+        System.out.println(new Resultado(Colores.Color.VERDE, out));
+    }
+
     @Override
     public String toString() {
         return new Colores(mensaje, color).toString();

@@ -1,19 +1,24 @@
 package gal.sdc.usc.risk.menu.comandos.mapa;
 
 import gal.sdc.usc.risk.menu.Partida;
+import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Continentes;
+import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.tablero.valores.Paises;
 
 
 public class CrearMapa extends Partida implements Comando {
-    private final Mapa mapa;
-
     public CrearMapa() {
+        if (super.getMapa() != null) {
+            Resultado.error(Errores.MAPA_YA_CREADO);
+            return;
+        }
+
         Mapa.Builder preMapa = new Mapa.Builder();
 
         // Primero continentes
@@ -36,6 +41,7 @@ public class CrearMapa extends Partida implements Comando {
 
                 Pais nuevoPais = new Pais.Builder(pais)
                         .withNombre(pais.getNombre())
+                        .withAbreviatura(pais.getAbreviatura())
                         .withCelda(celda)
                         .build();
                 preContinente.withPais(nuevoPais);
@@ -51,11 +57,7 @@ public class CrearMapa extends Partida implements Comando {
             preMapa.withContinente(nuevoContinente);
         }
 
-        this.mapa = preMapa.build();
-        this.mapa.imprimir();
-    }
-
-    public Mapa getMapa() {
-        return this.mapa;
+        super.setMapa(preMapa.build());
+        super.getMapa().imprimir();
     }
 }

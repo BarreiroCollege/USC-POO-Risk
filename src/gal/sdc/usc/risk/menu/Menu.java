@@ -1,6 +1,10 @@
 package gal.sdc.usc.risk.menu;
 
 import gal.sdc.usc.risk.menu.comandos.mapa.CrearMapa;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerColor;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerContinente;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerFrontera;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerPaises;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
 import gal.sdc.usc.risk.util.Colores.Color;
@@ -17,6 +21,8 @@ public class Menu extends Partida {
         // Iniciar juego
         String orden;
 
+        boolean primero = true;
+
         try {
             BufferedReader bufferLector;
             File fichero = Recursos.get("comandos.csv");
@@ -24,6 +30,11 @@ public class Menu extends Partida {
             bufferLector = new BufferedReader(lector);
 
             while ((orden = bufferLector.readLine()) != null) {
+                if (!primero) {
+                    System.out.println();
+                } else {
+                    primero = false;
+                }
                 System.out.print(new Colores("$> ", Color.AMARILLO));
                 System.out.println(orden);
 
@@ -35,6 +46,11 @@ public class Menu extends Partida {
 
             Scanner input = new Scanner(System.in);
             while (true) {
+                if (!primero) {
+                    System.out.println();
+                } else {
+                    primero = false;
+                }
                 System.out.print(new Colores("$> ", Color.AMARILLO));
                 orden = input.nextLine();
 
@@ -48,7 +64,7 @@ public class Menu extends Partida {
     }
 
     private void derivar(String orden) {
-        String[] partes = orden.split(" ");
+        String[] partes = orden.toLowerCase().split(" ");
         String comando = partes[0];
         // COMANDOS INICIALES PARA EMPEZAR A JUGAR
         //    crear mapa
@@ -74,11 +90,7 @@ public class Menu extends Partida {
             case "crear":
                 if (partes.length == 2) {
                     if (partes[1].equals("mapa")) {
-                        if (super.getMapa() == null) {
-                            super.setMapa(new CrearMapa().getMapa());
-                        } else {
-                            Resultado.error(Errores.MAPA_YA_CREADO);
-                        }
+                        new CrearMapa();
                     } else {
                         Resultado.error(Errores.COMANDO_INCORRECTO);
                     }
@@ -87,6 +99,21 @@ public class Menu extends Partida {
                         crearJugador(Recursos.get(partes[2]));
                     } else {
                         crearJugador(partes[1], partes[2]);
+                    }
+                } else {
+                    Resultado.error(Errores.COMANDO_INCORRECTO);
+                }
+                break;
+            case "obtener":
+                if (partes.length == 3) {
+                    if (partes[1].equals("frontera") || partes[1].equals("fronteras")) {
+                        new ObtenerFrontera(partes[2]);
+                    } else if (partes[1].equals("continente")) {
+                        new ObtenerContinente(partes[2]);
+                    } else if (partes[1].equals("color")) {
+                        new ObtenerColor(partes[2]);
+                    } else if (partes[1].equals("pais") || partes[1].equals("paises")) {
+                        new ObtenerPaises(partes[2]);
                     }
                 } else {
                     Resultado.error(Errores.COMANDO_INCORRECTO);

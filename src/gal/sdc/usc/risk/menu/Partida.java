@@ -9,6 +9,8 @@ public abstract class Partida {
     private static Mapa mapa;
     private static final HashMap<String, Jugador> jugadores = new HashMap<>();
 
+    private static boolean jugando = false;
+
     protected void setMapa(Mapa nuevoMapa) {
         if (mapa == null) {
             mapa = nuevoMapa;
@@ -21,5 +23,17 @@ public abstract class Partida {
 
     public HashMap<String, Jugador> getJugadores() {
         return jugadores;
+    }
+
+    public boolean isJugando() {
+        return jugando;
+    }
+
+    public boolean iniciar() {
+        if (jugando) {
+            return false;
+        }
+        jugando = true;
+        return true;
     }
 }
