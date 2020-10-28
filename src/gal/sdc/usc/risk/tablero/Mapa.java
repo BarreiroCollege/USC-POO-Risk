@@ -161,7 +161,6 @@ public class Mapa {
         String texto;
         StringBuilder nombreTemporal;
 
-        // TODO: Cambiar a columnas
         for (int i = 0; i < Mapa.MAX_PAISES_Y; i++) {
             // Imprimir paises con sus colores
             for (int j = 0; j < Mapa.MAX_PAISES_X; j++) {
