@@ -9,7 +9,6 @@ import gal.sdc.usc.risk.util.Recursos;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -75,9 +74,8 @@ public class Menu extends Partida {
             case "crear":
                 if (partes.length == 2) {
                     if (partes[1].equals("mapa")) {
-                        if (super.mapa == null) {
-                            super.mapa = new CrearMapa().getMapa();
-                            super.jugadores = new HashMap<>();
+                        if (super.getMapa() == null) {
+                            super.setMapa(new CrearMapa().getMapa());
                         } else {
                             Resultado.error(Errores.MAPA_YA_CREADO);
                         }
@@ -97,7 +95,7 @@ public class Menu extends Partida {
             case "ver":
                 if (partes.length == 2) {
                     if (partes[1].equals("mapa")) {
-                        System.out.println(super.getMapa());
+                        super.getMapa().imprimir();
                     }
                 } else {
                     Resultado.error(Errores.COMANDO_INCORRECTO);
@@ -162,7 +160,7 @@ public class Menu extends Partida {
     }
 
     /**
-     * @param file
+     * @param nombre
      */
     private void crearJugador(String nombre, String color) {
         // Código necesario para crear a un jugador a partir de su nombre y color
