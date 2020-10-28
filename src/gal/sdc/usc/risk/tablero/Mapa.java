@@ -3,7 +3,6 @@ package gal.sdc.usc.risk.tablero;
 import gal.sdc.usc.risk.tablero.valores.EnlacesMaritimos;
 import gal.sdc.usc.risk.util.Colores;
 
-import java.awt.*;
 import java.util.HashMap;
 
 public class Mapa {

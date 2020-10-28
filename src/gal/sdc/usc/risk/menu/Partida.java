@@ -6,19 +6,18 @@ import gal.sdc.usc.risk.tablero.Mapa;
 import java.util.HashMap;
 
 public abstract class Partida {
-    private static Mapa mapa;
     private static final HashMap<String, Jugador> jugadores = new HashMap<>();
-
+    private static Mapa mapa;
     private static boolean jugando = false;
+
+    public Mapa getMapa() {
+        return mapa;
+    }
 
     protected void setMapa(Mapa nuevoMapa) {
         if (mapa == null) {
             mapa = nuevoMapa;
         }
-    }
-
-    public Mapa getMapa() {
-        return mapa;
     }
 
     public HashMap<String, Jugador> getJugadores() {

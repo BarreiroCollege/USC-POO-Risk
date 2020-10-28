@@ -13,8 +13,8 @@ import java.util.List;
 
 //Para los jugadores fuera del fichero
 public class Jugadores2 implements Comando {
-public void crearJugador(String nombre, String color){
-    List<Jugadores> Yugadores= new ArrayList<>();
+    public void crearJugador(String nombre, String color) {
+        List<Jugadores> Yugadores = new ArrayList<>();
     /* if((Yugadores.includes( nombre))==true){
     System.out.println("Jugador ya existente\n");
     }
@@ -22,6 +22,6 @@ public void crearJugador(String nombre, String color){
         Yugadores.add(nombre);
         System.out.println("Jugador creado\n");
     } */
-}
+    }
 }
 

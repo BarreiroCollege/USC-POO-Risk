@@ -9,11 +9,11 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 public class Recursos {
+    private static final File saida = new File("saida.txt");
+
     public static File get(String name) {
         return new File("res/" + name);
     }
-
-    private static final File saida = new File("saida.txt");
 
     public static void engadirSaida(String out) {
         try {
