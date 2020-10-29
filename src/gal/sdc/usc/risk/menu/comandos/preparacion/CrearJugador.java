@@ -2,8 +2,8 @@ package gal.sdc.usc.risk.menu.comandos.preparacion;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
-import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Comando;
+import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
@@ -24,7 +24,7 @@ public class CrearJugador extends Partida implements IComando {
             Resultado.error(Errores.JUGADOR_YA_EXISTE);
             return;
         }
-        
+
         Colores.Color colorFinal = Colores.Color.toColor(color);
         if (colorFinal == null) {
             Resultado.error(Errores.COLOR_NO_PERMITIDO);

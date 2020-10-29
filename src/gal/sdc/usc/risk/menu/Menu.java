@@ -1,6 +1,10 @@
 package gal.sdc.usc.risk.menu;
 
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerColor;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerContinente;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerFrontera;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerPaises;
 import gal.sdc.usc.risk.menu.comandos.mapa.VerMapa;
 import gal.sdc.usc.risk.menu.comandos.partida.Jugador;
 import gal.sdc.usc.risk.menu.comandos.preparacion.AsignarMision;
@@ -8,10 +12,6 @@ import gal.sdc.usc.risk.menu.comandos.preparacion.AsignarMisiones;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearJugador;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearJugadores;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
-import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerColor;
-import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerContinente;
-import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerFrontera;
-import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerPaises;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
 import gal.sdc.usc.risk.util.Colores.Color;

@@ -21,6 +21,14 @@ public class Mision {
         return descripcion;
     }
 
+    @Override
+    public String toString() {
+        return "Mision{" +
+                "codigo='" + codigo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                '}';
+    }
+
     public static class Builder {
         private Misiones mision;
 
@@ -36,13 +44,5 @@ public class Mision {
             }
             return null;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Mision{" +
-                "codigo='" + codigo + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                '}';
     }
 }

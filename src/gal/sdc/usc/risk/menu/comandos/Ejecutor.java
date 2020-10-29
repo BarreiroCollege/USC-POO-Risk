@@ -4,8 +4,6 @@ import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
-import java.awt.Color;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
@@ -13,12 +11,27 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+
 public class Ejecutor extends Partida implements Callable<Boolean> {
     private static String[] comandos;
     private final Class<? extends IComando> comando;
 
     private Ejecutor(Class<? extends IComando> comando) {
         this.comando = comando;
+    }
+
+    public static void setComandos(String[] comandos) {
+        Ejecutor.comandos = comandos;
+    }
+
+    public static void comando(Class<? extends IComando> comando) {
+        Ejecutor ejecutor = new Ejecutor(comando);
+        Future<Boolean> executor = Executors.newSingleThreadExecutor().submit(ejecutor);
+        try {
+            executor.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -52,19 +65,5 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
             e.printStackTrace();
         }
         return false;
-    }
-
-    public static void setComandos(String[] comandos) {
-        Ejecutor.comandos = comandos;
-    }
-
-    public static void comando(Class<? extends IComando> comando) {
-        Ejecutor ejecutor = new Ejecutor(comando);
-        Future<Boolean> executor = Executors.newSingleThreadExecutor().submit(ejecutor);
-        try {
-            executor.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 }
