@@ -1,7 +1,8 @@
-package gal.sdc.usc.risk.menu.comandos.mapa;
+package gal.sdc.usc.risk.menu.comandos.preparacion;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
+import gal.sdc.usc.risk.menu.comandos.Preparacion;
 import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Continente;
@@ -12,8 +13,10 @@ import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.tablero.valores.Paises;
 
 
+@Preparacion
 public class CrearMapa extends Partida implements Comando {
-    public CrearMapa() {
+    @Override
+    public void ejecutar(String[] comandos) {
         if (super.getMapa() != null) {
             Resultado.error(Errores.MAPA_YA_CREADO);
             return;
@@ -59,5 +62,6 @@ public class CrearMapa extends Partida implements Comando {
 
         super.setMapa(preMapa.build());
         super.getMapa().imprimir();
+        super.getComandosEjecutados().add(this.getClass());
     }
 }

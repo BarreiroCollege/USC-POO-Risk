@@ -1,4 +1,4 @@
-package gal.sdc.usc.risk.menu.comandos.preparacion;
+package gal.sdc.usc.risk.menu.comandos.mapa;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
@@ -11,7 +11,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class ObtenerPaises extends Partida implements Comando {
-    public ObtenerPaises(String clave) {
+    @Override
+    public void ejecutar(String[] comandos) {
+        String clave = comandos[2];
+
         if (super.getMapa() == null) {
             Resultado.error(Errores.MAPA_NO_CREADO);
             return;
@@ -24,17 +27,22 @@ public class ObtenerPaises extends Partida implements Comando {
         }
 
         StringBuilder out = new StringBuilder("{\n" +
-                "\tpaises: [\n");
+                "  paises: [ ");
         Iterator<Map.Entry<String, Pais>> it = continente.getPaises().entrySet().iterator();
+        boolean primero = true;
         while (it.hasNext()) {
             Pais pais = it.next().getValue();
-            out.append(String.format("%-8s", ""));
+            if (!primero) {
+                out.append(String.format("%-11s", ""));
+            } else {
+                primero = false;
+            }
             out.append("\"").append(pais.getNombre()).append("\"");
             if (it.hasNext()) {
                 out.append(",\n");
             }
         }
-        out.append("\n").append("    ]\n" + "}");
+        out.append("\n").append("          ]\n" + "}");
         Resultado.correcto(out.toString());
     }
 }
