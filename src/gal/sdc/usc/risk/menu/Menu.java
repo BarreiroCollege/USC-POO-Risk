@@ -3,6 +3,8 @@ package gal.sdc.usc.risk.menu;
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.menu.comandos.mapa.VerMapa;
 import gal.sdc.usc.risk.menu.comandos.partida.Jugador;
+import gal.sdc.usc.risk.menu.comandos.preparacion.AsignarMision;
+import gal.sdc.usc.risk.menu.comandos.preparacion.AsignarMisiones;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearJugador;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearJugadores;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
@@ -140,6 +142,8 @@ public class Menu extends Partida {
                 if (partes.length == 2) {
                     if (partes[1].equals("mapa")) {
                         Ejecutor.comando(VerMapa.class);
+                    } else {
+                        Resultado.error(Errores.COMANDO_INCORRECTO);
                     }
                 } else {
                     Resultado.error(Errores.COMANDO_INCORRECTO);
@@ -154,8 +158,10 @@ public class Menu extends Partida {
                     // método se invocará a otros métodos de las clases que contienen los atributos
                     // y los métodos necesarios para realizar esa invocación
                     // asignarPaises(Recursos.get(partes[2]));
+                } else if (partes[1].equals("misiones")) {
+                    Ejecutor.comando(AsignarMisiones.class);
                 } else {
-                    // asignarPaises(partes[1], partes[2]);
+                    Ejecutor.comando(AsignarMision.class);
                 }
                 break;
             case "jugador":

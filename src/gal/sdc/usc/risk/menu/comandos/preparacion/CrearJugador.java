@@ -15,21 +15,24 @@ public class CrearJugador extends Partida implements IComando {
     public void ejecutar(String[] comandos) {
         String nombre = comandos[1];
         String color = comandos[2];
-        Colores.Color colorFinal = Colores.Color.toColor(color);
 
         if (super.getMapa() == null) {
             Resultado.error(Errores.MAPA_NO_CREADO);
             return;
-        } else if (super.getJugadores().containsKey(nombre)) {
+        }
+        if (super.getJugadores().containsKey(nombre)) {
             Resultado.error(Errores.JUGADOR_YA_EXISTE);
             return;
-        } else if (colorFinal == null) {
+        }
+        
+        Colores.Color colorFinal = Colores.Color.toColor(color);
+        if (colorFinal == null) {
             Resultado.error(Errores.COLOR_NO_PERMITIDO);
             return;
-        } else if (super.getJugadoresPorColor().containsKey(colorFinal)) {
+        }
+        if (super.getJugadoresPorColor().containsKey(colorFinal)) {
             Resultado.error(Errores.COLOR_YA_ASIGNADO);
             return;
-
         }
 
         Jugador jugador = new Jugador.Builder(nombre).withColor(colorFinal).build();
@@ -48,7 +51,8 @@ public class CrearJugador extends Partida implements IComando {
     private void comprobarJugadores() {
         if (super.getJugadores().size() == 3) {
             super.getComandosPermitidos().remove(CrearJugadores.class);
-            // TODO
+            super.getComandosPermitidos().add(AsignarMision.class);
+            super.getComandosPermitidos().add(AsignarMisiones.class);
         } else if (super.getJugadores().size() == 6) {
             super.getComandosPermitidos().remove(this.getClass());
         }

@@ -247,7 +247,7 @@ public class Mapa {
     }
 
     public void imprimir() {
-        System.out.println(this.toString());
+        System.out.print(this.toString());
     }
 
     public static class Builder {

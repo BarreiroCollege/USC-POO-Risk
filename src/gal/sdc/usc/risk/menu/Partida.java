@@ -4,6 +4,7 @@ import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
+import gal.sdc.usc.risk.tablero.Mision;
 import gal.sdc.usc.risk.util.Colores;
 
 import java.util.ArrayList;
@@ -40,6 +41,16 @@ public abstract class Partida {
         HashMap<Colores.Color, Jugador> jugadores = new HashMap<>();
         for (Jugador jugador : Partida.jugadores.values()) {
             jugadores.put(jugador.getColor(), jugador);
+        }
+        return jugadores;
+    }
+
+    protected HashMap<Mision, Jugador> getJugadoresPorMision() {
+        HashMap<Mision, Jugador> jugadores = new HashMap<>();
+        for (Jugador jugador : Partida.jugadores.values()) {
+            if (jugador.getMision() != null) {
+                jugadores.put(jugador.getMision(), jugador);
+            }
         }
         return jugadores;
     }

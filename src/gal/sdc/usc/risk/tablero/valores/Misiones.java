@@ -24,4 +24,21 @@ public enum Misiones {
         this.id = id;
         this.nombre = nombre;
     }
+
+    public static Misiones toMisiones(String id) {
+        for (Misiones mision : Misiones.values()) {
+            if (id.trim().toUpperCase().endsWith(mision.getId())) {
+                return mision;
+            }
+        }
+        return null;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
 }

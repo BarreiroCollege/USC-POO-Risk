@@ -14,7 +14,7 @@ import java.io.IOException;
 
 
 @Comando(jugando = false)
-public class CrearJugadores extends Partida implements IComando {
+public class AsignarMisiones extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
         try {
@@ -25,7 +25,7 @@ public class CrearJugadores extends Partida implements IComando {
             String linea;
 
             String[] partes;
-            String[] jugador = new String[]{"crear", "", ""};
+            String[] jugador = new String[]{"asignar", "", ""};
             while ((linea = bufferLector.readLine()) != null) {
                 partes = linea.split(";");
                 if (partes.length == 2) {
@@ -33,7 +33,7 @@ public class CrearJugadores extends Partida implements IComando {
                     jugador[2] = partes[1].trim();
 
                     Ejecutor.setComandos(jugador);
-                    Ejecutor.comando(CrearJugador.class);
+                    Ejecutor.comando(AsignarMision.class);
                 }
             }
             bufferLector.close();

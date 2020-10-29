@@ -5,6 +5,7 @@ import gal.sdc.usc.risk.util.Colores.Color;
 public class Jugador {
     private final String nombre;
     private final Color color;
+    private Mision mision = null;
 
     private Jugador(String nombre, Color color) {
         this.nombre = nombre;
@@ -17,6 +18,18 @@ public class Jugador {
 
     public Color getColor() {
         return color;
+    }
+
+    public Mision getMision() {
+        return mision;
+    }
+
+    public boolean setMision(Mision mision) {
+        if (this.mision == null) {
+            this.mision = mision;
+            return true;
+        }
+        return false;
     }
 
     public static class Builder {
