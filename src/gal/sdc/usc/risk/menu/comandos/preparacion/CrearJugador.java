@@ -2,15 +2,15 @@ package gal.sdc.usc.risk.menu.comandos.preparacion;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
+import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Comando;
-import gal.sdc.usc.risk.menu.comandos.Preparacion;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
 
 
-@Preparacion(requiere = CrearMapa.class)
-public class CrearJugador extends Partida implements Comando {
+@Comando(jugando = false)
+public class CrearJugador extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
         String nombre = comandos[1];
@@ -33,7 +33,7 @@ public class CrearJugador extends Partida implements Comando {
         }
 
         Jugador jugador = new Jugador.Builder(nombre).withColor(colorFinal).build();
-        if (jugador != null) {
+        if (jugador != null && super.getJugadores().size() < 6) {
             super.getJugadores().put(nombre, jugador);
             this.comprobarJugadores();
 
@@ -47,8 +47,8 @@ public class CrearJugador extends Partida implements Comando {
 
     private void comprobarJugadores() {
         if (super.getJugadores().size() == 3) {
-            super.getComandosEjecutados().add(this.getClass());
-            super.getComandosPermitidos().add(this.getClass());
+            super.getComandosPermitidos().remove(CrearJugadores.class);
+            // TODO
         } else if (super.getJugadores().size() == 6) {
             super.getComandosPermitidos().remove(this.getClass());
         }

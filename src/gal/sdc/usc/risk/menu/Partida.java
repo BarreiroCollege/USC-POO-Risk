@@ -1,6 +1,7 @@
 package gal.sdc.usc.risk.menu;
 
-import gal.sdc.usc.risk.menu.comandos.Comando;
+import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.util.Colores;
@@ -14,8 +15,11 @@ public abstract class Partida {
     private static Mapa mapa;
     private static boolean jugando = false;
 
-    private static List<Class<? extends Comando>> comandosEjecutados = new ArrayList<>();
-    private static List<Class<? extends Comando>> comandosPermitidos = new ArrayList<>();
+    private static List<Class<? extends IComando>> comandosPermitidos = new ArrayList<>();
+
+    static {
+        comandosPermitidos.add(CrearMapa.class);
+    }
 
 
     protected Mapa getMapa() {
@@ -52,11 +56,7 @@ public abstract class Partida {
         return true;
     }
 
-    public List<Class<? extends Comando>> getComandosEjecutados() {
-        return Partida.comandosEjecutados;
-    }
-
-    public List<Class<? extends Comando>> getComandosPermitidos() {
+    public List<Class<? extends IComando>> getComandosPermitidos() {
         return Partida.comandosPermitidos;
     }
 }

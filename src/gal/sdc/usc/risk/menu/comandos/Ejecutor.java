@@ -4,6 +4,8 @@ import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
+import java.awt.Color;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
@@ -13,9 +15,9 @@ import java.util.concurrent.Future;
 
 public class Ejecutor extends Partida implements Callable<Boolean> {
     private static String[] comandos;
-    private final Class<? extends Comando> comando;
+    private final Class<? extends IComando> comando;
 
-    private Ejecutor(Class<? extends Comando> comando) {
+    private Ejecutor(Class<? extends IComando> comando) {
         this.comando = comando;
     }
 
@@ -30,17 +32,14 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         }
 
         try {
-            if (comando.getPackage().getName().endsWith("partida") && !super.isJugando() ||
-                    comando.getPackage().getName().endsWith("preparacion") && super.isJugando()) {
-                Resultado.error(Errores.COMANDO_NO_PERMITIDO);
-                return true;
-            }
+            if (comando.isAnnotationPresent(Comando.class)) {
+                Comando comando = this.comando.getAnnotation(Comando.class);
+                if (comando.jugando() != super.isJugando()) {
+                    Resultado.error(Errores.COMANDO_NO_PERMITIDO);
+                    return true;
+                }
 
-            if (comando.getPackage().getName().endsWith("preparacion") &&
-                    comando.isAnnotationPresent(Preparacion.class)) {
-                Preparacion preparacion = comando.getAnnotation(Preparacion.class);
-                if (!preparacion.requiere().equals(Comando.class) && super.getComandosEjecutados().contains(comando) &&
-                        !super.getComandosPermitidos().contains(comando)) {
+                if (!super.getComandosPermitidos().contains(this.comando)) {
                     Resultado.error(Errores.COMANDO_NO_PERMITIDO);
                     return true;
                 }
@@ -59,7 +58,7 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         Ejecutor.comandos = comandos;
     }
 
-    public static void comando(Class<? extends Comando> comando) {
+    public static void comando(Class<? extends IComando> comando) {
         Ejecutor ejecutor = new Ejecutor(comando);
         Future<Boolean> executor = Executors.newSingleThreadExecutor().submit(ejecutor);
         try {

@@ -1,9 +1,9 @@
 package gal.sdc.usc.risk.menu.comandos.preparacion;
 
 import gal.sdc.usc.risk.menu.Partida;
-import gal.sdc.usc.risk.menu.comandos.Comando;
+import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
-import gal.sdc.usc.risk.menu.comandos.Preparacion;
+import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.util.Recursos;
 
 import java.io.BufferedReader;
@@ -12,8 +12,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-@Preparacion(requiere = CrearMapa.class)
-public class CrearJugadores extends Partida implements Comando {
+@Comando(jugando = false)
+public class CrearJugadores extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
         try {
