@@ -90,6 +90,41 @@ public class Colores {
         AZUL,
         MORADO,
         CELESTE,
-        BLANCO
+        BLANCO;
+
+        public static Color toColor(String color) {
+            Color resultado;
+            switch (color.trim().toUpperCase()) {
+                case "AMARILLO":
+                    resultado = Color.AMARILLO;
+                    break;
+                case "AZUL":
+                    resultado = Color.AZUL;
+                    break;
+                case "CELESTE":
+                case "CYAN":
+                    resultado = Color.CELESTE;
+                    break;
+                case "ROJO":
+                    resultado = Color.ROJO;
+                    break;
+                case "VERDE":
+                    resultado = Color.VERDE;
+                    break;
+                case "MORADO":
+                case "VIOLETA":
+                    resultado = Color.MORADO;
+                    break;
+                case "NEGRO":
+                    resultado = Color.NEGRO;
+                    break;
+                case "BLANCO":
+                    resultado = Color.BLANCO;
+                    break;
+                default:
+                    resultado = null;
+            }
+            return resultado;
+        }
     }
 }

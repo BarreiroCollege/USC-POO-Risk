@@ -1,4 +1,4 @@
-package gal.sdc.usc.risk.menu.comandos.mapa;
+package gal.sdc.usc.risk.menu.comandos.preparacion;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;

@@ -15,37 +15,20 @@ public class Jugador {
         return nombre;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public static class Builder {
         private String nombre;
         private Color color;
 
         public Builder(String nombre) {
-
+            this.nombre = nombre;
         }
 
-        public Builder withColor(String color) {
-            switch (color.toUpperCase()) {
-                case "AMARILLO":
-                    this.color = Color.AMARILLO;
-                    break;
-                case "AZUL":
-                    this.color = Color.AZUL;
-                    break;
-                case "CELESTE":
-                case "CYAN":
-                    this.color = Color.CELESTE;
-                    break;
-                case "ROJO":
-                    this.color = Color.ROJO;
-                    break;
-                case "VERDE":
-                    this.color = Color.VERDE;
-                    break;
-                case "MORADO":
-                case "VIOLETA":
-                    this.color = Color.MORADO;
-                    break;
-            }
+        public Builder withColor(Color color) {
+            this.color = color;
             return this;
         }
 

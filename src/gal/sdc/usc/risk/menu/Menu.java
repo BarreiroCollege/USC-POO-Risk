@@ -1,6 +1,11 @@
 package gal.sdc.usc.risk.menu;
 
-import gal.sdc.usc.risk.menu.comandos.mapa.CrearMapa;
+import gal.sdc.usc.risk.menu.comandos.Ejecutor;
+import gal.sdc.usc.risk.menu.comandos.mapa.VerMapa;
+import gal.sdc.usc.risk.menu.comandos.partida.Jugador;
+import gal.sdc.usc.risk.menu.comandos.preparacion.CrearJugador;
+import gal.sdc.usc.risk.menu.comandos.preparacion.CrearJugadores;
+import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerColor;
 import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerContinente;
 import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerFrontera;
@@ -65,7 +70,9 @@ public class Menu extends Partida {
 
     private void derivar(String orden) {
         String[] partes = orden.toLowerCase().split(" ");
+        Ejecutor.setComandos(partes);
         String comando = partes[0];
+
         // COMANDOS INICIALES PARA EMPEZAR A JUGAR
         //    crear mapa
         //    crear jugadores <nombre_fichero>
@@ -90,15 +97,15 @@ public class Menu extends Partida {
             case "crear":
                 if (partes.length == 2) {
                     if (partes[1].equals("mapa")) {
-                        new CrearMapa();
+                        Ejecutor.comando(CrearMapa.class);
                     } else {
                         Resultado.error(Errores.COMANDO_INCORRECTO);
                     }
                 } else if (partes.length == 3) {
                     if (partes[1].equals("jugadores")) {
-                        crearJugador(Recursos.get(partes[2]));
+                        Ejecutor.comando(CrearJugadores.class);
                     } else {
-                        crearJugador(partes[1], partes[2]);
+                        Ejecutor.comando(CrearJugador.class);
                     }
                 } else {
                     Resultado.error(Errores.COMANDO_INCORRECTO);
@@ -106,14 +113,24 @@ public class Menu extends Partida {
                 break;
             case "obtener":
                 if (partes.length == 3) {
-                    if (partes[1].equals("frontera") || partes[1].equals("fronteras")) {
-                        new ObtenerFrontera(partes[2]);
-                    } else if (partes[1].equals("continente")) {
-                        new ObtenerContinente(partes[2]);
-                    } else if (partes[1].equals("color")) {
-                        new ObtenerColor(partes[2]);
-                    } else if (partes[1].equals("pais") || partes[1].equals("paises")) {
-                        new ObtenerPaises(partes[2]);
+                    switch (partes[1]) {
+                        case "frontera":
+                        case "fronteras":
+                            Ejecutor.comando(ObtenerFrontera.class);
+                            break;
+                        case "continente":
+                            Ejecutor.comando(ObtenerContinente.class);
+                            break;
+                        case "color":
+                            Ejecutor.comando(ObtenerColor.class);
+                            break;
+                        case "pais":
+                        case "paises":
+                            Ejecutor.comando(ObtenerPaises.class);
+                            break;
+                        default:
+                            Resultado.error(Errores.COMANDO_INCORRECTO);
+                            break;
                     }
                 } else {
                     Resultado.error(Errores.COMANDO_INCORRECTO);
@@ -122,7 +139,7 @@ public class Menu extends Partida {
             case "ver":
                 if (partes.length == 2) {
                     if (partes[1].equals("mapa")) {
-                        super.getMapa().imprimir();
+                        Ejecutor.comando(VerMapa.class);
                     }
                 } else {
                     Resultado.error(Errores.COMANDO_INCORRECTO);
@@ -136,62 +153,17 @@ public class Menu extends Partida {
                     // en el que se encuentra la asignación de países a jugadores. Dentro de este
                     // método se invocará a otros métodos de las clases que contienen los atributos
                     // y los métodos necesarios para realizar esa invocación
-                    asignarPaises(Recursos.get(partes[2]));
+                    // asignarPaises(Recursos.get(partes[2]));
                 } else {
-                    asignarPaises(partes[1], partes[2]);
+                    // asignarPaises(partes[1], partes[2]);
                 }
+                break;
+            case "jugador":
+                Ejecutor.comando(Jugador.class);
                 break;
             default:
                 Resultado.error(Errores.COMANDO_INCORRECTO);
                 break;
         }
-    }
-
-    /**
-     * @param file
-     */
-    public void asignarPaises(File file) {
-
-        // Código necesario para asignar países
-
-
-    }
-
-    /**
-     * @param nombrePais
-     * @param nombreJugador
-     */
-    public void asignarPaises(String nombrePais, String nombreJugador) {
-        // Código necesario para asignar un país a un jugador
-        int i;
-        for (i = 0; i < 42; ++i) { //El num de paises es 42
-            //nombreJugador.Pais[i]=nombrePais[i];
-        }
-    }
-
-    /**
-     *
-     */
-    public void crearMapa() {
-        //Codigo necesario para crear el mapa
-    }
-
-    /**
-     * @param file
-     */
-    private void crearJugador(File file) {
-
-        // Código necesario para crear a los jugadores del RISK
-
-
-    }
-
-    /**
-     * @param nombre
-     */
-    private void crearJugador(String nombre, String color) {
-        // Código necesario para crear a un jugador a partir de su nombre y color
-        /* if(nombre!="Gondorff" && nombre!="Hooker" && nombre!="Lonnegan"){
-            System.out.println("\nNombre no admitido."); */
     }
 }
