@@ -20,6 +20,7 @@ import gal.sdc.usc.risk.util.Recursos;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -50,23 +51,23 @@ public class Menu extends Partida {
                 }
             }
             bufferLector.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            Scanner input = new Scanner(System.in);
-            while (true) {
-                if (!primero) {
-                    System.out.println();
-                } else {
-                    primero = false;
-                }
-                System.out.print(new Colores("$> ", Color.AMARILLO));
-                orden = input.nextLine();
-
-                if (!orden.isEmpty()) {
-                    this.derivar(orden);
-                }
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            if (!primero) {
+                System.out.println();
+            } else {
+                primero = false;
             }
-        } catch (Exception excepcion) {
-            excepcion.printStackTrace();
+            System.out.print(new Colores("$> ", Color.AMARILLO));
+            orden = input.nextLine();
+
+            if (!orden.isEmpty()) {
+                this.derivar(orden);
+            }
         }
     }
 
