@@ -65,6 +65,16 @@ public enum Paises {
         this.y = y;
     }
 
+    public static Paises toPaises(String pais) {
+        for (Paises paises : Paises.values()) {
+            if (pais.toLowerCase().equals(paises.getNombre().toLowerCase()) ||
+                    pais.toLowerCase().equals(paises.getAbreviatura().toLowerCase())) {
+                return paises;
+            }
+        }
+        return null;
+    }
+
     public String getNombre() {
         return this.nombre;
     }
@@ -83,15 +93,5 @@ public enum Paises {
 
     public int getY() {
         return this.y;
-    }
-
-    public static Paises toPaises(String pais) {
-        for (Paises paises : Paises.values()) {
-            if (pais.toLowerCase().equals(paises.getNombre().toLowerCase()) ||
-                    pais.toLowerCase().equals(paises.getAbreviatura().toLowerCase())) {
-                return paises;
-            }
-        }
-        return null;
     }
 }

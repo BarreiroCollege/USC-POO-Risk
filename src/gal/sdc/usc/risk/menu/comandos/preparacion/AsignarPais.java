@@ -7,10 +7,8 @@ import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Regex;
 import gal.sdc.usc.risk.tablero.Jugador;
-import gal.sdc.usc.risk.tablero.Mision;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
-import gal.sdc.usc.risk.tablero.valores.Misiones;
 import gal.sdc.usc.risk.tablero.valores.Paises;
 
 import java.util.List;

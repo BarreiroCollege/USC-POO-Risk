@@ -13,7 +13,7 @@ public enum Regex {
     CREAR_MAPA("crear mapa"),
     CREAR_JUGADOR("crear ([a-zA-Z0-9á-úÁ-Ú]*)(?<!jugador)(?<!jugadores) ([a-zA-Z]*)"),
     CREAR_JUGADORES("crear jugador(es)? ([a-zA-Z0-9.]*)"),
-    ASIGNAR_MISION("asignar ([a-zA-Z0-9Á-Ú]*)(?<!mision)(?<!misiones) ([a-zA-Z0-9]*)"),
+    ASIGNAR_MISION("asignar ([a-zA-Z0-9á-úÁ-Ú]*)(?<!mision)(?<!misiones) ([a-zA-Z0-9]*)"),
     ASIGNAR_MISIONES("asignar mision(es)? ([a-zA-Z0-9.]*)"),
     ASIGNAR_PAIS("asignar ([a-zA-Z0-9á-úÁ-Ú]*)(?<!pais)(?<!paises) ([a-zA-Z0-9á-úÁ-Ú]*)"),
     ASIGNAR_PAISES("asignar pais(es)? ([a-zA-Z0-9.]*)"),
