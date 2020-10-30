@@ -1,11 +1,12 @@
 package gal.sdc.usc.risk.menu;
 
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerColor;
-import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerContinente;
-import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerFrontera;
-import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerPaises;
-import gal.sdc.usc.risk.menu.comandos.mapa.VerMapa;
+import gal.sdc.usc.risk.menu.comandos.generico.Ayuda;
+import gal.sdc.usc.risk.menu.comandos.generico.ObtenerColor;
+import gal.sdc.usc.risk.menu.comandos.generico.ObtenerContinente;
+import gal.sdc.usc.risk.menu.comandos.generico.ObtenerFrontera;
+import gal.sdc.usc.risk.menu.comandos.generico.ObtenerPaises;
+import gal.sdc.usc.risk.menu.comandos.generico.VerMapa;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
@@ -24,11 +25,12 @@ public abstract class Partida {
     private static final List<Class<? extends IComando>> comandosPermitidos = new ArrayList<>();
 
     static {
+        comandosPermitidos.add(Ayuda.class);
+        comandosPermitidos.add(VerMapa.class);
         comandosPermitidos.add(ObtenerColor.class);
         comandosPermitidos.add(ObtenerContinente.class);
         comandosPermitidos.add(ObtenerFrontera.class);
         comandosPermitidos.add(ObtenerPaises.class);
-        comandosPermitidos.add(VerMapa.class);
         // Iniciar la partida
         comandosPermitidos.add(CrearMapa.class);
     }

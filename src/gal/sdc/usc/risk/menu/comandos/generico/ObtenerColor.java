@@ -1,4 +1,4 @@
-package gal.sdc.usc.risk.menu.comandos.mapa;
+package gal.sdc.usc.risk.menu.comandos.generico;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
@@ -9,8 +9,9 @@ import gal.sdc.usc.risk.menu.comandos.Regex;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
-@Comando(estado = Estado.CUALQUIERA, regex = Regex.OBTENER_CONTINENTE)
-public class ObtenerContinente extends Partida implements IComando {
+
+@Comando(estado = Estado.CUALQUIERA, regex = Regex.OBTENER_COLOR)
+public class ObtenerColor extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
         String clave = comandos[2];
@@ -26,12 +27,12 @@ public class ObtenerContinente extends Partida implements IComando {
             return;
         }
 
-        String out = "{ continente: \"" + pais.getContinente().getNombre() + "\" }";
+        String out = "{ color: \"" + pais.getContinente().getColor() + "\" }";
         Resultado.correcto(out);
     }
 
     @Override
     public String ayuda() {
-        return "obtener continente <abreviatura_continente>";
+        return "obtener color <abreviatura_país>";
     }
 }

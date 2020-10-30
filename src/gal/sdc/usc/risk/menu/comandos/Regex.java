@@ -1,6 +1,7 @@
 package gal.sdc.usc.risk.menu.comandos;
 
 public enum Regex {
+    AYUDA("(ayuda|info|help)"),
     OBTENER_COLOR("obtener color ([a-zA-Z]*)"),
     OBTENER_CONTINENTE("obtener continente ([a-zA-Z]*)"),
     OBTENER_FRONTERA("obtener frontera(s)? ([a-zA-Z]*)"),

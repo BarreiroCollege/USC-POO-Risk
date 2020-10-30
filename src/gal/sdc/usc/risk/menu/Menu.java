@@ -26,6 +26,10 @@ public class Menu extends Partida {
             bufferLector = new BufferedReader(lector);
 
             while ((orden = bufferLector.readLine()) != null) {
+                if (orden.startsWith("#") || orden.startsWith("//")) {
+                    continue;
+                }
+
                 if (!primero) {
                     System.out.println();
                 } else {
