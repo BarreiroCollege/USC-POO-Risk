@@ -21,7 +21,7 @@ public class Menu extends Partida {
 
         try {
             BufferedReader bufferLector;
-            File fichero = Recursos.get("comandos2.csv");
+            File fichero = Recursos.get("comandos.csv");
             FileReader lector = new FileReader(fichero);
             bufferLector = new BufferedReader(lector);
 

@@ -211,7 +211,7 @@ public class Mapa {
 
             for (int j = 0; j < Mapa.MAX_PAISES_X; j++) {
                 celda = new Celda.Builder().withX(j).withY(i).build();
-                pais = null;
+                pais = this.paises.get(celda);
 
                 if ((i == 4 && j == 4)) {
                     texto = new Colores("┃", Colores.Color.ROJO).toString();
@@ -221,18 +221,18 @@ public class Mapa {
                     texto = "│";
                 }
 
-                if (pais == null) {
+                if (pais == null || pais.getJugador() == null) {
                     if ((i == 3 && (j == 5 || j == 6)) || (i == 5 && j == 9)) {
                         texto += new Colores("      ┃     ", Colores.Color.ROJO);
                     } else {
                         texto += String.format(" %-18s ", new Colores(""));
                     }
                 } else {
-                    nombreTemporal = new StringBuilder(pais.getAbreviatura());
+                    nombreTemporal = new StringBuilder(pais.getEjercitos() == null ? "0" : pais.getEjercitos().toString());
                     while (nombreTemporal.length() < Pais.MAX_LENGTH_NOMBRE) {
                         nombreTemporal.append(" ");
                     }
-                    texto += String.format(" %-20s ", new Colores(nombreTemporal.toString(), null, pais.getColor()));
+                    texto += String.format(" %-18s ", new Colores(nombreTemporal.toString(), pais.getJugador().getColor()));
                 }
 
                 if ((j + 1) == Mapa.MAX_PAISES_X) {

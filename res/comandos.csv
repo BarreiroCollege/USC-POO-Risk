@@ -1,8 +1,8 @@
 crear mapa
-ver mapa
-obtener frontera alaska
-obtener color alaska
-obtener paises europa
+// ver mapa
+// obtener frontera alaska
+// obtener color alaska
+// obtener paises europa
 crear jugadores jugadores.csv
 asignar misiones misiones.csv
 asignar paises asignaciones.csv
