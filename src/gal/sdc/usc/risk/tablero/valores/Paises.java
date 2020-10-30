@@ -26,7 +26,7 @@ public enum Paises {
     MONGOLIA("Mongolia", "Mongolia", Continentes.ASIA, 8, 2),
     JAPON("Japón", "Japón", Continentes.ASIA, 9, 2),
 
-    AMERICACENTRAL("América Central", "AmeCentral", Continentes.AMERICANORTE, 1, 3),
+    AMERICACENTRAL("América Central", "AmeCentra", Continentes.AMERICANORTE, 1, 3),
     AFGANISTAN("Afganistán", "Afgan", Continentes.ASIA, 7, 3),
     CHINA("China", "China", Continentes.ASIA, 8, 3),
 
@@ -40,7 +40,7 @@ public enum Paises {
     PERU("Perú", "Perú", Continentes.AMERICASUR, 1, 5),
     BRASIL("Brasil", "Brasil", Continentes.AMERICASUR, 2, 5),
     CONGO("Congo", "Congo", Continentes.AFRICA, 5, 5),
-    AORIENTAL("Australia Oriental", "AOriental", Continentes.AFRICA, 6, 5),
+    AORIENTAL("África Oriental", "AOriental", Continentes.AFRICA, 6, 5),
 
     ARGENTINA("Argentina", "Argentina", Continentes.AMERICASUR, 1, 6),
     SUDAFRICA("Sudáfrica", "Sudáfrica", Continentes.AFRICA, 6, 6),
@@ -83,5 +83,15 @@ public enum Paises {
 
     public int getY() {
         return this.y;
+    }
+
+    public static Paises toPaises(String pais) {
+        for (Paises paises : Paises.values()) {
+            if (pais.toLowerCase().equals(paises.getNombre().toLowerCase()) ||
+                    pais.toLowerCase().equals(paises.getAbreviatura().toLowerCase())) {
+                return paises;
+            }
+        }
+        return null;
     }
 }

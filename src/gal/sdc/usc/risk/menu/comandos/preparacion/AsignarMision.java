@@ -73,7 +73,8 @@ public class AsignarMision extends Partida implements IComando {
 
         if (tienenMisiones) {
             super.getComandosPermitidos().remove(AsignarMision.class);
-            // TODO
+            super.getComandosPermitidos().add(AsignarPais.class);
+            super.getComandosPermitidos().add(AsignarPaises.class);
         }
     }
 

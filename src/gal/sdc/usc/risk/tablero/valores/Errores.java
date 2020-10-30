@@ -12,10 +12,12 @@ public enum Errores {
     MAPA_YA_CREADO(107, "El mapa ya ha sido creado"),
     PAIS_NO_EXISTE(109, "El país no existe"),
     //
+    PAIS_YA_ASIGNADO(113, "El país ya está asignado"),
     COLOR_YA_ASIGNADO(114, "El color ya está asignado"),
     MISION_YA_ASIGNADA(115, "La misión ya está asignada"),
     MISION_NO_EXISTE(116, "La misión no existe"),
-    JUGADOR_YA_MISION(117, "El jugador ya tiene asignada misión");
+    JUGADOR_YA_MISION(117, "El jugador ya tiene asignada misión"),
+    MISIONES_NO_ASIGNADAS(118, "Las misiones no están asignadas");
 
     private final Integer codigo;
     private final String mensaje;
