@@ -17,6 +17,7 @@ public enum Regex {
     ASIGNAR_MISIONES("asignar mision(es)? ([a-zA-Z0-9.]*)"),
     ASIGNAR_PAIS("asignar ([a-zA-Z0-9á-úÁ-Ú]*)(?<!pais)(?<!paises) ([a-zA-Z0-9á-úÁ-Ú]*)"),
     ASIGNAR_PAISES("asignar pais(es)? ([a-zA-Z0-9.]*)"),
+    REPARTIR_EJERCITO("repartir ejercitos ([0-9]*) ([a-zA-Z0-9á-úÁ-Ú]*)"),
     REPARTIR_EJERCITOS("repartir ejercitos");
 
     private final String regex;
