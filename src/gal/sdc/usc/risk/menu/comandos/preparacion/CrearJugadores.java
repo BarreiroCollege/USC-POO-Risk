@@ -3,7 +3,9 @@ package gal.sdc.usc.risk.menu.comandos.preparacion;
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
+import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.menu.comandos.Regex;
 import gal.sdc.usc.risk.util.Recursos;
 
 import java.io.BufferedReader;
@@ -13,7 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-@Comando(jugando = false)
+@Comando(estado = Estado.PREPARACION, regex = Regex.CREAR_JUGADORES)
 public class CrearJugadores extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
@@ -25,15 +27,11 @@ public class CrearJugadores extends Partida implements IComando {
             String linea;
 
             String[] partes;
-            String[] jugador = new String[]{"crear", "", ""};
             while ((linea = bufferLector.readLine()) != null) {
                 partes = linea.split(";");
                 if (partes.length == 2) {
-                    jugador[1] = partes[0].trim();
-                    jugador[2] = partes[1].trim();
-
-                    Ejecutor.setComandos(jugador);
-                    Ejecutor.comando(CrearJugador.class);
+                    Ejecutor.setComando("crear " + partes[0].trim() + " " + partes[1].trim());
+                    Ejecutor.comando();
                 }
             }
             bufferLector.close();
@@ -42,5 +40,10 @@ public class CrearJugadores extends Partida implements IComando {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String ayuda() {
+        return "crear jugadores <nombre_fichero>";
     }
 }

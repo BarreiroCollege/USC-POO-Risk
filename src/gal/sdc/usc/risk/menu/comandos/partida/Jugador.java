@@ -2,12 +2,19 @@ package gal.sdc.usc.risk.menu.comandos.partida;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.comandos.Comando;
+import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.menu.comandos.Regex;
 
-@Comando(jugando = true)
+@Comando(estado = Estado.JUGANDO, regex = Regex.JUGADOR)
 public class Jugador extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
 
+    }
+
+    @Override
+    public String ayuda() {
+        return "jugador";
     }
 }

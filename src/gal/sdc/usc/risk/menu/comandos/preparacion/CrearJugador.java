@@ -3,13 +3,15 @@ package gal.sdc.usc.risk.menu.comandos.preparacion;
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.menu.comandos.Comando;
+import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.menu.comandos.Regex;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
 
 
-@Comando(jugando = false)
+@Comando(estado = Estado.PREPARACION, regex = Regex.CREAR_JUGADOR)
 public class CrearJugador extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
@@ -56,5 +58,10 @@ public class CrearJugador extends Partida implements IComando {
         } else if (super.getJugadores().size() == 6) {
             super.getComandosPermitidos().remove(this.getClass());
         }
+    }
+
+    @Override
+    public String ayuda() {
+        return "crear <nombre_jugador> <nombre_color>";
     }
 }

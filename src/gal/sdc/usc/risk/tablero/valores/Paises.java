@@ -45,11 +45,11 @@ public enum Paises {
     ARGENTINA("Argentina", "Argentina", Continentes.AMERICASUR, 1, 6),
     SUDAFRICA("Sudáfrica", "Sudáfrica", Continentes.AFRICA, 6, 6),
     MADAGASCAR("Madagascar", "Madagasca", Continentes.AFRICA, 7, 6),
-    INDONESIA("Indonesia", "Indonesia", Continentes.AUSTRALIA, 9, 6),
-    NGUINEA("Nueva Guinea", "NGuinea", Continentes.AUSTRALIA, 10, 6),
+    INDONESIA("Indonesia", "Indonesia", Continentes.OCEANIA, 9, 6),
+    NGUINEA("Nueva Guinea", "NGuinea", Continentes.OCEANIA, 10, 6),
 
-    AUSOCCID("Australia Occidental", "AusOccid", Continentes.AUSTRALIA, 9, 7),
-    AUSORIENT("Australia Oriental", "AusOrient", Continentes.AUSTRALIA, 10, 7);
+    AUSOCCID("Australia Occidental", "AusOccid", Continentes.OCEANIA, 9, 7),
+    AUSORIENT("Australia Oriental", "AusOrient", Continentes.OCEANIA, 10, 7);
 
     private final String nombre;
     private final String abreviatura;

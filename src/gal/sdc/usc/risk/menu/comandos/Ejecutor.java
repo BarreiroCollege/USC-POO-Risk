@@ -13,19 +13,21 @@ import java.util.concurrent.Future;
 
 
 public class Ejecutor extends Partida implements Callable<Boolean> {
-    private static String[] comandos;
-    private final Class<? extends IComando> comando;
+    private static String comando;
 
-    private Ejecutor(Class<? extends IComando> comando) {
-        this.comando = comando;
+    private Ejecutor() {
     }
 
-    public static void setComandos(String[] comandos) {
-        Ejecutor.comandos = comandos;
+    public static void setComando(String comando) {
+        Ejecutor.comando = comando;
     }
 
-    public static void comando(Class<? extends IComando> comando) {
-        Ejecutor ejecutor = new Ejecutor(comando);
+    private String getComando() {
+        return Ejecutor.comando;
+    }
+
+    public static void comando() {
+        Ejecutor ejecutor = new Ejecutor();
         Future<Boolean> executor = Executors.newSingleThreadExecutor().submit(ejecutor);
         try {
             executor.get();
@@ -36,32 +38,43 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
 
     @Override
     public Boolean call() {
+        Class<? extends IComando> comando = null;
+
+        for (Class<? extends IComando> comandoI : super.getComandosPermitidos()) {
+            if (comandoI.isAnnotationPresent(Comando.class)) {
+                Comando comandoA = comandoI.getAnnotation(Comando.class);
+                if (this.getComando().toLowerCase().matches(comandoA.regex().getRegex())) {
+                    comando = comandoI;
+                    break;
+                }
+            }
+        }
+
+
+        if (comando == null) {
+            boolean existe = false;
+            for (Regex regex : Regex.values()) {
+                if (this.getComando().toLowerCase().matches(regex.getRegex())) {
+                    existe = true;
+                    break;
+                }
+            }
+            if (existe) {
+                Resultado.error(Errores.COMANDO_NO_PERMITIDO);
+            } else {
+                Resultado.error(Errores.COMANDO_INCORRECTO);
+            }
+            return true;
+        }
+
+
         Object comandoObject;
         try {
             comandoObject = comando.newInstance();
-        } catch (IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        try {
-            if (comando.isAnnotationPresent(Comando.class)) {
-                Comando comando = this.comando.getAnnotation(Comando.class);
-                if (comando.jugando() != super.isJugando()) {
-                    Resultado.error(Errores.COMANDO_NO_PERMITIDO);
-                    return true;
-                }
-
-                if (!super.getComandosPermitidos().contains(this.comando)) {
-                    Resultado.error(Errores.COMANDO_NO_PERMITIDO);
-                    return true;
-                }
-            }
-
             Method ejecutar = comando.getMethod("ejecutar", String[].class);
-            ejecutar.invoke(comandoObject, new Object[]{comandos});
+            ejecutar.invoke(comandoObject, new Object[]{this.getComando().trim().split(" ")});
             return true;
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
         }
         return false;

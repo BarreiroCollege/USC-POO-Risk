@@ -3,7 +3,9 @@ package gal.sdc.usc.risk.menu.comandos.preparacion;
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.menu.comandos.Comando;
+import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.menu.comandos.Regex;
 import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Mapa;
@@ -13,7 +15,7 @@ import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.tablero.valores.Paises;
 
 
-@Comando(jugando = false)
+@Comando(estado = Estado.PREPARACION, regex = Regex.CREAR_MAPA)
 public class CrearMapa extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
@@ -66,5 +68,10 @@ public class CrearMapa extends Partida implements IComando {
         super.getComandosPermitidos().remove(this.getClass());
         super.getComandosPermitidos().add(CrearJugador.class);
         super.getComandosPermitidos().add(CrearJugadores.class);
+    }
+
+    @Override
+    public String ayuda() {
+        return "crear mapa";
     }
 }

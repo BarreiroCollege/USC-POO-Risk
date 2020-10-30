@@ -10,5 +10,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Comando {
-    boolean jugando();
+    Estado estado();
+
+    Regex regex();
 }

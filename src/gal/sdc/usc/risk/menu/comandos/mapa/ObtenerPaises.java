@@ -2,7 +2,10 @@ package gal.sdc.usc.risk.menu.comandos.mapa;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
+import gal.sdc.usc.risk.menu.comandos.Comando;
+import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.menu.comandos.Regex;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
@@ -10,6 +13,7 @@ import gal.sdc.usc.risk.tablero.valores.Errores;
 import java.util.Iterator;
 import java.util.Map;
 
+@Comando(estado = Estado.CUALQUIERA, regex = Regex.OBTENER_PAISES)
 public class ObtenerPaises extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
@@ -44,5 +48,10 @@ public class ObtenerPaises extends Partida implements IComando {
         }
         out.append("\n").append("          ]\n" + "}");
         Resultado.correcto(out.toString());
+    }
+
+    @Override
+    public String ayuda() {
+        return "obtener paises <abreviatura_continente>";
     }
 }

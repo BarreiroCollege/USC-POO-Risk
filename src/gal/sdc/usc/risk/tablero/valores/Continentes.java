@@ -8,7 +8,7 @@ public enum Continentes {
     EUROPA("Europa", Color.AMARILLO, 5),
     AMERICANORTE("America del Norte", Color.MORADO, 5),
     AMERICASUR("America del Sur", Color.ROJO, 2),
-    AUSTRALIA("Australia", Color.AZUL, 2);
+    OCEANIA("Oceanía", Color.AZUL, 2);
 
     private final String nombre;
     private final Color color;

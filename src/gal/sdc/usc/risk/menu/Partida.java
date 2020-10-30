@@ -1,6 +1,11 @@
 package gal.sdc.usc.risk.menu;
 
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerColor;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerContinente;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerFrontera;
+import gal.sdc.usc.risk.menu.comandos.mapa.ObtenerPaises;
+import gal.sdc.usc.risk.menu.comandos.mapa.VerMapa;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
@@ -16,9 +21,15 @@ public abstract class Partida {
     private static Mapa mapa;
     private static boolean jugando = false;
 
-    private static List<Class<? extends IComando>> comandosPermitidos = new ArrayList<>();
+    private static final List<Class<? extends IComando>> comandosPermitidos = new ArrayList<>();
 
     static {
+        comandosPermitidos.add(ObtenerColor.class);
+        comandosPermitidos.add(ObtenerContinente.class);
+        comandosPermitidos.add(ObtenerFrontera.class);
+        comandosPermitidos.add(ObtenerPaises.class);
+        comandosPermitidos.add(VerMapa.class);
+        // Iniciar la partida
         comandosPermitidos.add(CrearMapa.class);
     }
 
