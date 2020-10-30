@@ -18,6 +18,14 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
     private Ejecutor() {
     }
 
+    public static void setComando(String comando) {
+        Ejecutor.comando = comando;
+    }
+
+    private String getComando() {
+        return Ejecutor.comando;
+    }
+
     public static void comando() {
         Ejecutor ejecutor = new Ejecutor();
         Future<Boolean> executor = Executors.newSingleThreadExecutor().submit(ejecutor);
@@ -26,14 +34,6 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-    }
-
-    private String getComando() {
-        return Ejecutor.comando;
-    }
-
-    public static void setComando(String comando) {
-        Ejecutor.comando = comando;
     }
 
     @Override

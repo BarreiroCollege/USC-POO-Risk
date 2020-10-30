@@ -19,9 +19,10 @@ import java.util.List;
 
 public abstract class Partida {
     private static final HashMap<String, Jugador> jugadores = new HashMap<>();
-    private static final List<Class<? extends IComando>> comandosPermitidos = new ArrayList<>();
     private static Mapa mapa;
     private static boolean jugando = false;
+
+    private static final List<Class<? extends IComando>> comandosPermitidos = new ArrayList<>();
 
     static {
         comandosPermitidos.add(Ayuda.class);

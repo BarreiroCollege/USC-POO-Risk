@@ -1,6 +1,7 @@
 package gal.sdc.usc.risk.menu.comandos.generico;
 
 import gal.sdc.usc.risk.menu.Partida;
+import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
@@ -18,13 +19,12 @@ public class Ayuda extends Partida implements IComando {
         try {
             String ayuda;
             StringBuilder texto = new StringBuilder("{\n");
-            for (Class<? extends IComando> comando : super.getComandosPermitidos()) {
-                Object comandoObject;
+            for (Class<? extends IComando> comando : super.getComandosPermitidos()) {Object comandoObject;
                 comandoObject = comando.newInstance();
                 Method ejecutar = comando.getMethod("ayuda");
                 ayuda = (String) ejecutar.invoke(comandoObject);
 
-                texto.append("\t");
+                texto.append("  ");
                 if (comando.isAnnotationPresent(Comando.class)) {
                     Comando comandoA = comando.getAnnotation(Comando.class);
                     if (comandoA.estado().equals(Estado.CUALQUIERA)) {
