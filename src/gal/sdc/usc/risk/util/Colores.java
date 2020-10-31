@@ -103,6 +103,7 @@ public class Colores {
                     break;
                 case "CELESTE":
                 case "CYAN":
+                case "CIAN":
                     resultado = Color.CELESTE;
                     break;
                 case "ROJO":
