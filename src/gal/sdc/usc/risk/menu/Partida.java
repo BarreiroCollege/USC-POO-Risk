@@ -88,7 +88,6 @@ public abstract class Partida {
         if (Partida.jugando) {
             return false;
         }
-        this.moverTurno();
         Partida.jugando = true;
         return true;
     }

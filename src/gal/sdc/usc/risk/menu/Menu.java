@@ -35,7 +35,7 @@ public class Menu extends Partida {
                 } else {
                     primero = false;
                 }
-                System.out.print(new Colores("$> ", Color.AMARILLO));
+                this.entrada();
                 System.out.println(orden);
 
                 if (!orden.isEmpty()) {
@@ -54,7 +54,7 @@ public class Menu extends Partida {
             } else {
                 primero = false;
             }
-            System.out.print(new Colores("$> ", Color.AMARILLO));
+            this.entrada();
             orden = input.nextLine();
 
             if (!orden.isEmpty()) {
@@ -66,5 +66,14 @@ public class Menu extends Partida {
     private void derivar(String orden) {
         Ejecutor.setComando(orden);
         Ejecutor.comando();
+    }
+
+    private void entrada() {
+        String out = "";
+        if (super.isJugando()) {
+            out += "[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] ";
+        }
+        out += new Colores("$> ", Color.AMARILLO);
+        System.out.print(out);
     }
 }

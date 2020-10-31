@@ -96,7 +96,7 @@ public class AsignarPais extends Partida implements IComando {
 
             super.getComandosPermitidos().add(RepartirEjercito.class);
             super.getComandosPermitidos().add(RepartirEjercitos.class);
-            Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
+            // Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
         }
     }
 
