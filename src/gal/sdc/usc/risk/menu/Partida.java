@@ -15,9 +15,12 @@ import gal.sdc.usc.risk.util.Colores;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public abstract class Partida {
+    private static final Queue<Jugador> ordenJugadores = new LinkedList<>();
     private static final HashMap<String, Jugador> jugadores = new HashMap<>();
     private static Mapa mapa;
     private static boolean jugando = false;
@@ -44,6 +47,15 @@ public abstract class Partida {
         if (Partida.mapa == null) {
             Partida.mapa = nuevoMapa;
         }
+    }
+
+    protected void nuevoJugador(Jugador jugador) {
+        Partida.jugadores.put(jugador.getNombre(), jugador);
+        ordenJugadores.add(jugador);
+    }
+
+    protected Jugador getJugadorTurno() {
+        return Partida.ordenJugadores.peek();
     }
 
     protected HashMap<String, Jugador> getJugadores() {
@@ -80,7 +92,16 @@ public abstract class Partida {
         return true;
     }
 
-    public List<Class<? extends IComando>> getComandosPermitidos() {
+    protected List<Class<? extends IComando>> getComandosPermitidos() {
         return Partida.comandosPermitidos;
+    }
+
+    protected boolean moverTurno() {
+        Jugador jugador = Partida.ordenJugadores.poll();
+        if (jugador != null) {
+            Partida.ordenJugadores.add(jugador);
+            return true;
+        }
+        return false;
     }
 }

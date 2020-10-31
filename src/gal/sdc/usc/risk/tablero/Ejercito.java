@@ -3,7 +3,7 @@ package gal.sdc.usc.risk.tablero;
 import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
-public class Ejercito {
+public class Ejercito implements Comparable<Ejercito> {
     private Integer cantidad;
 
     public Ejercito() {
@@ -53,5 +53,10 @@ public class Ejercito {
     @Override
     public String toString() {
         return cantidad.toString();
+    }
+
+    @Override
+    public int compareTo(Ejercito o) {
+        return cantidad.compareTo(o.cantidad);
     }
 }

@@ -7,11 +7,10 @@ import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Regex;
 import gal.sdc.usc.risk.tablero.Jugador;
-import gal.sdc.usc.risk.tablero.Mision;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
-import gal.sdc.usc.risk.tablero.valores.Misiones;
 import gal.sdc.usc.risk.tablero.valores.Paises;
+import gal.sdc.usc.risk.util.Colores;
 
 import java.util.List;
 
@@ -61,7 +60,6 @@ public class AsignarPais extends Partida implements IComando {
 
         paisFinal.setJugador(jugadorFinal);
         paisFinal.getEjercito().recibir(jugadorFinal.getEjercitosPendientes(), 1);
-        this.comprobarPaises();
 
         List<Pais> fronteras = paisFinal.getFronteras().getTodas();
         StringBuilder fronterasOut = new StringBuilder("[ ");
@@ -80,6 +78,7 @@ public class AsignarPais extends Partida implements IComando {
                 "  frontera: " + fronterasOut.toString() + "\n" +
                 "}";
         Resultado.correcto(out);
+        this.comprobarPaises();
     }
 
     private void comprobarPaises() {
@@ -92,11 +91,12 @@ public class AsignarPais extends Partida implements IComando {
         }
 
         super.getComandosPermitidos().remove(AsignarPaises.class);
-
         if (tieneJugador) {
             super.getComandosPermitidos().remove(AsignarPais.class);
+
             super.getComandosPermitidos().add(RepartirEjercito.class);
             super.getComandosPermitidos().add(RepartirEjercitos.class);
+            Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
         }
     }
 

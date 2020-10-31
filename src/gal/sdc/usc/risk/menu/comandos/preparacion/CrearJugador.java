@@ -39,7 +39,7 @@ public class CrearJugador extends Partida implements IComando {
 
         Jugador jugador = new Jugador.Builder(nombre).withColor(colorFinal).build();
         if (jugador != null && super.getJugadores().size() < 6) {
-            super.getJugadores().put(nombre, jugador);
+            super.nuevoJugador(jugador);
             this.comprobarJugadores();
 
             String out = "{\n" +

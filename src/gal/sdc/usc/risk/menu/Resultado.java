@@ -12,6 +12,10 @@ public class Resultado {
         this.mensaje = mensaje;
     }
 
+    public static void out(String out) {
+        System.out.println(out);
+    }
+
     public static void error(Errores error) {
         String texto = "{\n" +
                 "\tcódigo de error: " + error.getCodigo() + ",\n" +

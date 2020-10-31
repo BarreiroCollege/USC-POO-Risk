@@ -6,8 +6,10 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Regex;
+import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.util.Colores;
 
 import java.util.Iterator;
 import java.util.stream.Collectors;
@@ -43,6 +45,10 @@ public class RepartirEjercito extends Partida implements IComando {
             Resultado.error(Errores.PAIS_NO_PERTENECE);
             return;
         }
+        if (!paisFinal.getJugador().equals(super.getJugadorTurno())) {
+            Resultado.error(Errores.PAIS_NO_PERTENECE);
+            return;
+        }
 
         Integer asignado = paisFinal.getEjercito().recibir(paisFinal.getJugador().getEjercitosPendientes(), numero);
         if (asignado != null) {
@@ -74,15 +80,21 @@ public class RepartirEjercito extends Partida implements IComando {
             out.append("                            ]\n");
             out.append("}");
             Resultado.correcto(out.toString());
+
+            this.comprobarEjercitos(paisFinal.getJugador());
         }
     }
 
-    private void comprobarEjercitos() {
+    private void comprobarEjercitos(Jugador jugador) {
         super.getComandosPermitidos().remove(RepartirEjercitos.class);
 
         if (super.getJugadores().values().stream().filter(j -> j.getEjercitosPendientes().toInt() > 0).findAny().orElse(null) == null) {
             super.getComandosPermitidos().remove(RepartirEjercito.class);
+            super.iniciar();
             // TODO
+        } else if (jugador.getEjercitosPendientes().toInt() == 0) {
+            super.moverTurno();
+            Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
         }
     }
 
