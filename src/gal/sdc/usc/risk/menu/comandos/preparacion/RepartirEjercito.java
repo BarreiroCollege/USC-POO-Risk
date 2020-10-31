@@ -10,7 +10,6 @@ import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Comando(estado = Estado.PREPARACION, regex = Regex.REPARTIR_EJERCITO)
@@ -75,6 +74,15 @@ public class RepartirEjercito extends Partida implements IComando {
             out.append("                            ]\n");
             out.append("}");
             Resultado.correcto(out.toString());
+        }
+    }
+
+    private void comprobarEjercitos() {
+        super.getComandosPermitidos().remove(RepartirEjercitos.class);
+
+        if (super.getJugadores().values().stream().filter(j -> j.getEjercitosPendientes().toInt() > 0).findAny().orElse(null) == null) {
+            super.getComandosPermitidos().remove(RepartirEjercito.class);
+            // TODO
         }
     }
 
