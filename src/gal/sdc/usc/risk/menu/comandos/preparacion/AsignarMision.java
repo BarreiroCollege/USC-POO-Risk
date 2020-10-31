@@ -6,6 +6,7 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Regex;
+import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mision;
 import gal.sdc.usc.risk.tablero.valores.Errores;
@@ -68,7 +69,24 @@ public class AsignarMision extends Partida implements IComando {
             }
         }
 
-        super.getComandosPermitidos().remove(CrearJugador.class);
+        if (super.getComandosPermitidos().remove(CrearJugador.class)) {
+            int ejercitos = 0;
+            if (super.getJugadores().size() == 3) {
+                ejercitos = 35;
+            } else if (super.getJugadores().size() == 4) {
+                ejercitos = 30;
+            } else if (super.getJugadores().size() == 5) {
+                ejercitos = 25;
+            } else if (super.getJugadores().size() == 6) {
+                ejercitos = 20;
+            }
+
+            if (ejercitos > 0) {
+                for (Jugador jugador : super.getJugadores().values()) {
+                    jugador.getEjercitosPendientes().recibir(new Ejercito(ejercitos));
+                }
+            }
+        }
         super.getComandosPermitidos().remove(AsignarMisiones.class);
 
         if (tienenMisiones) {

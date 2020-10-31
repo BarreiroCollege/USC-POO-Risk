@@ -15,13 +15,14 @@ public class Pais {
     private Fronteras fronteras = null;
 
     private Jugador jugador = null;
-    private Integer ejercitos = null;
+    private final Ejercito ejercito;
 
     private Pais(Paises identificador, String nombre, String abreviatura, Celda celda) {
         this.identificador = identificador;
         this.nombre = nombre;
         this.abreviatura = abreviatura;
         this.celda = celda;
+        this.ejercito = new Ejercito();
     }
 
     public boolean setContinente(Continente continente) {
@@ -75,12 +76,8 @@ public class Pais {
         this.jugador = jugador;
     }
 
-    public Integer getEjercitos() {
-        return ejercitos;
-    }
-
-    public void setEjercitos(Integer ejercitos) {
-        this.ejercitos = ejercitos;
+    public Ejercito getEjercito() {
+        return ejercito;
     }
 
     @Override

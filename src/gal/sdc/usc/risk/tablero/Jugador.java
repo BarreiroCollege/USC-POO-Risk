@@ -1,15 +1,21 @@
 package gal.sdc.usc.risk.tablero;
 
+import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.util.Colores.Color;
 
-public class Jugador {
+import java.util.List;
+
+public class Jugador extends Partida {
     private final String nombre;
     private final Color color;
     private Mision mision = null;
 
+    private final Ejercito ejercitosPendientes;
+
     private Jugador(String nombre, Color color) {
         this.nombre = nombre;
         this.color = color;
+        this.ejercitosPendientes = new Ejercito();
     }
 
     public String getNombre() {
@@ -22,6 +28,26 @@ public class Jugador {
 
     public Mision getMision() {
         return mision;
+    }
+
+    public List<Pais> getPaises() {
+        return super.getMapa().getPaisesPorJugador(this);
+    }
+
+    public List<Continente> getContinentes() {
+        return super.getMapa().getContinentesPorJugador(this);
+    }
+
+    public Ejercito getEjercitosPendientes() {
+        return this.ejercitosPendientes;
+    }
+
+    public Integer getNumEjercitos() {
+        Integer i = 0;
+        for (Pais pais : this.getPaises()) {
+            i += pais.getEjercito().toInt();
+        }
+        return i;
     }
 
     public boolean setMision(Mision mision) {

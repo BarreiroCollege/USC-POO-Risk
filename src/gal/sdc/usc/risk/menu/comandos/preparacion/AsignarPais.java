@@ -59,8 +59,8 @@ public class AsignarPais extends Partida implements IComando {
             return;
         }
 
-
         paisFinal.setJugador(jugadorFinal);
+        paisFinal.getEjercito().recibir(jugadorFinal.getEjercitosPendientes(), 1);
         this.comprobarPaises();
 
         List<Pais> fronteras = paisFinal.getFronteras().getTodas();
@@ -95,7 +95,8 @@ public class AsignarPais extends Partida implements IComando {
 
         if (tieneJugador) {
             super.getComandosPermitidos().remove(AsignarPais.class);
-            // TODO
+            super.getComandosPermitidos().add(RepartirEjercito.class);
+            super.getComandosPermitidos().add(RepartirEjercitos.class);
         }
     }
 

@@ -30,6 +30,7 @@ public class CrearMapa extends Partida implements IComando {
         for (Continentes continente : Continentes.values()) {
             Continente.Builder preContinente = new Continente.Builder(continente)
                     .withNombre(continente.getNombre())
+                    .withAbreviatura(continente.getAbreviatura())
                     .withColor(continente.getColor())
                     .withEjercitos(continente.getEjercitos());
 

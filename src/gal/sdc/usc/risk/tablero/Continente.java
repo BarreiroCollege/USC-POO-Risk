@@ -8,13 +8,16 @@ import java.util.HashMap;
 public class Continente {
     private final Continentes identificador;
     private final String nombre;
+    private final String abreviatura;
     private final Color color;
     private final Integer ejercitos;
     private final HashMap<String, Pais> paises;
 
-    private Continente(Continentes continente, String nombre, Color color, Integer ejercitos, HashMap<String, Pais> paises) {
+    private Continente(Continentes continente, String nombre, String abreviatura, Color color, Integer ejercitos,
+                       HashMap<String, Pais> paises) {
         this.identificador = continente;
         this.nombre = nombre;
+        this.abreviatura = abreviatura;
         this.color = color;
         this.ejercitos = ejercitos;
         this.paises = paises;
@@ -26,6 +29,10 @@ public class Continente {
 
     public String getNombre() {
         return this.nombre;
+    }
+
+    public String getAbreviatura() {
+        return this.abreviatura;
     }
 
     public Color getColor() {
@@ -45,6 +52,7 @@ public class Continente {
         return "Continente{" +
                 "identificador=" + identificador +
                 ", nombre='" + nombre + '\'' +
+                ", abreviatura='" + abreviatura + '\'' +
                 ", color=" + color +
                 ", ejercitos=" + ejercitos +
                 ", paises=" + paises +
@@ -55,6 +63,7 @@ public class Continente {
         private final Continentes continente;
         private final HashMap<String, Pais> paises;
         private String nombre;
+        private String abreviatura;
         private Color color;
         private Integer ejercitos;
 
@@ -65,6 +74,11 @@ public class Continente {
 
         public Builder withNombre(String nombre) {
             this.nombre = nombre;
+            return this;
+        }
+
+        public Builder withAbreviatura(String abreviatura) {
+            this.abreviatura = abreviatura;
             return this;
         }
 
@@ -88,6 +102,8 @@ public class Continente {
                 // TODO
             } else if (nombre == null) {
                 // TODO
+            } else if (abreviatura == null) {
+                // TODO
             } else if (color == null) {
                 // TODO
             } else if (ejercitos == null) {
@@ -95,7 +111,7 @@ public class Continente {
             } else if (paises.size() == 0) {
                 // TODO: Warn
             } else {
-                return new Continente(this.continente, this.nombre, this.color, this.ejercitos, this.paises);
+                return new Continente(this.continente, this.nombre, this.abreviatura, this.color, this.ejercitos, this.paises);
             }
             return null;
         }

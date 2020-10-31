@@ -3,7 +3,10 @@ package gal.sdc.usc.risk.tablero;
 import gal.sdc.usc.risk.tablero.valores.EnlacesMaritimos;
 import gal.sdc.usc.risk.util.Colores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Mapa {
     public static int MAX_PAISES_X = 11;
@@ -32,13 +35,10 @@ public class Mapa {
             return null;
         }
 
-        for (Pais pais : this.paises.values()) {
-            if (pais.getAbreviatura().toLowerCase().equals(nombre.toLowerCase()) ||
-                    pais.getNombre().toLowerCase().equals(nombre.toLowerCase())) {
-                return pais;
-            }
-        }
-        return null;
+        return this.paises.values().stream().filter(pais ->
+                pais.getAbreviatura().toLowerCase().equals(nombre.toLowerCase()) ||
+                        pais.getNombre().toLowerCase().equals(nombre.toLowerCase())
+        ).findAny().orElse(null);
     }
 
     public Continente getContinentePorNombre(String nombre) {
@@ -46,12 +46,31 @@ public class Mapa {
             return null;
         }
 
-        for (Continente continente : this.continentes.values()) {
-            if (continente.getNombre().toLowerCase().equals(nombre.toLowerCase())) {
-                return continente;
+        return this.continentes.values().stream().filter(continente ->
+                continente.getAbreviatura().toLowerCase().equals(nombre.toLowerCase()) ||
+                        continente.getNombre().toLowerCase().equals(nombre.toLowerCase())
+        ).findAny().orElse(null);
+    }
+
+    public List<Continente> getContinentesPorJugador(Jugador jugador) {
+        List<Continente> continentes = new ArrayList<>();
+        for (Continente continente : this.getContinentes().values()) {
+            boolean tiene = true;
+            for (Pais pais : continente.getPaises().values()) {
+                if (!pais.getJugador().equals(jugador)) {
+                    tiene = false;
+                    break;
+                }
+            }
+            if (tiene) {
+                continentes.add(continente);
             }
         }
-        return null;
+        return continentes;
+    }
+
+    public List<Pais> getPaisesPorJugador(Jugador jugador) {
+        return this.paises.values().stream().filter(pais -> pais.getJugador().equals(jugador)).collect(Collectors.toList());
     }
 
     private void asignarFronteras() {
@@ -228,7 +247,7 @@ public class Mapa {
                         texto += String.format(" %-18s ", new Colores(""));
                     }
                 } else {
-                    nombreTemporal = new StringBuilder(pais.getEjercitos() == null ? "0" : pais.getEjercitos().toString());
+                    nombreTemporal = new StringBuilder(pais.getEjercito() == null ? "0" : pais.getEjercito().toString());
                     while (nombreTemporal.length() < Pais.MAX_LENGTH_NOMBRE) {
                         nombreTemporal.append(" ");
                     }
