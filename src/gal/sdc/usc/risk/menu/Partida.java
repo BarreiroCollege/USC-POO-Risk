@@ -85,6 +85,7 @@ public abstract class Partida {
     }
 
     protected boolean iniciar() {
+        this.moverTurno();
         if (Partida.jugando) {
             return false;
         }
