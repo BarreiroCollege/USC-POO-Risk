@@ -135,12 +135,19 @@ public abstract class Partida {
     }
 
     protected void comandosTurno() {
+        Partida.comandosPermitidos.remove(Rearmar.class);
+        Partida.comandosPermitidos.remove(AsignarCarta.class);
+
         Partida.comandosPermitidos.add(CambiarCartas.class);
         Partida.comandosPermitidos.add(CambiarCartasTodas.class);
-        Partida.comandosPermitidos.add(RepartirEjercito.class);
-        Partida.comandosPermitidos.add(RepartirEjercitos.class);
-        Partida.comandosPermitidos.add(AtacarPais.class);
-        Partida.comandosPermitidos.add(AtacarPaisDados.class);
+
+        if (this.getJugadorTurno().getEjercitosPendientes().toInt() == 0) {
+            Partida.comandosPermitidos.add(AtacarPais.class);
+            Partida.comandosPermitidos.add(AtacarPaisDados.class);
+        } else {
+            Partida.comandosPermitidos.add(RepartirEjercito.class);
+            Partida.comandosPermitidos.add(RepartirEjercitos.class);
+        }
     }
 
     protected List<Class<? extends IComando>> getComandosPermitidos() {
@@ -184,17 +191,12 @@ public abstract class Partida {
             this.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(continente.getEjercitosRearme()));
         }
 
-        // Al tener 3 cartas de equipamiento, el jugador podrá cambiarlas por ejércitos atendiendo a los
-        // siguientes criterios: si se dispone de 3 cartas de infantería, se obtienen 6 ejércitos; si las 3
-        // cartas son de caballería, se consiguen 8 ejércitos; si las 3 cartas son de artillería, se obtendrán
-        // 10 ejércitos; y finalmente, si hay una carta de cada tipo, se obtienen 12 ejércitos.
-
         // Un jugador no puede disponer de más de 6 cartas de equipamiento, en cuyo caso se deberá
         // realizar un cambio de forma automática, de modo que, si son posibles dos cambios, se elegirá
         // el que obtiene el mayor número de ejércitos.
-
-        // Cuando se cambian las cartas, si el país asociado a la carta es un país que pertenece al jugador,
-        // se pondrá un ejército adicional en dicho país.
+        if (this.getJugadorTurno().getCartas().size() > 6) {
+            // TODO: Llamar a CambiarCarta.class
+        }
 
         return true;
     }

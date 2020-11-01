@@ -6,6 +6,8 @@ import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
+import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartas;
+import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartasTodas;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -35,6 +37,8 @@ public class RepartirEjercitos extends Partida implements IComando {
 
         Ejecutor.comando("ver mapa");
 
+        super.getComandosPermitidos().remove(CambiarCartas.class);
+        super.getComandosPermitidos().remove(CambiarCartasTodas.class);
         super.getComandosPermitidos().remove(RepartirEjercito.class);
         super.getComandosPermitidos().remove(RepartirEjercitos.class);
         super.iniciar();

@@ -6,6 +6,10 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
+import gal.sdc.usc.risk.menu.comandos.partida.AtacarPais;
+import gal.sdc.usc.risk.menu.comandos.partida.AtacarPaisDados;
+import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartas;
+import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartasTodas;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
@@ -85,15 +89,24 @@ public class RepartirEjercito extends Partida implements IComando {
     }
 
     private void comprobarEjercitos(Jugador jugador) {
-        super.getComandosPermitidos().remove(RepartirEjercitos.class);
+        if (super.isJugando()) {
+            super.getComandosPermitidos().remove(CambiarCartas.class);
+            super.getComandosPermitidos().remove(CambiarCartasTodas.class);
 
-        if (super.getJugadores().values().stream().filter(j -> j.getEjercitosPendientes().toInt() > 0).findAny().orElse(null) == null) {
-            super.getComandosPermitidos().remove(RepartirEjercito.class);
-            super.moverTurno();
-            super.iniciar();
-        } else if (jugador.getEjercitosPendientes().toInt() == 0) {
-            super.moverTurno();
-            // Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
+            if (super.getJugadorTurno().getEjercitosPendientes().toInt() == 0) {
+                super.getComandosPermitidos().remove(this.getClass());
+                super.getComandosPermitidos().remove(RepartirEjercitos.class);
+                super.getComandosPermitidos().add(AtacarPais.class);
+                super.getComandosPermitidos().add(AtacarPaisDados.class);
+            }
+        } else {
+            if (super.getJugadores().values().stream().filter(j -> j.getEjercitosPendientes().toInt() > 0).findAny().orElse(null) == null) {
+                super.moverTurno();
+                super.iniciar();
+            } else if (jugador.getEjercitosPendientes().toInt() == 0) {
+                super.moverTurno();
+                // Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
+            }
         }
     }
 
