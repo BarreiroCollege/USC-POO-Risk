@@ -5,7 +5,7 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.Regex;
+import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.util.Recursos;
 
 import java.io.BufferedReader;
@@ -15,7 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-@Comando(estado = Estado.PREPARACION, regex = Regex.ASIGNAR_MISIONES)
+@Comando(estado = Estado.PREPARACION, comando = Comandos.ASIGNAR_MISIONES)
 public class AsignarMisiones extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {

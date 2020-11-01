@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 public @interface Comando {
     Estado estado();
 
-    Regex regex();
+    Comandos comando();
 }

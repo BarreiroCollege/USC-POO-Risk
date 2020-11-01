@@ -5,11 +5,11 @@ import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.Regex;
+import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
-@Comando(estado = Estado.CUALQUIERA, regex = Regex.OBTENER_CONTINENTE)
+@Comando(estado = Estado.CUALQUIERA, comando = Comandos.OBTENER_CONTINENTE)
 public class ObtenerContinente extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {

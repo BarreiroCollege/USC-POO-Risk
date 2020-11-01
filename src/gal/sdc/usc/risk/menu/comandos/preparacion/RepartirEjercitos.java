@@ -5,7 +5,7 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.Regex;
+import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Comando(estado = Estado.PREPARACION, regex = Regex.REPARTIR_EJERCITOS)
+@Comando(estado = Estado.PREPARACION, comando = Comandos.REPARTIR_EJERCITOS)
 public class RepartirEjercitos extends Partida implements IComando {
     private HashMap<Continente, Jugador> continentesR1;
     private HashMap<Continente, Jugador> continentesR4;

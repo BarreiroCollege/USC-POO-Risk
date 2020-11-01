@@ -1,6 +1,6 @@
 package gal.sdc.usc.risk.menu.comandos;
 
-public enum Regex {
+public enum Comandos {
     AYUDA("(ayuda|info|help)"),
     VER_MAPA("ver mapa"),
     OBTENER_COLOR("obtener color ([a-zA-Z]*)"),
@@ -24,7 +24,7 @@ public enum Regex {
 
     private final String regex;
 
-    Regex(String regex) {
+    Comandos(String regex) {
         this.regex = regex;
     }
 

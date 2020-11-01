@@ -5,16 +5,15 @@ import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.Regex;
+import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
-import gal.sdc.usc.risk.util.Colores;
 
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
-@Comando(estado = Estado.PREPARACION, regex = Regex.REPARTIR_EJERCITO)
+@Comando(estado = Estado.PREPARACION, comando = Comandos.REPARTIR_EJERCITO)
 public class RepartirEjercito extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {

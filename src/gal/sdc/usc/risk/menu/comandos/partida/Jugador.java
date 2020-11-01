@@ -5,9 +5,9 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.Regex;
+import gal.sdc.usc.risk.menu.comandos.Comandos;
 
-@Comando(estado = Estado.JUGANDO, regex = Regex.JUGADOR)
+@Comando(estado = Estado.JUGANDO, comando = Comandos.JUGADOR)
 public class Jugador extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {

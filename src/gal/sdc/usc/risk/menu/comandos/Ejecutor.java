@@ -44,7 +44,7 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         for (Class<? extends IComando> comandoI : super.getComandosPermitidos()) {
             if (comandoI.isAnnotationPresent(Comando.class)) {
                 Comando comandoA = comandoI.getAnnotation(Comando.class);
-                if (this.getComando().toLowerCase().matches(comandoA.regex().getRegex())) {
+                if (this.getComando().toLowerCase().matches(comandoA.comando().getRegex())) {
                     comando = comandoI;
                     break;
                 }
@@ -54,7 +54,7 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
 
         if (comando == null) {
             boolean existe = false;
-            for (Regex regex : Regex.values()) {
+            for (Comandos regex : Comandos.values()) {
                 if (this.getComando().toLowerCase().matches(regex.getRegex())) {
                     existe = true;
                     break;

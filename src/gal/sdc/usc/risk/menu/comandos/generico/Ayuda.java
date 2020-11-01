@@ -1,18 +1,17 @@
 package gal.sdc.usc.risk.menu.comandos.generico;
 
 import gal.sdc.usc.risk.menu.Partida;
-import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.Regex;
+import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.util.Colores;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 
-@Comando(estado = Estado.CUALQUIERA, regex = Regex.AYUDA)
+@Comando(estado = Estado.CUALQUIERA, comando = Comandos.AYUDA)
 public class Ayuda extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
