@@ -68,6 +68,18 @@ public class Continente extends Partida {
         return i;
     }
 
+    public Jugador getJugador() {
+        Jugador jugador = null;
+        for (Pais pais : this.getPaises().values()) {
+            if (jugador == null) {
+                jugador = pais.getJugador();
+            } else if (!pais.getJugador().equals(jugador)) {
+                return null;
+            }
+        }
+        return jugador;
+    }
+
     @Override
     public String toString() {
         return "Continente{" +

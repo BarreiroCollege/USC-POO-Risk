@@ -14,7 +14,7 @@ import gal.sdc.usc.risk.util.Dado;
 import java.util.ArrayList;
 import java.util.List;
 
-@Comando(estado = Estado.JUGANDO, comando = Comandos.CAMBIAR_CARTAS)
+@Comando(estado = Estado.JUGANDO, comando = Comandos.ATACAR_PAIS)
 public class AtacarPais extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
@@ -48,7 +48,7 @@ public class AtacarPais extends Partida implements IComando {
         List<String> atacante = new ArrayList<>();
         List<String> defensor = new ArrayList<>();
 
-        int atacantes = 0;
+        int atacantes;
         if (pais1.getEjercito().toInt() == 2) {
             atacantes = 1;
         } else if (pais1.getEjercito().toInt() == 3) {
@@ -57,7 +57,7 @@ public class AtacarPais extends Partida implements IComando {
             atacantes = 3;
         }
 
-        int defensores = 0;
+        int defensores;
         if (pais2.getEjercito().toInt() == 1) {
             defensores = 1;
         } else {
@@ -74,9 +74,9 @@ public class AtacarPais extends Partida implements IComando {
 
         List<String> comando = new ArrayList<>();
         comando.add("atacar");
-        comando.add(pais1.getNombre());
+        comando.add(pais1.getAbreviatura());
         comando.add(String.join("x", atacante));
-        comando.add(pais2.getNombre());
+        comando.add(pais2.getAbreviatura());
         comando.add(String.join("x", defensor));
 
         Ejecutor.comando(String.join(" ", comando));

@@ -131,10 +131,17 @@ public abstract class Partida {
         Partida.comandosPermitidos.add(DescribirPais.class);
         Partida.comandosPermitidos.add(gal.sdc.usc.risk.menu.comandos.partida.Jugador.class);
         this.comandosTurno();
+        this.comprobacionesTurno();
         return true;
     }
 
     protected void comandosTurno() {
+        Partida.comandosPermitidos.remove(CambiarCartas.class);
+        Partida.comandosPermitidos.remove(CambiarCartasTodas.class);
+        Partida.comandosPermitidos.remove(RepartirEjercito.class);
+        Partida.comandosPermitidos.remove(RepartirEjercitos.class);
+        Partida.comandosPermitidos.remove(AtacarPais.class);
+        Partida.comandosPermitidos.remove(AtacarPaisDados.class);
         Partida.comandosPermitidos.remove(Rearmar.class);
         Partida.comandosPermitidos.remove(AsignarCarta.class);
 
@@ -184,6 +191,14 @@ public abstract class Partida {
         Partida.haConquistadoPais = false;
         Partida.ordenJugadores.add(jugadorAnterior);
 
+        if (this.isJugando()) {
+            this.comprobacionesTurno();
+        }
+
+        return true;
+    }
+
+    protected void comprobacionesTurno() {
         // El jugador recibe el número de ejércitos que es el resultado de dividir el número de países que
         // pertenecen al jugador entre 3. Por ejemplo, si un jugador tiene 14 países, al iniciar su turno
         // recibe 4 países (el resultado entero de 14/3= 4).
@@ -201,7 +216,5 @@ public abstract class Partida {
         if (this.getJugadorTurno().getCartas().size() > 6) {
             // TODO: Llamar a CambiarCarta.class
         }
-
-        return true;
     }
 }
