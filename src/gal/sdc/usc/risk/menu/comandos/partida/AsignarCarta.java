@@ -53,7 +53,7 @@ public class AsignarCarta extends Partida implements IComando {
         out += "  tipoCarta: \"" + carta.getEquipamiento().getNombre() + "\",\n";
         out += "  paisAsociado: \"" + carta.getPais().getNombre() + "\",\n";
         out += "  perteneceAJugador: \"" + carta.getPais().getJugador().getNombre() + "\",\n";
-        out += "  ejercitosDeRearme: " + carta.getPais().getJugador().equals(super.getJugadorTurno()) + "\n";
+        out += "  ejercitosDeRearme: " + (carta.getPais().getJugador().equals(super.getJugadorTurno()) ? 1 : 0) + "\n";
         out += "}";
         Resultado.correcto(out);
     }

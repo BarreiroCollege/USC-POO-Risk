@@ -55,14 +55,7 @@ public class Mapa {
     public List<Continente> getContinentesPorJugador(Jugador jugador) {
         List<Continente> continentes = new ArrayList<>();
         for (Continente continente : this.getContinentes().values()) {
-            boolean tiene = true;
-            for (Pais pais : continente.getPaises().values()) {
-                if (!pais.getJugador().equals(jugador)) {
-                    tiene = false;
-                    break;
-                }
-            }
-            if (tiene) {
+            if (continente.getJugador() != null && continente.getJugador().equals(jugador)) {
                 continentes.add(continente);
             }
         }

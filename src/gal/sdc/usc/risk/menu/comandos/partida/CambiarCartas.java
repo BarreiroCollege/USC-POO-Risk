@@ -92,7 +92,7 @@ public class CambiarCartas extends Partida implements IComando {
         }
 
         StringBuilder out = new StringBuilder("{\n");
-        out.append("  cartasCambio: [ \"").append(cartas.get(0)).append("\",").append(cartas.get(1)).append("\",").append(cartas.get(2)).append("\" ],\n");
+        out.append("  cartasCambio: [ \"").append(cartas.get(0)).append("\", \"").append(cartas.get(1)).append("\", \"").append(cartas.get(2)).append("\" ],\n");
         out.append("  cartasQuedan: [ ");
         Iterator<Carta> itCa = super.getJugadorTurno().getCartas().iterator();
         while (itCa.hasNext()) {

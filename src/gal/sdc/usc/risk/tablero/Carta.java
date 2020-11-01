@@ -20,7 +20,7 @@ public class Carta {
     }
 
     public String getNombre() {
-        return this.equipamiento + "&" + pais.getAbreviatura();
+        return this.equipamiento.getNombre() + "&" + pais.getAbreviatura();
     }
 
     @Override
