@@ -40,6 +40,7 @@ public class AsignarCarta extends Partida implements IComando {
             Resultado.error(Errores.CARTA_YA_ASIGNADA);
         }
 
+        super.getComandosPermitidos().remove(this.getClass());
         super.getJugadorTurno().getCartas().add(carta);
     }
 

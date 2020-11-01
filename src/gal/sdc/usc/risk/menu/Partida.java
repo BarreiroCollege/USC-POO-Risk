@@ -42,6 +42,7 @@ public abstract class Partida {
     private static final HashMap<String, Jugador> jugadores = new HashMap<>();
 
     private static final List<Carta> cartasMonton = new ArrayList<>();
+    private static boolean haConquistadoPais = false;
 
     private static boolean jugando = false;
     private static final List<Class<? extends IComando>> comandosPermitidos = new ArrayList<>();
@@ -156,11 +157,20 @@ public abstract class Partida {
         return null;
     }
 
+    protected boolean isHaConquistadoPais() {
+        return Partida.haConquistadoPais;
+    }
+
+    protected void conquistadoPais() {
+        Partida.haConquistadoPais = true;
+    }
+
     protected boolean moverTurno() {
         Jugador jugadorAnterior = Partida.ordenJugadores.poll();
         if (jugadorAnterior == null) {
             return false;
         }
+        Partida.haConquistadoPais = false;
         Partida.ordenJugadores.add(jugadorAnterior);
 
         // El jugador recibe el número de ejércitos que es el resultado de dividir el número de países que

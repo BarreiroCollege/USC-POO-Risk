@@ -16,6 +16,6 @@ public class CambiarCartas extends Partida implements IComando {
 
     @Override
     public String ayuda() {
-        return "";
+        return "cambiar cartas <id_carta1> <id_carta2> <id_carta3>";
     }
 }

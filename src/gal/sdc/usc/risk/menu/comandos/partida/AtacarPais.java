@@ -12,14 +12,11 @@ import gal.sdc.usc.risk.menu.comandos.preparacion.RepartirEjercitos;
 public class AtacarPais extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
-        super.getComandosPermitidos().remove(CambiarCartas.class);
-        super.getComandosPermitidos().remove(CambiarCartasTodas.class);
-        super.getComandosPermitidos().remove(RepartirEjercito.class);
-        super.getComandosPermitidos().remove(RepartirEjercitos.class);
+        // TODO: Derivar a AtacarPaisDados
     }
 
     @Override
     public String ayuda() {
-        return "";
+        return "atacar <abreviatura _país1> <abreviatura _país2>";
     }
 }

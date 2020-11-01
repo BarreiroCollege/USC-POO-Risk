@@ -12,7 +12,8 @@ import gal.sdc.usc.risk.util.Colores;
 public class Rearmar extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
-        // TODO: Eliminar comandos
+        super.getComandosPermitidos().remove(AtacarPais.class);
+        super.getComandosPermitidos().remove(AtacarPaisDados.class);
         super.getComandosPermitidos().remove(this.getClass());
 
         String out = "{\n" +
@@ -24,6 +25,6 @@ public class Rearmar extends Partida implements IComando {
 
     @Override
     public String ayuda() {
-        return "acabar turno";
+        return "rearmar <abreviatura_pais1> <número_ejércitos> <abreviatura_pais2>";
     }
 }
