@@ -8,6 +8,7 @@ import gal.sdc.usc.risk.menu.comandos.generico.ObtenerFrontera;
 import gal.sdc.usc.risk.menu.comandos.generico.ObtenerPaises;
 import gal.sdc.usc.risk.menu.comandos.generico.VerMapa;
 import gal.sdc.usc.risk.menu.comandos.partida.AcabarTurno;
+import gal.sdc.usc.risk.menu.comandos.partida.DescribirJugador;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
@@ -63,6 +64,16 @@ public abstract class Partida {
         return Partida.jugadores;
     }
 
+    protected Jugador getJugadorPorNombre(String nombre) {
+        if (nombre == null) {
+            return null;
+        }
+
+        return Partida.jugadores.values().stream()
+                .filter(jugador -> jugador.getNombre().toLowerCase().equals(nombre.toLowerCase()))
+                .findAny().orElse(null);
+    }
+
     protected HashMap<Colores.Color, Jugador> getJugadoresPorColor() {
         HashMap<Colores.Color, Jugador> jugadores = new HashMap<>();
         for (Jugador jugador : Partida.jugadores.values()) {
@@ -91,6 +102,7 @@ public abstract class Partida {
         }
         Partida.jugando = true;
         Partida.comandosPermitidos.add(AcabarTurno.class);
+        Partida.comandosPermitidos.add(DescribirJugador.class);
         Partida.comandosPermitidos.add(gal.sdc.usc.risk.menu.comandos.partida.Jugador.class);
         return true;
     }

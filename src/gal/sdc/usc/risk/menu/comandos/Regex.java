@@ -10,6 +10,7 @@ public enum Regex {
     //
     ACABAR_TURNO("(acabar|terminar) turno"),
     JUGADOR("jugador"),
+    DESCRIBIR_JUGADOR("describir jugador ([a-zA-Z0-9á-úÁ-Ú]*)"),
     //
     CREAR_MAPA("crear mapa"),
     CREAR_JUGADOR("crear ([a-zA-Z0-9á-úÁ-Ú]*)(?<!jugador)(?<!jugadores) ([a-zA-Z]*)"),

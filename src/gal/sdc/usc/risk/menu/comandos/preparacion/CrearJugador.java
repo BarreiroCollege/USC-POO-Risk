@@ -22,7 +22,7 @@ public class CrearJugador extends Partida implements IComando {
             Resultado.error(Errores.MAPA_NO_CREADO);
             return;
         }
-        if (super.getJugadores().containsKey(nombre)) {
+        if (super.getJugadorPorNombre(nombre) != null) {
             Resultado.error(Errores.JUGADOR_YA_EXISTE);
             return;
         }
