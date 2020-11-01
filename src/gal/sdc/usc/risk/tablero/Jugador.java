@@ -3,6 +3,7 @@ package gal.sdc.usc.risk.tablero;
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.util.Colores.Color;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Jugador extends Partida {
@@ -11,11 +12,13 @@ public class Jugador extends Partida {
     private Mision mision = null;
 
     private final Ejercito ejercitosPendientes;
+    private final List<Carta> cartas;
 
     private Jugador(String nombre, Color color) {
         this.nombre = nombre;
         this.color = color;
         this.ejercitosPendientes = new Ejercito();
+        this.cartas = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -40,6 +43,10 @@ public class Jugador extends Partida {
 
     public Ejercito getEjercitosPendientes() {
         return this.ejercitosPendientes;
+    }
+
+    public List<Carta> getCartas() {
+        return cartas;
     }
 
     public Integer getNumEjercitos() {

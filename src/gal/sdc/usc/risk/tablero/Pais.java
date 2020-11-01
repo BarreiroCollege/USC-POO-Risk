@@ -16,7 +16,7 @@ public class Pais {
 
     private Jugador jugador = null;
     private final Ejercito ejercito;
-    private Integer numVecesConquistado = 0;
+    private Integer numVecesConquistado;
 
     private Pais(Paises identificador, String nombre, String abreviatura, Celda celda) {
         this.identificador = identificador;
@@ -24,6 +24,7 @@ public class Pais {
         this.abreviatura = abreviatura;
         this.celda = celda;
         this.ejercito = new Ejercito();
+        this.numVecesConquistado = 0;
     }
 
     public boolean setContinente(Continente continente) {

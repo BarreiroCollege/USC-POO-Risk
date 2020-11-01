@@ -6,6 +6,7 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
+import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -53,7 +54,7 @@ public class DescribirJugador extends Partida implements IComando {
         out.append("\n").append("          ],\n");
 
         out.append("  continentes: [ ");
-        Iterator<Continente> itC = getJugadorTurno().getContinentes().iterator();
+        Iterator<Continente> itC = super.getJugadorTurno().getContinentes().iterator();
         while (itC.hasNext()) {
             Continente continente = itC.next();
             out.append("\"").append(continente.getNombre()).append("\"");
@@ -63,7 +64,16 @@ public class DescribirJugador extends Partida implements IComando {
         }
         out.append(" ],\n");
 
-        out.append("  cartas: [ ],\n");
+        out.append("  cartas: [ ");
+        Iterator<Carta> itCa = super.getJugadorTurno().getCartas().iterator();
+        while (itCa.hasNext()) {
+            Carta carta = itCa.next();
+            out.append("\"").append(carta.getNombre()).append("\"");
+            if (itCa.hasNext()) {
+                out.append(", ");
+            }
+        }
+        out.append(" ],\n");
         out.append("  numeroEjercitosRearmar: ").append(jugador.getEjercitosPendientes()).append("\n");
 
         out.append("}");
