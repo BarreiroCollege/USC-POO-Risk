@@ -89,6 +89,7 @@ public abstract class Partida {
             return false;
         }
         Partida.jugando = true;
+        Partida.comandosPermitidos.add(gal.sdc.usc.risk.menu.comandos.partida.Jugador.class);
         return true;
     }
 

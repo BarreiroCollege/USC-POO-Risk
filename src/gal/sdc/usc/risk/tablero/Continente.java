@@ -1,11 +1,14 @@
 package gal.sdc.usc.risk.tablero;
 
+import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.tablero.valores.Continentes;
 import gal.sdc.usc.risk.util.Colores.Color;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class Continente {
+public class Continente extends Partida {
     private final Continentes identificador;
     private final String nombre;
     private final String abreviatura;
@@ -45,6 +48,16 @@ public class Continente {
 
     public HashMap<String, Pais> getPaises() {
         return this.paises;
+    }
+
+    public List<Pais> getPaisesPorJugador(Jugador jugador) {
+        return this.paises.values().stream().filter(pais -> pais.getJugador().equals(jugador)).collect(Collectors.toList());
+    }
+
+    public List<Pais> getPaisesFrontera() {
+        return this.paises.values().stream()
+                .filter(pais -> pais.getFronteras().getTodas().stream().anyMatch(pais1 -> !pais1.getContinente().equals(this)))
+                .collect(Collectors.toList());
     }
 
     @Override

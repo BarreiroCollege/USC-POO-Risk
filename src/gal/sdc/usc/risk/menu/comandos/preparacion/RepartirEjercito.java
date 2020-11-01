@@ -92,7 +92,6 @@ public class RepartirEjercito extends Partida implements IComando {
             super.getComandosPermitidos().remove(RepartirEjercito.class);
             super.moverTurno();
             super.iniciar();
-            // TODO
         } else if (jugador.getEjercitosPendientes().toInt() == 0) {
             super.moverTurno();
             // Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
