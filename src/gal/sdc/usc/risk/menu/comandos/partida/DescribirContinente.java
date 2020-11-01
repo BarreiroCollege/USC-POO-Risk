@@ -58,7 +58,7 @@ public class DescribirContinente extends Partida implements IComando {
         out.append("  numeroEjercitos: ").append(continente.getNumEjercitos()).append(",\n");
         out.append("  rearmeContinente: ").append(continente.getEjercitosRearme()).append("\n");
 
-        out.append("}\n");
+        out.append("}");
         Resultado.correcto(new Colores(out.toString(), Colores.Color.VERDE).toString());
     }
 

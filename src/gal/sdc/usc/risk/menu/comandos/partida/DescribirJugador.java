@@ -66,7 +66,7 @@ public class DescribirJugador extends Partida implements IComando {
         out.append("  cartas: [ ],\n");
         out.append("  numeroEjercitosRearmar: ").append(jugador.getEjercitosPendientes()).append("\n");
 
-        out.append("}\n");
+        out.append("}");
         Resultado.correcto(new Colores(out.toString(), Colores.Color.VERDE).toString());
     }
 

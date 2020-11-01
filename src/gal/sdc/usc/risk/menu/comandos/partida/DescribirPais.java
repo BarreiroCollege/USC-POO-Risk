@@ -53,7 +53,7 @@ public class DescribirPais extends Partida implements IComando {
         out.append("  numeroEjercitos: ").append(pais.getEjercito()).append(",\n");
         out.append("  numeroVecesOcupado: ").append(pais.getNumVecesConquistado()).append("\n");
 
-        out.append("}\n");
+        out.append("}");
         Resultado.correcto(new Colores(out.toString(), Colores.Color.VERDE).toString());
     }
 

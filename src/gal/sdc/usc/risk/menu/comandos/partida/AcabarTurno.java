@@ -17,7 +17,7 @@ public class AcabarTurno extends Partida implements IComando {
         String out = "{\n" +
                 "  nombre: \"" + super.getJugadorTurno().getNombre() + "\",\n" +
                 "  numeroEjercitosRearmar: " + super.getJugadorTurno().getEjercitosPendientes() + "\n" +
-                "}\n";
+                "}";
         Resultado.correcto(new Colores(out, Colores.Color.VERDE).toString());
     }
 

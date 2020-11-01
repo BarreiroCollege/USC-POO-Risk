@@ -12,6 +12,8 @@ import gal.sdc.usc.risk.menu.comandos.partida.DescribirContinente;
 import gal.sdc.usc.risk.menu.comandos.partida.DescribirJugador;
 import gal.sdc.usc.risk.menu.comandos.partida.DescribirPais;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
+import gal.sdc.usc.risk.tablero.Continente;
+import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Mision;
@@ -117,10 +119,34 @@ public abstract class Partida {
 
     protected boolean moverTurno() {
         Jugador jugador = Partida.ordenJugadores.poll();
-        if (jugador != null) {
-            Partida.ordenJugadores.add(jugador);
-            return true;
+        if (jugador == null) {
+            return false;
         }
-        return false;
+        Partida.ordenJugadores.add(jugador);
+
+        // El jugador recibe el número de ejércitos que es el resultado de dividir el número de países que
+        // pertenecen al jugador entre 3. Por ejemplo, si un jugador tiene 14 países, al iniciar su turno
+        // recibe 4 países (el resultado entero de 14/3= 4).
+        this.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(this.getJugadorTurno().getPaises().size() / 3));
+
+        // Si todos los países de un continente pertenecen a dicho jugador, recibe el número de ejércitos
+        // indicados en la Tabla 4.
+        for (Continente continente : this.getJugadorTurno().getContinentes()) {
+            this.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(continente.getEjercitosRearme()));
+        }
+
+        // Al tener 3 cartas de equipamiento, el jugador podrá cambiarlas por ejércitos atendiendo a los
+        // siguientes criterios: si se dispone de 3 cartas de infantería, se obtienen 6 ejércitos; si las 3
+        // cartas son de caballería, se consiguen 8 ejércitos; si las 3 cartas son de artillería, se obtendrán
+        // 10 ejércitos; y finalmente, si hay una carta de cada tipo, se obtienen 12 ejércitos.
+
+        // Un jugador no puede disponer de más de 6 cartas de equipamiento, en cuyo caso se deberá
+        // realizar un cambio de forma automática, de modo que, si son posibles dos cambios, se elegirá
+        // el que obtiene el mayor número de ejércitos.
+
+        // Cuando se cambian las cartas, si el país asociado a la carta es un país que pertenece al jugador,
+        // se pondrá un ejército adicional en dicho país.
+
+        return true;
     }
 }
