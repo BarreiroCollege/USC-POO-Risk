@@ -8,6 +8,7 @@ public enum Regex {
     OBTENER_FRONTERA("obtener frontera(s)? ([a-zA-Z]*)"),
     OBTENER_PAISES("obtener pais(es)? ([a-zA-Z]*)"),
     //
+    ACABAR_TURNO("(acabar|terminar) turno"),
     JUGADOR("jugador"),
     //
     CREAR_MAPA("crear mapa"),

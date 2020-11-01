@@ -7,6 +7,7 @@ import gal.sdc.usc.risk.menu.comandos.generico.ObtenerContinente;
 import gal.sdc.usc.risk.menu.comandos.generico.ObtenerFrontera;
 import gal.sdc.usc.risk.menu.comandos.generico.ObtenerPaises;
 import gal.sdc.usc.risk.menu.comandos.generico.VerMapa;
+import gal.sdc.usc.risk.menu.comandos.partida.AcabarTurno;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
@@ -89,6 +90,7 @@ public abstract class Partida {
             return false;
         }
         Partida.jugando = true;
+        Partida.comandosPermitidos.add(AcabarTurno.class);
         Partida.comandosPermitidos.add(gal.sdc.usc.risk.menu.comandos.partida.Jugador.class);
         return true;
     }
