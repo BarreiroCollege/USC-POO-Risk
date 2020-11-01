@@ -18,8 +18,8 @@ public enum Comandos {
     // VER_MAPA("ver mapa"),
     ATACAR_PAIS(""),
     ATACAR_PAIS_DADOS(""),
-    REARMAR(""),
-    ASIGNAR_CARTA(""),
+    REARMAR("rearmar ([a-zA-Z0-9á-úÁ-Ú]*) ([0-9]*) ([a-zA-Z0-9á-úÁ-Ú]*)"),
+    ASIGNAR_CARTA("asignar carta ([a-zA-Z0-9á-úÁ-Ú&]*)"),
     /* --- */
     CREAR_MAPA("crear mapa"),
     CREAR_JUGADOR("crear ([a-zA-Z0-9á-úÁ-Ú]*)(?<!jugador)(?<!jugadores) ([a-zA-Z]*)"),

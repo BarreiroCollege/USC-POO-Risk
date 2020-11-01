@@ -19,7 +19,9 @@ public enum Errores {
     MISION_NO_EXISTE(116, "La misión no existe"),
     JUGADOR_YA_MISION(117, "El jugador ya tiene asignada misión"),
     MISIONES_NO_ASIGNADAS(118, "Las misiones no están asignadas"),
-    EJERCITO_NO_DISPONIBLE(119, "Ejércitos no disponibles");
+    EJERCITO_NO_DISPONIBLE(119, "Ejércitos no disponibles"),
+    CARTA_INCORRECTA(125, "El identificador no sigue el formato correcto"),
+    CARTA_YA_ASIGNADA(126, "Carta de equipamiento ya asignada");
 
     private final Integer codigo;
     private final String mensaje;

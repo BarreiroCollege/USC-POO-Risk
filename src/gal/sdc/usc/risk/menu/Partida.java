@@ -8,10 +8,18 @@ import gal.sdc.usc.risk.menu.comandos.generico.ObtenerFrontera;
 import gal.sdc.usc.risk.menu.comandos.generico.ObtenerPaises;
 import gal.sdc.usc.risk.menu.comandos.generico.VerMapa;
 import gal.sdc.usc.risk.menu.comandos.partida.AcabarTurno;
+import gal.sdc.usc.risk.menu.comandos.partida.AsignarCarta;
+import gal.sdc.usc.risk.menu.comandos.partida.AtacarPais;
+import gal.sdc.usc.risk.menu.comandos.partida.AtacarPaisDados;
+import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartas;
+import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartasTodas;
 import gal.sdc.usc.risk.menu.comandos.partida.DescribirContinente;
 import gal.sdc.usc.risk.menu.comandos.partida.DescribirJugador;
 import gal.sdc.usc.risk.menu.comandos.partida.DescribirPais;
+import gal.sdc.usc.risk.menu.comandos.partida.Rearmar;
 import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
+import gal.sdc.usc.risk.menu.comandos.preparacion.RepartirEjercito;
+import gal.sdc.usc.risk.menu.comandos.preparacion.RepartirEjercitos;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Ejercito;
@@ -27,15 +35,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Random;
 
 public abstract class Partida {
     private static Mapa mapa;
     private static final Queue<Jugador> ordenJugadores = new LinkedList<>();
     private static final HashMap<String, Jugador> jugadores = new HashMap<>();
 
-    private static final List<Carta> cartas = new ArrayList<>();
-    private static boolean asignarCarta = false;
+    private static final List<Carta> cartasMonton = new ArrayList<>();
 
     private static boolean jugando = false;
     private static final List<Class<? extends IComando>> comandosPermitidos = new ArrayList<>();
@@ -114,7 +120,7 @@ public abstract class Partida {
         Partida.jugando = true;
         for (Equipamientos equipamiento : Equipamientos.values()) {
             for (Pais pais : this.getMapa().getPaisesPorCeldas().values()) {
-                Partida.cartas.add(new Carta.Builder().withEquipamiento(equipamiento).withPais(pais).build());
+                Partida.cartasMonton.add(new Carta.Builder().withEquipamiento(equipamiento).withPais(pais).build());
             }
         }
 
@@ -123,11 +129,31 @@ public abstract class Partida {
         Partida.comandosPermitidos.add(DescribirJugador.class);
         Partida.comandosPermitidos.add(DescribirPais.class);
         Partida.comandosPermitidos.add(gal.sdc.usc.risk.menu.comandos.partida.Jugador.class);
+        this.comandosTurno();
         return true;
+    }
+
+    protected void comandosTurno() {
+        Partida.comandosPermitidos.add(CambiarCartas.class);
+        Partida.comandosPermitidos.add(CambiarCartasTodas.class);
+        Partida.comandosPermitidos.add(RepartirEjercito.class);
+        Partida.comandosPermitidos.add(RepartirEjercitos.class);
+        Partida.comandosPermitidos.add(AtacarPais.class);
+        Partida.comandosPermitidos.add(AtacarPaisDados.class);
     }
 
     protected List<Class<? extends IComando>> getComandosPermitidos() {
         return Partida.comandosPermitidos;
+    }
+
+    protected Carta getCarta(Equipamientos equipamiento, Pais pais) {
+        for (Carta carta : Partida.cartasMonton) {
+            if (carta.getEquipamiento().equals(equipamiento) && carta.getPais().equals(pais)) {
+                Partida.cartasMonton.remove(carta);
+                return carta;
+            }
+        }
+        return null;
     }
 
     protected boolean moverTurno() {
@@ -136,10 +162,6 @@ public abstract class Partida {
             return false;
         }
         Partida.ordenJugadores.add(jugadorAnterior);
-
-        // Las cartas de equipamiento no están predefinidas y se generarán automática y aleatoriamente cuando
-        // un jugador acabe su turno y haya conquistado algún país.
-        jugadorAnterior.getCartas().add(Partida.cartas.get(new Random().nextInt(Partida.cartas.size())));
 
         // El jugador recibe el número de ejércitos que es el resultado de dividir el número de países que
         // pertenecen al jugador entre 3. Por ejemplo, si un jugador tiene 14 países, al iniciar su turno
