@@ -39,7 +39,7 @@ public class Menu extends Partida {
                 System.out.println(orden);
 
                 if (!orden.isEmpty()) {
-                    this.derivar(orden);
+                    Ejecutor.comando(orden);
                 }
             }
             bufferLector.close();
@@ -58,14 +58,9 @@ public class Menu extends Partida {
             orden = input.nextLine();
 
             if (!orden.isEmpty()) {
-                this.derivar(orden);
+                Ejecutor.comando(orden);
             }
         }
-    }
-
-    private void derivar(String orden) {
-        Ejecutor.setComando(orden);
-        Ejecutor.comando();
     }
 
     private void entrada() {

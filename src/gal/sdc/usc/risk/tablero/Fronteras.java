@@ -3,7 +3,7 @@ package gal.sdc.usc.risk.tablero;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fronteras {
+public class Fronteras implements Comparable<Fronteras> {
     private final Pais norte;
     private final Pais sur;
     private final Pais este;
@@ -72,6 +72,15 @@ public class Fronteras {
                 ", oeste=" + oeste.getAbreviatura() +
                 ", maritimas=" + maritimas.stream().map(Pais::getAbreviatura) +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Fronteras o) {
+        return this.getTodas().size() - o.getTodas().size();
+    }
+
+    public int reverseCompareTo(Fronteras o) {
+        return -1 * this.compareTo(o);
     }
 
     public static class Builder {

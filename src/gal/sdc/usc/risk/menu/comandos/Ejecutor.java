@@ -18,8 +18,9 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
     private Ejecutor() {
     }
 
-    public static void setComando(String comando) {
+    public static void comando(String comando) {
         Ejecutor.comando = comando;
+        Ejecutor.comando();
     }
 
     private String getComando() {

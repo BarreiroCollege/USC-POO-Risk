@@ -30,8 +30,7 @@ public class CrearJugadores extends Partida implements IComando {
             while ((linea = bufferLector.readLine()) != null) {
                 partes = linea.split(";");
                 if (partes.length == 2) {
-                    Ejecutor.setComando("crear " + partes[0].trim() + " " + partes[1].trim());
-                    Ejecutor.comando();
+                    Ejecutor.comando("crear " + partes[0].trim() + " " + partes[1].trim());
                 }
             }
             bufferLector.close();

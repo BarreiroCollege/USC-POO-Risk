@@ -19,11 +19,17 @@ public class Ejercito implements Comparable<Ejercito> {
     }
 
     public Integer recibir(Ejercito ejercito, int cantidad) {
+        return this.recibir(ejercito, cantidad, false);
+    }
+
+    public Integer recibir(Ejercito ejercito, int cantidad, boolean auto) {
         if (cantidad > ejercito.cantidad) {
             cantidad = ejercito.cantidad;
         }
         if (cantidad == 0) {
-            Resultado.error(Errores.EJERCITO_NO_DISPONIBLE);
+            if (!auto) {
+                Resultado.error(Errores.EJERCITO_NO_DISPONIBLE);
+            }
             return null;
         } else if (cantidad < 0) {
             System.err.println("Para hacer esto, cambiar orden de parámetros");
