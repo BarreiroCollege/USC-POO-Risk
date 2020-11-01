@@ -154,6 +154,10 @@ public abstract class Partida {
         return Partida.comandosPermitidos;
     }
 
+    protected void devolverCarta(Carta carta) {
+        Partida.cartasMonton.add(carta);
+    }
+
     protected Carta getCarta(Equipamientos equipamiento, Pais pais) {
         for (Carta carta : Partida.cartasMonton) {
             if (carta.getEquipamiento().equals(equipamiento) && carta.getPais().equals(pais)) {

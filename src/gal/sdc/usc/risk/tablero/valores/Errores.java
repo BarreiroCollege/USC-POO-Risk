@@ -20,6 +20,9 @@ public enum Errores {
     JUGADOR_YA_MISION(117, "El jugador ya tiene asignada misión"),
     MISIONES_NO_ASIGNADAS(118, "Las misiones no están asignadas"),
     EJERCITO_NO_DISPONIBLE(119, "Ejércitos no disponibles"),
+    CARTAS_NO_CAMBIABLES(121, "No hay configuración de cambio"),
+    CARTAS_NO_JUGADOR(122, "Algunas cartas no pertenecen al jugador"),
+    CARTAS_NO_EXISTEN(123, "Algunas cartas no existen"),
     CARTA_INCORRECTA(125, "El identificador no sigue el formato correcto"),
     CARTA_YA_ASIGNADA(126, "Carta de equipamiento ya asignada");
 

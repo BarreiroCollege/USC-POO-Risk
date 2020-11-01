@@ -1,26 +1,24 @@
 package gal.sdc.usc.risk.tablero.valores;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 public enum Equipamientos {
-    INFANTERIA("Caballería"),
-    CABALLERIA("Infantería"),
-    ARTILLERIA("Artillería");
+    CABALLERIA("Caballería", 8),
+    INFANTERIA("Infantería", 6),
+    ARTILLERIA("Artillería", 10);
 
     private final String nombre;
+    private final Integer ejercitos;
 
-    private static final List<Equipamientos> EQUIPAMIENTOS = Collections.unmodifiableList(Arrays.asList(values()));
-    private static final Random R = new Random();
-
-    Equipamientos(String nombre) {
+    Equipamientos(String nombre, Integer ejercitos) {
         this.nombre = nombre;
+        this.ejercitos = ejercitos;
     }
 
     public String getNombre() {
         return this.nombre;
+    }
+
+    public Integer getEjercitos() {
+        return this.ejercitos;
     }
 
     public static Equipamientos toEquipamientos(String equipamiento) {
@@ -30,9 +28,5 @@ public enum Equipamientos {
             }
         }
         return null;
-    }
-
-    public static Equipamientos aleatoria()  {
-        return EQUIPAMIENTOS.get(R.nextInt(EQUIPAMIENTOS.size()));
     }
 }
