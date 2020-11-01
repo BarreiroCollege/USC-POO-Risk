@@ -11,8 +11,9 @@ public enum Errores {
     MAPA_NO_CREADO(106, "El mapa todavía no se ha creado"),
     MAPA_YA_CREADO(107, "El mapa ya ha sido creado"),
     PAIS_NO_EXISTE(109, "El país no existe"),
-    //
     PAIS_NO_PERTENECE(110, "El país no pertenece al jugador"),
+    PAIS_PERTENECE(111, "El país pertenece al jugador"),
+    PAIS_NO_FONTERA(112, "Los países no son frontera"),
     PAIS_YA_ASIGNADO(113, "El país ya está asignado"),
     COLOR_YA_ASIGNADO(114, "El color ya está asignado"),
     MISION_YA_ASIGNADA(115, "La misión ya está asignada"),
@@ -23,6 +24,7 @@ public enum Errores {
     CARTAS_NO_CAMBIABLES(121, "No hay configuración de cambio"),
     CARTAS_NO_JUGADOR(122, "Algunas cartas no pertenecen al jugador"),
     CARTAS_NO_EXISTEN(123, "Algunas cartas no existen"),
+    EJERCITOS_NO_SUFICIENTES(124, "No hay ejércitos suficientes"),
     CARTA_INCORRECTA(125, "El identificador no sigue el formato correcto"),
     CARTA_YA_ASIGNADA(126, "Carta de equipamiento ya asignada");
 

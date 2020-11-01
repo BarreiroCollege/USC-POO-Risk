@@ -14,6 +14,7 @@ import gal.sdc.usc.risk.tablero.valores.Errores;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.CAMBIAR_CARTAS)
@@ -73,19 +74,39 @@ public class CambiarCartas extends Partida implements IComando {
             return;
         }
 
+        int numCambios = 0;
         if (caballeria == 3 || infanteria == 3 || artilleria == 3) {
-            super.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(12));
+            numCambios = 12;
         } else if (caballeria == 1) {
-            super.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(Equipamientos.CABALLERIA.getEjercitos()));
+            numCambios = Equipamientos.CABALLERIA.getEjercitos();
         } else if (infanteria == 1) {
-            super.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(Equipamientos.INFANTERIA.getEjercitos()));
+            numCambios = Equipamientos.INFANTERIA.getEjercitos();
         } else if (artilleria == 1) {
-            super.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(Equipamientos.ARTILLERIA.getEjercitos()));
+            numCambios = Equipamientos.ARTILLERIA.getEjercitos();
         }
+        super.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(numCambios));
 
         for (Carta cartaT : cartas) {
+            super.getJugadorTurno().getCartas().remove(cartaT);
             super.devolverCarta(cartaT);
         }
+
+        StringBuilder out = new StringBuilder("{\n");
+        out.append("  cartasCambio: [ \"").append(cartas.get(0)).append("\",").append(cartas.get(1)).append("\",").append(cartas.get(2)).append("\" ],\n");
+        out.append("  cartasQuedan: [ ");
+        Iterator<Carta> itCa = super.getJugadorTurno().getCartas().iterator();
+        while (itCa.hasNext()) {
+            Carta cartaT = itCa.next();
+            out.append("\"").append(cartaT.getNombre()).append("\"");
+            if (itCa.hasNext()) {
+                out.append(", ");
+            }
+        }
+        out.append(" ],\n");
+        out.append("  numeroEjercitosCambiados: ").append(numCambios).append(",\n");
+        out.append("  numEjercitosRearme: ").append(super.getJugadorTurno().getEjercitosPendientes()).append("\n");
+        out.append("}");
+        Resultado.correcto(out.toString());
     }
 
     @Override
