@@ -91,10 +91,9 @@ public class RepartirEjercitos extends Partida implements IComando {
                 if (maxOcupacion.size() == 0) {
                     maxOcupacion.add(continente);
                 } else {
-                    // TODO: Cambiar comparación de número países a porcentage
-                    if (maxOcupacion.get(0).getPaisesPorJugador(e.getKey()).size() == continente.getPaisesPorJugador(e.getKey()).size()) {
+                    if ((maxOcupacion.get(0).getPaisesPorJugador(e.getKey()).size() / maxOcupacion.get(0).getPaises().size()) == (continente.getPaisesPorJugador(e.getKey()).size() / continente.getPaises().size())) {
                         maxOcupacion.add(continente);
-                    } else if (maxOcupacion.get(0).getPaisesPorJugador(e.getKey()).size() < continente.getPaisesPorJugador(e.getKey()).size()) {
+                    } else if (maxOcupacion.get(0).getPaisesPorJugador(e.getKey()).size() / maxOcupacion.get(0).getPaises().size() < (continente.getPaisesPorJugador(e.getKey()).size()) / continente.getPaises().size()) {
                         maxOcupacion.clear();
                         maxOcupacion.add(continente);
                     }
