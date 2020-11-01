@@ -57,7 +57,7 @@ public class CrearMapa extends Partida implements IComando {
             Continente nuevoContinente = preContinente.build();
             for (Pais pais : nuevoContinente.getPaises().values()) {
                 if (!pais.setContinente(nuevoContinente)) {
-                    // TODO
+                    System.err.println("El país " + pais.getNombre() + " ya tenía asignado continente!");
                 }
             }
             preMapa.withContinente(nuevoContinente);

@@ -90,9 +90,9 @@ public class Jugador extends Partida {
 
         public Jugador build() {
             if (nombre == null) {
-                // TODO
+                System.err.println("Jugador.Builder nombre=null");
             } else if (color == null) {
-                // TODO
+                System.err.println("Jugador.Builder color=null");
             } else {
                 return new Jugador(nombre, color);
             }

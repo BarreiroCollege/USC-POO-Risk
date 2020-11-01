@@ -91,9 +91,9 @@ public class Celda {
 
         public Celda build() {
             if (x == null) {
-                // TODO
+                System.err.println("Celda.Builder x=null");
             } else if (y == null) {
-                // TODO
+                System.err.println("Celda.Builder y=null");
             } else {
                 return new Celda(x, y);
             }

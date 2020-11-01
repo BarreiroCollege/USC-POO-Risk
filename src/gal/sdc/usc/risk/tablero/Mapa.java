@@ -114,7 +114,7 @@ public class Mapa {
                 }
 
                 if (!pais.setFronteras(preFronteras.build())) {
-                    // TODO
+                    System.err.println("El país " + pais.getNombre() + " ya tenía fronteras asignadas!");
                 }
             }
         }
@@ -289,7 +289,6 @@ public class Mapa {
         }
 
         public Mapa build() {
-            // TODO: generarFronteras
             Mapa mapa = new Mapa(continentes, paises);
             mapa.asignarFronteras();
             return mapa;

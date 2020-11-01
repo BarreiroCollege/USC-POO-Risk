@@ -132,17 +132,17 @@ public class Continente extends Partida {
 
         public Continente build() {
             if (continente == null) {
-                // TODO
+                System.err.println("Continente.Builder continente=null");
             } else if (nombre == null) {
-                // TODO
+                System.err.println("Continente.Builder nombre=null");
             } else if (abreviatura == null) {
-                // TODO
+                System.err.println("Continente.Builder abreviatura=null");
             } else if (color == null) {
-                // TODO
+                System.err.println("Continente.Builder color=null");
             } else if (ejercitosRearme == null) {
-                // TODO
+                System.err.println("Continente.Builder ejercitosRearme=null");
             } else if (paises.size() == 0) {
-                // TODO: Warn
+                System.err.println("Continente.Builder paises.size=0");
             } else {
                 return new Continente(this.continente, this.nombre, this.abreviatura, this.color, this.ejercitosRearme, this.paises);
             }

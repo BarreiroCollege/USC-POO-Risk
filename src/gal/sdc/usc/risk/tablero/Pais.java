@@ -124,13 +124,13 @@ public class Pais {
 
         public Pais build() {
             if (this.pais == null) {
-                // TODO
+                System.err.println("Pais.Builder pais=null");
             } else if (this.nombre == null) {
-                // TODO
+                System.err.println("Pais.Builder nombre=null");
             } else if (this.abreviatura == null) {
-                // TODO
+                System.err.println("Pais.Builder abreviatura=null");
             } else if (this.celda == null) {
-                // TODO
+                System.err.println("Pais.Builder celda=null");
             } else {
                 return new Pais(pais, nombre, abreviatura, celda);
             }

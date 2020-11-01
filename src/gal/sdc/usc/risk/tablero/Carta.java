@@ -47,9 +47,9 @@ public class Carta {
 
         public Carta build() {
             if (this.equipamiento == null) {
-                // TODO
+                System.err.println("Carta.Builder equipamiento=null");
             } else if (this.pais == null) {
-                // TODO
+                System.err.println("Carta.Builder pais=null");
             } else {
                 return new Carta(this.equipamiento, this.pais);
             }

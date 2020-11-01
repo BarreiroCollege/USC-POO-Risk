@@ -38,7 +38,7 @@ public class Mision {
 
         public Mision build() {
             if (mision == null) {
-                // TODO
+                System.err.println("Mision.Builder mision=null");
             } else {
                 return new Mision(mision, mision.getId(), mision.getNombre());
             }
