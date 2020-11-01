@@ -36,7 +36,7 @@ public class DescribirJugador extends Partida implements IComando {
         out.append("  numeroEjercitos: ").append(jugador.getNumEjercitos()).append(",\n");
 
         out.append("  paises: [ ");
-        Iterator<Pais> itP = getJugadorTurno().getPaises().iterator();
+        Iterator<Pais> itP = jugador.getPaises().iterator();
         boolean primero = true;
         while (itP.hasNext()) {
             Pais pais = itP.next();

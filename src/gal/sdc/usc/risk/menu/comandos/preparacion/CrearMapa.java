@@ -32,7 +32,7 @@ public class CrearMapa extends Partida implements IComando {
                     .withNombre(continente.getNombre())
                     .withAbreviatura(continente.getAbreviatura())
                     .withColor(continente.getColor())
-                    .withEjercitos(continente.getEjercitos());
+                    .withEjercitosRearme(continente.getEjercitos());
 
             // Luego países del continente
             for (Paises pais : Paises.values()) {

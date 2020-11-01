@@ -7,11 +7,20 @@ public enum Comandos {
     OBTENER_CONTINENTE("obtener continente ([a-zA-Z]*)"),
     OBTENER_FRONTERA("obtener frontera(s)? ([a-zA-Z]*)"),
     OBTENER_PAISES("obtener pais(es)? ([a-zA-Z]*)"),
-    //
+    /* --- */
+    CAMBIAR_CARTAS(""),
+    CAMBIAR_CARTAS_TODAS(""),
     ACABAR_TURNO("(acabar|terminar) turno"),
     JUGADOR("jugador"),
     DESCRIBIR_JUGADOR("describir jugador ([a-zA-Z0-9á-úÁ-Ú]*)"),
-    //
+    DESCRIBIR_PAIS("describir pa[ií]s ([a-zA-Z0-9á-úÁ-Ú]*)"),
+    DESCRIBIR_CONTINENTE("describir continente ([a-zA-Z0-9á-úÁ-Ú]*)"),
+    // VER_MAPA("ver mapa"),
+    ATACAR_PAIS(""),
+    ATACAR_PAIS_DADOS(""),
+    REARMAR(""),
+    ASIGNAR_CARTA(""),
+    /* --- */
     CREAR_MAPA("crear mapa"),
     CREAR_JUGADOR("crear ([a-zA-Z0-9á-úÁ-Ú]*)(?<!jugador)(?<!jugadores) ([a-zA-Z]*)"),
     CREAR_JUGADORES("crear jugador(es)? ([a-zA-Z0-9.]*)"),

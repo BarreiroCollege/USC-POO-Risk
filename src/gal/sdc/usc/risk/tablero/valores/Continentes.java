@@ -6,7 +6,7 @@ public enum Continentes {
     ASIA("Asia", "Asia", Color.CELESTE, 7),
     AFRICA("África", "África", Color.VERDE, 3),
     EUROPA("Europa", "Europa", Color.AMARILLO, 5),
-    AMERICANORTE("América del Norte", "AmericaNorte", Color.MORADO, 5),
+    AMERICANORTE("América del Norte", "AméricaNorte", Color.MORADO, 5),
     AMERICASUR("América del Sur", "AméricaSur", Color.ROJO, 2),
     OCEANIA("Oceanía", "Oceanía", Color.AZUL, 2);
 

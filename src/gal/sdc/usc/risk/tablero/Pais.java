@@ -16,6 +16,7 @@ public class Pais {
 
     private Jugador jugador = null;
     private final Ejercito ejercito;
+    private Integer numVecesConquistado = 0;
 
     private Pais(Paises identificador, String nombre, String abreviatura, Celda celda) {
         this.identificador = identificador;
@@ -74,10 +75,15 @@ public class Pais {
 
     public void setJugador(Jugador jugador) {
         this.jugador = jugador;
+        numVecesConquistado += 1;
     }
 
     public Ejercito getEjercito() {
         return ejercito;
+    }
+
+    public Integer getNumVecesConquistado() {
+        return numVecesConquistado;
     }
 
     @Override

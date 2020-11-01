@@ -13,16 +13,16 @@ public class Continente extends Partida {
     private final String nombre;
     private final String abreviatura;
     private final Color color;
-    private final Integer ejercitos;
+    private final Integer ejercitosRearme;
     private final HashMap<String, Pais> paises;
 
-    private Continente(Continentes continente, String nombre, String abreviatura, Color color, Integer ejercitos,
+    private Continente(Continentes continente, String nombre, String abreviatura, Color color, Integer ejercitosRearme,
                        HashMap<String, Pais> paises) {
         this.identificador = continente;
         this.nombre = nombre;
         this.abreviatura = abreviatura;
         this.color = color;
-        this.ejercitos = ejercitos;
+        this.ejercitosRearme = ejercitosRearme;
         this.paises = paises;
     }
 
@@ -42,8 +42,8 @@ public class Continente extends Partida {
         return this.color;
     }
 
-    public Integer getEjercitos() {
-        return this.ejercitos;
+    public Integer getEjercitosRearme() {
+        return this.ejercitosRearme;
     }
 
     public HashMap<String, Pais> getPaises() {
@@ -60,6 +60,14 @@ public class Continente extends Partida {
                 .collect(Collectors.toList());
     }
 
+    public Integer getNumEjercitos() {
+        Integer i = 0;
+        for (Pais pais : this.getPaises().values()) {
+            i += pais.getEjercito().toInt();
+        }
+        return i;
+    }
+
     @Override
     public String toString() {
         return "Continente{" +
@@ -67,7 +75,7 @@ public class Continente extends Partida {
                 ", nombre='" + nombre + '\'' +
                 ", abreviatura='" + abreviatura + '\'' +
                 ", color=" + color +
-                ", ejercitos=" + ejercitos +
+                ", ejercitosRearme=" + ejercitosRearme +
                 ", paises=" + paises +
                 '}';
     }
@@ -78,7 +86,7 @@ public class Continente extends Partida {
         private String nombre;
         private String abreviatura;
         private Color color;
-        private Integer ejercitos;
+        private Integer ejercitosRearme;
 
         public Builder(Continentes continente) {
             this.continente = continente;
@@ -100,8 +108,8 @@ public class Continente extends Partida {
             return this;
         }
 
-        public Builder withEjercitos(Integer ejercitos) {
-            this.ejercitos = ejercitos;
+        public Builder withEjercitosRearme(Integer ejercitos) {
+            this.ejercitosRearme = ejercitos;
             return this;
         }
 
@@ -119,12 +127,12 @@ public class Continente extends Partida {
                 // TODO
             } else if (color == null) {
                 // TODO
-            } else if (ejercitos == null) {
+            } else if (ejercitosRearme == null) {
                 // TODO
             } else if (paises.size() == 0) {
                 // TODO: Warn
             } else {
-                return new Continente(this.continente, this.nombre, this.abreviatura, this.color, this.ejercitos, this.paises);
+                return new Continente(this.continente, this.nombre, this.abreviatura, this.color, this.ejercitosRearme, this.paises);
             }
             return null;
         }
