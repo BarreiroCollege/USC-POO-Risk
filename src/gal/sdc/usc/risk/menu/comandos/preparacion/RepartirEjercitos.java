@@ -35,6 +35,10 @@ public class RepartirEjercitos extends Partida implements IComando {
 
         Ejecutor.comando("ver mapa");
 
+        // for (Jugador jugador : super.getJugadores().values()) {
+        //     System.out.println(jugador.getNombre() + " -> " + jugador.getEjercitosPendientes());
+        // }
+
         if (super.isJugando()) {
             super.getComandos().atacar();
         } else {
