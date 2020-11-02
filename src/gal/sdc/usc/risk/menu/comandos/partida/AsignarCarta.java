@@ -45,10 +45,6 @@ public class AsignarCarta extends Partida implements IComando {
         super.getComandos().cartaEscogida();
         super.getJugadorTurno().getCartas().add(carta);
 
-        if (carta.getPais().getJugador().equals(super.getJugadorTurno())) {
-            paisFinal.getEjercito().recibir(new Ejercito(1));
-        }
-
         String out = "{\n";
         out += "  tipoCarta: \"" + carta.getEquipamiento().getNombre() + "\",\n";
         out += "  paisAsociado: \"" + carta.getPais().getNombre() + "\",\n";
