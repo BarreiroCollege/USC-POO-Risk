@@ -10,6 +10,7 @@ import gal.sdc.usc.risk.menu.comandos.IComando;
 public class CambiarCartasTodas extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
+        // TODO
     }
 
     @Override

@@ -1,6 +1,7 @@
 package gal.sdc.usc.risk.menu;
 
 import gal.sdc.usc.risk.menu.comandos.ComandosDisponibles;
+import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
@@ -159,7 +160,7 @@ public abstract class Partida {
         // realizar un cambio de forma automática, de modo que, si son posibles dos cambios, se elegirá
         // el que obtiene el mayor número de ejércitos.
         if (this.getJugadorTurno().getCartas().size() > 6) {
-            // TODO: Llamar a CambiarCarta.class
+            Ejecutor.comando("cambiar cartas todas");
         }
 
         // Cuando se cambian las cartas, si el país asociado a la carta es un país que pertenece al jugador,
