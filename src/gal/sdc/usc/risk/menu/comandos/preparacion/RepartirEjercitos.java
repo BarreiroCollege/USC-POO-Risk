@@ -2,12 +2,10 @@ package gal.sdc.usc.risk.menu.comandos.preparacion;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.comandos.Comando;
+import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.Comandos;
-import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartas;
-import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartasTodas;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -22,8 +20,8 @@ import java.util.Map;
 
 @Comando(estado = Estado.PREPARACION, comando = Comandos.REPARTIR_EJERCITOS)
 public class RepartirEjercitos extends Partida implements IComando {
-    private HashMap<Continente, Jugador> continentesR1;
-    private HashMap<Continente, Jugador> continentesR4;
+    private HashMap<Continente, List<Jugador>> continentesR1;
+    private HashMap<Continente, List<Jugador>> continentesR4;
     private List<Jugador> jugadoresR7;
 
     @Override
@@ -38,7 +36,7 @@ public class RepartirEjercitos extends Partida implements IComando {
         Ejecutor.comando("ver mapa");
 
         if (super.isJugando()) {
-            super.getComandos().atacando();
+            super.getComandos().atacar();
         } else {
             super.iniciar();
         }
@@ -53,6 +51,8 @@ public class RepartirEjercitos extends Partida implements IComando {
         Jugador jugador;
 
         for (Continente continente : super.getMapa().getContinentes().values()) {
+            this.continentesR1.put(continente, new ArrayList<>());
+            this.continentesR4.put(continente, new ArrayList<>());
             numPaises50 = (int) Math.ceil(continente.getPaises().size() * 0.50);
             numPaises25 = (int) Math.ceil(continente.getPaises().size() * 0.25);
             jugadoresPaises = new HashMap<>();
@@ -60,21 +60,37 @@ public class RepartirEjercitos extends Partida implements IComando {
             for (Pais pais : continente.getPaises().values()) {
                 jugador = pais.getJugador();
                 jugadoresPaises.putIfAbsent(jugador, 0);
-                if (jugadoresPaises.get(jugador) >= numPaises50) {
-                    this.continentesR1.put(continente, jugador);
-                    break;
-                } else if (jugadoresPaises.get(jugador) >= numPaises25) {
-                    this.continentesR4.put(continente, jugador);
-                    break;
-                }
                 jugadoresPaises.put(jugador, jugadoresPaises.get(jugador) + 1);
+                if (jugadoresPaises.get(jugador) >= numPaises50 &&
+                        !this.continentesR1.get(continente).contains(jugador)) {
+                    this.continentesR1.get(continente).add(jugador);
+                    this.continentesR4.get(continente).remove(jugador);
+                } else if (jugadoresPaises.get(jugador) >= numPaises25 &&
+                        !this.continentesR4.get(continente).contains(jugador) &&
+                        !this.continentesR1.get(continente).contains(jugador)) {
+                    this.continentesR4.get(continente).add(jugador);
+                }
             }
         }
     }
 
     private void buscarR2R5() {
-        this.buscarR2R5(this.continentesR1);
-        this.buscarR2R5(this.continentesR4);
+        this.parsearR2R5(this.continentesR1);
+        this.parsearR2R5(this.continentesR4);
+    }
+
+    private void parsearR2R5(HashMap<Continente, List<Jugador>> jugadoresContinentes) {
+        for (Map.Entry<Continente, List<Jugador>> jugadorContinente : jugadoresContinentes.entrySet()) {
+            for (Jugador jugador : jugadorContinente.getValue()) {
+                HashMap<Continente, Jugador> nuevoContinenteJugador = new HashMap<>();
+                for (Map.Entry<Continente, List<Jugador>> jugadorContinente2 : jugadoresContinentes.entrySet()) {
+                    if (jugadorContinente2.getValue().contains(jugador)) {
+                        nuevoContinenteJugador.put(jugadorContinente2.getKey(), jugador);
+                    }
+                }
+                this.buscarR2R5(nuevoContinenteJugador);
+            }
+        }
     }
 
     private void buscarR2R5(HashMap<Continente, Jugador> jugadoresContinentes) {
@@ -125,11 +141,11 @@ public class RepartirEjercitos extends Partida implements IComando {
         int numEjercitos;
 
         Continente continente;
-        Jugador jugador;
+        List<Jugador> jugadores;
 
-        for (Map.Entry<Continente, Jugador> e : this.continentesR1.entrySet()) {
+        for (Map.Entry<Continente, List<Jugador>> e : this.continentesR1.entrySet()) {
             continente = e.getKey();
-            jugador = e.getValue();
+            jugadores = e.getValue();
 
             if (continente.equals(super.getMapa().getContinentePorNombre(Continentes.OCEANIA.getNombre())) ||
                     continente.equals(super.getMapa().getContinentePorNombre(Continentes.AMERICASUR.getNombre()))) {
@@ -137,55 +153,35 @@ public class RepartirEjercitos extends Partida implements IComando {
             } else {
                 factor = 1;
             }
-            numEjercitos = Math.toIntExact(Math.round(jugador.getEjercitosPendientes().toInt() / (factor * continente.getPaisesPorJugador(jugador).size())));
-            for (Pais pais : continente.getPaisesPorJugador(jugador)) {
-                pais.getEjercito().recibir(jugador.getEjercitosPendientes(), numEjercitos, true);
+
+            for (Jugador jugador : jugadores) {
+                numEjercitos = Math.toIntExact(Math.round(jugador.getEjercitosPendientes().toInt() / (factor * continente.getPaisesPorJugador(jugador).size())));
+                for (Pais pais : continente.getPaisesPorJugador(jugador)) {
+                    pais.getEjercito().recibir(jugador.getEjercitosPendientes(), numEjercitos, true);
+                }
             }
         }
 
-        for (Map.Entry<Continente, Jugador> e : this.continentesR4.entrySet()) {
+        for (Map.Entry<Continente, List<Jugador>> e : this.continentesR4.entrySet()) {
             continente = e.getKey();
-            jugador = e.getValue();
+            jugadores = e.getValue();
 
-            numEjercitos = Math.toIntExact(Math.round(jugador.getEjercitosPendientes().toInt() / (2.0 * continente.getPaisesPorJugador(jugador).size())));
-            for (Pais pais : continente.getPaisesPorJugador(jugador)) {
-                pais.getEjercito().recibir(jugador.getEjercitosPendientes(), numEjercitos, true);
+            for (Jugador jugador : jugadores) {
+                numEjercitos = Math.toIntExact(Math.round(jugador.getEjercitosPendientes().toInt() / (2.0 * continente.getPaisesPorJugador(jugador).size())));
+                for (Pais pais : continente.getPaisesPorJugador(jugador)) {
+                    pais.getEjercito().recibir(jugador.getEjercitosPendientes(), numEjercitos, true);
+                }
             }
         }
     }
 
     private void buscarR7() {
         this.jugadoresR7 = new ArrayList<>();
+        int numPaises25 = (int) Math.ceil(super.getMapa().getPaisesPorCeldas().size() * 0.25);
 
-        HashMap<Jugador, HashMap<Continente, Integer>> jugadoresContinentes = new HashMap<>();
-        HashMap<Continente, Integer> numPaises25 = new HashMap<>();
-        Jugador jugador;
-
-        for (Continente continente : super.getMapa().getContinentes().values()) {
-            numPaises25.put(continente, (int) Math.ceil(continente.getPaises().size() * 0.25));
-
-            for (Pais pais : continente.getPaises().values()) {
-                jugador = pais.getJugador();
-                jugadoresContinentes.putIfAbsent(jugador, new HashMap<>());
-                jugadoresContinentes.get(jugador).putIfAbsent(continente, 0);
-                jugadoresContinentes.get(jugador).put(continente, jugadoresContinentes.get(jugador).get(continente));
-            }
-        }
-
-        for (Map.Entry<Jugador, HashMap<Continente, Integer>> jugadorContinentes : jugadoresContinentes.entrySet()) {
-            boolean menor = true;
-            for (Map.Entry<Continente, Integer> jugadorContinente : jugadorContinentes.getValue().entrySet()) {
-                if (jugadorContinente.getValue() == 0) {
-                    menor = false;
-                    break;
-                } else if (jugadorContinente.getValue() >= numPaises25.get(jugadorContinente.getKey())) {
-                    menor = false;
-                    break;
-                }
-            }
-
-            if (menor) {
-                this.jugadoresR7.add(jugadorContinentes.getKey());
+        for (Jugador jugador : super.getJugadores().values()) {
+            if (jugador.getPaises().size() < numPaises25) {
+                this.jugadoresR7.add(jugador);
             }
         }
     }
@@ -203,25 +199,29 @@ public class RepartirEjercitos extends Partida implements IComando {
     }
 
     private void repartirR3R6R8() {
-        for (Jugador jugador : this.continentesR1.values()) {
-            jugador.getPaises().sort(Comparator.comparing(Pais::getFronteras).reversed());
-            for (Pais pais : jugador.getPaises()) {
-                if (jugador.getEjercitosPendientes().toInt() == 0) {
-                    break;
-                }
-                if (pais.getEjercito().toInt() == 1) {
-                    pais.getEjercito().recibir(jugador.getEjercitosPendientes(), 1, true);
+        for (List<Jugador> jugadores : this.continentesR1.values()) {
+            for (Jugador jugador : jugadores) {
+                jugador.getPaises().sort(Comparator.comparing(Pais::getFronteras).reversed());
+                for (Pais pais : jugador.getPaises()) {
+                    if (jugador.getEjercitosPendientes().toInt() == 0) {
+                        break;
+                    }
+                    if (pais.getEjercito().toInt() == 1) {
+                        pais.getEjercito().recibir(jugador.getEjercitosPendientes(), 1, true);
+                    }
                 }
             }
         }
-        for (Jugador jugador : this.continentesR4.values()) {
-            jugador.getPaises().sort(Comparator.comparing(Pais::getFronteras).reversed());
-            for (Pais pais : jugador.getPaises()) {
-                if (jugador.getEjercitosPendientes().toInt() == 0) {
-                    break;
-                }
-                if (pais.getEjercito().toInt() == 1) {
-                    pais.getEjercito().recibir(jugador.getEjercitosPendientes(), 1, true);
+        for (List<Jugador> jugadores : this.continentesR4.values()) {
+            for (Jugador jugador : jugadores) {
+                jugador.getPaises().sort(Comparator.comparing(Pais::getFronteras).reversed());
+                for (Pais pais : jugador.getPaises()) {
+                    if (jugador.getEjercitosPendientes().toInt() == 0) {
+                        break;
+                    }
+                    if (pais.getEjercito().toInt() == 1) {
+                        pais.getEjercito().recibir(jugador.getEjercitosPendientes(), 1, true);
+                    }
                 }
             }
         }
