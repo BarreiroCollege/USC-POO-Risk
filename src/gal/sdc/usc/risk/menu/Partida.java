@@ -160,7 +160,7 @@ public abstract class Partida {
         // realizar un cambio de forma automática, de modo que, si son posibles dos cambios, se elegirá
         // el que obtiene el mayor número de ejércitos.
         if (this.getJugadorTurno().getCartas().size() > 6) {
-            Ejecutor.comando("cambiar cartas todas");
+            Ejecutor.comando("cambiar cartas todas auto");
         }
 
         // Cuando se cambian las cartas, si el país asociado a la carta es un país que pertenece al jugador,

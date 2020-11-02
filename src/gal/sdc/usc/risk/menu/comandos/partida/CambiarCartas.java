@@ -24,6 +24,7 @@ public class CambiarCartas extends Partida implements IComando {
         String c1 = comandos[2];
         String c2 = comandos[3];
         String c3 = comandos[4];
+        boolean auto = comandos.length > 5;
 
         Carta cartaFinal;
         String[] carta;
@@ -34,25 +35,33 @@ public class CambiarCartas extends Partida implements IComando {
         for (String c : Arrays.asList(c1, c2, c3)) {
             carta = c.split("&");
             if (carta.length != 2) {
-                Resultado.error(Errores.CARTAS_NO_EXISTEN);
+                if (!auto) {
+                    Resultado.error(Errores.CARTAS_NO_EXISTEN);
+                }
                 return;
             }
 
             equipamiento = Equipamientos.toEquipamientos(carta[0]);
             if (equipamiento == null) {
-                Resultado.error(Errores.CARTAS_NO_EXISTEN);
+                if (!auto) {
+                    Resultado.error(Errores.CARTAS_NO_EXISTEN);
+                }
                 return;
             }
 
             pais = super.getMapa().getPaisPorNombre(carta[1]);
             if (pais == null) {
-                Resultado.error(Errores.CARTAS_NO_EXISTEN);
+                if (!auto) {
+                    Resultado.error(Errores.CARTAS_NO_EXISTEN);
+                }
                 return;
             }
 
             cartaFinal = super.getJugadorTurno().getCarta(equipamiento, pais);
             if (cartaFinal == null) {
-                Resultado.error(Errores.CARTAS_NO_JUGADOR);
+                if (!auto) {
+                    Resultado.error(Errores.CARTAS_NO_JUGADOR);
+                }
                 return;
             }
             cartas.add(cartaFinal);
@@ -70,7 +79,9 @@ public class CambiarCartas extends Partida implements IComando {
         }
 
         if (caballeria == 2 || infanteria == 2 || artilleria == 2) {
-            Resultado.error(Errores.CARTAS_NO_CAMBIABLES);
+            if (!auto) {
+                Resultado.error(Errores.CARTAS_NO_CAMBIABLES);
+            }
             return;
         }
 

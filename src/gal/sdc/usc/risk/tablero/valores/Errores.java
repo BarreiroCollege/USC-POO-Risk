@@ -21,6 +21,7 @@ public enum Errores {
     JUGADOR_YA_MISION(117, "El jugador ya tiene asignada misión"),
     MISIONES_NO_ASIGNADAS(118, "Las misiones no están asignadas"),
     EJERCITO_NO_DISPONIBLE(119, "Ejércitos no disponibles"),
+    CARTAS_NO_SUFICIENTES(120, "No hay cartas suficientes"),
     CARTAS_NO_CAMBIABLES(121, "No hay configuración de cambio"),
     CARTAS_NO_JUGADOR(122, "Algunas cartas no pertenecen al jugador"),
     CARTAS_NO_EXISTEN(123, "Algunas cartas no existen"),

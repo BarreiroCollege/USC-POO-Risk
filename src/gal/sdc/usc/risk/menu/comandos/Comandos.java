@@ -8,8 +8,8 @@ public enum Comandos {
     OBTENER_FRONTERA("obtener frontera(s)? ([a-zA-Z]*)"),
     OBTENER_PAISES("obtener pais(es)? ([a-zA-Z]*)"),
     /* --- */
-    CAMBIAR_CARTAS("cambiar cartas? ([a-zA-Z0-9á-úÁ-Ú&]*) ([a-zA-Z0-9á-úÁ-Ú&]*) ([a-zA-Z0-9á-úÁ-Ú&]*)"),
-    CAMBIAR_CARTAS_TODAS("cambiar cartas? todas"),
+    CAMBIAR_CARTAS("cambiar cartas? ([a-zA-Z0-9á-úÁ-Ú&]*) ([a-zA-Z0-9á-úÁ-Ú&]*) ([a-zA-Z0-9á-úÁ-Ú&]*)( auto)?"),
+    CAMBIAR_CARTAS_TODAS("cambiar cartas? todas( auto)?"),
     ACABAR_TURNO("(acabar|terminar) turno"),
     JUGADOR("jugador"),
     DESCRIBIR_JUGADOR("describir jugador ([a-zA-Z0-9á-úÁ-Ú]*)"),
