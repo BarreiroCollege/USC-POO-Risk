@@ -42,7 +42,7 @@ public class AsignarCarta extends Partida implements IComando {
             return;
         }
 
-        super.getComandosPermitidos().remove(this.getClass());
+        super.getComandos().cartaEscogida();
         super.getJugadorTurno().getCartas().add(carta);
 
         if (carta.getPais().getJugador().equals(super.getJugadorTurno())) {
@@ -52,7 +52,7 @@ public class AsignarCarta extends Partida implements IComando {
         String out = "{\n";
         out += "  tipoCarta: \"" + carta.getEquipamiento().getNombre() + "\",\n";
         out += "  paisAsociado: \"" + carta.getPais().getNombre() + "\",\n";
-        out += "  perteneceAJugador: \"" + carta.getPais().getJugador().getNombre() + "\",\n";
+        out += "  perteneceAJugador: \"" + super.getJugadorTurno().getNombre() + "\",\n";
         out += "  ejercitosDeRearme: " + (carta.getPais().getJugador().equals(super.getJugadorTurno()) ? 1 : 0) + "\n";
         out += "}";
         Resultado.correcto(out);

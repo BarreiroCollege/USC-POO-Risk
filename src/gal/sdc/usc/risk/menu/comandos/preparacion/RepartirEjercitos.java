@@ -37,11 +37,11 @@ public class RepartirEjercitos extends Partida implements IComando {
 
         Ejecutor.comando("ver mapa");
 
-        super.getComandosPermitidos().remove(CambiarCartas.class);
-        super.getComandosPermitidos().remove(CambiarCartasTodas.class);
-        super.getComandosPermitidos().remove(RepartirEjercito.class);
-        super.getComandosPermitidos().remove(RepartirEjercitos.class);
-        super.iniciar();
+        if (super.isJugando()) {
+            super.getComandos().atacando();
+        } else {
+            super.iniciar();
+        }
     }
 
     private void buscarR1R4() {

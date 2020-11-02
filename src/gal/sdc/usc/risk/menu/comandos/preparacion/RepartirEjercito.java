@@ -90,14 +90,10 @@ public class RepartirEjercito extends Partida implements IComando {
 
     private void comprobarEjercitos(Jugador jugador) {
         if (super.isJugando()) {
-            super.getComandosPermitidos().remove(CambiarCartas.class);
-            super.getComandosPermitidos().remove(CambiarCartasTodas.class);
+            super.getComandos().repartiendo();
 
             if (super.getJugadorTurno().getEjercitosPendientes().toInt() == 0) {
-                super.getComandosPermitidos().remove(this.getClass());
-                super.getComandosPermitidos().remove(RepartirEjercitos.class);
-                super.getComandosPermitidos().add(AtacarPais.class);
-                super.getComandosPermitidos().add(AtacarPaisDados.class);
+                super.getComandos().atacar();
             }
         } else {
             if (super.getJugadores().values().stream().filter(j -> j.getEjercitosPendientes().toInt() > 0).findAny().orElse(null) == null) {

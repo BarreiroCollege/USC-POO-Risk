@@ -22,11 +22,6 @@ import java.util.List;
 public class AtacarPaisDados extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
-        super.getComandosPermitidos().remove(CambiarCartas.class);
-        super.getComandosPermitidos().remove(CambiarCartasTodas.class);
-        super.getComandosPermitidos().remove(RepartirEjercito.class);
-        super.getComandosPermitidos().remove(RepartirEjercitos.class);
-
         Pais pais1 = super.getMapa().getPaisPorNombre(comandos[1]);
         Pais pais2 = super.getMapa().getPaisPorNombre(comandos[3]);
         String[] dadosAtacante = comandos[2].split("x");
@@ -52,6 +47,8 @@ public class AtacarPaisDados extends Partida implements IComando {
             Resultado.error(Errores.PAIS_NO_PERTENECE);
             return;
         }
+
+        super.getComandos().atacando();
 
         List<Integer> atacante = new ArrayList<>();
         for (String dado : dadosAtacante) {
@@ -97,8 +94,7 @@ public class AtacarPaisDados extends Partida implements IComando {
         }
         if (conquistado && !super.isHaConquistadoPais()) {
             super.conquistadoPais();
-            super.getComandosPermitidos().add(Rearmar.class);
-            super.getComandosPermitidos().add(AsignarCarta.class);
+            super.getComandos().paisConquistado();
         }
 
         Iterator<Integer> it;

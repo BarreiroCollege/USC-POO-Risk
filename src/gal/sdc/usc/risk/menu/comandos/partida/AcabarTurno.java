@@ -13,7 +13,7 @@ public class AcabarTurno extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
         super.moverTurno();
-        super.comandosTurno();
+        super.getComandos().iniciarTurno();
 
         String out = "{\n" +
                 "  nombre: \"" + super.getJugadorTurno().getNombre() + "\",\n" +

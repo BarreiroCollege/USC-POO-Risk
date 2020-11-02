@@ -1,25 +1,7 @@
 package gal.sdc.usc.risk.menu;
 
+import gal.sdc.usc.risk.menu.comandos.ComandosDisponibles;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.generico.Ayuda;
-import gal.sdc.usc.risk.menu.comandos.generico.ObtenerColor;
-import gal.sdc.usc.risk.menu.comandos.generico.ObtenerContinente;
-import gal.sdc.usc.risk.menu.comandos.generico.ObtenerFrontera;
-import gal.sdc.usc.risk.menu.comandos.generico.ObtenerPaises;
-import gal.sdc.usc.risk.menu.comandos.generico.VerMapa;
-import gal.sdc.usc.risk.menu.comandos.partida.AcabarTurno;
-import gal.sdc.usc.risk.menu.comandos.partida.AsignarCarta;
-import gal.sdc.usc.risk.menu.comandos.partida.AtacarPais;
-import gal.sdc.usc.risk.menu.comandos.partida.AtacarPaisDados;
-import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartas;
-import gal.sdc.usc.risk.menu.comandos.partida.CambiarCartasTodas;
-import gal.sdc.usc.risk.menu.comandos.partida.DescribirContinente;
-import gal.sdc.usc.risk.menu.comandos.partida.DescribirJugador;
-import gal.sdc.usc.risk.menu.comandos.partida.DescribirPais;
-import gal.sdc.usc.risk.menu.comandos.partida.Rearmar;
-import gal.sdc.usc.risk.menu.comandos.preparacion.CrearMapa;
-import gal.sdc.usc.risk.menu.comandos.preparacion.RepartirEjercito;
-import gal.sdc.usc.risk.menu.comandos.preparacion.RepartirEjercitos;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Ejercito;
@@ -45,18 +27,7 @@ public abstract class Partida {
     private static boolean haConquistadoPais = false;
 
     private static boolean jugando = false;
-    private static final List<Class<? extends IComando>> comandosPermitidos = new ArrayList<>();
-
-    static {
-        comandosPermitidos.add(Ayuda.class);
-        comandosPermitidos.add(VerMapa.class);
-        comandosPermitidos.add(ObtenerColor.class);
-        comandosPermitidos.add(ObtenerContinente.class);
-        comandosPermitidos.add(ObtenerFrontera.class);
-        comandosPermitidos.add(ObtenerPaises.class);
-        // Iniciar la partida
-        comandosPermitidos.add(CrearMapa.class);
-    }
+    private static final ComandosDisponibles comandosDisponibles = new ComandosDisponibles();
 
 
     protected Mapa getMapa() {
@@ -125,40 +96,13 @@ public abstract class Partida {
             }
         }
 
-        Partida.comandosPermitidos.add(AcabarTurno.class);
-        Partida.comandosPermitidos.add(DescribirContinente.class);
-        Partida.comandosPermitidos.add(DescribirJugador.class);
-        Partida.comandosPermitidos.add(DescribirPais.class);
-        Partida.comandosPermitidos.add(gal.sdc.usc.risk.menu.comandos.partida.Jugador.class);
-        this.comandosTurno();
+        Partida.comandosDisponibles.iniciarPartida();
         this.comprobacionesTurno();
         return true;
     }
 
-    protected void comandosTurno() {
-        Partida.comandosPermitidos.remove(CambiarCartas.class);
-        Partida.comandosPermitidos.remove(CambiarCartasTodas.class);
-        Partida.comandosPermitidos.remove(RepartirEjercito.class);
-        Partida.comandosPermitidos.remove(RepartirEjercitos.class);
-        Partida.comandosPermitidos.remove(AtacarPais.class);
-        Partida.comandosPermitidos.remove(AtacarPaisDados.class);
-        Partida.comandosPermitidos.remove(Rearmar.class);
-        Partida.comandosPermitidos.remove(AsignarCarta.class);
-
-        Partida.comandosPermitidos.add(CambiarCartas.class);
-        Partida.comandosPermitidos.add(CambiarCartasTodas.class);
-
-        if (this.getJugadorTurno().getEjercitosPendientes().toInt() == 0) {
-            Partida.comandosPermitidos.add(AtacarPais.class);
-            Partida.comandosPermitidos.add(AtacarPaisDados.class);
-        } else {
-            Partida.comandosPermitidos.add(RepartirEjercito.class);
-            Partida.comandosPermitidos.add(RepartirEjercitos.class);
-        }
-    }
-
-    protected List<Class<? extends IComando>> getComandosPermitidos() {
-        return Partida.comandosPermitidos;
+    protected ComandosDisponibles getComandos() {
+        return Partida.comandosDisponibles;
     }
 
     protected void devolverCarta(Carta carta) {
@@ -215,6 +159,14 @@ public abstract class Partida {
         // el que obtiene el mayor número de ejércitos.
         if (this.getJugadorTurno().getCartas().size() > 6) {
             // TODO: Llamar a CambiarCarta.class
+        }
+
+        // Cuando se cambian las cartas, si el país asociado a la carta es un país que pertenece al jugador,
+        // se pondrá un ejército adicional en dicho país.
+        for (Carta carta : this.getJugadorTurno().getCartas()) {
+            if (carta.getPais().getJugador().equals(this.getJugadorTurno())) {
+                carta.getPais().getEjercito().recibir(new Ejercito(1));
+            }
         }
     }
 }

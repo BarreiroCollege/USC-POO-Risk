@@ -18,7 +18,7 @@ public class Ayuda extends Partida implements IComando {
         try {
             String ayuda;
             StringBuilder texto = new StringBuilder("{\n");
-            for (Class<? extends IComando> comando : super.getComandosPermitidos()) {Object comandoObject;
+            for (Class<? extends IComando> comando : super.getComandos().getLista()) {Object comandoObject;
                 comandoObject = comando.newInstance();
                 Method ejecutar = comando.getMethod("ayuda");
                 ayuda = (String) ejecutar.invoke(comandoObject);

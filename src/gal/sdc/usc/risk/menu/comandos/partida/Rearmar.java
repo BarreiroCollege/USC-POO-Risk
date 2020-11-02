@@ -14,10 +14,6 @@ import gal.sdc.usc.risk.util.Colores;
 public class Rearmar extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
-        super.getComandosPermitidos().remove(AtacarPais.class);
-        super.getComandosPermitidos().remove(AtacarPaisDados.class);
-        super.getComandosPermitidos().remove(this.getClass());
-
         Pais origen = super.getMapa().getPaisPorNombre(comandos[1]);
         Integer num = Integer.parseInt(comandos[2]);
         Pais destino = super.getMapa().getPaisPorNombre(comandos[3]);
@@ -38,6 +34,8 @@ public class Rearmar extends Partida implements IComando {
             Resultado.error(Errores.PAIS_NO_FONTERA);
             return;
         }
+
+        super.getComandos().rearmando();
 
         int inicialOrigen = origen.getEjercito().toInt();
         int inicialDestino = destino.getEjercito().toInt();

@@ -89,12 +89,8 @@ public class AsignarPais extends Partida implements IComando {
             }
         }
 
-        super.getComandosPermitidos().remove(AsignarPaises.class);
         if (tieneJugador) {
-            super.getComandosPermitidos().remove(AsignarPais.class);
-
-            super.getComandosPermitidos().add(RepartirEjercito.class);
-            super.getComandosPermitidos().add(RepartirEjercitos.class);
+            super.getComandos().habilitarRepartirEjercitos();
             // Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
         }
     }

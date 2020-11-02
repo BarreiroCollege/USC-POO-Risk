@@ -41,7 +41,7 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
     public Boolean call() {
         Class<? extends IComando> comando = null;
 
-        for (Class<? extends IComando> comandoI : super.getComandosPermitidos()) {
+        for (Class<? extends IComando> comandoI : super.getComandos().getLista()) {
             if (comandoI.isAnnotationPresent(Comando.class)) {
                 Comando comandoA = comandoI.getAnnotation(Comando.class);
                 if (this.getComando().toLowerCase().matches(comandoA.comando().getRegex())) {

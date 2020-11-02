@@ -52,11 +52,9 @@ public class CrearJugador extends Partida implements IComando {
 
     private void comprobarJugadores() {
         if (super.getJugadores().size() == 3) {
-            super.getComandosPermitidos().remove(CrearJugadores.class);
-            super.getComandosPermitidos().add(AsignarMision.class);
-            super.getComandosPermitidos().add(AsignarMisiones.class);
+            super.getComandos().habilitarAsignarMisiones();
         } else if (super.getJugadores().size() == 6) {
-            super.getComandosPermitidos().remove(this.getClass());
+            super.getComandos().deshabilitarCrearJugadores();
         }
     }
 

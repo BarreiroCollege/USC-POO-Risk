@@ -50,6 +50,8 @@ public class AsignarMision extends Partida implements IComando {
             return;
         }
 
+        super.getComandos().deshabilitarCrearJugadores();
+
         jugador.setMision(misionFinal);
         this.comprobarJugadores();
 
@@ -69,7 +71,7 @@ public class AsignarMision extends Partida implements IComando {
             }
         }
 
-        if (super.getComandosPermitidos().remove(CrearJugador.class)) {
+        if (super.getJugadores().entrySet().iterator().next().getValue().getEjercitosPendientes().toInt() == 0) {
             int ejercitos = 0;
             if (super.getJugadores().size() == 3) {
                 ejercitos = 35;
@@ -87,12 +89,9 @@ public class AsignarMision extends Partida implements IComando {
                 }
             }
         }
-        super.getComandosPermitidos().remove(AsignarMisiones.class);
 
         if (tienenMisiones) {
-            super.getComandosPermitidos().remove(AsignarMision.class);
-            super.getComandosPermitidos().add(AsignarPais.class);
-            super.getComandosPermitidos().add(AsignarPaises.class);
+            super.getComandos().habilitarAsignarPaises();
         }
     }
 
