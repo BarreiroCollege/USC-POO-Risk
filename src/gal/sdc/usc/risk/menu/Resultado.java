@@ -1,5 +1,7 @@
 package gal.sdc.usc.risk.menu;
 
+import gal.sdc.usc.risk.menu.comandos.Ejecutor;
+import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
 
@@ -26,6 +28,17 @@ public class Resultado {
 
     public static void correcto(String out) {
         System.out.println(new Resultado(Colores.Color.VERDE, out));
+    }
+
+    public static void victoria(Jugador j) {
+        String out = "\033[1m\033[4m" + new Colores("VICTORIA DE ", Colores.Color.NEGRO, Colores.Color.BLANCO);
+        String jugador = "\033[1m\033[4m" + new Colores(j.getNombre(), Colores.Color.NEGRO, j.getColor()).toString();
+        String endout = "\033[1m\033[4m" + new Colores("!!!", Colores.Color.NEGRO, Colores.Color.BLANCO);
+        System.out.println(out + jugador + endout);
+
+        System.out.println(new Colores("Ahora puedes ver como ha quedado el tablero de juego", Colores.Color.AZUL));
+        System.out.println();
+        Ejecutor.comando("ayuda");
     }
 
     @Override

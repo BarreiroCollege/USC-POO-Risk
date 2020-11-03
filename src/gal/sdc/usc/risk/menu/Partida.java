@@ -60,6 +60,10 @@ public abstract class Partida {
                 .findAny().orElse(null);
     }
 
+    protected Jugador getJugadorPorColor(Colores.Color color) {
+        return this.getJugadoresPorColor().get(color);
+    }
+
     protected HashMap<Colores.Color, Jugador> getJugadoresPorColor() {
         HashMap<Colores.Color, Jugador> jugadores = new HashMap<>();
         for (Jugador jugador : Partida.jugadores.values()) {
@@ -126,12 +130,14 @@ public abstract class Partida {
     }
 
     protected boolean moverTurno() {
-        Jugador jugadorAnterior = Partida.ordenJugadores.poll();
-        if (jugadorAnterior == null) {
-            return false;
-        }
         Partida.haConquistadoPais = false;
-        Partida.ordenJugadores.add(jugadorAnterior);
+        do {
+            Jugador jugadorAnterior = Partida.ordenJugadores.poll();
+            if (jugadorAnterior == null) {
+                return false;
+            }
+            Partida.ordenJugadores.add(jugadorAnterior);
+        } while (Partida.ordenJugadores.peek().getPaises().size() == 0);
 
         if (this.isJugando()) {
             this.comprobacionesTurno();

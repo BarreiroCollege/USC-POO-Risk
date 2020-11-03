@@ -13,6 +13,10 @@ public class Mision {
         this.descripcion = descripcion;
     }
 
+    public Misiones getIdentificador() {
+        return this.identificador;
+    }
+
     public String getCodigo() {
         return codigo;
     }

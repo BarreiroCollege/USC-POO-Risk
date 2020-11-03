@@ -111,6 +111,11 @@ public class ComandosDisponibles extends Partida {
         remove(AsignarCarta.class);
     }
 
+    public void acabarPartida() {
+        this.acabarTurno();
+        remove(AcabarTurno.class);
+    }
+
     /* --- */
 
     public void mapaCreado() {

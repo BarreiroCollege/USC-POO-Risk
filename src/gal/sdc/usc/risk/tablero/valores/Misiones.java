@@ -2,7 +2,7 @@ package gal.sdc.usc.risk.tablero.valores;
 
 public enum Misiones {
     M1("M1", "Conquistar 24 países de la preferencia del jugador"),
-    M2("M1", "Conquistar 18 países de la preferencia del jugador con un mínimo de 2 ejércitos"),
+    M2("M2", "Conquistar 18 países de la preferencia del jugador con un mínimo de 2 ejércitos"),
 
     M31("M31", "Conquistar Asia y América del Sur"),
     M32("M32", "Conquistar Asia y África"),

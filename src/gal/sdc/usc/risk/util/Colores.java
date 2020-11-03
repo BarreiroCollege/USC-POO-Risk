@@ -45,7 +45,7 @@ public class Colores {
                 return "3";
             case AZUL:
                 return "4";
-            case MORADO:
+            case VIOLETA:
                 return "5";
             case CELESTE:
                 return "6";
@@ -88,7 +88,7 @@ public class Colores {
         VERDE,
         AMARILLO,
         AZUL,
-        MORADO,
+        VIOLETA,
         CELESTE,
         BLANCO;
 
@@ -114,7 +114,7 @@ public class Colores {
                     break;
                 case "MORADO":
                 case "VIOLETA":
-                    resultado = Color.MORADO;
+                    resultado = Color.VIOLETA;
                     break;
                 case "NEGRO":
                     resultado = Color.NEGRO;

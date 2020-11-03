@@ -41,9 +41,7 @@ public class AtacarPais extends Partida implements IComando {
             return;
         }
         if (pais1.getEjercito().toInt() <= 1) {
-            Resultado.error(Errores.EJERCITOS_NO_SUFICIENTES);  //ESTO LO MOVI AL FINAL, PQ SI ATACABAS CON UN PAIS Q NO ES TUYO A OTRO
-            //Y NO TIENE EL NUM MIN DE EJERCITOS TE PRINTEA ESE ERROR (ej_no_suf)
-            //EN VEZ DEL QUE DICE Q EL PAIS NO ES TUYO(pais_no_pertenece)
+            Resultado.error(Errores.EJERCITOS_NO_SUFICIENTES);
             return;
         }
         List<String> atacante = new ArrayList<>();

@@ -75,9 +75,8 @@ public class RepartirEjercitos extends Partida implements IComando {
                     this.continentesR4.get(continente).add(jugador);
                 }
             }
-           }
+        }
     }
-
 
 
     private void buscarR2R5() {
@@ -105,7 +104,7 @@ public class RepartirEjercitos extends Partida implements IComando {
             if (Collections.frequency(jugadoresContinentes.values(), e.getValue()) > 1) {
                 jugadoresDuplicados.putIfAbsent(e.getValue(), new ArrayList<>());
                 jugadoresDuplicados.get(e.getValue()).add(e.getKey());
-                // jugadoresContinentes.remove(e.getKey());
+                jugadoresContinentes.remove(e.getKey());
             }
         }
 
