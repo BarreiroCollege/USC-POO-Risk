@@ -2,9 +2,9 @@ package gal.sdc.usc.risk.menu.comandos.generico;
 
 import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.comandos.Comando;
+import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.util.Colores;
 
 import java.lang.reflect.InvocationTargetException;
@@ -18,7 +18,8 @@ public class Ayuda extends Partida implements IComando {
         try {
             String ayuda;
             StringBuilder texto = new StringBuilder("{\n");
-            for (Class<? extends IComando> comando : super.getComandos().getLista()) {Object comandoObject;
+            for (Class<? extends IComando> comando : super.getComandos().getLista()) {
+                Object comandoObject;
                 comandoObject = comando.newInstance();
                 Method ejecutar = comando.getMethod("ayuda");
                 ayuda = (String) ejecutar.invoke(comandoObject);

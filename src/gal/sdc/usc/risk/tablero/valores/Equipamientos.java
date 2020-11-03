@@ -13,14 +13,6 @@ public enum Equipamientos {
         this.ejercitos = ejercitos;
     }
 
-    public String getNombre() {
-        return this.nombre;
-    }
-
-    public Integer getEjercitos() {
-        return this.ejercitos;
-    }
-
     public static Equipamientos toEquipamientos(String equipamiento) {
         for (Equipamientos equipamientos : Equipamientos.values()) {
             if (equipamiento.toLowerCase().equals(equipamientos.getNombre().toLowerCase())) {
@@ -28,5 +20,13 @@ public enum Equipamientos {
             }
         }
         return null;
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public Integer getEjercitos() {
+        return this.ejercitos;
     }
 }

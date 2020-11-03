@@ -10,10 +10,9 @@ import java.util.List;
 public class Jugador extends Partida {
     private final String nombre;
     private final Color color;
-    private Mision mision = null;
-
     private final Ejercito ejercitosPendientes;
     private final List<Carta> cartas;
+    private Mision mision = null;
 
     private Jugador(String nombre, Color color) {
         this.nombre = nombre;
@@ -76,7 +75,7 @@ public class Jugador extends Partida {
     }
 
     public static class Builder {
-        private String nombre;
+        private final String nombre;
         private Color color;
 
         public Builder(String nombre) {

@@ -2,7 +2,6 @@ package gal.sdc.usc.risk.menu;
 
 import gal.sdc.usc.risk.menu.comandos.ComandosDisponibles;
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
-import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Ejercito;
@@ -20,16 +19,13 @@ import java.util.List;
 import java.util.Queue;
 
 public abstract class Partida {
-    private static Mapa mapa;
     private static final Queue<Jugador> ordenJugadores = new LinkedList<>();
     private static final HashMap<String, Jugador> jugadores = new HashMap<>();
-
     private static final List<Carta> cartasMonton = new ArrayList<>();
-    private static boolean haConquistadoPais = false;
-
-    private static boolean jugando = false;
     private static final ComandosDisponibles comandosDisponibles = new ComandosDisponibles();
-
+    private static Mapa mapa;
+    private static boolean haConquistadoPais = false;
+    private static boolean jugando = false;
 
     protected Mapa getMapa() {
         return Partida.mapa;

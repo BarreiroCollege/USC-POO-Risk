@@ -13,7 +13,7 @@ public class AcabarTurno extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
         // TODO: Comprobar si hay victoria
-        
+
         super.moverTurno();
         super.getComandos().iniciarTurno();
 

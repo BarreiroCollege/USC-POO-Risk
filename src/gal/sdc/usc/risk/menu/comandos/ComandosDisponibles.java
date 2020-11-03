@@ -34,20 +34,6 @@ import java.util.List;
 public class ComandosDisponibles extends Partida {
     private final List<Class<? extends IComando>> lista;
 
-    private void add(Class<? extends IComando> comando) {
-        if (!lista.contains(comando)) {
-            lista.add(comando);
-        }
-    }
-    
-    private void remove(Class<? extends IComando> comando) {
-        lista.remove(comando);
-    }
-
-    public List<Class<? extends IComando>> getLista() {
-        return this.lista;
-    }
-
     public ComandosDisponibles() {
         this.lista = new ArrayList<>();
 
@@ -59,6 +45,20 @@ public class ComandosDisponibles extends Partida {
         add(ObtenerPaises.class);
         // Iniciar la partida
         add(CrearMapa.class);
+    }
+
+    private void add(Class<? extends IComando> comando) {
+        if (!lista.contains(comando)) {
+            lista.add(comando);
+        }
+    }
+
+    private void remove(Class<? extends IComando> comando) {
+        lista.remove(comando);
+    }
+
+    public List<Class<? extends IComando>> getLista() {
+        return this.lista;
     }
 
     public void acabarPreparacion() {
@@ -84,7 +84,7 @@ public class ComandosDisponibles extends Partida {
 
         this.iniciarTurno();
     }
-    
+
     public void iniciarTurno() {
         this.acabarTurno();
 

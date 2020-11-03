@@ -30,7 +30,7 @@ public class Mision {
     }
 
     public static class Builder {
-        private Misiones mision;
+        private final Misiones mision;
 
         public Builder(Misiones mision) {
             this.mision = mision;

@@ -6,8 +6,6 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.menu.comandos.preparacion.RepartirEjercito;
-import gal.sdc.usc.risk.menu.comandos.preparacion.RepartirEjercitos;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;

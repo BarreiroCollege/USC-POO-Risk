@@ -10,12 +10,10 @@ public class Pais {
     private final String nombre;
     private final String abreviatura;
     private final Celda celda;
-    private Continente continente;
-
-    private Fronteras fronteras = null;
-
-    private Jugador jugador = null;
     private final Ejercito ejercito;
+    private Continente continente;
+    private Fronteras fronteras = null;
+    private Jugador jugador = null;
     private Integer numVecesConquistado;
 
     private Pais(Paises identificador, String nombre, String abreviatura, Celda celda) {
