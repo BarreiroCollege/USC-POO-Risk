@@ -75,8 +75,10 @@ public class RepartirEjercitos extends Partida implements IComando {
                     this.continentesR4.get(continente).add(jugador);
                 }
             }
-        }
+           }
     }
+
+
 
     private void buscarR2R5() {
         this.parsearR2R5(this.continentesR1);

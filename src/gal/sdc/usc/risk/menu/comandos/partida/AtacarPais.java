@@ -26,10 +26,6 @@ public class AtacarPais extends Partida implements IComando {
             return;
         }
 
-        if (pais1.getEjercito().toInt() <= 1) {
-            Resultado.error(Errores.EJERCITOS_NO_SUFICIENTES);
-            return;
-        }
 
         if (!pais1.getFronteras().getTodas().contains(pais2)) {
             Resultado.error(Errores.PAIS_NO_FONTERA);
@@ -44,7 +40,12 @@ public class AtacarPais extends Partida implements IComando {
             Resultado.error(Errores.PAIS_NO_PERTENECE);
             return;
         }
-
+        if (pais1.getEjercito().toInt() <= 1) {
+            Resultado.error(Errores.EJERCITOS_NO_SUFICIENTES);  //ESTO LO MOVI AL FINAL, PQ SI ATACABAS CON UN PAIS Q NO ES TUYO A OTRO
+            //Y NO TIENE EL NUM MIN DE EJERCITOS TE PRINTEA ESE ERROR (ej_no_suf)
+            //EN VEZ DEL QUE DICE Q EL PAIS NO ES TUYO(pais_no_pertenece)
+            return;
+        }
         List<String> atacante = new ArrayList<>();
         List<String> defensor = new ArrayList<>();
 
