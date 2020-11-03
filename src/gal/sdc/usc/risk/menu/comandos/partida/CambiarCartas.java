@@ -105,22 +105,24 @@ public class CambiarCartas extends Partida implements IComando {
             super.devolverCarta(cartaT);
         }
 
-        StringBuilder out = new StringBuilder("{\n");
-        out.append("  cartasCambio: [ \"").append(cartas.get(0)).append("\", \"").append(cartas.get(1)).append("\", \"").append(cartas.get(2)).append("\" ],\n");
-        out.append("  cartasQuedan: [ ");
-        Iterator<Carta> itCa = super.getJugadorTurno().getCartas().iterator();
-        while (itCa.hasNext()) {
-            Carta cartaT = itCa.next();
-            out.append("\"").append(cartaT.getNombre()).append("\"");
-            if (itCa.hasNext()) {
-                out.append(", ");
+        if (!auto) {
+            StringBuilder out = new StringBuilder("{\n");
+            out.append("  cartasCambio: [ \"").append(cartas.get(0)).append("\", \"").append(cartas.get(1)).append("\", \"").append(cartas.get(2)).append("\" ],\n");
+            out.append("  cartasQuedan: [ ");
+            Iterator<Carta> itCa = super.getJugadorTurno().getCartas().iterator();
+            while (itCa.hasNext()) {
+                Carta cartaT = itCa.next();
+                out.append("\"").append(cartaT.getNombre()).append("\"");
+                if (itCa.hasNext()) {
+                    out.append(", ");
+                }
             }
+            out.append(" ],\n");
+            out.append("  numeroEjercitosCambiados: ").append(numCambios).append(",\n");
+            out.append("  numEjercitosRearme: ").append(super.getJugadorTurno().getEjercitosPendientes()).append("\n");
+            out.append("}");
+            Resultado.correcto(out.toString());
         }
-        out.append(" ],\n");
-        out.append("  numeroEjercitosCambiados: ").append(numCambios).append(",\n");
-        out.append("  numEjercitosRearme: ").append(super.getJugadorTurno().getEjercitosPendientes()).append("\n");
-        out.append("}");
-        Resultado.correcto(out.toString());
     }
 
     @Override

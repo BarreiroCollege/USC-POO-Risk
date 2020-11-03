@@ -4,19 +4,25 @@ import gal.sdc.usc.risk.menu.Partida;
 import gal.sdc.usc.risk.menu.Resultado;
 import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
+import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-@Comando(estado = Estado.JUGANDO, comando = Comandos.CAMBIAR_CARTAS)
+@Comando(estado = Estado.JUGANDO, comando = Comandos.CAMBIAR_CARTAS_TODAS)
 public class CambiarCartasTodas extends Partida implements IComando {
-    private final HashMap<List<Carta>, Integer> posiblesCambios = new HashMap<>();
+    private final HashMap<List<Carta>, Integer> posiblesCambios = new LinkedHashMap<>();
 
     @Override
     public void ejecutar(String[] comandos) {
@@ -24,7 +30,6 @@ public class CambiarCartasTodas extends Partida implements IComando {
 
         List<Carta> cartas = super.getJugadorTurno().getCartas();
         List<Carta> combinacion;
-        List<List<Carta>> cambios = new ArrayList<>();
 
         if (cartas.size() < 3) {
             if (!auto) {
@@ -80,6 +85,57 @@ public class CambiarCartasTodas extends Partida implements IComando {
             }
             return;
         }
+
+        List<List<Carta>> dobleCambio = new ArrayList<>();
+        for (int i = 0; i < posiblesCambios.size(); i++) {
+            for (int j = i + 1; j < posiblesCambios.size(); j++) {
+                List<Carta> cambio1 = new ArrayList<>(posiblesCambios.keySet()).get(i);
+                List<Carta> cambio2 = new ArrayList<>(posiblesCambios.keySet()).get(j);
+
+                if (cambio1.equals(cambio2)) {
+                    continue;
+                }
+
+                boolean contiene = false;
+                for (Carta cartaCambio2 : cambio2) {
+                    if (cambio1.contains(cartaCambio2)) {
+                        contiene = true;
+                        break;
+                    }
+                }
+
+                if (!contiene) {
+                    dobleCambio.add(cambio1);
+                    dobleCambio.add(cambio2);
+                    break;
+                }
+            }
+            if (dobleCambio.size() > 0) {
+                break;
+            }
+        }
+
+        if (dobleCambio.size() > 0) {
+            for (List<Carta> cambio : dobleCambio) {
+                Ejecutor.comando("cambiar cartas " +
+                        String.join(" ", cambio.stream().map(Carta::getNombre).toArray(String[]::new)) +
+                        (auto ? " auto" : ""));
+            }
+            return;
+        }
+
+        int max = 0;
+        List<Carta> cambio = new ArrayList<>();
+        for (Map.Entry<List<Carta>, Integer> e : posiblesCambios.entrySet()) {
+            if (e.getValue() > max) {
+                max = e.getValue();
+                cambio = e.getKey();
+            }
+        }
+
+        Ejecutor.comando("cambiar cartas " +
+                String.join(" ", cambio.stream().map(Carta::getNombre).toArray(String[]::new)) +
+                (auto ? " auto" : ""));
     }
 
     private boolean comprobarCombinacion(List<Carta> cartas) {
