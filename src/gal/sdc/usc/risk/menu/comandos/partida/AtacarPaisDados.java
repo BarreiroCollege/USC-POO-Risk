@@ -29,10 +29,6 @@ public class AtacarPaisDados extends Partida implements IComando {
             Resultado.error(Errores.PAIS_NO_EXISTE);
             return;
         }
-        if (pais1.getEjercito().toInt() <= 1) {
-            Resultado.error(Errores.EJERCITOS_NO_SUFICIENTES);
-            return;
-        }
         if (!pais1.getFronteras().getTodas().contains(pais2)) {
             Resultado.error(Errores.PAIS_NO_FONTERA);
             return;
@@ -46,6 +42,10 @@ public class AtacarPaisDados extends Partida implements IComando {
             return;
         }
 
+        if (pais1.getEjercito().toInt() <= 1) {
+            Resultado.error(Errores.EJERCITOS_NO_SUFICIENTES);
+            return;
+        }
         super.getComandos().atacando();
 
         List<Integer> atacante = new ArrayList<>();
