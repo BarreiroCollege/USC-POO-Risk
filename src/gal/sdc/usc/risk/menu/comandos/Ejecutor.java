@@ -18,14 +18,21 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
     private Ejecutor() {
     }
 
-    public static void comando(String comando) {
+    public static void comando(String comando, boolean imprimir) {
         Ejecutor.comando = comando;
-        Ejecutor.comando();
+        Ejecutor.comando(imprimir);
     }
 
-    public static void comando() {
+    public static void comando(String comando) {
+        Ejecutor.comando(comando, true);
+    }
+
+    public static void comando(boolean imprimir) {
         Ejecutor ejecutor = new Ejecutor();
         Future<Boolean> executor = Executors.newSingleThreadExecutor().submit(ejecutor);
+        if (imprimir) {
+            Resultado.Escritor.comando(comando);
+        }
         try {
             executor.get();
         } catch (InterruptedException | ExecutionException e) {

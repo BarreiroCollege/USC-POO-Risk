@@ -2,6 +2,7 @@ package gal.sdc.usc.risk.menu.comandos;
 
 public enum Comandos {
     AYUDA("(ayuda|info|help)"),
+    SALIR("salir"),
     VER_MAPA("ver mapa"),
     OBTENER_COLOR("obtener color ([a-zA-Z]*)"),
     OBTENER_CONTINENTE("obtener continente ([a-zA-Z]*)"),

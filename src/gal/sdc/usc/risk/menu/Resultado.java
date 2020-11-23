@@ -4,18 +4,23 @@ import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
+import gal.sdc.usc.risk.util.Recursos;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 public class Resultado {
     private final Colores.Color color;
     private final String mensaje;
 
-    public Resultado(Colores.Color color, String mensaje) {
+    private Resultado(Colores.Color color, String mensaje) {
         this.color = color;
         this.mensaje = mensaje;
-    }
 
-    public static void out(String out) {
-        System.out.println(out);
+        Resultado.Escritor.resultado(mensaje);
     }
 
     public static void error(Errores error) {
@@ -39,6 +44,57 @@ public class Resultado {
         System.out.println(new Colores("Ahora puedes ver como ha quedado el tablero de juego", Colores.Color.AZUL));
         System.out.println();
         Ejecutor.comando("ayuda");
+    }
+
+    public static class Escritor {
+        private static FileOutputStream fos;
+        private static BufferedWriter bw;
+
+        private static void inicializar() {
+            try {
+                fos = new FileOutputStream(Recursos.get("salida.txt"));
+                bw = new BufferedWriter(new OutputStreamWriter(fos));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public static void comando(String s) {
+            if (fos == null || bw == null) {
+                Escritor.inicializar();
+            }
+            try {
+                bw.write("$> ");
+                bw.write(s);
+                bw.newLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public static void resultado(String s) {
+            if (fos == null || bw == null) {
+                Escritor.inicializar();
+            }
+            try {
+                bw.write(s);
+                bw.newLine();
+                bw.newLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public static void cerrar() {
+            try {
+                bw.close();
+                fos.close();
+                bw = null;
+                fos = null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

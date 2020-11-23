@@ -6,6 +6,7 @@ import gal.sdc.usc.risk.menu.comandos.generico.ObtenerColor;
 import gal.sdc.usc.risk.menu.comandos.generico.ObtenerContinente;
 import gal.sdc.usc.risk.menu.comandos.generico.ObtenerFrontera;
 import gal.sdc.usc.risk.menu.comandos.generico.ObtenerPaises;
+import gal.sdc.usc.risk.menu.comandos.generico.Salir;
 import gal.sdc.usc.risk.menu.comandos.generico.VerMapa;
 import gal.sdc.usc.risk.menu.comandos.partida.AcabarTurno;
 import gal.sdc.usc.risk.menu.comandos.partida.AsignarCarta;
@@ -38,6 +39,7 @@ public class ComandosDisponibles extends Partida {
         this.lista = new ArrayList<>();
 
         add(Ayuda.class);
+        add(Salir.class);
         add(VerMapa.class);
         add(ObtenerColor.class);
         add(ObtenerContinente.class);

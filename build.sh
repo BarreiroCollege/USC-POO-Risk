@@ -1,6 +1,7 @@
 #!/bin/bash
 
 rm -rf build/
+mkdir build/
 find . -name "*.java" > sources.txt
 javac -d ./build @sources.txt
 cp -r res/* build/

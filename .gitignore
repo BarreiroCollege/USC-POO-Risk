@@ -28,3 +28,5 @@ hs_err_pid*
 out/
 build/
 sources.txt
+
+res/salida.txt
