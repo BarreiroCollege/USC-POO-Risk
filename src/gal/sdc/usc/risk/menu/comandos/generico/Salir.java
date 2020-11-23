@@ -10,7 +10,7 @@ import gal.sdc.usc.risk.menu.comandos.IComando;
 public class Salir extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
-        System.exit(-2);
+        System.exit(-1);
     }
 
     @Override

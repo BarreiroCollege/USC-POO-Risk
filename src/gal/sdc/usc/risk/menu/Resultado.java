@@ -87,10 +87,14 @@ public class Resultado {
 
         public static void cerrar() {
             try {
-                bw.close();
-                fos.close();
-                bw = null;
-                fos = null;
+                if (bw != null) {
+                    bw.close();
+                    bw = null;
+                }
+                if (fos != null) {
+                    fos.close();
+                    fos = null;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
