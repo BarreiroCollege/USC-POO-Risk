@@ -6,6 +6,9 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaLista;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -95,42 +98,16 @@ public class AtacarPaisDados extends Partida implements IComando {
             super.getComandos().paisConquistado();
         }
 
-        Iterator<Integer> it;
-        StringBuilder out = new StringBuilder("{\n");
-
-        out.append("  dadosAtaque: [ ");
-        it = atacante.iterator();
-        while (it.hasNext()) {
-            Integer dado = it.next();
-            out.append(dado);
-            if (it.hasNext()) {
-                out.append(", ");
-            }
-        }
-        out.append(" ],\n");
-
-        out.append("  dadosDefensa: [ ");
-        it = defensor.iterator();
-        while (it.hasNext()) {
-            Integer dado = it.next();
-            out.append(dado);
-            if (it.hasNext()) {
-                out.append(", ");
-            }
-        }
-        out.append(" ],\n");
-
-        out.append("  ejercitosPaisAtaque: [ ").append(atacanteOriginal).append(", ").append(pais1.getEjercito()).append(" ]\n");
-        out.append("  ejercitosPaisDefensa: [ ").append(defensorOriginal).append(", ").append(pais2.getEjercito()).append(" ]\n");
-        out.append("  paisAtaquePerceneceA: \"").append(pais1.getJugador().getNombre()).append("\",\n");
-        out.append("  paisDefensaPerceneceA: \"").append(jugadorDefensor.getNombre()).append("\",\n");
-        out.append("  continenteConquistado: \"")
-                .append(pais2.getContinente().getJugador() != null && pais2.getContinente().getJugador()
-                        .equals(super.getJugadorTurno()) ? pais2.getContinente().getNombre() : "null")
-                .append("\", ");
-        out.append("}");
-
-        Resultado.correcto(out.toString());
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("dadosAtaque", SalidaValor.withSalidaLista(SalidaLista.withInteger(atacante)));
+        salida.withEntrada("dadosDefensa", SalidaValor.withSalidaLista(SalidaLista.withInteger(defensor)));
+        salida.withEntrada("ejercitosPaisAtaque", SalidaValor.withSalidaLista(SalidaLista.withInteger(atacanteOriginal, pais1.getEjercito().toInt())));
+        salida.withEntrada("ejercitosPaisAtaque", SalidaValor.withSalidaLista(SalidaLista.withInteger(defensorOriginal, pais2.getEjercito().toInt())));
+        salida.withEntrada("paisAtaquePerceneceA", SalidaValor.withString(pais1.getJugador().getNombre()));
+        salida.withEntrada("paisDefensaPerceneceA", SalidaValor.withString(jugadorDefensor.getNombre()));
+        salida.withEntrada("continenteConquistado", SalidaValor.withString(pais2.getContinente().getJugador() != null && pais2.getContinente().getJugador()
+                .equals(super.getJugadorTurno()) ? pais2.getContinente().getNombre() : "null"));
+        Resultado.correcto(salida);
     }
 
     @Override

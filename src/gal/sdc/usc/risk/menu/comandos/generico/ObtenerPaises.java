@@ -6,12 +6,11 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaUtils;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Continente;
-import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
-
-import java.util.Iterator;
-import java.util.Map;
 
 @Comando(estado = Estado.CUALQUIERA, comando = Comandos.OBTENER_PAISES)
 public class ObtenerPaises extends Partida implements IComando {
@@ -30,24 +29,9 @@ public class ObtenerPaises extends Partida implements IComando {
             return;
         }
 
-        StringBuilder out = new StringBuilder("{\n" +
-                "  paises: [ ");
-        Iterator<Map.Entry<String, Pais>> it = continente.getPaises().entrySet().iterator();
-        boolean primero = true;
-        while (it.hasNext()) {
-            Pais pais = it.next().getValue();
-            if (!primero) {
-                out.append(String.format("%-11s", ""));
-            } else {
-                primero = false;
-            }
-            out.append("\"").append(pais.getNombre()).append("\"");
-            if (it.hasNext()) {
-                out.append(", ");
-            }
-        }
-        out.append("\n").append("          ]\n" + "}");
-        Resultado.correcto(out.toString());
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("paises", SalidaValor.withSalidaLista(SalidaUtils.paises(continente.getPaises().values())));
+        Resultado.correcto(salida);
     }
 
     @Override

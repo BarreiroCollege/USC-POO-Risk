@@ -6,6 +6,9 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaUtils;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
@@ -26,58 +29,18 @@ public class DescribirJugador extends Partida implements IComando {
             return;
         }
 
-        StringBuilder out = new StringBuilder();
-        out.append("{\n");
-
-        out.append("  nombre: \"").append(jugador.getNombre()).append("\",\n");
-        out.append("  color: \"").append(jugador.getColor()).append("\",\n");
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("nombre", SalidaValor.withString(jugador.getNombre()));
+        salida.withEntrada("color", SalidaValor.withString(jugador.getColor().toString()));
         if (jugador.equals(super.getJugadorTurno())) {
-            out.append("  misión: \"").append(jugador.getMision().getDescripcion()).append("\",\n");
+            salida.withEntrada("misión", SalidaValor.withString(jugador.getMision().getDescripcion()));
         }
-        out.append("  numeroEjercitos: ").append(jugador.getNumEjercitos()).append(",\n");
-
-        out.append("  paises: [ ");
-        Iterator<Pais> itP = jugador.getPaises().iterator();
-        boolean primero = true;
-        while (itP.hasNext()) {
-            Pais pais = itP.next();
-            if (!primero) {
-                out.append(String.format("%-12s", ""));
-            } else {
-                primero = false;
-            }
-            out.append("\"").append(pais.getNombre()).append("\"");
-            if (itP.hasNext()) {
-                out.append(",\n");
-            }
-        }
-        out.append("\n").append("          ],\n");
-
-        out.append("  continentes: [ ");
-        Iterator<Continente> itC = super.getJugadorTurno().getContinentes().iterator();
-        while (itC.hasNext()) {
-            Continente continente = itC.next();
-            out.append("\"").append(continente.getNombre()).append("\"");
-            if (itC.hasNext()) {
-                out.append(", ");
-            }
-        }
-        out.append("  ],\n");
-
-        out.append("  cartas: [ ");
-        Iterator<Carta> itCa = super.getJugadorTurno().getCartas().iterator();
-        while (itCa.hasNext()) {
-            Carta carta = itCa.next();
-            out.append("\"").append(carta.getNombre()).append("\"");
-            if (itCa.hasNext()) {
-                out.append(", ");
-            }
-        }
-        out.append("  ],\n");
-        out.append("  numeroEjercitosRearmar: ").append(jugador.getEjercitosPendientes()).append("\n");
-
-        out.append("}");
-        Resultado.correcto(new Colores(out.toString(), Colores.Color.VERDE).toString());
+        salida.withEntrada("numeroEjercitos: ", SalidaValor.withInteger(jugador.getNumEjercitos()));
+        salida.withEntrada("paises", SalidaValor.withSalidaLista(SalidaUtils.paises(jugador.getPaises())));
+        salida.withEntrada("continentes", SalidaValor.withSalidaLista(SalidaUtils.continentes(jugador.getContinentes())));
+        salida.withEntrada("cartas", SalidaValor.withSalidaLista(SalidaUtils.cartas(jugador.getCartas())));
+        salida.withEntrada("numeroEjercitosRearmar", SalidaValor.withInteger(jugador.getEjercitosPendientes().toInt()));
+        Resultado.correcto(salida);
     }
 
     @Override

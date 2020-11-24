@@ -6,6 +6,10 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaLista;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaUtils;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -14,7 +18,6 @@ import gal.sdc.usc.risk.tablero.valores.Errores;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.CAMBIAR_CARTAS)
@@ -106,22 +109,13 @@ public class CambiarCartas extends Partida implements IComando {
         }
 
         if (!auto) {
-            StringBuilder out = new StringBuilder("{\n");
-            out.append("  cartasCambio: [ \"").append(cartas.get(0)).append("\", \"").append(cartas.get(1)).append("\", \"").append(cartas.get(2)).append("\" ],\n");
-            out.append("  cartasQuedan: [ ");
-            Iterator<Carta> itCa = super.getJugadorTurno().getCartas().iterator();
-            while (itCa.hasNext()) {
-                Carta cartaT = itCa.next();
-                out.append("\"").append(cartaT.getNombre()).append("\"");
-                if (itCa.hasNext()) {
-                    out.append(", ");
-                }
-            }
-            out.append("  ],\n");
-            out.append("  numeroEjercitosCambiados: ").append(numCambios).append(",\n");
-            out.append("  numEjercitosRearme: ").append(super.getJugadorTurno().getEjercitosPendientes()).append("\n");
-            out.append("}");
-            Resultado.correcto(out.toString());
+            SalidaObjeto salida = new SalidaObjeto();
+            salida.withEntrada("cartasCambio", SalidaValor.withSalidaLista(SalidaLista.withString(cartas.get(0).getNombre(),
+                    cartas.get(1).getNombre(), cartas.get(2).getNombre())));
+            salida.withEntrada("cartasQuedan", SalidaValor.withSalidaLista(SalidaUtils.cartas(super.getJugadorTurno().getCartas())));
+            salida.withEntrada("numeroEjercitosCambiados", SalidaValor.withInteger(numCambios));
+            salida.withEntrada("numEjercitosRearme", SalidaValor.withInteger(numCambios));
+            Resultado.correcto(salida);
         }
     }
 

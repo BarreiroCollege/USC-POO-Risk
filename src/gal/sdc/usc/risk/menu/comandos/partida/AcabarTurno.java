@@ -6,6 +6,8 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Continentes;
@@ -25,11 +27,10 @@ public class AcabarTurno extends Partida implements IComando {
         super.moverTurno();
         super.getComandos().iniciarTurno();
 
-        String out = "{\n" +
-                "  nombre: \"" + super.getJugadorTurno().getNombre() + "\",\n" +
-                "  numeroEjercitosRearmar: " + super.getJugadorTurno().getEjercitosPendientes() + "\n" +
-                "}";
-        Resultado.correcto(new Colores(out, Colores.Color.VERDE).toString());
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("nombre", SalidaValor.withString(super.getJugadorTurno().getNombre()));
+        salida.withEntrada("numeroEjercitosRearmar", SalidaValor.withInteger(super.getJugadorTurno().getEjercitosPendientes().toInt()));
+        Resultado.correcto(salida);
     }
 
     private boolean ganador() {

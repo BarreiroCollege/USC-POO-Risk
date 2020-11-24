@@ -6,14 +6,19 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaLista;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.DESCRIBIR_CONTINENTE)
@@ -27,39 +32,25 @@ public class DescribirContinente extends Partida implements IComando {
             return;
         }
 
-        StringBuilder out = new StringBuilder();
-        out.append("{\n");
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("nombre", SalidaValor.withString(continente.getNombre()));
+        salida.withEntrada("abreviatura", SalidaValor.withString(continente.getAbreviatura()));
 
-        out.append("  nombre: \"").append(continente.getNombre()).append("\",\n");
-        out.append("  abreviatura: \"").append(continente.getAbreviatura()).append("\",\n");
-
-        out.append("  jugadores: [ ");
         HashMap<Jugador, Integer> jugadoresEjercitos = new HashMap<>();
         for (Pais pais : continente.getPaises().values()) {
             jugadoresEjercitos.putIfAbsent(pais.getJugador(), 0);
             jugadoresEjercitos.put(pais.getJugador(), jugadoresEjercitos.get(pais.getJugador()) + pais.getEjercito().toInt());
         }
-        Iterator<Map.Entry<Jugador, Integer>> it = jugadoresEjercitos.entrySet().iterator();
-        boolean primero = true;
-        while (it.hasNext()) {
-            Map.Entry<Jugador, Integer> e = it.next();
-            if (!primero) {
-                out.append(String.format("%-15s", ""));
-            } else {
-                primero = false;
-            }
-            out.append("{ \"").append(e.getKey().getNombre()).append("\", ").append(e.getValue()).append(" }");
-            if (it.hasNext()) {
-                out.append(", ");
-            }
+        List<SalidaObjeto> jugadores = new ArrayList<>();
+        for (Map.Entry<Jugador, Integer> jugador : jugadoresEjercitos.entrySet()) {
+            jugadores.add(new SalidaObjeto().withEntrada(jugador.getKey().getNombre(), SalidaValor.withInteger(jugador.getValue())));
         }
-        out.append("  ],\n");
+        salida.withEntrada("jugadores", SalidaValor.withSalidaLista(SalidaLista.withSalidaObjeto(jugadores)));
 
-        out.append("  numeroEjercitos: ").append(continente.getNumEjercitos()).append(",\n");
-        out.append("  rearmeContinente: ").append(continente.getEjercitosRearme()).append("\n");
+        salida.withEntrada("numeroEjercitos", SalidaValor.withInteger(continente.getNumEjercitos()));
+        salida.withEntrada("rearmeContinente", SalidaValor.withInteger(continente.getEjercitosRearme()));
 
-        out.append("}");
-        Resultado.correcto(new Colores(out.toString(), Colores.Color.VERDE).toString());
+        Resultado.correcto(salida);
     }
 
     @Override

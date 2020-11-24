@@ -6,6 +6,8 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mision;
@@ -17,8 +19,8 @@ import gal.sdc.usc.risk.tablero.valores.Misiones;
 public class AsignarMision extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
-        String nombre = comandos[1];
-        String mision = comandos[2];
+        String nombre = comandos[2];
+        String mision = comandos[3];
 
         if (super.getMapa() == null) {
             Resultado.error(Errores.MAPA_NO_CREADO);
@@ -55,11 +57,10 @@ public class AsignarMision extends Partida implements IComando {
         jugador.setMision(misionFinal);
         this.comprobarJugadores();
 
-        String out = "{\n" +
-                "  nombre: \"" + jugador.getNombre() + "\",\n" +
-                "  mision: \"" + jugador.getMision().getDescripcion() + "\",\n" +
-                "}";
-        Resultado.correcto(out);
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("nombre", SalidaValor.withString(jugador.getNombre()));
+        salida.withEntrada("mision", SalidaValor.withString(jugador.getMision().getDescripcion()));
+        Resultado.correcto(salida);
     }
 
     private void comprobarJugadores() {

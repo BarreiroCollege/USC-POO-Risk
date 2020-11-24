@@ -1,6 +1,8 @@
 package gal.sdc.usc.risk.menu;
 
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
@@ -10,7 +12,6 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 
 public class Resultado {
     private final Colores.Color color;
@@ -24,15 +25,14 @@ public class Resultado {
     }
 
     public static void error(Errores error) {
-        String texto = "{\n" +
-                "\tcódigo de error: " + error.getCodigo() + ",\n" +
-                "\tdescripción: \"" + error.getMensaje() + "\"\n" +
-                "}";
-        System.out.println(new Resultado(Colores.Color.ROJO, texto));
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("código de error", SalidaValor.withInteger(error.getCodigo()));
+        salida.withEntrada("descripción", SalidaValor.withString(error.getMensaje()));
+        System.out.println(new Resultado(Colores.Color.ROJO, salida.toString()));
     }
 
-    public static void correcto(String out) {
-        System.out.println(new Resultado(Colores.Color.VERDE, out));
+    public static void correcto(SalidaObjeto out) {
+        System.out.println(new Resultado(Colores.Color.VERDE, out.toString()));
     }
 
     public static void victoria(Jugador j) {

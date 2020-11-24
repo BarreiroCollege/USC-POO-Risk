@@ -6,6 +6,9 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaUtils;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
@@ -18,8 +21,8 @@ import java.util.List;
 public class AsignarPais extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
-        String jugador = comandos[1];
-        String pais = comandos[2];
+        String jugador = comandos[2];
+        String pais = comandos[3];
 
         if (super.getMapa() == null) {
             Resultado.error(Errores.MAPA_NO_CREADO);
@@ -60,23 +63,12 @@ public class AsignarPais extends Partida implements IComando {
         paisFinal.setJugador(jugadorFinal);
         paisFinal.getEjercito().recibir(jugadorFinal.getEjercitosPendientes(), 1);
 
-        List<Pais> fronteras = paisFinal.getFronteras().getTodas();
-        StringBuilder fronterasOut = new StringBuilder("[ ");
-        for (Pais frontera : fronteras) {
-            fronterasOut.append("\"").append(frontera.getNombre()).append("\"");
-            if ((fronteras.indexOf(frontera) + 1) != fronteras.size()) {
-                fronterasOut.append(", ");
-            }
-        }
-        fronterasOut.append(" ]");
-
-        String out = "{\n" +
-                "  nombre: \"" + jugadorFinal.getNombre() + "\",\n" +
-                "  pais: \"" + paisFinal.getNombre() + "\",\n" +
-                "  continente: \"" + paisFinal.getContinente().getNombre() + "\",\n" +
-                "  frontera: " + fronterasOut.toString() + "\n" +
-                "}";
-        Resultado.correcto(out);
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("nombre", SalidaValor.withString(jugadorFinal.getNombre()));
+        salida.withEntrada("pais", SalidaValor.withString(paisFinal.getNombre()));
+        salida.withEntrada("continente", SalidaValor.withString(paisFinal.getContinente().getNombre()));
+        salida.withEntrada("frontera", SalidaValor.withSalidaLista(SalidaUtils.paises(paisFinal.getFronteras().getTodas())));
+        Resultado.correcto(salida);
         this.comprobarPaises();
     }
 

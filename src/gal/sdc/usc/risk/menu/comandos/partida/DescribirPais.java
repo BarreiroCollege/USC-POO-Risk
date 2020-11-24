@@ -6,6 +6,9 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaUtils;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
@@ -23,36 +26,15 @@ public class DescribirPais extends Partida implements IComando {
             return;
         }
 
-        StringBuilder out = new StringBuilder();
-        out.append("{\n");
-
-        out.append("  nombre: \"").append(pais.getNombre()).append("\",\n");
-        out.append("  abreviatura: \"").append(pais.getAbreviatura()).append("\",\n");
-        out.append("  continente: \"").append(pais.getContinente().getNombre()).append("\",\n");
-
-        out.append("  frontera: [ ");
-        Iterator<Pais> itP = pais.getFronteras().getTodas().iterator();
-        boolean primero = true;
-        while (itP.hasNext()) {
-            Pais paisFrontera = itP.next();
-            if (!primero) {
-                out.append(String.format("%-14s", ""));
-            } else {
-                primero = false;
-            }
-            out.append("\"").append(paisFrontera.getNombre()).append("\"");
-            if (itP.hasNext()) {
-                out.append(", ");
-            }
-        }
-        out.append("  ],\n");
-
-        out.append("  jugador: \"").append(pais.getJugador().getNombre()).append("\",\n");
-        out.append("  numeroEjercitos: ").append(pais.getEjercito()).append(",\n");
-        out.append("  numeroVecesOcupado: ").append(pais.getNumVecesConquistado()).append("\n");
-
-        out.append("}");
-        Resultado.correcto(new Colores(out.toString(), Colores.Color.VERDE).toString());
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("nombre", SalidaValor.withString(pais.getNombre()));
+        salida.withEntrada("abreviatura", SalidaValor.withString(pais.getAbreviatura()));
+        salida.withEntrada("continente", SalidaValor.withString(pais.getContinente().getNombre()));
+        salida.withEntrada("frontera", SalidaValor.withSalidaLista(SalidaUtils.paises(pais.getFronteras().getTodas())));
+        salida.withEntrada("jugador", SalidaValor.withString(pais.getJugador().getNombre()));
+        salida.withEntrada("numeroEjercitos", SalidaValor.withInteger(pais.getEjercito().toInt()));
+        salida.withEntrada("numeroVecesOcupado", SalidaValor.withInteger(pais.getNumVecesConquistado()));
+        Resultado.correcto(salida);
     }
 
     @Override

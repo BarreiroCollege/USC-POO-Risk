@@ -6,6 +6,8 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
@@ -46,13 +48,12 @@ public class Rearmar extends Partida implements IComando {
 
         destino.getEjercito().recibir(origen.getEjercito(), num);
 
-        String out = "{\n" +
-                "  numeroEjercitosInicialesOrigen: " + inicialOrigen + ",\n" +
-                "  numeroEjercitosInicialesDestino: " + inicialDestino + ",\n" +
-                "  numeroEjercitosFinalesOrigen: " + origen.getEjercito().toInt() + ",\n" +
-                "  numeroEjercitosFinalesDestino: " + destino.getEjercito().toInt() + "\n" +
-                "}";
-        Resultado.correcto(new Colores(out, Colores.Color.VERDE).toString());
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("numeroEjercitosInicialesOrigen", SalidaValor.withInteger(inicialOrigen));
+        salida.withEntrada("numeroEjercitosInicialesDestino", SalidaValor.withInteger(inicialDestino));
+        salida.withEntrada("numeroEjercitosFinalesOrigen", SalidaValor.withInteger(origen.getEjercito().toInt()));
+        salida.withEntrada("numeroEjercitosFinalesDestino", SalidaValor.withInteger(destino.getEjercito().toInt()));
+        Resultado.correcto(salida);
     }
 
     @Override

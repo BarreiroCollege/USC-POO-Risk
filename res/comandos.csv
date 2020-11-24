@@ -1,13 +1,52 @@
-crear mapa
+// crear mapa
 // ver mapa
 // obtener frontera alaska
 // obtener color alaska
 // obtener paises europa
-crear jugadores jugadores.csv
-asignar misiones misiones.csv
-asignar paises asignaciones.csv
+// crear jugadores jugadores.csv
+// asignar misiones misiones.csv
+// asignar paises asignaciones.csv
 // repartir ejercitos 30 Alaska
 // repartir ejercitos 30 Irkutsk
 // repartir ejercitos 30 OMedio
-repartir ejercitos
-salir
+// repartir ejercitos
+// salir
+crear mapa
+crear mapa
+crear jugadores jugadores.csv
+crear Gondorff AZUL
+crear JT VERDE
+asignar paises paises.csv
+asignar misiones misiones.csv
+crear JT CYAN
+asignar paises paises.csv
+asignar mision Hooker M32
+asignar paises paises.csv
+asignar pais Gondorff Rusia
+jugador
+repartir ejercitos 8 Alaska
+repartir ejercitos 5 Groenlandia
+repartir ejercitos 5 Urales
+repartir ejercitos 3 Quebec
+repartir ejercitos 7 Ontario
+jugador
+acabar turno
+repartir ejercitos 10 Venezuela
+repartir ejercitos 5 ANorte
+repartir ejercitos 6 Egipto
+repartir ejercitos 5 India
+acabar turno
+repartir ejercitos 15 Indonesia
+repartir ejercitos 6 NGuinea
+acabar turno
+repartir ejercitos 3 Islandia
+describir pais USAEste
+atacar Ontario 5x1x1 USAEste 4
+describir pais USAEste
+describir pais Ontario
+rearmar Alaska 4 Alberta
+asignar carta Infantería&Alaska
+atacar GBretaña 3 EurSur 4
+acabar turno
+describir jugador Gondorff
+describir continente AméricaNorte

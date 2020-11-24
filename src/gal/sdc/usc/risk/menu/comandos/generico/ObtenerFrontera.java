@@ -6,6 +6,9 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaUtils;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
@@ -29,16 +32,9 @@ public class ObtenerFrontera extends Partida implements IComando {
         }
         List<Pais> fronteras = pais.getFronteras().getTodas();
 
-        StringBuilder out = new StringBuilder("{\n" +
-                "  frontera: [ ");
-        for (Pais frontera : fronteras) {
-            out.append("\"").append(frontera.getNombre()).append("\"");
-            if ((fronteras.indexOf(frontera) + 1) != fronteras.size()) {
-                out.append(", ");
-            }
-        }
-        out.append(" ]\n" + "}");
-        Resultado.correcto(out.toString());
+        SalidaObjeto salida = new SalidaObjeto();
+        salida.withEntrada("frontera", SalidaValor.withSalidaLista(SalidaUtils.paises(fronteras)));
+        Resultado.correcto(salida);
     }
 
     @Override

@@ -6,11 +6,17 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaLista;
+import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Comando(estado = Estado.PREPARACION, comando = Comandos.REPARTIR_EJERCITO)
@@ -51,34 +57,23 @@ public class RepartirEjercito extends Partida implements IComando {
 
         Integer asignado = paisFinal.getEjercito().recibir(paisFinal.getJugador().getEjercitosPendientes(), numero);
         if (asignado != null) {
-            StringBuilder out = new StringBuilder();
-            out.append("{\n");
-            out.append("  pais: \"").append(paisFinal.getNombre()).append("\",\n");
-            out.append("  jugador: \"").append(paisFinal.getJugador().getNombre()).append("\",\n");
-            out.append("  numeroEjercitosAsignados: ").append(asignado).append(",\n");
-            out.append("  numeroEjercitosTotales: ").append(paisFinal.getEjercito()).append(",\n");
-            out.append("  paisesOcupadosContinente: [ ");
+            SalidaObjeto salida = new SalidaObjeto();
+            salida.withEntrada("pais", SalidaValor.withString(paisFinal.getNombre()));
+            salida.withEntrada("jugador", SalidaValor.withString(paisFinal.getJugador().getNombre()));
+            salida.withEntrada("numeroEjercitosAsignados", SalidaValor.withInteger(asignado));
+            salida.withEntrada("numeroEjercitosTotales", SalidaValor.withInteger(paisFinal.getEjercito().toInt()));
 
-            Iterator<Pais> it = super.getMapa().getPaisesPorJugador(paisFinal.getJugador()).stream()
+            List<SalidaObjeto> paisesOcupadosContinente = new ArrayList<>();
+            List<Pais> paisesJugadorContinente = super.getMapa().getPaisesPorJugador(paisFinal.getJugador()).stream()
                     .filter(paisFiltro -> paisFiltro.getContinente().equals(paisFinal.getContinente()))
-                    .collect(Collectors.toList()).iterator();
-            boolean primero = true;
-            while (it.hasNext()) {
-                Pais paisSalida = it.next();
-                if (primero) {
-                    primero = false;
-                } else {
-                    out.append("                              ");
-                }
-                out.append("{ \"").append(paisSalida.getNombre()).append("\"").append(", ").append(paisSalida.getEjercito()).append(" }");
-                if (it.hasNext()) {
-                    out.append(", ");
-                }
+                    .collect(Collectors.toList());
+            for (Pais paisOcupado : paisesJugadorContinente) {
+                paisesOcupadosContinente.add(new SalidaObjeto()
+                        .withEntrada(paisOcupado.getNombre(), SalidaValor.withInteger(paisOcupado.getEjercito().toInt())));
             }
-            out.append("  ]\n");
-            out.append("}");
-            Resultado.correcto(out.toString());
+            salida.withEntrada("paisesOcupadosContinente", SalidaValor.withSalidaLista(SalidaLista.withSalidaObjeto(paisesOcupadosContinente)));
 
+            Resultado.correcto(salida);
             this.comprobarEjercitos(paisFinal.getJugador());
         }
     }
