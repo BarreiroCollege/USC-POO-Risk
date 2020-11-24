@@ -72,27 +72,11 @@ public class AsignarMision extends Partida implements IComando {
             }
         }
 
-        if (super.getJugadores().entrySet().iterator().next().getValue().getEjercitosPendientes().toInt() == 0) {
-            int ejercitos = 0;
-            if (super.getJugadores().size() == 3) {
-                ejercitos = 35;
-            } else if (super.getJugadores().size() == 4) {
-                ejercitos = 30;
-            } else if (super.getJugadores().size() == 5) {
-                ejercitos = 25;
-            } else if (super.getJugadores().size() == 6) {
-                ejercitos = 20;
-            }
-
-            if (ejercitos > 0) {
-                for (Jugador jugador : super.getJugadores().values()) {
-                    jugador.getEjercitosPendientes().recibir(new Ejercito(ejercitos));
-                }
-            }
-        }
-
         if (tienenMisiones) {
             super.getComandos().habilitarAsignarPaises();
+            for (Jugador j : super.getJugadores().values()) {
+                j.getEjercitosPendientes().recibir(new Ejercito(super.getEjercitosIniciales()));
+            }
         }
     }
 

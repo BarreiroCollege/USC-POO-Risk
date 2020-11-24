@@ -173,4 +173,18 @@ public abstract class Partida {
             }
         }
     }
+
+    protected Integer getEjercitosIniciales() {
+        int ejercitos = 0;
+        if (this.getJugadores().size() == 3) {
+            ejercitos = 35;
+        } else if (this.getJugadores().size() == 4) {
+            ejercitos = 30;
+        } else if (this.getJugadores().size() == 5) {
+            ejercitos = 25;
+        } else if (this.getJugadores().size() == 6) {
+            ejercitos = 20;
+        }
+        return ejercitos;
+    }
 }

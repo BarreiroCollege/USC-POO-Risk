@@ -1,6 +1,7 @@
 package gal.sdc.usc.risk.menu;
 
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
+import gal.sdc.usc.risk.menu.comandos.preparacion.RepartirEjercito;
 import gal.sdc.usc.risk.util.Colores;
 import gal.sdc.usc.risk.util.Colores.Color;
 import gal.sdc.usc.risk.util.Recursos;
@@ -65,7 +66,7 @@ public class Menu extends Partida {
 
     private void entrada() {
         String out = "";
-        if (super.isJugando()) {
+        if (super.isJugando() || super.getComandos().getLista().contains(RepartirEjercito.class)) {
             out += "[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] ";
         }
         out += new Colores("$> ", Color.AMARILLO);

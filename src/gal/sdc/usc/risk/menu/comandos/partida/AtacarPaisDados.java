@@ -16,7 +16,6 @@ import gal.sdc.usc.risk.tablero.valores.Errores;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.ATACAR_PAIS_DADOS)
@@ -104,7 +103,7 @@ public class AtacarPaisDados extends Partida implements IComando {
         salida.withEntrada("ejercitosPaisAtaque", SalidaValor.withSalidaLista(SalidaLista.withInteger(atacanteOriginal, pais1.getEjercito().toInt())));
         salida.withEntrada("ejercitosPaisAtaque", SalidaValor.withSalidaLista(SalidaLista.withInteger(defensorOriginal, pais2.getEjercito().toInt())));
         salida.withEntrada("paisAtaquePerceneceA", SalidaValor.withString(pais1.getJugador().getNombre()));
-        salida.withEntrada("paisDefensaPerceneceA", SalidaValor.withString(jugadorDefensor.getNombre()));
+        salida.withEntrada("paisDefensaPerceneceA", SalidaValor.withString(pais2.getJugador().getNombre()/*jugadorDefensor.getNombre()*/));
         salida.withEntrada("continenteConquistado", SalidaValor.withString(pais2.getContinente().getJugador() != null && pais2.getContinente().getJugador()
                 .equals(super.getJugadorTurno()) ? pais2.getContinente().getNombre() : "null"));
         Resultado.correcto(salida);

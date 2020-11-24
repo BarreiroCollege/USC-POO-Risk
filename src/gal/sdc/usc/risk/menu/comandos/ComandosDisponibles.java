@@ -156,6 +156,7 @@ public class ComandosDisponibles extends Partida {
         this.deshabilitarAsignarPaises();
         add(RepartirEjercito.class);
         add(RepartirEjercitos.class);
+        add(AcabarTurno.class);
     }
 
     /* --- */
