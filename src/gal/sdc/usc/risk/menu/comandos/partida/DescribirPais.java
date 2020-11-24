@@ -42,10 +42,10 @@ public class DescribirPais extends Partida implements IComando {
             }
             out.append("\"").append(paisFrontera.getNombre()).append("\"");
             if (itP.hasNext()) {
-                out.append(",\n");
+                out.append(", ");
             }
         }
-        out.append("\n").append("            ],\n");
+        out.append("  ],\n");
 
         out.append("  jugador: \"").append(pais.getJugador().getNombre()).append("\",\n");
         out.append("  numeroEjercitos: ").append(pais.getEjercito()).append(",\n");

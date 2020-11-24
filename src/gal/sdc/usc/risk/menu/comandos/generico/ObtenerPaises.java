@@ -43,7 +43,7 @@ public class ObtenerPaises extends Partida implements IComando {
             }
             out.append("\"").append(pais.getNombre()).append("\"");
             if (it.hasNext()) {
-                out.append(",\n");
+                out.append(", ");
             }
         }
         out.append("\n").append("          ]\n" + "}");

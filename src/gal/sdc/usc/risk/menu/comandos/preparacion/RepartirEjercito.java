@@ -72,11 +72,10 @@ public class RepartirEjercito extends Partida implements IComando {
                 }
                 out.append("{ \"").append(paisSalida.getNombre()).append("\"").append(", ").append(paisSalida.getEjercito()).append(" }");
                 if (it.hasNext()) {
-                    out.append(",");
+                    out.append(", ");
                 }
-                out.append("\n");
             }
-            out.append("                            ]\n");
+            out.append("  ]\n");
             out.append("}");
             Resultado.correcto(out.toString());
 

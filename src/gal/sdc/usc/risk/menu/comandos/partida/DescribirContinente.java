@@ -50,10 +50,10 @@ public class DescribirContinente extends Partida implements IComando {
             }
             out.append("{ \"").append(e.getKey().getNombre()).append("\", ").append(e.getValue()).append(" }");
             if (it.hasNext()) {
-                out.append(",\n");
+                out.append(", ");
             }
         }
-        out.append("\n").append("             ],\n");
+        out.append("  ],\n");
 
         out.append("  numeroEjercitos: ").append(continente.getNumEjercitos()).append(",\n");
         out.append("  rearmeContinente: ").append(continente.getEjercitosRearme()).append("\n");

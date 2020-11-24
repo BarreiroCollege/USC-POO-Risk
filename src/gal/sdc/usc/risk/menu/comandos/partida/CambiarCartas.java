@@ -117,7 +117,7 @@ public class CambiarCartas extends Partida implements IComando {
                     out.append(", ");
                 }
             }
-            out.append(" ],\n");
+            out.append("  ],\n");
             out.append("  numeroEjercitosCambiados: ").append(numCambios).append(",\n");
             out.append("  numEjercitosRearme: ").append(super.getJugadorTurno().getEjercitosPendientes()).append("\n");
             out.append("}");

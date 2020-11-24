@@ -120,14 +120,14 @@ public class AtacarPaisDados extends Partida implements IComando {
         }
         out.append(" ],\n");
 
-        out.append("  ejercitosPaisAtaque: { ").append(atacanteOriginal).append(", ").append(pais1.getEjercito()).append(" }\n");
-        out.append("  ejercitosPaisDefensa: { ").append(defensorOriginal).append(", ").append(pais2.getEjercito()).append(" }\n");
+        out.append("  ejercitosPaisAtaque: [ ").append(atacanteOriginal).append(", ").append(pais1.getEjercito()).append(" ]\n");
+        out.append("  ejercitosPaisDefensa: [ ").append(defensorOriginal).append(", ").append(pais2.getEjercito()).append(" ]\n");
         out.append("  paisAtaquePerceneceA: \"").append(pais1.getJugador().getNombre()).append("\",\n");
         out.append("  paisDefensaPerceneceA: \"").append(jugadorDefensor.getNombre()).append("\",\n");
         out.append("  continenteConquistado: \"")
                 .append(pais2.getContinente().getJugador() != null && pais2.getContinente().getJugador()
                         .equals(super.getJugadorTurno()) ? pais2.getContinente().getNombre() : "null")
-                .append("\",\n");
+                .append("\", ");
         out.append("}");
 
         Resultado.correcto(out.toString());

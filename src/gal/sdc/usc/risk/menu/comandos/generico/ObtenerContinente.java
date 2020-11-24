@@ -26,7 +26,7 @@ public class ObtenerContinente extends Partida implements IComando {
             return;
         }
 
-        String out = "{ continente: \"" + pais.getContinente().getNombre() + "\" }";
+        String out = "{\n\tcontinente: \"" + pais.getContinente().getNombre() + "\"\n}";
         Resultado.correcto(out);
     }
 

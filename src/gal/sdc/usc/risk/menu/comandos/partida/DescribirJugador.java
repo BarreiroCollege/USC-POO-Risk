@@ -62,7 +62,7 @@ public class DescribirJugador extends Partida implements IComando {
                 out.append(", ");
             }
         }
-        out.append(" ],\n");
+        out.append("  ],\n");
 
         out.append("  cartas: [ ");
         Iterator<Carta> itCa = super.getJugadorTurno().getCartas().iterator();
@@ -73,7 +73,7 @@ public class DescribirJugador extends Partida implements IComando {
                 out.append(", ");
             }
         }
-        out.append(" ],\n");
+        out.append("  ],\n");
         out.append("  numeroEjercitosRearmar: ").append(jugador.getEjercitosPendientes()).append("\n");
 
         out.append("}");

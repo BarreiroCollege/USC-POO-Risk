@@ -27,7 +27,9 @@ public class ObtenerColor extends Partida implements IComando {
             return;
         }
 
-        String out = "{ color: \"" + pais.getContinente().getColor() + "\" }";
+        String out = "{\n" +
+                "  color: \"" + pais.getContinente().getColor() + "\"\n" +
+                "}";
         Resultado.correcto(out);
     }
 
