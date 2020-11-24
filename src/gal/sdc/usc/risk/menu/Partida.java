@@ -98,7 +98,7 @@ public abstract class Partida {
         }
 
         Partida.comandosDisponibles.iniciarPartida();
-        this.comprobacionesTurno();
+        // this.comprobacionesTurno();
         Partida.comandosDisponibles.iniciarTurno();
         return true;
     }

@@ -73,8 +73,10 @@ public class Pais {
     }
 
     public void setJugador(Jugador jugador) {
+        if (this.jugador != null) {
+            numVecesConquistado += 1;
+        }
         this.jugador = jugador;
-        numVecesConquistado += 1;
     }
 
     public Ejercito getEjercito() {
