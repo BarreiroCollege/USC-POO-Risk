@@ -29,4 +29,6 @@ out/
 build/
 sources.txt
 
+res/goldstandard.txt
 res/resultado.txt
+res/resultados.txt
