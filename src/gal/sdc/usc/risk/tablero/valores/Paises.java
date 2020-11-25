@@ -19,7 +19,7 @@ public enum Paises {
     IRKUTSK("Irkutsk", "Irkutsk", Continentes.ASIA, 8, 1),
 
     USAOESTE("Estados Unidos del Oeste", "USAOeste", Continentes.AMERICANORTE, 0, 2),
-    USAESTE("Estadoos Unidos del Este", "USAEste", Continentes.AMERICANORTE, 1, 2),
+    USAESTE("Estados Unidos del Este", "USAEste", Continentes.AMERICANORTE, 1, 2),
     EUROPAOCC("Europa Occidental", "EurOcc", Continentes.EUROPA, 5, 2),
     EUROPASUR("Europa del Sur", "EurSur", Continentes.EUROPA, 6, 2),
     URALES("Urales", "Urales", Continentes.ASIA, 7, 2),

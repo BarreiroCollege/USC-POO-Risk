@@ -5,6 +5,9 @@ import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Pais;
 
 public abstract class SalidaUtils {
+    private SalidaUtils() {
+    }
+
     protected static String getString(Object object) {
         if (object == null) {
             return "null";

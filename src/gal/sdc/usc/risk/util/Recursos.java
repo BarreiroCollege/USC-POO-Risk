@@ -14,24 +14,4 @@ public class Recursos {
     public static File get(String name) {
         return new File("res/" + name);
     }
-
-    public static void engadirSaida(String out) {
-        try {
-            if (saida.createNewFile()) {
-                System.out.println("Creando arquivo...");
-            }
-
-            FileOutputStream fos = new FileOutputStream(saida, true);
-            OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
-            Writer writer = new BufferedWriter(osw);
-
-            writer.append(out).append("\n");
-
-            writer.close();
-            osw.close();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

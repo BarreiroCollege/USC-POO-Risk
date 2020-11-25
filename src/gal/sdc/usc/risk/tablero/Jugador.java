@@ -1,6 +1,6 @@
 package gal.sdc.usc.risk.tablero;
 
-import gal.sdc.usc.risk.menu.Partida;
+import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.valores.Equipamientos;
 import gal.sdc.usc.risk.util.Colores.Color;
 

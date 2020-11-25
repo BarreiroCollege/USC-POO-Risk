@@ -1,6 +1,6 @@
 package gal.sdc.usc.risk.tablero;
 
-import gal.sdc.usc.risk.menu.Resultado;
+import gal.sdc.usc.risk.jugar.Resultado;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
 public class Ejercito implements Comparable<Ejercito> {

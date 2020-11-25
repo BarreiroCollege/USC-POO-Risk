@@ -1,8 +1,7 @@
 package gal.sdc.usc.risk;
 
-
-import gal.sdc.usc.risk.menu.Menu;
-import gal.sdc.usc.risk.menu.Resultado;
+import gal.sdc.usc.risk.jugar.Menu;
+import gal.sdc.usc.risk.jugar.Resultado;
 
 public class Main {
 
