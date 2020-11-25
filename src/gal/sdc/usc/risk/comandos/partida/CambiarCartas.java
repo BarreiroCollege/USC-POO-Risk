@@ -95,6 +95,11 @@ public class CambiarCartas extends Partida implements IComando {
         } else if (artilleria == 1) {
             numCambios = Equipamientos.ARTILLERIA.getEjercitos();
         }
+        for (Carta cartaT : cartas) {
+            if (cartaT.getPais().getJugador().equals(getJugadorTurno())) {
+                numCambios++;
+            }
+        }
         super.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(numCambios));
 
         for (Carta cartaT : cartas) {
@@ -110,7 +115,7 @@ public class CambiarCartas extends Partida implements IComando {
             salida.put("cartasCambio", cartas.get(0).getNombre(), cartas.get(1).getNombre(), cartas.get(2).getNombre());
             salida.put("cartasQuedan", super.getJugadorTurno().getCartas());
             salida.put("numeroEjercitosCambiados", numCambios);
-            salida.put("numEjercitosRearme", numCambios);
+            salida.put("numEjercitosRearme", super.getJugadorTurno().getEjercitosPendientes().toInt());
             Resultado.correcto(salida);
         }
     }
