@@ -28,7 +28,8 @@ public class Mision {
     @Override
     public String toString() {
         return "Mision{" +
-                "codigo='" + codigo + '\'' +
+                "identificador=" + identificador +
+                ", codigo='" + codigo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 '}';
     }

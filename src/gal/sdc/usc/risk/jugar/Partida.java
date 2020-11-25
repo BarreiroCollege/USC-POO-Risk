@@ -1,6 +1,5 @@
 package gal.sdc.usc.risk.jugar;
 
-import gal.sdc.usc.risk.comandos.ComandosDisponibles;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
@@ -19,10 +18,11 @@ import java.util.List;
 import java.util.Queue;
 
 public abstract class Partida {
+    private static final ComandosDisponibles comandosDisponibles = new ComandosDisponibles();
+
     private static final Queue<Jugador> ordenJugadores = new LinkedList<>();
     private static final HashMap<String, Jugador> jugadores = new HashMap<>();
     private static final List<Carta> cartasMonton = new ArrayList<>();
-    private static final ComandosDisponibles comandosDisponibles = new ComandosDisponibles();
     private static Mapa mapa;
     private static boolean haConquistadoPais = false;
     private static boolean jugando = false;
@@ -97,9 +97,8 @@ public abstract class Partida {
             }
         }
 
-        Partida.comandosDisponibles.iniciarPartida();
+        this.getComandos().iniciarPartida(this.getJugadorTurno());
         // this.comprobacionesTurno();
-        Partida.comandosDisponibles.iniciarTurno();
         return true;
     }
 

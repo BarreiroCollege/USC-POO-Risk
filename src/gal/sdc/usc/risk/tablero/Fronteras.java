@@ -66,11 +66,11 @@ public class Fronteras implements Comparable<Fronteras> {
     @Override
     public String toString() {
         return "Fronteras{" +
-                "norte=" + norte.getAbreviatura() +
-                ", sur=" + sur.getAbreviatura() +
-                ", este=" + este.getAbreviatura() +
-                ", oeste=" + oeste.getAbreviatura() +
-                ", maritimas=" + maritimas.stream().map(Pais::getAbreviatura) +
+                "norte=" + norte +
+                ", sur=" + sur +
+                ", este=" + este +
+                ", oeste=" + oeste +
+                ", maritimas=" + maritimas +
                 '}';
     }
 

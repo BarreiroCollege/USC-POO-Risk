@@ -1,6 +1,6 @@
-package gal.sdc.usc.risk.comandos;
+package gal.sdc.usc.risk.jugar;
 
-import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.comandos.generico.Ayuda;
 import gal.sdc.usc.risk.comandos.generico.ObtenerColor;
 import gal.sdc.usc.risk.comandos.generico.ObtenerContinente;
@@ -28,11 +28,12 @@ import gal.sdc.usc.risk.comandos.preparacion.CrearJugadores;
 import gal.sdc.usc.risk.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercito;
 import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercitos;
+import gal.sdc.usc.risk.tablero.Mapa;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComandosDisponibles extends Partida {
+public class ComandosDisponibles {
     private final List<Class<? extends IComando>> lista;
 
     public ComandosDisponibles() {
@@ -46,7 +47,7 @@ public class ComandosDisponibles extends Partida {
         add(ObtenerFrontera.class);
         add(ObtenerPaises.class);
         // Iniciar la partida
-        add(CrearMapa.class);
+        this.iniciarPreparacion();
     }
 
     private void add(Class<? extends IComando> comando) {
@@ -63,6 +64,22 @@ public class ComandosDisponibles extends Partida {
         return this.lista;
     }
 
+    public void iniciarPreparacion() {
+        add(CrearMapa.class);
+        add(CrearJugador.class);
+        add(CrearJugadores.class);
+        add(AsignarMision.class);
+        add(AsignarMisiones.class);
+        add(AsignarPais.class);
+        add(AsignarPaises.class);
+        add(RepartirEjercito.class);
+        add(RepartirEjercitos.class);
+    }
+
+    public void habilitarAcabarTurno() {
+        add(AcabarTurno.class);
+    }
+
     public void acabarPreparacion() {
         remove(CrearMapa.class);
         remove(CrearJugador.class);
@@ -75,7 +92,13 @@ public class ComandosDisponibles extends Partida {
         remove(RepartirEjercitos.class);
     }
 
-    public void iniciarPartida() {
+    public boolean isPaisesAsignados(Mapa mapa) {
+        return this.getLista().contains(AsignarPais.class)
+                && mapa != null
+                && mapa.getPaisesPorCeldas().values().stream().noneMatch(p -> p.getJugador() == null);
+    }
+
+    public void iniciarPartida(gal.sdc.usc.risk.tablero.Jugador jugador) {
         this.acabarPreparacion();
 
         add(AcabarTurno.class);
@@ -84,16 +107,16 @@ public class ComandosDisponibles extends Partida {
         add(DescribirPais.class);
         add(Jugador.class);
 
-        this.iniciarTurno();
+        this.iniciarTurno(jugador);
     }
 
-    public void iniciarTurno() {
+    public void iniciarTurno(gal.sdc.usc.risk.tablero.Jugador jugador) {
         this.acabarTurno();
 
         add(CambiarCartas.class);
         add(CambiarCartasTodas.class);
 
-        if (super.getJugadorTurno().getEjercitosPendientes().toInt() == 0) {
+        if (jugador.getEjercitosPendientes().toInt() == 0) {
             add(AtacarPais.class);
             add(AtacarPaisDados.class);
         } else {

@@ -1,15 +1,17 @@
 package gal.sdc.usc.risk.comandos.preparacion;
 
-import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Comandos;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
+import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.jugar.Resultado;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Continentes;
+import gal.sdc.usc.risk.tablero.valores.Errores;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +28,25 @@ public class RepartirEjercitos extends Partida implements IComando {
 
     @Override
     public void ejecutar(String[] comandos) {
+        if (super.getMapa() == null) {
+            Resultado.error(Errores.MAPA_NO_CREADO);
+            return;
+        }
+        if (super.getJugadores().size() < 3 || super.getJugadores().size() > 6) {
+            Resultado.error(Errores.JUGADORES_NO_CREADOS);
+            return;
+        }
+
+        if (super.getJugadores().values().stream().noneMatch(p -> p.getMision() == null)) {
+            Resultado.error(Errores.MISIONES_NO_ASIGNADAS);
+            return;
+        }
+
+        if (super.getMapa().getPaisesPorCeldas().values().stream().noneMatch(p -> p.getJugador() == null)) {
+            Resultado.error(Errores.COMANDO_NO_PERMITIDO);
+            return;
+        }
+
         this.buscarR1R4();
         this.buscarR2R5();
         this.repartirR1R2R4R5();

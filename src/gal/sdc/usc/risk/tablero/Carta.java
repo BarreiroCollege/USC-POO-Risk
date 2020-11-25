@@ -25,7 +25,10 @@ public class Carta {
 
     @Override
     public String toString() {
-        return this.getNombre();
+        return "Carta{" +
+                "equipamiento=" + equipamiento +
+                ", pais=" + pais +
+                '}';
     }
 
     public static class Builder {

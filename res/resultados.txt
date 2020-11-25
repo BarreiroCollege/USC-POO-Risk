@@ -1,8 +1,8 @@
 $> crear mapa
 $> crear mapa
 {
-  código de error: 99,
-  descripción: "Comando no permitido en este momento"
+  código de error: 107,
+  descripción: "El mapa ya ha sido creado"
 }
 
 $> crear jugadores jugadores.csv
@@ -35,8 +35,8 @@ $> crear JT VERDE
 
 $> asignar paises paises.csv
 {
-  código de error: 99,
-  descripción: "Comando no permitido en este momento"
+  código de error: 118,
+  descripción: "Las misiones no están asignadas"
 }
 
 $> asignar misiones misiones.csv
@@ -63,8 +63,8 @@ $> crear JT CYAN
 
 $> asignar paises paises.csv
 {
-  código de error: 99,
-  descripción: "Comando no permitido en este momento"
+  código de error: 118,
+  descripción: "Las misiones no están asignadas"
 }
 
 $> asignar mision Hooker M32
@@ -370,8 +370,8 @@ $> asignar paises paises.csv
 
 $> asignar pais Gondorff Rusia
 {
-  código de error: 99,
-  descripción: "Comando no permitido en este momento"
+  código de error: 113,
+  descripción: "El país ya está asignado"
 }
 
 $> repartir ejercitos 8 Alaska
@@ -513,7 +513,7 @@ $> atacar Ontario 5x1x1 USAEste 4
   ejercitosPaisDefensa: [ 1, 3 ],
   paisAtaquePerceneceA: "Gondorff",
   paisDefensaPerceneceA: "Gondorff",
-  continenteConquistado: null
+  continenteConquistado: "null"
 }
 
 $> describir pais USAEste
@@ -581,7 +581,7 @@ $> describir continente AméricaNorte
 {
   nombre: "América del Norte",
   abreviatura: "AméricaNorte",
-  jugadores: [ { "Gondorff", 27 }, { "Hooker", 2 } ],
+  jugadores: [ { "Hooker", 2 }, { "Gondorff", 27 } ],
   numeroEjercitos: 29,
   rearmeContinente: 5
 }

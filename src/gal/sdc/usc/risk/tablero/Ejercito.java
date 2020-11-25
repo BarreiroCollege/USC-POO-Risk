@@ -58,7 +58,9 @@ public class Ejercito implements Comparable<Ejercito> {
 
     @Override
     public String toString() {
-        return cantidad.toString();
+        return "Ejercito{" +
+                "cantidad=" + cantidad +
+                '}';
     }
 
     @Override

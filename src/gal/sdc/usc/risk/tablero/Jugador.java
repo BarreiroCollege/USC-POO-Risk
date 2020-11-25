@@ -74,6 +74,17 @@ public class Jugador extends Partida {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Jugador{" +
+                "nombre='" + nombre + '\'' +
+                ", color=" + color +
+                ", ejercitosPendientes=" + ejercitosPendientes +
+                ", cartas=" + cartas +
+                ", mision=" + mision +
+                '}';
+    }
+
     public static class Builder {
         private final String nombre;
         private Color color;

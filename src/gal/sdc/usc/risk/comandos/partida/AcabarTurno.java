@@ -25,7 +25,7 @@ public class AcabarTurno extends Partida implements IComando {
 
         super.moverTurno();
         if (super.isJugando()) {
-            super.getComandos().iniciarTurno();
+            super.getComandos().iniciarTurno(super.getJugadorTurno());
         }
 
         SalidaObjeto salida = new SalidaObjeto();

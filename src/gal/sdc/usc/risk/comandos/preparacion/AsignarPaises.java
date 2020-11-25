@@ -1,11 +1,13 @@
 package gal.sdc.usc.risk.comandos.preparacion;
 
-import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Comandos;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
+import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.jugar.Resultado;
+import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Recursos;
 
 import java.io.BufferedReader;
@@ -19,6 +21,20 @@ import java.io.IOException;
 public class AsignarPaises extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
+        if (super.getMapa() == null) {
+            Resultado.error(Errores.MAPA_NO_CREADO);
+            return;
+        }
+        if (super.getJugadores().size() < 3 || super.getJugadores().size() > 6) {
+            Resultado.error(Errores.JUGADORES_NO_CREADOS);
+            return;
+        }
+
+        if (super.getJugadores().values().stream().anyMatch(p -> p.getMision() == null)) {
+            Resultado.error(Errores.MISIONES_NO_ASIGNADAS);
+            return;
+        }
+
         try {
             BufferedReader bufferLector;
             File fichero = Recursos.get(comandos[2]);

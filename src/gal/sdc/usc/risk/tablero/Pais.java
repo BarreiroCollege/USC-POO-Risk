@@ -90,10 +90,15 @@ public class Pais {
     @Override
     public String toString() {
         return "Pais{" +
-                "nombre='" + nombre + '\'' +
+                "identificador=" + identificador +
+                ", nombre='" + nombre + '\'' +
                 ", abreviatura='" + abreviatura + '\'' +
-                ", continente=" + (continente != null ? continente.getNombre() : continente) +
                 ", celda=" + celda +
+                ", ejercito=" + ejercito +
+                ", continente=" + continente +
+                ", fronteras=" + fronteras +
+                ", jugador=" + jugador +
+                ", numVecesConquistado=" + numVecesConquistado +
                 '}';
     }
 
