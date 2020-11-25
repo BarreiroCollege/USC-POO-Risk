@@ -27,7 +27,7 @@ hs_err_pid*
 
 out/
 build/
-sources.txt
+build/sources.txt
 
 res/goldstandard.txt
 res/resultado.txt
