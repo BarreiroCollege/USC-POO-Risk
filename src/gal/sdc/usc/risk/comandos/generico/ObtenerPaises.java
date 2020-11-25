@@ -1,11 +1,11 @@
-package gal.sdc.usc.risk.menu.comandos.generico;
+package gal.sdc.usc.risk.comandos.generico;
 
-import gal.sdc.usc.risk.menu.Partida;
-import gal.sdc.usc.risk.menu.Resultado;
-import gal.sdc.usc.risk.menu.comandos.Comando;
-import gal.sdc.usc.risk.menu.comandos.Comandos;
-import gal.sdc.usc.risk.menu.comandos.Estado;
-import gal.sdc.usc.risk.menu.comandos.IComando;
+import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.jugar.Resultado;
+import gal.sdc.usc.risk.comandos.Comando;
+import gal.sdc.usc.risk.comandos.Comandos;
+import gal.sdc.usc.risk.comandos.Estado;
+import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.valores.Errores;
