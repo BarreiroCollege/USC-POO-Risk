@@ -145,17 +145,26 @@ public abstract class Partida {
         return true;
     }
 
-    protected void comprobacionesTurno() {
+    protected int calcularEjercitosPendientes(Jugador jugador) {
+        int e = 0;
+
         // El jugador recibe el número de ejércitos que es el resultado de dividir el número de países que
         // pertenecen al jugador entre 3. Por ejemplo, si un jugador tiene 14 países, al iniciar su turno
         // recibe 4 países (el resultado entero de 14/3= 4).
-        this.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(this.getJugadorTurno().getPaises().size() / 3));
+        e += jugador.getPaises().size() / 3;
 
         // Si todos los países de un continente pertenecen a dicho jugador, recibe el número de ejércitos
         // indicados en la Tabla 4.
-        for (Continente continente : this.getJugadorTurno().getContinentes()) {
-            this.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(continente.getEjercitosRearme()));
+        for (Continente continente : jugador.getContinentes()) {
+            e += continente.getEjercitosRearme();
         }
+
+        return e;
+    }
+
+    protected void comprobacionesTurno() {
+        // Ejércitos que le tocan
+        this.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(this.calcularEjercitosPendientes(this.getJugadorTurno())));
 
         // Un jugador no puede disponer de más de 6 cartas de equipamiento, en cuyo caso se deberá
         // realizar un cambio de forma automática, de modo que, si son posibles dos cambios, se elegirá
@@ -166,11 +175,12 @@ public abstract class Partida {
 
         // Cuando se cambian las cartas, si el país asociado a la carta es un país que pertenece al jugador,
         // se pondrá un ejército adicional en dicho país.
-        for (Carta carta : this.getJugadorTurno().getCartas()) {
+        // TODO
+        /* for (Carta carta : this.getJugadorTurno().getCartas()) {
             if (carta.getPais().getJugador().equals(this.getJugadorTurno())) {
                 carta.getPais().getEjercito().recibir(new Ejercito(1));
             }
-        }
+        } */
     }
 
     protected Integer getEjercitosIniciales() {

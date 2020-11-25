@@ -103,6 +103,8 @@ public class Mapa {
                 for (EnlacesMaritimos enlace : EnlacesMaritimos.values()) {
                     if (enlace.getPais1().getNombre().equals(pais.getNombre())) {
                         preFronteras.withMaritima(this.getPaisPorNombre(enlace.getPais2().getNombre()));
+                    } else if (enlace.getPais2().getNombre().equals(pais.getNombre())) {
+                        preFronteras.withMaritima(this.getPaisPorNombre(enlace.getPais1().getNombre()));
                     }
                 }
 
@@ -240,7 +242,7 @@ public class Mapa {
                         texto += String.format(" %-18s ", new Colores(""));
                     }
                 } else {
-                    nombreTemporal = new StringBuilder(pais.getEjercito() == null ? "0" : pais.getEjercito().toString());
+                    nombreTemporal = new StringBuilder(pais.getEjercito() == null ? "0" : pais.getEjercito().toInt().toString());
                     while (nombreTemporal.length() < Pais.MAX_LENGTH_NOMBRE) {
                         nombreTemporal.append(" ");
                     }

@@ -31,7 +31,7 @@ public class DescribirJugador extends Partida implements IComando {
         salida.put("paises", jugador.getPaises());
         salida.put("continentes", jugador.getContinentes());
         salida.put("cartas", jugador.getCartas());
-        salida.put("numeroEjercitosRearmar", jugador.getEjercitosPendientes().toInt());
+        salida.put("numeroEjercitosRearmar", super.calcularEjercitosPendientes(jugador));
         Resultado.correcto(salida);
     }
 
