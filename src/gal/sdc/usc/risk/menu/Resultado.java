@@ -2,7 +2,6 @@ package gal.sdc.usc.risk.menu;
 
 import gal.sdc.usc.risk.menu.comandos.Ejecutor;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
@@ -26,8 +25,8 @@ public class Resultado {
 
     public static void error(Errores error) {
         SalidaObjeto salida = new SalidaObjeto();
-        salida.withEntrada("código de error", SalidaValor.withInteger(error.getCodigo()));
-        salida.withEntrada("descripción", SalidaValor.withString(error.getMensaje()));
+        salida.put("código de error", error.getCodigo());
+        salida.put("descripción", error.getMensaje());
         System.out.println(new Resultado(Colores.Color.ROJO, salida.toString()));
     }
 

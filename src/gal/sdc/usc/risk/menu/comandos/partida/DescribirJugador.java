@@ -8,15 +8,8 @@ import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.salida.SalidaUtils;
-import gal.sdc.usc.risk.salida.SalidaValor;
-import gal.sdc.usc.risk.tablero.Carta;
-import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
-import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
-import gal.sdc.usc.risk.util.Colores;
-
-import java.util.Iterator;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.DESCRIBIR_JUGADOR)
 public class DescribirJugador extends Partida implements IComando {
@@ -30,16 +23,16 @@ public class DescribirJugador extends Partida implements IComando {
         }
 
         SalidaObjeto salida = new SalidaObjeto();
-        salida.withEntrada("nombre", SalidaValor.withString(jugador.getNombre()));
-        salida.withEntrada("color", SalidaValor.withString(jugador.getColor().toString()));
+        salida.put("nombre", jugador.getNombre());
+        salida.put("color", jugador.getColor().toString());
         if (jugador.equals(super.getJugadorTurno())) {
-            salida.withEntrada("misión", SalidaValor.withString(jugador.getMision().getDescripcion()));
+            salida.put("misión", jugador.getMision().getDescripcion());
         }
-        salida.withEntrada("numeroEjercitos: ", SalidaValor.withInteger(jugador.getNumEjercitos()));
-        salida.withEntrada("paises", SalidaValor.withSalidaLista(SalidaUtils.paises(jugador.getPaises())));
-        salida.withEntrada("continentes", SalidaValor.withSalidaLista(SalidaUtils.continentes(jugador.getContinentes())));
-        salida.withEntrada("cartas", SalidaValor.withSalidaLista(SalidaUtils.cartas(jugador.getCartas())));
-        salida.withEntrada("numeroEjercitosRearmar", SalidaValor.withInteger(jugador.getEjercitosPendientes().toInt()));
+        salida.put("numeroEjercitos: ", jugador.getNumEjercitos());
+        salida.put("paises", jugador.getPaises());
+        salida.put("continentes", jugador.getContinentes());
+        salida.put("cartas", jugador.getCartas());
+        salida.put("numeroEjercitosRearmar", jugador.getEjercitosPendientes().toInt());
         Resultado.correcto(salida);
     }
 

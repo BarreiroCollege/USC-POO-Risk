@@ -8,12 +8,8 @@ import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.salida.SalidaUtils;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
-import gal.sdc.usc.risk.util.Colores;
-
-import java.util.Iterator;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.DESCRIBIR_PAIS)
 public class DescribirPais extends Partida implements IComando {
@@ -27,13 +23,13 @@ public class DescribirPais extends Partida implements IComando {
         }
 
         SalidaObjeto salida = new SalidaObjeto();
-        salida.withEntrada("nombre", SalidaValor.withString(pais.getNombre()));
-        salida.withEntrada("abreviatura", SalidaValor.withString(pais.getAbreviatura()));
-        salida.withEntrada("continente", SalidaValor.withString(pais.getContinente().getNombre()));
-        salida.withEntrada("frontera", SalidaValor.withSalidaLista(SalidaUtils.paises(pais.getFronteras().getTodas())));
-        salida.withEntrada("jugador", SalidaValor.withString(pais.getJugador().getNombre()));
-        salida.withEntrada("numeroEjercitos", SalidaValor.withInteger(pais.getEjercito().toInt()));
-        salida.withEntrada("numeroVecesOcupado", SalidaValor.withInteger(pais.getNumVecesConquistado()));
+        salida.put("nombre", pais.getNombre());
+        salida.put("abreviatura", pais.getAbreviatura());
+        salida.put("continente", pais.getContinente().getNombre());
+        salida.put("frontera", pais.getFronteras().getTodas());
+        salida.put("jugador", pais.getJugador().getNombre());
+        salida.put("numeroEjercitos", pais.getEjercito().toInt());
+        salida.put("numeroVecesOcupado", pais.getNumVecesConquistado());
         Resultado.correcto(salida);
     }
 

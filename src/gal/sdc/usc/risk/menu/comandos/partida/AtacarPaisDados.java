@@ -6,9 +6,7 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.salida.SalidaLista;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -98,14 +96,14 @@ public class AtacarPaisDados extends Partida implements IComando {
         }
 
         SalidaObjeto salida = new SalidaObjeto();
-        salida.withEntrada("dadosAtaque", SalidaValor.withSalidaLista(SalidaLista.withInteger(atacante)));
-        salida.withEntrada("dadosDefensa", SalidaValor.withSalidaLista(SalidaLista.withInteger(defensor)));
-        salida.withEntrada("ejercitosPaisAtaque", SalidaValor.withSalidaLista(SalidaLista.withInteger(atacanteOriginal, pais1.getEjercito().toInt())));
-        salida.withEntrada("ejercitosPaisAtaque", SalidaValor.withSalidaLista(SalidaLista.withInteger(defensorOriginal, pais2.getEjercito().toInt())));
-        salida.withEntrada("paisAtaquePerceneceA", SalidaValor.withString(pais1.getJugador().getNombre()));
-        salida.withEntrada("paisDefensaPerceneceA", SalidaValor.withString(pais2.getJugador().getNombre()/*jugadorDefensor.getNombre()*/));
-        salida.withEntrada("continenteConquistado", SalidaValor.withString(pais2.getContinente().getJugador() != null && pais2.getContinente().getJugador()
-                .equals(super.getJugadorTurno()) ? pais2.getContinente().getNombre() : "null"));
+        salida.put("dadosAtaque", atacante);
+        salida.put("dadosDefensa", defensor);
+        salida.put("ejercitosPaisAtaque", atacanteOriginal, pais1.getEjercito());
+        salida.put("ejercitosPaisDefensa", defensorOriginal, pais2.getEjercito());
+        salida.put("paisAtaquePerceneceA", pais1.getJugador().getNombre());
+        salida.put("paisDefensaPerceneceA", pais2.getJugador().getNombre());
+        salida.put("continenteConquistado", pais2.getContinente().getJugador() != null && pais2.getContinente().getJugador()
+                .equals(super.getJugadorTurno()) ? pais2.getContinente().getNombre() : null);
         Resultado.correcto(salida);
     }
 

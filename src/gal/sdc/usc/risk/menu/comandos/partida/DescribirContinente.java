@@ -6,18 +6,14 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.salida.SalidaLista;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
-import gal.sdc.usc.risk.util.Colores;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,8 +29,8 @@ public class DescribirContinente extends Partida implements IComando {
         }
 
         SalidaObjeto salida = new SalidaObjeto();
-        salida.withEntrada("nombre", SalidaValor.withString(continente.getNombre()));
-        salida.withEntrada("abreviatura", SalidaValor.withString(continente.getAbreviatura()));
+        salida.put("nombre", continente.getNombre());
+        salida.put("abreviatura", continente.getAbreviatura());
 
         HashMap<Jugador, Integer> jugadoresEjercitos = new HashMap<>();
         for (Pais pais : continente.getPaises().values()) {
@@ -43,12 +39,12 @@ public class DescribirContinente extends Partida implements IComando {
         }
         List<SalidaObjeto> jugadores = new ArrayList<>();
         for (Map.Entry<Jugador, Integer> jugador : jugadoresEjercitos.entrySet()) {
-            jugadores.add(new SalidaObjeto().withEntrada(jugador.getKey().getNombre(), SalidaValor.withInteger(jugador.getValue())));
+            jugadores.add(new SalidaObjeto().put(jugador.getKey().getNombre(), jugador.getValue()));
         }
-        salida.withEntrada("jugadores", SalidaValor.withSalidaLista(SalidaLista.withSalidaObjeto(jugadores)));
+        salida.put("jugadores", jugadores);
 
-        salida.withEntrada("numeroEjercitos", SalidaValor.withInteger(continente.getNumEjercitos()));
-        salida.withEntrada("rearmeContinente", SalidaValor.withInteger(continente.getEjercitosRearme()));
+        salida.put("numeroEjercitos", continente.getNumEjercitos());
+        salida.put("rearmeContinente", continente.getEjercitosRearme());
 
         Resultado.correcto(salida);
     }

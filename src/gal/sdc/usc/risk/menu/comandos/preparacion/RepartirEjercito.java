@@ -6,16 +6,12 @@ import gal.sdc.usc.risk.menu.comandos.Comando;
 import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
-import gal.sdc.usc.risk.salida.SalidaLista;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,10 +54,10 @@ public class RepartirEjercito extends Partida implements IComando {
         Integer asignado = paisFinal.getEjercito().recibir(paisFinal.getJugador().getEjercitosPendientes(), numero);
         if (asignado != null) {
             SalidaObjeto salida = new SalidaObjeto();
-            salida.withEntrada("pais", SalidaValor.withString(paisFinal.getNombre()));
-            salida.withEntrada("jugador", SalidaValor.withString(paisFinal.getJugador().getNombre()));
-            salida.withEntrada("numeroEjercitosAsignados", SalidaValor.withInteger(asignado));
-            salida.withEntrada("numeroEjercitosTotales", SalidaValor.withInteger(paisFinal.getEjercito().toInt()));
+            salida.put("pais", paisFinal.getNombre());
+            salida.put("jugador", paisFinal.getJugador().getNombre());
+            salida.put("numeroEjercitosAsignados", asignado);
+            salida.put("numeroEjercitosTotales", paisFinal.getEjercito());
 
             List<SalidaObjeto> paisesOcupadosContinente = new ArrayList<>();
             List<Pais> paisesJugadorContinente = super.getMapa().getPaisesPorJugador(paisFinal.getJugador()).stream()
@@ -69,9 +65,9 @@ public class RepartirEjercito extends Partida implements IComando {
                     .collect(Collectors.toList());
             for (Pais paisOcupado : paisesJugadorContinente) {
                 paisesOcupadosContinente.add(new SalidaObjeto()
-                        .withEntrada(paisOcupado.getNombre(), SalidaValor.withInteger(paisOcupado.getEjercito().toInt())));
+                        .put(paisOcupado.getNombre(), paisOcupado.getEjercito()));
             }
-            salida.withEntrada("paisesOcupadosContinente", SalidaValor.withSalidaLista(SalidaLista.withSalidaObjeto(paisesOcupadosContinente)));
+            salida.put("paisesOcupadosContinente", paisesOcupadosContinente);
 
             Resultado.correcto(salida);
             this.comprobarEjercitos(paisFinal.getJugador());

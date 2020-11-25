@@ -8,7 +8,6 @@ import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.salida.SalidaUtils;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
@@ -30,7 +29,7 @@ public class ObtenerPaises extends Partida implements IComando {
         }
 
         SalidaObjeto salida = new SalidaObjeto();
-        salida.withEntrada("paises", SalidaValor.withSalidaLista(SalidaUtils.paises(continente.getPaises().values())));
+        salida.put("paises", continente.getPaises().values());
         Resultado.correcto(salida);
     }
 

@@ -7,7 +7,6 @@ import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Equipamientos;
@@ -47,10 +46,10 @@ public class AsignarCarta extends Partida implements IComando {
         super.getJugadorTurno().getCartas().add(carta);
 
         SalidaObjeto salida = new SalidaObjeto();
-        salida.withEntrada("tipoCarta", SalidaValor.withString(carta.getEquipamiento().getNombre()));
-        salida.withEntrada("paisAsociado", SalidaValor.withString(carta.getPais().getNombre()));
-        salida.withEntrada("perteneceAJugador", SalidaValor.withString(super.getJugadorTurno().getNombre()));
-        salida.withEntrada("ejercitosDeRearme", SalidaValor.withInteger(carta.getPais().getJugador().equals(super.getJugadorTurno()) ? 1 : 0));
+        salida.put("tipoCarta", carta.getEquipamiento().getNombre());
+        salida.put("paisAsociado", carta.getPais().getNombre());
+        salida.put("perteneceAJugador", super.getJugadorTurno().getNombre());
+        salida.put("ejercitosDeRearme", carta.getPais().getJugador().equals(super.getJugadorTurno()) ? 1 : 0);
         Resultado.correcto(salida);
     }
 

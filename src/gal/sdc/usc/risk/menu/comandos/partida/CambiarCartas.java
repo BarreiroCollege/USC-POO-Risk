@@ -9,7 +9,6 @@ import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaLista;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.salida.SalidaUtils;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -110,11 +109,10 @@ public class CambiarCartas extends Partida implements IComando {
 
         if (!auto) {
             SalidaObjeto salida = new SalidaObjeto();
-            salida.withEntrada("cartasCambio", SalidaValor.withSalidaLista(SalidaLista.withString(cartas.get(0).getNombre(),
-                    cartas.get(1).getNombre(), cartas.get(2).getNombre())));
-            salida.withEntrada("cartasQuedan", SalidaValor.withSalidaLista(SalidaUtils.cartas(super.getJugadorTurno().getCartas())));
-            salida.withEntrada("numeroEjercitosCambiados", SalidaValor.withInteger(numCambios));
-            salida.withEntrada("numEjercitosRearme", SalidaValor.withInteger(numCambios));
+            salida.put("cartasCambio", cartas.get(0).getNombre(), cartas.get(1).getNombre(), cartas.get(2).getNombre());
+            salida.put("cartasQuedan", super.getJugadorTurno().getCartas());
+            salida.put("numeroEjercitosCambiados", numCambios);
+            salida.put("numEjercitosRearme", numCambios);
             Resultado.correcto(salida);
         }
     }

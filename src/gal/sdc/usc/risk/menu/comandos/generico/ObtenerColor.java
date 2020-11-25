@@ -7,7 +7,6 @@ import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
@@ -30,7 +29,7 @@ public class ObtenerColor extends Partida implements IComando {
         }
 
         SalidaObjeto salida = new SalidaObjeto();
-        salida.withEntrada("color", SalidaValor.withString(pais.getContinente().getColor().toString()));
+        salida.put("color", pais.getContinente().getColor().toString());
         Resultado.correcto(salida);
     }
 

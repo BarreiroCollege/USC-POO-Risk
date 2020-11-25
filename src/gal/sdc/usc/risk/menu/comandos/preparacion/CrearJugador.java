@@ -7,7 +7,6 @@ import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.util.Colores;
@@ -45,8 +44,8 @@ public class CrearJugador extends Partida implements IComando {
             this.comprobarJugadores();
 
             SalidaObjeto salida = new SalidaObjeto();
-            salida.withEntrada("nombre", SalidaValor.withString(jugador.getNombre()));
-            salida.withEntrada("color", SalidaValor.withString(jugador.getColor().toString()));
+            salida.put("nombre", jugador.getNombre());
+            salida.put("color", jugador.getColor().toString());
             Resultado.correcto(salida);
         }
     }

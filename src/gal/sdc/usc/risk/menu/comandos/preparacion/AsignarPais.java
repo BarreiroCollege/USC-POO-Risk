@@ -8,13 +8,10 @@ import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.salida.SalidaUtils;
-import gal.sdc.usc.risk.salida.SalidaValor;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 import gal.sdc.usc.risk.tablero.valores.Paises;
-
-import java.util.List;
 
 
 @Comando(estado = Estado.PREPARACION, comando = Comandos.ASIGNAR_PAIS)
@@ -64,10 +61,10 @@ public class AsignarPais extends Partida implements IComando {
         paisFinal.getEjercito().recibir(jugadorFinal.getEjercitosPendientes(), 1);
 
         SalidaObjeto salida = new SalidaObjeto();
-        salida.withEntrada("nombre", SalidaValor.withString(jugadorFinal.getNombre()));
-        salida.withEntrada("pais", SalidaValor.withString(paisFinal.getNombre()));
-        salida.withEntrada("continente", SalidaValor.withString(paisFinal.getContinente().getNombre()));
-        salida.withEntrada("frontera", SalidaValor.withSalidaLista(SalidaUtils.paises(paisFinal.getFronteras().getTodas())));
+        salida.put("nombre", jugadorFinal.getNombre());
+        salida.put("pais", paisFinal.getNombre());
+        salida.put("continente", paisFinal.getContinente().getNombre());
+        salida.put("frontera", paisFinal.getFronteras().getTodas());
         Resultado.correcto(salida);
         this.comprobarPaises();
     }
