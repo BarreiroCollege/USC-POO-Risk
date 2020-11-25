@@ -7,7 +7,6 @@ import gal.sdc.usc.risk.menu.comandos.Comandos;
 import gal.sdc.usc.risk.menu.comandos.Estado;
 import gal.sdc.usc.risk.menu.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
-import gal.sdc.usc.risk.salida.SalidaUtils;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Errores;
 
@@ -28,7 +27,7 @@ public class DescribirJugador extends Partida implements IComando {
         if (jugador.equals(super.getJugadorTurno())) {
             salida.put("misión", jugador.getMision().getDescripcion());
         }
-        salida.put("numeroEjercitos: ", jugador.getNumEjercitos());
+        salida.put("numeroEjercitos", jugador.getNumEjercitos());
         salida.put("paises", jugador.getPaises());
         salida.put("continentes", jugador.getContinentes());
         salida.put("cartas", jugador.getCartas());

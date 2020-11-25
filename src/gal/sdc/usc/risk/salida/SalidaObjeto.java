@@ -8,8 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SalidaObjeto {
-    private boolean raiz = true;
     private final HashMap<String, Object> entradas;
+    private boolean raiz = true;
 
     public SalidaObjeto() {
         this.entradas = new LinkedHashMap<>();

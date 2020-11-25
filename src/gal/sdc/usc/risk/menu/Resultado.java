@@ -45,6 +45,11 @@ public class Resultado {
         Ejecutor.comando("ayuda");
     }
 
+    @Override
+    public String toString() {
+        return new Colores(mensaje, color).toString();
+    }
+
     public static class Escritor {
         private static FileOutputStream fos;
         private static BufferedWriter bw;
@@ -98,10 +103,5 @@ public class Resultado {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public String toString() {
-        return new Colores(mensaje, color).toString();
     }
 }
