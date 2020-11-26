@@ -16,8 +16,6 @@ public abstract class SalidaUtils {
 
         if (o instanceof String) {
             return "\"" + o.toString() + "\"";
-        } else if (o instanceof SalidaObjeto) {
-            return ((SalidaObjeto) o).setNodo().toString();
         } else if (o instanceof Pais) {
             return SalidaUtils.getString(((Pais) o).getNombre());
         } else if (o instanceof Continente) {

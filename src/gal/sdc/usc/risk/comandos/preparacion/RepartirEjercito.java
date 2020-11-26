@@ -1,11 +1,12 @@
 package gal.sdc.usc.risk.comandos.preparacion;
 
-import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.jugar.Resultado;
 import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Comandos;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
+import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.jugar.Resultado;
+import gal.sdc.usc.risk.salida.SalidaDupla;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -65,13 +66,12 @@ public class RepartirEjercito extends Partida implements IComando {
             salida.put("numeroEjercitosAsignados", asignado);
             salida.put("numeroEjercitosTotales", paisFinal.getEjercito());
 
-            List<SalidaObjeto> paisesOcupadosContinente = new ArrayList<>();
+            List<SalidaDupla> paisesOcupadosContinente = new ArrayList<>();
             List<Pais> paisesJugadorContinente = super.getMapa().getPaisesPorJugador(paisFinal.getJugador()).stream()
                     .filter(paisFiltro -> paisFiltro.getContinente().equals(paisFinal.getContinente()))
                     .collect(Collectors.toList());
             for (Pais paisOcupado : paisesJugadorContinente) {
-                paisesOcupadosContinente.add(new SalidaObjeto()
-                        .put(paisOcupado.getNombre(), paisOcupado.getEjercito()));
+                paisesOcupadosContinente.add(new SalidaDupla(paisOcupado.getNombre(), paisOcupado.getEjercito()));
             }
             salida.put("paisesOcupadosContinente", paisesOcupadosContinente);
 

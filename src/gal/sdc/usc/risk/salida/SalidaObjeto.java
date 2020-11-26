@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class SalidaObjeto {
     private final HashMap<String, Object> entradas;
-    private boolean raiz = true;
 
     public SalidaObjeto() {
         this.entradas = new LinkedHashMap<>();
@@ -39,32 +38,15 @@ public class SalidaObjeto {
         return this;
     }
 
-    public SalidaObjeto setNodo() {
-        this.raiz = false;
-        return this;
-    }
-
     @Override
     public String toString() {
-        StringBuilder out = new StringBuilder("{");
-        if (raiz) {
-            out.append("\n");
-        } else {
-            out.append(" ");
-        }
+        StringBuilder out = new StringBuilder("{\n");
         Iterator<Map.Entry<String, Object>> it = entradas.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, Object> entrada = it.next();
-            if (raiz) {
-                out.append("  ").append(entrada.getKey()).append(": ").append(SalidaUtils.getString(entrada.getValue()))
-                        .append(it.hasNext() ? "," : "").append("\n");
-            } else {
-                out.append("\"").append(entrada.getKey()).append("\"").append(", ").append(SalidaUtils.getString(entrada.getValue()))
-                        .append(it.hasNext() ? ", " : "");
-            }
-        }
-        if (!raiz) {
-            out.append(" ");
+            out.append("  ").append(entrada.getKey()).append(": ").append(SalidaUtils.getString(entrada.getValue()))
+                    .append(it.hasNext() ? "," : "").append("\n");
+
         }
         out.append("}");
         return out.toString();

@@ -6,6 +6,7 @@ import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Comandos;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
+import gal.sdc.usc.risk.salida.SalidaDupla;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
@@ -37,9 +38,9 @@ public class DescribirContinente extends Partida implements IComando {
             jugadoresEjercitos.putIfAbsent(pais.getJugador(), 0);
             jugadoresEjercitos.put(pais.getJugador(), jugadoresEjercitos.get(pais.getJugador()) + pais.getEjercito().toInt());
         }
-        List<SalidaObjeto> jugadores = new ArrayList<>();
+        List<SalidaDupla> jugadores = new ArrayList<>();
         for (Map.Entry<Jugador, Integer> jugador : jugadoresEjercitos.entrySet()) {
-            jugadores.add(new SalidaObjeto().put(jugador.getKey().getNombre(), jugador.getValue()));
+            jugadores.add(new SalidaDupla(jugador.getKey().getNombre(), jugador.getValue()));
         }
         salida.put("jugadores", jugadores);
 
