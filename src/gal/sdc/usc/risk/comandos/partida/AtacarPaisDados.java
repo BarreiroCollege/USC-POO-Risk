@@ -103,7 +103,7 @@ public class AtacarPaisDados extends Partida implements IComando {
         salida.put("paisAtaquePerteneceA", pais1.getJugador().getNombre());
         salida.put("paisDefensaPerteneceA", pais2.getJugador().getNombre());
         salida.put("continenteConquistado", pais2.getContinente().getJugador() != null && pais2.getContinente().getJugador()
-                .equals(super.getJugadorTurno()) ? pais2.getContinente().getNombre() : null);
+                .equals(super.getJugadorTurno()) ? pais2.getContinente().getNombre() : "null");
         Resultado.correcto(salida);
     }
 

@@ -78,7 +78,7 @@ $> asignar paises paises.csv
   nombre: "Gondorff",
   pais: "Alaska",
   continente: "América del Norte",
-  frontera: [ "Alberta", "Territorios del Noroeste" ]
+  frontera: [ "Alberta", "Territorios del Noroeste", "Kamchatka" ]
 }
 
 {
@@ -99,7 +99,7 @@ $> asignar paises paises.csv
   nombre: "Gondorff",
   pais: "Islandia",
   continente: "Europa",
-  frontera: [ "Escandinavia" ]
+  frontera: [ "Escandinavia", "Groenlandia" ]
 }
 
 {
@@ -260,14 +260,14 @@ $> asignar paises paises.csv
   nombre: "Hooker",
   pais: "África del Norte",
   continente: "África",
-  frontera: [ "Congo", "Egipto" ]
+  frontera: [ "Congo", "Egipto", "Brasil", "Europa Occidental" ]
 }
 
 {
   nombre: "Hooker",
   pais: "Egipto",
   continente: "África",
-  frontera: [ "África Oriental", "Oriente Medio", "África del Norte" ]
+  frontera: [ "África Oriental", "Oriente Medio", "África del Norte", "Europa del Sur" ]
 }
 
 {
@@ -344,7 +344,7 @@ $> asignar paises paises.csv
   nombre: "Lonnegan",
   pais: "Indonesia",
   continente: "Oceanía",
-  frontera: [ "Australia Occidental", "Nueva Guinea" ]
+  frontera: [ "Australia Occidental", "Nueva Guinea", "Sureste Asiático" ]
 }
 
 {
@@ -511,8 +511,8 @@ $> atacar Ontario 5x1x1 USAEste 4
   dadosDefensa: [ 4 ],
   ejercitosPaisAtaque: [ 6, 3 ],
   ejercitosPaisDefensa: [ 1, 3 ],
-  paisAtaquePerceneceA: "Gondorff",
-  paisDefensaPerceneceA: "Gondorff",
+  paisAtaquePerteneceA: "Gondorff",
+  paisDefensaPerteneceA: "Gondorff",
   continenteConquistado: "null"
 }
 
@@ -574,7 +574,7 @@ $> describir jugador Gondorff
   paises: [ "Quebec", "Alaska", "Alberta", "Yakustsk", "Rusia", "Escandinavia", "Gran Bretaña", "Territorios del Noroeste", "Ontario", "Estados Unidos del Este", "Kamchatka", "Siberia", "Europa del Norte", "Islandia", "Groenlandia" ],
   continentes: [  ],
   cartas: [ "Infantería&Alaska" ],
-  numeroEjercitosRearmar: 0
+  numeroEjercitosRearmar: 5
 }
 
 $> describir continente AméricaNorte

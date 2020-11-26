@@ -11,7 +11,9 @@ public abstract class SalidaUtils {
 
     protected static String getString(Object o) {
         if (o == null) {
-            return SalidaUtils.getString("null");
+            return null;
+        } else if (o instanceof SalidaObjeto) {
+            System.err.println("Se ha encontrado más de un SalidaObjeto");
         }
 
         if (o instanceof String) {

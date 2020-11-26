@@ -1,4 +1,5 @@
 $> CREAR MAPA
+
 $> CREAR MAPA
 {
 código de error: 107,
@@ -23,6 +24,10 @@ $> CREAR Gondorff AZUL
 {
 código de error: 104,
 descripción: "El jugador ya existe"
+}
+{
+código de error: 114,
+descripción: "El color ya está asignado"
 }
 
 $> CREAR JT VERDE
@@ -392,7 +397,7 @@ pais: "África del Norte",
 jugador: "Hooker",
 numeroEjercitosAsignados: 5,
 numeroEjercitosTotales: 6,
-paisesOcupadosContinente: [ { "Egipto", 1 }, { "África del Norte", 6} ]
+paisesOcupadosContinente: [ { "Egipto", 1 }, { "África del Norte", 6} ]
 }
 
 $> REPARTIR EJERCITOS 6 Egipto
@@ -401,7 +406,7 @@ pais: "Egipto",
 jugador: "Hooker",
 numeroEjercitosAsignados: 6,
 numeroEjercitosTotales: 7,
-paisesOcupadosContinente: [ { "Egipto", 7 }, { "África del Norte", 6} ]
+paisesOcupadosContinente: [ { "Egipto", 7 }, { "África del Norte", 6} ]
 }
 
 $> REPARTIR EJERCITOS 5 India
@@ -426,7 +431,7 @@ pais: "Indonesia",
 jugador: "Lonnegan",
 numeroEjercitosAsignados: 15,
 numeroEjercitosTotales: 16,
-paisesOcupadosContinente: [ { "Indonesia", 16 }, { "Nueva Guinea", 1}, { "Australia Oriental", 1 }, { "Australia Occidental", 1 } ]
+paisesOcupadosContinente: [ { "Indonesia", 16 }, { "Nueva Guinea", 1}, { "Australia Oriental", 1 }, { "Australia Occidental", 1 } ]
 }
 
 $> REPARTIR EJERCITOS 6 NGuinea
@@ -435,7 +440,7 @@ pais: "Indonesia",
 jugador: "Lonnegan",
 numeroEjercitosAsignados: 6,
 numeroEjercitosTotales: 7,
-paisesOcupadosContinente: [ { "Indonesia", 16 }, { "Nueva Guinea", 7}, { "Australia Oriental", 1 }, { "Australia Occidental", 1 } ]
+paisesOcupadosContinente: [ { "Indonesia", 16 }, { "Nueva Guinea", 7}, { "Australia Oriental", 1 }, { "Australia Occidental", 1 } ]
 }
 
 $> ACABAR TURNO
@@ -450,7 +455,7 @@ pais: "Islandia",
 jugador: "Gondorff",
 numeroEjercitosAsignados: 4,
 numeroEjercitosTotales: 5,
-paisesOcupadosContinente: [ { "Islandia", 5 }, { "Escandinavia", 1}, { "Gran Bretaña", 1 }, { "Europa del Norte", 1 } ]
+paisesOcupadosContinente: [ { "Islandia", 5 }, { "Escandinavia", 1}, { "Gran Bretaña", 1 }, { "Europa del Norte", 1 } ]
 }
 
 $> DESCRIBIR PAIS USAEste
@@ -503,14 +508,6 @@ numeroEjercitosInicialesOrigen: 9,
 numeroEjercitosInicialesDestino: 1,
 numeroEjercitosFinalesOrigen: 5,
 numeroEjercitosFinalesDestino: 5
-}
-
-$> ASIGNAR CARTA Infantería&Alaska
-{
-tipoCarta: "Infantería",
-paisAsociado: Alaska,
-perteneceAJugador: "Gondorff",
-ejercitosDeRearme: 1
 }
 
 $> ATACAR GBretaña 3 EurSur 4
