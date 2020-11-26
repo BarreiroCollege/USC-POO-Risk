@@ -3,147 +3,114 @@ package gal.sdc.usc.risk.correccion;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class DatosDiccionario {
-    boolean dupla = false;
-    Map<String, Object> map = new HashMap<>();
+    public static final Pattern REGEX = Pattern.compile("\\s*\\{\\s*" + Parseador.REGEX_CLAVE + "\\s*:\\s*" + Parseador.REGEX_VALOR + "\\s*\\}\\s*", Pattern.DOTALL);
+    HashMap<DatosTexto, Object> valores = new HashMap<>();
 
-    public Object opt(String key) {
-        return key == null ? null : this.map.get(key);
+    public DatosDiccionario(String o) {
+        // System.out.println("DICCIONARIO: " + o);
+
+        char c, prev;
+        boolean leyendo = false, leyendoClave = false, leyendoValor = false;
+        StringBuilder clave = new StringBuilder();
+        StringBuilder valor = new StringBuilder();
+        int corchetesValor = 0;
+        for (int i = 0; i < o.length(); i++) {
+            c = o.charAt(i);
+            prev = i > 0 ? o.charAt(i - 1) : '\0';
+
+            if (!leyendoClave && !leyendoValor) {
+                if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
+                    continue;
+                }
+            }
+
+            if (!leyendo) {
+                if (c == '{' && prev != '\\') {
+                    leyendo = true;
+                    leyendoClave = true;
+                }
+            } else {
+                if (leyendoClave) {
+                    if (c == ':' && prev != '\\') {
+                        leyendoClave = false;
+                        leyendoValor = true;
+                        corchetesValor = 0;
+                    } else {
+                        clave.append(c);
+                    }
+                } else if (leyendoValor) {
+                    if (corchetesValor == 0 && valor.toString().trim().length() != 0 && (c == ',' || c == '}') && prev != '\\') {
+                        leyendoValor = false;
+                        if (c == ',') leyendoClave = true;
+                        corchetesValor = 0;
+                        // System.out.println(clave.toString().trim() + " - " + valor.toString().trim());
+                        this.valores.put(new DatosTexto(clave.toString().trim()), Parseador.convertir(valor.toString().trim()));
+                        clave = new StringBuilder();
+                        valor = new StringBuilder();
+                    } else {
+                        switch (c) {
+                            case '{':
+                            case '[':
+                                if (prev != '\\') corchetesValor++;
+                                break;
+                            case ']':
+                            case '}':
+                                if (prev != '\\') corchetesValor--;
+                                break;
+                            default:
+                                break;
+                        }
+                        valor.append(c);
+                    }
+                }
+            }
+        }
     }
 
-    public DatosDiccionario put(String key, Object value) {
-        if (key == null) {
-            throw new NullPointerException("Null key.");
+    public DatosDiccionario put(String clave, Object valor) {
+        if (clave == null) {
+            System.err.println("[DatosDiccionario] Intento de inserción de clave nula");
+            return this;
         }
-        if (value != null) {
-            this.map.put(key, value);
+        if (valor != null) {
+            this.valores.put(new DatosTexto(clave), valor);
         } else {
-            this.remove(key);
+            this.valores.remove(new DatosTexto(clave));
         }
         return this;
     }
 
-    public Object remove(String key) {
-        return this.map.remove(key);
-    }
-
-    public DatosDiccionario(Parseador x) {
-        System.out.println(x.s());
-        char c;
-        String key;
-
-        if (x.nextClean() != '{') {
-            System.err.println("A JSONObject text must begin with '{'");
-            return;
-        }
-        for (; ; ) {
-            c = x.nextClean();
-            switch (c) {
-                case 0:
-                    System.err.println("A JSONObject text must end with '}'");
-                    return;
-                case '}':
-                    return;
-                default:
-                    x.back();
-                    key = x.nextValue().toString();
-            }
-
-            // The key is followed by ':'.
-
-            c = x.nextClean();
-            if (c != ':') {
-                System.err.println("Expected a ':' after a key");
-                return;
-            }
-
-            // Use syntaxError(..) to include error location
-
-            if (key != null) {
-                // Check if key exists
-                if (this.opt(key) != null) {
-                    // key already exists
-                    System.err.println("Duplicate key \"" + key + "\"");
-                    return;
-                }
-                // Only add value if non-null
-                Object value = x.nextValue();
-                if (value != null) {
-                    this.put(key, value);
-                }
-            }
-
-            // Pairs are separated by ','.
-
-            switch (x.nextClean()) {
-                case ';':
-                case ',':
-                    if (x.nextClean() == '}') {
-                        return;
-                    }
-                    x.back();
-                    break;
-                case '}':
-                    return;
-                default:
-                    System.err.println(x.s());
-                    System.err.println("> Expected a ',' or '}'");
-                    return;
-            }
-        }
-    }
-
-    public static Object stringToValue(String string) {
-        if ("".equals(string)) {
-            return string;
-        }
-
-        // check JSON key words true/false/null
-        if ("true".equalsIgnoreCase(string)) {
-            return Boolean.TRUE;
-        }
-        if ("false".equalsIgnoreCase(string)) {
-            return Boolean.FALSE;
-        }
-        if ("null".equalsIgnoreCase(string)) {
-            return null;
-        }
-
-        /*
-         * If it might be a number, try converting it. If a number cannot be
-         * produced, then the value will just be a string.
-         */
-
-        char initial = string.charAt(0);
-        if ((initial >= '0' && initial <= '9') || initial == '-') {
-            try {
-                return Integer.valueOf(string);
-            } catch (Exception ignore) {
-            }
-        }
-        return string;
-    }
-
     @Override
     public boolean equals(Object object) {
-        return object == null || object == this;
+        if (object == null) {
+            return false;
+        } else if (!(object instanceof DatosDiccionario)) {
+            return false;
+        }
+        return ((DatosDiccionario) object).valores.equals(this.valores);
+    }
+
+    public String toString(boolean lb) {
+        StringBuilder out = new StringBuilder("{").append(lb ? "\n" : " ");
+        Iterator<Map.Entry<DatosTexto, Object>> it = valores.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<DatosTexto, Object> entrada = it.next();
+            out.append("  ").append(entrada.getKey().toString()).append(": ")
+                    .append(Parseador.objetoATexto(entrada.getValue())).append(it.hasNext() ? "," : "")
+                    .append(lb ? "\n" : " ");
+        }
+        if (!lb) {
+            out.append(" ");
+        }
+        out.append("}");
+        return out.toString();
     }
 
     @Override
     public String toString() {
-        StringBuilder out = new StringBuilder("{");
-        out.append(" ");
-        Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, Object> entrada = it.next();
-            out.append("\"").append(entrada.getKey()).append("\"")
-                    .append(dupla ? ", " : ": ")
-                    .append(entrada.getValue().toString())
-                    .append(it.hasNext() ? ", " : "");
-        }
-        out.append(" ");
-        out.append("}");
-        return out.toString();
+        return toString(false);
     }
 }

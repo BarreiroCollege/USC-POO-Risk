@@ -8,38 +8,42 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Lector {
-    private HashMap<String, List<DatosDiccionario>> comandos = new LinkedHashMap<>();
+    private List<HashMap<String, List<Object>>> comandos = new LinkedList<>();
 
     public Lector(String archivo) {
         this(new File(archivo));
     }
 
     public Lector(File archivo) {
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(new FileInputStream(archivo)))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(archivo)))) {
             String line;
 
             String comando = null;
-            List<DatosDiccionario> resultados = null;
+            List<Object> resultados = null;
             int corchetes = 0;
             StringBuilder resultado = null;
+
+            HashMap<String, List<Object>> comandos2 = null;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
                 if (line.startsWith("$> ")) {
                     if (comando != null) {
-                        comandos.put(comando, resultados);
+                        comandos2.put(comando, resultados);
+                        comandos.add(comandos2);
                     }
                     resultado = null;
-                    comando = line.replace("$> ", "");
-                    System.out.println("$> " + comando);
+                    comando = line.replace("$>", "").trim();
+                    comandos2 = new LinkedHashMap<>();
                     resultados = new ArrayList<>();
                     continue;
                 } else if (line.equals("EOF")) {
                     if (comando != null) {
-                        comandos.put(comando, resultados);
+                        comandos2.put(comando, resultados);
+                        comandos.add(comandos2);
                     }
                     break;
                 }
@@ -49,9 +53,8 @@ public class Lector {
                         resultado = new StringBuilder();
                     }
                 }
-                if (resultado != null){
-                    System.out.println(line);
-                    resultado.append(line);
+                if (resultado != null) {
+                    resultado.append(line).append("\n");
 
                     corchetes += line.length() - line.replace("[", "").length();
                     corchetes += line.length() - line.replace("{", "").length();
@@ -59,17 +62,27 @@ public class Lector {
                     corchetes -= line.length() - line.replace("]", "").length();
 
                     if (corchetes == 0) {
-                        // Parseador.detector(resultado.toString());
-                        System.out.println(resultado.toString());
-                        // DatosDiccionario objeto = new DatosDiccionario(new Parseador(resultado.toString()));
-                        // System.out.println(objeto);
-                        // resultados.add(new CorrectorObjetoJson(new ParseadorJson(resultado.toString())));
+                        resultados.add(Parseador.convertir(resultado.toString()));
                         resultado = null;
                     }
                 }
             }
+
+            /* for (HashMap<String, List<Object>> comandos : comandos) {
+                for (Map.Entry<String, List<Object>> c : comandos.entrySet()) {
+                    System.out.println("$> " + c.getKey());
+                    for (Object o : c.getValue()) {
+                        System.out.println(Parseador.objetoATexto(o));
+                    }
+                    System.out.println();
+                }
+            } */
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<HashMap<String, List<Object>>> getComandos() {
+        return comandos;
     }
 }

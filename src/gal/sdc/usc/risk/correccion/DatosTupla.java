@@ -1,149 +1,93 @@
 package gal.sdc.usc.risk.correccion;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.regex.Pattern;
 
 public class DatosTupla {
-    boolean dupla = false;
-    Map<String, Object> map = new HashMap<>();
+    public static final Pattern REGEX = Pattern.compile("\\s*\\{\\s*" + Parseador.REGEX_CLAVE + "\\s*,\\s*" + Parseador.REGEX_VALOR + "\\s*\\}\\s*", Pattern.DOTALL);
 
-    public Object opt(String key) {
-        return key == null ? null : this.map.get(key);
+    private DatosTexto clave;
+    private Object valor;
+
+    public DatosTupla(String o) {
+        // System.out.println("TUPLA: " + o);
+
+        char c, prev;
+        boolean leyendo = false, leyendo1 = false, leyendo2 = false;
+        StringBuilder clave = new StringBuilder();
+        StringBuilder valor = new StringBuilder();
+        int corchetesValor = 0;
+        for (int i = 0; i < o.length(); i++) {
+            c = o.charAt(i);
+            prev = i > 0 ? o.charAt(i - 1) : '\0';
+
+            if (!leyendo1 && !leyendo2) {
+                if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
+                    continue;
+                }
+            }
+
+            if (!leyendo) {
+                if (c == '{' && prev != '\\') {
+                    leyendo = true;
+                    leyendo1 = true;
+                }
+            } else {
+                if (leyendo1) {
+                    if (c == ',' && prev != '\\') {
+                        leyendo1 = false;
+                        leyendo2 = true;
+                        corchetesValor = 0;
+                    } else {
+                        clave.append(c);
+                    }
+                } else if (leyendo2) {
+                    if (corchetesValor == 0 && valor.toString().trim().length() != 0 && (c == ',' || c == '}') && prev != '\\') {
+                        leyendo2 = false;
+                        corchetesValor = 0;
+                        // System.out.println(clave.toString().trim() + " - " + valor.toString().trim());
+                        this.clave = new DatosTexto(clave.toString().trim());
+                        this.valor = Parseador.convertir(valor.toString().trim());
+                    } else {
+                        switch (c) {
+                            case '{':
+                            case '[':
+                                if (prev != '\\') corchetesValor++;
+                                break;
+                            case ']':
+                            case '}':
+                                if (prev != '\\') corchetesValor--;
+                                break;
+                            default:
+                                break;
+                        }
+                        valor.append(c);
+                    }
+                }
+            }
+        }
     }
 
-    public DatosTupla put(String key, Object value) {
-        if (key == null) {
-            throw new NullPointerException("Null key.");
+    public DatosTupla put(String clave, Object valor) {
+        if (clave == null) {
+            System.err.println("[DatosTupla] Intento de inserción de clave nula");
+            return this;
         }
-        if (value != null) {
-            this.map.put(key, value);
+        if (this.clave != null) {
+            System.err.println("[DatosTupla] Intento de inserción en tupla llena");
+            return this;
+        }
+        if (valor != null) {
+            this.clave = new DatosTexto(clave);
+            this.valor = valor;
         } else {
-            this.remove(key);
+            this.clave = null;
+            this.valor = null;
         }
         return this;
     }
 
-    public Object remove(String key) {
-        return this.map.remove(key);
-    }
-
-    public DatosTupla(Parseador x) {
-        System.out.println(x.s());
-        char c;
-        String key;
-
-        if (x.nextClean() != '{') {
-            System.err.println("A JSONObject text must begin with '{'");
-            return;
-        }
-        for (; ; ) {
-            c = x.nextClean();
-            switch (c) {
-                case 0:
-                    System.err.println("A JSONObject text must end with '}'");
-                    return;
-                case '}':
-                    return;
-                default:
-                    x.back();
-                    key = x.nextValue().toString();
-            }
-
-            // The key is followed by ':'.
-
-            c = x.nextClean();
-            if (c != ':') {
-                System.err.println("Expected a ':' after a key");
-                return;
-            }
-
-            // Use syntaxError(..) to include error location
-
-            if (key != null) {
-                // Check if key exists
-                if (this.opt(key) != null) {
-                    // key already exists
-                    System.err.println("Duplicate key \"" + key + "\"");
-                    return;
-                }
-                // Only add value if non-null
-                Object value = x.nextValue();
-                if (value != null) {
-                    this.put(key, value);
-                }
-            }
-
-            // Pairs are separated by ','.
-
-            switch (x.nextClean()) {
-                case ';':
-                case ',':
-                    if (x.nextClean() == '}') {
-                        return;
-                    }
-                    x.back();
-                    break;
-                case '}':
-                    return;
-                default:
-                    System.err.println(x.s());
-                    System.err.println("> Expected a ',' or '}'");
-                    return;
-            }
-        }
-    }
-
-    public static Object stringToValue(String string) {
-        if ("".equals(string)) {
-            return string;
-        }
-
-        // check JSON key words true/false/null
-        if ("true".equalsIgnoreCase(string)) {
-            return Boolean.TRUE;
-        }
-        if ("false".equalsIgnoreCase(string)) {
-            return Boolean.FALSE;
-        }
-        if ("null".equalsIgnoreCase(string)) {
-            return null;
-        }
-
-        /*
-         * If it might be a number, try converting it. If a number cannot be
-         * produced, then the value will just be a string.
-         */
-
-        char initial = string.charAt(0);
-        if ((initial >= '0' && initial <= '9') || initial == '-') {
-            try {
-                return Integer.valueOf(string);
-            } catch (Exception ignore) {
-            }
-        }
-        return string;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        return object == null || object == this;
-    }
-
     @Override
     public String toString() {
-        StringBuilder out = new StringBuilder("{");
-        out.append(" ");
-        Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, Object> entrada = it.next();
-            out.append("\"").append(entrada.getKey()).append("\"")
-                    .append(dupla ? ", " : ": ")
-                    .append(entrada.getValue().toString())
-                    .append(it.hasNext() ? ", " : "");
-        }
-        out.append(" ");
-        out.append("}");
-        return out.toString();
+        return "{ " + "\"" + Parseador.Texto.sinComillas(this.clave.toString()) + "\", " + Parseador.objetoATexto(this.valor) + " }";
     }
 }

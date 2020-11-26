@@ -2,52 +2,58 @@ package gal.sdc.usc.risk.correccion;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.regex.Pattern;
 
 public class DatosArray implements Iterable<Object> {
-    private final ArrayList<Object> list = new ArrayList<>();
+    public static final Pattern REGEX = Pattern.compile("\\s*\\[\\s*" + Parseador.REGEX_VALOR + "\\s*\\]\\s*", Pattern.DOTALL);
 
-    public DatosArray(Parseador x) {
-        if (x.nextClean() != '[') {
-            System.err.println("A CorrectorArray text must start with '['");
-            return;
-        }
+    private final ArrayList<Object> valores = new ArrayList<>();
 
-        char nextChar = x.nextClean();
-        if (nextChar == 0) {
-            System.out.println(x);
-            // array is unclosed. No ']' found, instead EOF
-            System.err.println("Expected a ',' or ']'");
-            return;
-        }
-        if (nextChar != ']') {
-            x.back();
-            for (; ; ) {
-                if (x.nextClean() == ',') {
-                    x.back();
-                    this.list.add(null);
-                } else {
-                    x.back();
-                    this.list.add(x.nextValue());
+    public DatosArray(String o) {
+        // System.out.println("ARRAY: " + o);
+
+        char c, prev;
+        boolean leyendo = false, leyendoValor = false;
+        StringBuilder valor = new StringBuilder();
+        int corchetesValor = 0;
+        for (int i = 0; i < o.length(); i++) {
+            c = o.charAt(i);
+            prev = i > 0 ? o.charAt(i - 1) : '\0';
+
+            if (!leyendoValor) {
+                if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
+                    continue;
                 }
-                switch (x.nextClean()) {// array is unclosed. No ']' found, instead EOF
-                    case ',':
-                        nextChar = x.nextClean();
-                        if (nextChar == 0) {
-                            // array is unclosed. No ']' found, instead EOF
-                            System.err.println("Expected a ',' or ']'");
-                            return;
+            }
+
+            if (!leyendo) {
+                if (c == '[' && prev != '\\') {
+                    leyendo = true;
+                    leyendoValor = true;
+                }
+            } else {
+                if (leyendoValor) {
+                    if (corchetesValor == 0 && valor.toString().trim().length() != 0 && (c == ',' || c == ']') && prev != '\\') {
+                        leyendoValor = c == ',';
+                        corchetesValor = 0;
+                        // System.out.println(valor.toString().trim());
+                        this.valores.add(Parseador.convertir(valor.toString().trim()));
+                        valor = new StringBuilder();
+                    } else {
+                        switch (c) {
+                            case '{':
+                            case '[':
+                                if (prev != '\\') corchetesValor++;
+                                break;
+                            case ']':
+                            case '}':
+                                if (prev != '\\') corchetesValor--;
+                                break;
+                            default:
+                                break;
                         }
-                        if (nextChar == ']') {
-                            return;
-                        }
-                        x.back();
-                        break;
-                    case ']':
-                        return;
-                    case 0:
-                    default:
-                        System.err.println("Expected a ',' or ']'");
-                        return;
+                        valor.append(c);
+                    }
                 }
             }
         }
@@ -55,15 +61,15 @@ public class DatosArray implements Iterable<Object> {
 
     @Override
     public Iterator<Object> iterator() {
-        return this.list.iterator();
+        return this.valores.iterator();
     }
 
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder("[ ");
-        for (int i = 0; i < list.size(); i++) {
-            out.append(list.get(i).toString());
-            if (i != (list.size() - 1)) {
+        for (int i = 0; i < valores.size(); i++) {
+            out.append(Parseador.objetoATexto(valores.get(i)));
+            if (i != (valores.size() - 1)) {
                 out.append(", ");
             }
         }
