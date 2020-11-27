@@ -71,7 +71,8 @@ public abstract class Parseador {
                     .replace("é", "e").replace("É", "E")
                     .replace("í", "i").replace("Í", "I")
                     .replace("ó", "o").replace("Ó", "O")
-                    .replace("ú", "u").replace("Ú", "u");
+                    .replace("ú", "u").replace("Ú", "u")
+                    .replace("ñ", "n").replace("Ñ", "N");
         }
 
         public static String sinEspacios(String o) {

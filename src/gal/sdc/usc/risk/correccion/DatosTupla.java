@@ -86,6 +86,22 @@ public class DatosTupla {
         return this;
     }
 
+    public int puntuacionMax() {
+        int sum = 1;
+        sum += Comparador.puntuacionMax(valor);
+        return sum;
+    }
+
+    public int puntuacion(Object r) {
+        if (r instanceof DatosTupla) {
+            DatosTupla t = (DatosTupla) r;
+            int sum = Comparador.puntuacion(this.clave, t.clave);
+            sum += Comparador.puntuacion(this.valor, t.valor);
+            return sum;
+        }
+        return 0;
+    }
+
     @Override
     public String toString() {
         return "{ " + "\"" + Parseador.Texto.sinComillas(this.clave.toString()) + "\", " + Parseador.objetoATexto(this.valor) + " }";

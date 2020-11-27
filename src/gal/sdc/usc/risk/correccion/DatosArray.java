@@ -1,13 +1,16 @@
 package gal.sdc.usc.risk.correccion;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class DatosArray implements Iterable<Object> {
     public static final Pattern REGEX = Pattern.compile("\\s*\\[\\s*" + Parseador.REGEX_VALOR + "\\s*\\]\\s*", Pattern.DOTALL);
 
-    private final ArrayList<Object> valores = new ArrayList<>();
+    private final List<Object> valores = new LinkedList<>();
 
     public DatosArray(String o) {
         // System.out.println("ARRAY: " + o);
@@ -57,6 +60,35 @@ public class DatosArray implements Iterable<Object> {
                 }
             }
         }
+    }
+
+    public int puntuacionMax() {
+        int sum = 0;
+        for (Object entrada : valores) {
+            sum += Comparador.puntuacionMax(entrada);
+        }
+        return sum;
+    }
+
+    public int puntuacion(Object r) {
+        if (r instanceof DatosArray) {
+            DatosArray t = (DatosArray) r;
+            int sum = 0;
+            for (Object entrada : this.valores) {
+                int valor2 = t.valores.indexOf(entrada);
+                if (valor2 > -1) {
+                    sum += Comparador.puntuacion(entrada, t.valores.get(valor2));
+                }
+            }
+            for (Object entrada : t.valores) {
+                int valor1 = this.valores.indexOf(entrada);
+                if (valor1 == -1) {
+                    sum -= 1;
+                }
+            }
+            return sum;
+        }
+        return 0;
     }
 
     @Override

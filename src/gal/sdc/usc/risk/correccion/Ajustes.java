@@ -63,44 +63,23 @@ public class Ajustes {
     public static final Niveles SALTOS_DE_LINEAS = Niveles.RECHAZAR;
 
     /**
-     * Permitirá aceptar claves que no contengan comillas
-     * OK = Las claves se darán por buenas tengan o no comillas
-     * FALLO = Las comillas se tratáran como un caracter más en la clave
+     * Permitirá aceptar textos que no contengan comillas
+     * OK = Los textos se darán por buenas tengan o no comillas
+     * FALLO = Las comillas se tratáran como un caracter más en el texto
      */
-    public static final Niveles CLAVES_IGNORAR_COMILLAS = Niveles.AVISAR;
+    public static final Niveles TEXTO_IGNORAR_COMILLAS = Niveles.AVISAR;
 
     /**
-     * Especifica si ignorar las tildes en las claves
+     * Especifica si ignorar las tildes en los textos (y la "ñ")
      * OK = Las tildes coinciden con el profesor
      * FALLO = Las tildes no coinciden con el profesor
      */
-    public static final Niveles CLAVES_IGNORAR_TILDES = Niveles.AVISAR;
+    public static final Niveles TEXTO_IGNORAR_TILDES = Niveles.AVISAR;
 
     /**
-     * Especifica si las mayúsculas y minúsculas se ignorarán en las claves
+     * Especifica si las mayúsculas y minúsculas se ignorarán en los textos
      * OK = La cadena coincide independientemente de las mayúsculas y minúsculas
      * FALLO = La cadena no coincide ignorando las mayúsculas y minúsculas
      */
-    public static final Niveles CLAVES_IGNORAR_MAYUSCULAS = Niveles.AVISAR;
-
-    /**
-     * Permitirá aceptar valores que no contengan comillas
-     * OK = Los valores se darán por buenas tengan o no comillas
-     * FALLO = Las comillas se tratáran como un caracter más en la clave
-     */
-    public static final Niveles VALORES_IGNORAR_COMILLAS = Niveles.RECHAZAR;
-
-    /**
-     * Especifica si ignorar las tildes en los valores
-     * OK = Las tildes coinciden con el profesor
-     * FALLO = Las tildes no coinciden con el profesor
-     */
-    public static final Niveles VALORES_IGNORAR_TILDES = Niveles.AVISAR;
-
-    /**
-     * Especifica si las mayúsculas y minúsculas se ignorarán en los valores
-     * OK = La cadena coincide independientemente de las mayúsculas y minúsculas
-     * FALLO = La cadena no coincide ignorando las mayúsculas y minúsculas
-     */
-    public static final Niveles VALORES_IGNORAR_MAYUSCULAS = Niveles.AVISAR;
+    public static final Niveles TEXTO_IGNORAR_MAYUSCULAS = Niveles.AVISAR;
 }
