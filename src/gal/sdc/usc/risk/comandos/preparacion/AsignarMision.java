@@ -10,7 +10,7 @@ import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mision;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.tablero.valores.Misiones;
 
 

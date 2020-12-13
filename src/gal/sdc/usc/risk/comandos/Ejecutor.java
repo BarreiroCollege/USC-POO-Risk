@@ -1,8 +1,9 @@
 package gal.sdc.usc.risk.comandos;
 
+import gal.sdc.usc.risk.excepciones.Errores;
+import gal.sdc.usc.risk.excepciones.Excepcion;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.jugar.Resultado;
-import gal.sdc.usc.risk.tablero.valores.Errores;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,7 +36,17 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         }
         try {
             executor.get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (ExecutionException e) {
+            Throwable t = e.getCause();
+            while (t != null) {
+                if (t instanceof Excepcion) {
+                    Resultado.error((Excepcion) t);
+                    return;
+                }
+                t = t.getCause();
+            }
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -45,7 +56,7 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
     }
 
     @Override
-    public Boolean call() {
+    public Boolean call() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Class<? extends IComando> comando = null;
 
         for (Class<? extends IComando> comandoI : super.getComandos().getLista()) {
@@ -77,14 +88,9 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
 
 
         Object comandoObject;
-        try {
-            comandoObject = comando.newInstance();
-            Method ejecutar = comando.getMethod("ejecutar", String[].class);
-            ejecutar.invoke(comandoObject, new Object[]{this.getComando().trim().split(" ")});
-            return true;
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return false;
+        comandoObject = comando.newInstance();
+        Method ejecutar = comando.getMethod("ejecutar", String[].class);
+        ejecutar.invoke(comandoObject, new Object[]{this.getComando().trim().split(" ")});
+        return true;
     }
 }

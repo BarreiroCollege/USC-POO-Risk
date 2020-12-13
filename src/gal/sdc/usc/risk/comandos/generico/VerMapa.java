@@ -6,7 +6,7 @@ import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Comandos;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 
 @Comando(estado = Estado.CUALQUIERA, comando = Comandos.VER_MAPA)
 public class VerMapa extends Partida implements IComando {

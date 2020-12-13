@@ -9,7 +9,7 @@ import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.tablero.valores.Paises;
 
 

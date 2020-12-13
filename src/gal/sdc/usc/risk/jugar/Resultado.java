@@ -1,9 +1,10 @@
 package gal.sdc.usc.risk.jugar;
 
 import gal.sdc.usc.risk.comandos.Ejecutor;
+import gal.sdc.usc.risk.excepciones.Excepcion;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Jugador;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.util.Colores;
 import gal.sdc.usc.risk.util.Recursos;
 
@@ -11,6 +12,7 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Objects;
 
 public class Resultado extends Partida {
     private final Colores.Color color;
@@ -35,11 +37,15 @@ public class Resultado extends Partida {
         super.getConsola().imprimirSalto();
     }
 
-    public static void error(Errores error) {
+    public static void error(Excepcion e) {
         SalidaObjeto salida = new SalidaObjeto();
-        salida.put("código de error", error.getCodigo());
-        salida.put("descripción", error.getMensaje());
+        salida.put("código de error", e.getCodigo());
+        salida.put("descripción", e.getMensaje());
         new Resultado(Colores.Color.ROJO, salida.toString()).imprimir();
+    }
+
+    public static void error(Errores error) {
+        throw Objects.requireNonNull(error.getExcepcion());
     }
 
     public static void correcto(SalidaObjeto out) {

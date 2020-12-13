@@ -9,7 +9,7 @@ import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Pais;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.ASIGNAR_CARTA)

@@ -8,7 +8,7 @@ import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Pais;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.DESCRIBIR_PAIS)
 public class DescribirPais extends Partida implements IComando {

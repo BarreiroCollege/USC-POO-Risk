@@ -8,7 +8,7 @@ import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Continente;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 
 @Comando(estado = Estado.CUALQUIERA, comando = Comandos.OBTENER_PAISES)
 public class ObtenerPaises extends Partida implements IComando {

@@ -8,7 +8,7 @@ import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Jugador;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.DESCRIBIR_JUGADOR)
 public class DescribirJugador extends Partida implements IComando {

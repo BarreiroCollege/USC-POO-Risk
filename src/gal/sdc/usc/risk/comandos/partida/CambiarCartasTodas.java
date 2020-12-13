@@ -8,7 +8,7 @@ import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.tablero.Carta;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 
 import java.util.ArrayList;
 import java.util.HashMap;

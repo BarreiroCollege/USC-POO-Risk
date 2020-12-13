@@ -579,7 +579,7 @@ $> describir continente AméricaNorte
 {
   nombre: "América del Norte",
   abreviatura: "AméricaNorte",
-  jugadores: [ { "Hooker", 2 }, { "Gondorff", 27 } ],
+  jugadores: [ { "Gondorff", 27 }, { "Hooker", 2 } ],
   numeroEjercitos: 29,
   rearmeContinente: 5
 }

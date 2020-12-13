@@ -7,7 +7,7 @@ import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.jugar.Resultado;
-import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.util.Recursos;
 
 import java.io.BufferedReader;

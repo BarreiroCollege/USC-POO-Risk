@@ -9,4 +9,5 @@ public class Main {
         Runtime.getRuntime().addShutdownHook(new Thread(Resultado.Escritor::cerrar));
         Menu.jugar();
     }
+
 }
