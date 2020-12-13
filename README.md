@@ -23,3 +23,7 @@ tienen constructores que reciben el país de la carta.
 
 ### Interfaz _Consola_
 
+La interfaz `Consola` está en el paquete `gal.sdc.usc.risk.jugar`, la cual, además de los requisitos, tiene un método
+con el que imprimir una línea en blanco. La clase `ConsolaNormal` que extiende `Consola` está en el mismo paquete.  
+La clase `Partida` (que contiene todos los datos del juego) tiene una instanca estática de `Consola` con la que se
+puede acceder desde cualquier punto del programa.
