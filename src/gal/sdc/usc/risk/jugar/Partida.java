@@ -9,6 +9,7 @@ import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Mision;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Equipamientos;
+import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 import gal.sdc.usc.risk.util.Colores;
 
 import java.util.ArrayList;
@@ -91,9 +92,9 @@ public abstract class Partida {
             return false;
         }
         Partida.jugando = true;
-        for (Equipamientos equipamiento : Equipamientos.values()) {
+        for (SubEquipamientos subEquipamiento : SubEquipamientos.values()) {
             for (Pais pais : this.getMapa().getPaisesPorCeldas().values()) {
-                Partida.cartasMonton.add(new Carta.Builder().withEquipamiento(equipamiento).withPais(pais).build());
+                Partida.cartasMonton.add(new Carta.Builder().withSubEquipamiento(subEquipamiento).withPais(pais).build());
             }
         }
 
@@ -110,9 +111,9 @@ public abstract class Partida {
         Partida.cartasMonton.add(carta);
     }
 
-    protected Carta getCarta(Equipamientos equipamiento, Pais pais) {
+    protected Carta getCarta(SubEquipamientos subEquipamiento, Pais pais) {
         for (Carta carta : Partida.cartasMonton) {
-            if (carta.getEquipamiento().equals(equipamiento) && carta.getPais().equals(pais)) {
+            if (carta.getSubEquipamiento().equals(subEquipamiento) && carta.getPais().equals(pais)) {
                 Partida.cartasMonton.remove(carta);
                 return carta;
             }

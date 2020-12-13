@@ -9,8 +9,8 @@ import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Pais;
-import gal.sdc.usc.risk.tablero.valores.Equipamientos;
 import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.ASIGNAR_CARTA)
 public class AsignarCarta extends Partida implements IComando {
@@ -23,7 +23,7 @@ public class AsignarCarta extends Partida implements IComando {
         }
 
         String equipamiento = partesCarta[0];
-        Equipamientos equipamientoFinal = Equipamientos.toEquipamientos(equipamiento);
+        SubEquipamientos equipamientoFinal = SubEquipamientos.toSubEquipamientos(equipamiento);
         if (equipamientoFinal == null) {
             Resultado.error(Errores.CARTA_INCORRECTA);
             return;
@@ -46,7 +46,7 @@ public class AsignarCarta extends Partida implements IComando {
         super.getJugadorTurno().getCartas().add(carta);
 
         SalidaObjeto salida = new SalidaObjeto();
-        salida.put("tipoCarta", carta.getEquipamiento().getNombre());
+        salida.put("tipoCarta", carta.getSubEquipamiento().getNombre());
         salida.put("paisAsociado", carta.getPais().getNombre());
         salida.put("perteneceAJugador", super.getJugadorTurno().getNombre());
         salida.put("ejercitosDeRearme", carta.getPais().getJugador().equals(super.getJugadorTurno()) ? 1 : 0);

@@ -12,6 +12,7 @@ import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Equipamientos;
 import gal.sdc.usc.risk.tablero.valores.Errores;
+import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class CambiarCartas extends Partida implements IComando {
 
         Carta cartaFinal;
         String[] carta;
-        Equipamientos equipamiento;
+        SubEquipamientos equipamiento;
         Pais pais;
 
         List<Carta> cartas = new ArrayList<>();
@@ -41,7 +42,7 @@ public class CambiarCartas extends Partida implements IComando {
                 return;
             }
 
-            equipamiento = Equipamientos.toEquipamientos(carta[0]);
+            equipamiento = SubEquipamientos.toSubEquipamientos(carta[0]);
             if (equipamiento == null) {
                 if (!auto) {
                     Resultado.error(Errores.CARTAS_NO_EXISTEN);
@@ -96,6 +97,7 @@ public class CambiarCartas extends Partida implements IComando {
             numCambios = Equipamientos.ARTILLERIA.getEjercitos();
         }
         for (Carta cartaT : cartas) {
+            numCambios += cartaT.obtenerRearme();
             if (cartaT.getPais().getJugador().equals(getJugadorTurno())) {
                 numCambios++;
             }

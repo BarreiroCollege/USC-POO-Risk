@@ -13,7 +13,11 @@ import java.util.Scanner;
 
 
 public class Menu extends Partida {
-    public Menu() {
+    public static void jugar() {
+        new Menu();
+    }
+
+    private Menu() {
         // Iniciar juego
         String orden;
 

@@ -2,6 +2,7 @@ package gal.sdc.usc.risk.tablero;
 
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.valores.Equipamientos;
+import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 import gal.sdc.usc.risk.util.Colores.Color;
 
 import java.util.ArrayList;
@@ -49,9 +50,9 @@ public class Jugador extends Partida {
         return cartas;
     }
 
-    public Carta getCarta(Equipamientos equipamiento, Pais pais) {
+    public Carta getCarta(SubEquipamientos subEquipamiento, Pais pais) {
         for (Carta carta : this.getCartas()) {
-            if (carta.getEquipamiento().equals(equipamiento) && carta.getPais().equals(pais)) {
+            if (carta.getSubEquipamiento().equals(subEquipamiento) && carta.getPais().equals(pais)) {
                 return carta;
             }
         }

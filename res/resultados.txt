@@ -548,10 +548,8 @@ $> rearmar Alaska 4 Alberta
 
 $> asignar carta Infantería&Alaska
 {
-  tipoCarta: "Infantería",
-  paisAsociado: "Alaska",
-  perteneceAJugador: "Gondorff",
-  ejercitosDeRearme: 1
+  código de error: 125,
+  descripción: "El identificador no sigue el formato correcto"
 }
 
 $> atacar GBretaña 3 EurSur 4
@@ -573,7 +571,7 @@ $> describir jugador Gondorff
   numeroEjercitos: 39,
   paises: [ "Quebec", "Alaska", "Alberta", "Yakustsk", "Rusia", "Escandinavia", "Gran Bretaña", "Territorios del Noroeste", "Ontario", "Estados Unidos del Este", "Kamchatka", "Siberia", "Europa del Norte", "Islandia", "Groenlandia" ],
   continentes: [  ],
-  cartas: [ "Infantería&Alaska" ],
+  cartas: [  ],
   numeroEjercitosRearmar: 5
 }
 
