@@ -41,7 +41,6 @@ public class AsignarPais extends Partida implements IComando {
 
         Paises paises = Paises.toPaises(pais);
         if (paises == null) {
-            System.out.println(pais);
             Resultado.error(Errores.PAIS_NO_EXISTE);
             return;
         }

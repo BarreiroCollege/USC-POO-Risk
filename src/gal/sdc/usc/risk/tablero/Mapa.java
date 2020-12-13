@@ -260,10 +260,6 @@ public class Mapa {
         return out.toString();
     }
 
-    public void imprimir() {
-        System.out.print(this.toString());
-    }
-
     public static class Builder {
         private final HashMap<String, Continente> continentes;
         private final HashMap<Celda, Pais> paises;

@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-public class Resultado {
+public class Resultado extends Partida {
     private final Colores.Color color;
     private final String mensaje;
 
@@ -20,28 +20,40 @@ public class Resultado {
         this.color = color;
         this.mensaje = mensaje;
 
-        Resultado.Escritor.resultado(mensaje);
+        if (!super.haAcabado()) {
+            Resultado.Escritor.resultado(mensaje);
+        }
+    }
+
+    private Resultado(String mensaje) {
+        this.color = null;
+        this.mensaje = mensaje;
+    }
+
+    private void imprimir() {
+        super.getConsola().imprimir(this);
+        super.getConsola().imprimirSalto();
     }
 
     public static void error(Errores error) {
         SalidaObjeto salida = new SalidaObjeto();
         salida.put("código de error", error.getCodigo());
         salida.put("descripción", error.getMensaje());
-        System.out.println(new Resultado(Colores.Color.ROJO, salida.toString()));
+        new Resultado(Colores.Color.ROJO, salida.toString()).imprimir();
     }
 
     public static void correcto(SalidaObjeto out) {
-        System.out.println(new Resultado(Colores.Color.VERDE, out.toString()));
+        new Resultado(Colores.Color.VERDE, out.toString()).imprimir();
     }
 
     public static void victoria(Jugador j) {
         String out = "\033[1m\033[4m" + new Colores("VICTORIA DE ", Colores.Color.NEGRO, Colores.Color.BLANCO);
         String jugador = "\033[1m\033[4m" + new Colores(j.getNombre(), Colores.Color.NEGRO, j.getColor()).toString();
         String endout = "\033[1m\033[4m" + new Colores("!!!", Colores.Color.NEGRO, Colores.Color.BLANCO);
-        System.out.println(out + jugador + endout);
+        new Resultado(out + jugador + endout).imprimir();
 
-        System.out.println(new Colores("Ahora puedes ver como ha quedado el tablero de juego", Colores.Color.AZUL));
-        System.out.println();
+        new Resultado(Colores.Color.AZUL, "Ahora puedes ver como ha quedado el tablero de juego").imprimir();
+        new Resultado("").imprimir();
         Ejecutor.comando("ayuda");
     }
 

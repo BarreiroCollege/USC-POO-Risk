@@ -16,7 +16,7 @@ public class VerMapa extends Partida implements IComando {
             Resultado.error(Errores.MAPA_NO_CREADO);
             return;
         }
-        super.getMapa().imprimir();
+        super.getConsola().imprimir(super.getMapa());
     }
 
     @Override

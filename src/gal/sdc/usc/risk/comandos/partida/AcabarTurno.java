@@ -18,7 +18,7 @@ public class AcabarTurno extends Partida implements IComando {
     @Override
     public void ejecutar(String[] comandos) {
         if (this.ganador()) {
-            super.getComandos().acabarPartida();
+            super.acabarPartida();
             Resultado.victoria(super.getJugadorTurno());
             return;
         }

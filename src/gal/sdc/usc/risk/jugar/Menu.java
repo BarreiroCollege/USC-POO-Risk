@@ -37,12 +37,13 @@ public class Menu extends Partida {
                 }
 
                 if (!primero) {
-                    System.out.println();
+                    super.getConsola().imprimirSalto();
                 } else {
                     primero = false;
                 }
                 this.entrada();
-                System.out.println(orden);
+                super.getConsola().imprimir(orden);
+                super.getConsola().imprimirSalto();
 
                 if (!orden.isEmpty()) {
                     Ejecutor.comando(orden);
@@ -54,15 +55,14 @@ public class Menu extends Partida {
         }
 
         if (!hayFichero) {
-            Scanner input = new Scanner(System.in);
             while (true) {
                 if (!primero) {
-                    System.out.println();
+                    super.getConsola().imprimirSalto();
                 } else {
                     primero = false;
                 }
                 this.entrada();
-                orden = input.nextLine();
+                orden = super.getConsola().leer();
 
                 if (!orden.isEmpty()) {
                     Ejecutor.comando(orden);
@@ -79,6 +79,6 @@ public class Menu extends Partida {
             out += "[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] ";
         }
         out += new Colores("$> ", Color.AMARILLO);
-        System.out.print(out);
+        super.getConsola().imprimir(out);
     }
 }

@@ -8,7 +8,6 @@ import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Mision;
 import gal.sdc.usc.risk.tablero.Pais;
-import gal.sdc.usc.risk.tablero.valores.Equipamientos;
 import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 import gal.sdc.usc.risk.util.Colores;
 
@@ -20,6 +19,7 @@ import java.util.Queue;
 
 public abstract class Partida {
     private static final ComandosDisponibles comandosDisponibles = new ComandosDisponibles();
+    private static final Consola consola = new ConsolaNormal();
 
     private static final Queue<Jugador> ordenJugadores = new LinkedList<>();
     private static final HashMap<String, Jugador> jugadores = new HashMap<>();
@@ -27,6 +27,7 @@ public abstract class Partida {
     private static Mapa mapa;
     private static boolean haConquistadoPais = false;
     private static boolean jugando = false;
+    private static boolean acabada = false;
 
     protected Mapa getMapa() {
         return Partida.mapa;
@@ -36,6 +37,10 @@ public abstract class Partida {
         if (Partida.mapa == null) {
             Partida.mapa = nuevoMapa;
         }
+    }
+
+    protected Consola getConsola() {
+        return Partida.consola;
     }
 
     protected void nuevoJugador(Jugador jugador) {
@@ -85,6 +90,15 @@ public abstract class Partida {
 
     protected boolean isJugando() {
         return Partida.jugando;
+    }
+
+    protected boolean haAcabado() {
+        return Partida.acabada;
+    }
+
+    protected void acabarPartida() {
+        Partida.acabada = true;
+        this.getComandos().acabarPartida();
     }
 
     protected boolean iniciar() {

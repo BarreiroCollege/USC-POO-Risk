@@ -32,7 +32,8 @@ public class Ayuda extends Partida implements IComando {
                             new Colores(ayuda, Colores.Color.VERDE));
                 }
             }
-            System.out.println(salida);
+            super.getConsola().imprimir(salida.toString());
+            super.getConsola().imprimirSalto();
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
         }
