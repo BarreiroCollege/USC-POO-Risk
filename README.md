@@ -33,8 +33,8 @@ La gestión de errores tiene lugar en la clase `Ejecutor`, dentro del paquete `g
 es una extensión del `Callable<Boolean>`, la cual permite "ejecutar" la clase y devolver un booleano (representando
 si la ejecución del comando tuvo éxito o no). La gestión de errores tiene lugar en el `public static void comando`,
 en el cual se intenta obtener el resultado de la ejecución. Los comandos lanzarán las excepciones durante la ejecución,
-y se gestionarán con la excepción `RuntimeException`, la cual contendrá una serie de causas, siendo una de ellas una
-clase extendida de `Excepcion`.  
+y se gestionarán con la excepción `RuntimeException` (la cual extiende a `Exception`), la cual contendrá una serie de
+causas, siendo una de ellas una clase extendida de `Excepcion`.  
 Cuando esto se alcanza, se manda esta excepción al gestor de errores para escribirlo en el archivo y lanzarlo por
 consola.
 
