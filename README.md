@@ -21,6 +21,23 @@ tienen constructores que reciben el país de la carta.
 
 ### Excepciones
 
+Las excepciones se encuentran en el paquete `gal.sdc.usc.risk.excepciones`. En ella, se encuentra la clase abstracta
+`Excepcion`, la cual es la superclase de todas las sub-excepciones. El tipo de excepción es `RuntimeException`, ya
+que así permite no tener que extender mediante `throws`. Las sub-excepciones todas extienden esta clase,
+recibiendo como argumento un elemento del enum `Errores`.  
+Existe el enum `Errores` con los valores constantes de los errores todos, el cual recibe el código de error, el mensaje
+del error y la sub-excepción que lanza. De esta forma, se consigue más versatilidad al estar definidas como constante
+todas las posibles.
+
+La gestión de errores tiene lugar en la clase `Ejecutor`, dentro del paquete `gal.sdc.usc.risk.comandos`. Esta clase
+es una extensión del `Callable<Boolean>`, la cual permite "ejecutar" la clase y devolver un booleano (representando
+si la ejecución del comando tuvo éxito o no). La gestión de errores tiene lugar en el `public static void comando`,
+en el cual se intenta obtener el resultado de la ejecución. Los comandos lanzarán las excepciones durante la ejecución,
+y se gestionarán con la excepción `RuntimeException`, la cual contendrá una serie de causas, siendo una de ellas una
+clase extendida de `Excepcion`.  
+Cuando esto se alcanza, se manda esta excepción al gestor de errores para escribirlo en el archivo y lanzarlo por
+consola.
+
 ### Interfaz _Consola_
 
 La interfaz `Consola` está en el paquete `gal.sdc.usc.risk.jugar`, la cual, además de los requisitos, tiene un método
