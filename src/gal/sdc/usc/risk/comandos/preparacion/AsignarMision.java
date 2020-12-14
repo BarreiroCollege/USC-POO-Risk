@@ -74,7 +74,7 @@ public class AsignarMision extends Partida implements IComando {
         if (tienenMisiones) {
             // super.getComandos().habilitarAsignarPaises();
             for (Jugador j : super.getJugadores().values()) {
-                j.getEjercitosPendientes().recibir(new Ejercito(super.getEjercitosIniciales()));
+                j.getEjercitosPendientes().recibir(new Ejercito.Builder().withCantidad(super.getEjercitosIniciales()).build());
             }
         }
     }

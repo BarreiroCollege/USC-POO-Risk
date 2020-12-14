@@ -102,11 +102,11 @@ public class CambiarCartas extends Partida implements IComando {
                 numCambios++;
             }
         }
-        super.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(numCambios));
+        super.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito.Builder().withCantidad(numCambios).build());
 
         for (Carta cartaT : cartas) {
             if (cartaT.getPais().getJugador().equals(super.getJugadorTurno())) {
-                cartaT.getPais().getEjercito().recibir(new Ejercito(1));
+                cartaT.getPais().getEjercito().recibir(new Ejercito.Builder().withCantidad(1).build());
             }
             super.getJugadorTurno().getCartas().remove(cartaT);
             super.devolverCarta(cartaT);

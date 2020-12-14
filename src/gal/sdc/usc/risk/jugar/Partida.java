@@ -8,6 +8,7 @@ import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Mision;
 import gal.sdc.usc.risk.tablero.Pais;
+import gal.sdc.usc.risk.tablero.ejercito.EjercitoNuevo;
 import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 import gal.sdc.usc.risk.util.Colores;
 
@@ -179,7 +180,7 @@ public abstract class Partida {
 
     protected void comprobacionesTurno() {
         // Ejércitos que le tocan
-        this.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito(this.calcularEjercitosPendientes(this.getJugadorTurno())));
+        this.getJugadorTurno().getEjercitosPendientes().recibir(new Ejercito.Builder().withCantidad(this.calcularEjercitosPendientes(this.getJugadorTurno())).build());
 
         // Un jugador no puede disponer de más de 6 cartas de equipamiento, en cuyo caso se deberá
         // realizar un cambio de forma automática, de modo que, si son posibles dos cambios, se elegirá

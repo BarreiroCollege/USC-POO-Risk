@@ -18,7 +18,7 @@ public class Jugador extends Partida {
     private Jugador(String nombre, Color color) {
         this.nombre = nombre;
         this.color = color;
-        this.ejercitosPendientes = new Ejercito();
+        this.ejercitosPendientes = new Ejercito.Builder(color).build();
         this.cartas = new ArrayList<>();
     }
 

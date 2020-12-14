@@ -1,16 +1,15 @@
 package gal.sdc.usc.risk.comandos.partida;
 
-import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.jugar.Resultado;
 import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Comandos;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
+import gal.sdc.usc.risk.excepciones.Errores;
+import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.jugar.Resultado;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Ejercito;
-import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
-import gal.sdc.usc.risk.excepciones.Errores;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +17,19 @@ import java.util.List;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.ATACAR_PAIS_DADOS)
 public class AtacarPaisDados extends Partida implements IComando {
+    private static List<Integer> generarCombate(String[] dados, Pais pais) {
+        int[] prim = new int[dados.length];
+        for (int i = 0; i < dados.length; i++) {
+            prim[i] = Integer.parseInt(dados[i]);
+        }
+        List<Integer> resultado = new ArrayList<>();
+        for (int ejercito : pais.getJugador().getEjercitosPendientes().ataque(prim)) {
+            resultado.add(ejercito);
+        }
+        resultado.sort(Collections.reverseOrder());
+        return resultado;
+    }
+
     @Override
     public void ejecutar(String[] comandos) {
         Pais pais1 = super.getMapa().getPaisPorNombre(comandos[1]);
@@ -48,26 +60,17 @@ public class AtacarPaisDados extends Partida implements IComando {
         }
         super.getComandos().atacando();
 
-        List<Integer> atacante = new ArrayList<>();
-        for (String dado : dadosAtacante) {
-            atacante.add(Integer.parseInt(dado));
-        }
-        atacante.sort(Collections.reverseOrder());
+        List<Integer> atacante = AtacarPaisDados.generarCombate(dadosAtacante, pais1);
+        List<Integer> defensor = AtacarPaisDados.generarCombate(dadosDefensor, pais2);
 
-        List<Integer> defensor = new ArrayList<>();
-        for (String dado : dadosDefensor) {
-            defensor.add(Integer.parseInt(dado));
-        }
-        defensor.sort(Collections.reverseOrder());
-
-        Jugador jugadorDefensor = pais2.getJugador();
+        // Jugador jugadorDefensor = pais2.getJugador();
         int atacanteOriginal = pais1.getEjercito().toInt();
         int defensorOriginal = pais2.getEjercito().toInt();
 
         if (atacante.get(0) > defensor.get(0)) {
-            new Ejercito().recibir(pais2.getEjercito(), 1);
+            new Ejercito.Builder().build().recibir(pais2.getEjercito(), 1);
         } else {
-            new Ejercito().recibir(pais1.getEjercito(), 1);
+            new Ejercito.Builder().build().recibir(pais1.getEjercito(), 1);
         }
 
         boolean conquistado = false;
@@ -77,9 +80,9 @@ public class AtacarPaisDados extends Partida implements IComando {
 
         if (!conquistado && atacante.size() >= 2 && defensor.size() >= 2) {
             if (atacante.get(1) > defensor.get(1)) {
-                new Ejercito().recibir(pais2.getEjercito(), 1);
+                new Ejercito.Builder().build().recibir(pais2.getEjercito(), 1);
             } else {
-                new Ejercito().recibir(pais1.getEjercito(), 1);
+                new Ejercito.Builder().build().recibir(pais1.getEjercito(), 1);
             }
         }
         if (pais2.getEjercito().toInt() == 0) {

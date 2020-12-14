@@ -21,7 +21,7 @@ public class Pais {
         this.nombre = nombre;
         this.abreviatura = abreviatura;
         this.celda = celda;
-        this.ejercito = new Ejercito();
+        this.ejercito = new Ejercito.Builder().build();
         this.numVecesConquistado = 0;
     }
 
