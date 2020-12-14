@@ -19,6 +19,14 @@ tienen constructores que reciben el país de la carta.
 
 ### Jerarquía de ejércitos
 
+La jerarquía especificada de ejércitos se encuentra en el paquete `gal.sdc.usc.risk.tablero`. Ahí dentro se encuentra
+la clase abstracta `Ejercito`, la cual es extendida por las otras subclases. Al igual que con la jerarquía de cartas,
+están en `gal.sdc.usc.risk.tablero.ejercitos`, estando estos en en sus respectivos paquetes.
+
+Además, aparte de tener `EjercitoBase` y `EjercitoCompuesto`, está también `EjercitoNuevo`, la cual no es abstracta,
+y permite crear un ejército sin color (ya que debido a la implementación de ejércitos, el traspaso siempre es mediante
+otro ejército), haciendo de "basura" de ejércitos o fábrica.
+
 ### Excepciones
 
 Las excepciones se encuentran en el paquete `gal.sdc.usc.risk.excepciones`. En ella, se encuentra la clase abstracta
