@@ -31,9 +31,9 @@ public enum Errores {
 
     private final Integer codigo;
     private final String mensaje;
-    private final Class<? extends Excepcion> excepcion;
+    private final Class<? extends ExcepcionRISK> excepcion;
 
-    Errores(Integer codigo, String mensaje, Class<? extends Excepcion> excepcion) {
+    Errores(Integer codigo, String mensaje, Class<? extends ExcepcionRISK> excepcion) {
         this.codigo = codigo;
         this.mensaje = mensaje;
         this.excepcion = excepcion;
@@ -47,8 +47,8 @@ public enum Errores {
         return this.mensaje;
     }
 
-    public Excepcion getExcepcion() {
-        Excepcion excepcion;
+    public ExcepcionRISK getExcepcion() {
+        ExcepcionRISK excepcion;
         try {
             excepcion = this.excepcion.getDeclaredConstructor(new Class[]{Errores.class}).newInstance(this);
         } catch (Exception e) {

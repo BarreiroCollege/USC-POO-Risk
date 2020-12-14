@@ -1,7 +1,7 @@
 package gal.sdc.usc.risk.comandos;
 
 import gal.sdc.usc.risk.excepciones.Errores;
-import gal.sdc.usc.risk.excepciones.Excepcion;
+import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.jugar.Resultado;
 
@@ -39,8 +39,8 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         } catch (ExecutionException e) {
             Throwable t = e.getCause();
             while (t != null) {
-                if (t instanceof Excepcion) {
-                    Resultado.error((Excepcion) t);
+                if (t instanceof ExcepcionRISK) {
+                    Resultado.error((ExcepcionRISK) t);
                     return;
                 }
                 t = t.getCause();

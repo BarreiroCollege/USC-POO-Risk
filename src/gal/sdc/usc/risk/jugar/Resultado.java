@@ -1,7 +1,7 @@
 package gal.sdc.usc.risk.jugar;
 
 import gal.sdc.usc.risk.comandos.Ejecutor;
-import gal.sdc.usc.risk.excepciones.Excepcion;
+import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.excepciones.Errores;
@@ -37,7 +37,7 @@ public class Resultado extends Partida {
         super.getConsola().imprimirSalto();
     }
 
-    public static void error(Excepcion e) {
+    public static void error(ExcepcionRISK e) {
         SalidaObjeto salida = new SalidaObjeto();
         salida.put("código de error", e.getCodigo());
         salida.put("descripción", e.getMensaje());
