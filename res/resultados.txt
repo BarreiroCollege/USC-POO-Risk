@@ -507,7 +507,7 @@ $> describir pais USAEste
 
 $> atacar Ontario 5x1x1 USAEste 4
 {
-  dadosAtaque: [ 5, 1, 1 ],
+  dadosAtaque: [ 6, 1, 1 ],
   dadosDefensa: [ 4 ],
   ejercitosPaisAtaque: [ 6, 3 ],
   ejercitosPaisDefensa: [ 1, 3 ],
@@ -546,10 +546,12 @@ $> rearmar Alaska 4 Alberta
   numeroEjercitosFinalesDestino: 5
 }
 
-$> asignar carta Infantería&Alaska
+$> asignar carta Fusilero&Alaska
 {
-  código de error: 125,
-  descripción: "El identificador no sigue el formato correcto"
+  tipoCarta: "Fusilero",
+  paisAsociado: "Alaska",
+  perteneceAJugador: "Gondorff",
+  ejercitosDeRearme: 1
 }
 
 $> atacar GBretaña 3 EurSur 4
@@ -571,7 +573,7 @@ $> describir jugador Gondorff
   numeroEjercitos: 39,
   paises: [ "Quebec", "Alaska", "Alberta", "Yakustsk", "Rusia", "Escandinavia", "Gran Bretaña", "Territorios del Noroeste", "Ontario", "Estados Unidos del Este", "Kamchatka", "Siberia", "Europa del Norte", "Islandia", "Groenlandia" ],
   continentes: [  ],
-  cartas: [  ],
+  cartas: [ "Fusilero&Alaska" ],
   numeroEjercitosRearmar: 5
 }
 
