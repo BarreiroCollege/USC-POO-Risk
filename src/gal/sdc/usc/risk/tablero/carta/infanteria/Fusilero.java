@@ -10,4 +10,9 @@ public class Fusilero extends Infanteria {
     public Fusilero(Pais pais) {
         super(pais, Fusilero.SUBEQUIPAMIENTO);
     }
+
+    @Override
+    public int obtenerRearme() {
+        return Fusilero.SUBEQUIPAMIENTO.getEjercitos();
+    }
 }

@@ -36,9 +36,7 @@ public abstract class Carta {
         return this.subEquipamiento.getNombre() + "&" + pais.getAbreviatura();
     }
 
-    public int obtenerRearme() {
-        return this.subEquipamiento.getEjercitos();
-    }
+    public abstract int obtenerRearme();
 
     @Override
     public String toString() {

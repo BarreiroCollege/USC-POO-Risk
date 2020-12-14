@@ -10,4 +10,9 @@ public class Antiaerea extends Artilleria {
     public Antiaerea(Pais pais) {
         super(pais, Antiaerea.SUBEQUIPAMIENTO);
     }
+
+    @Override
+    public int obtenerRearme() {
+        return Antiaerea.SUBEQUIPAMIENTO.getEjercitos();
+    }
 }

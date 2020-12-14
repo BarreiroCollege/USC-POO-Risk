@@ -10,4 +10,9 @@ public class DeCaballo extends Caballeria {
     public DeCaballo(Pais pais) {
         super(pais, DeCaballo.SUBEQUIPAMIENTO);
     }
+
+    @Override
+    public int obtenerRearme() {
+        return DeCaballo.SUBEQUIPAMIENTO.getEjercitos();
+    }
 }

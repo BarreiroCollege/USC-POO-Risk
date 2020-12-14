@@ -10,4 +10,9 @@ public class Granadero extends Infanteria {
     public Granadero(Pais pais) {
         super(pais, Granadero.SUBEQUIPAMIENTO);
     }
+
+    @Override
+    public int obtenerRearme() {
+        return Granadero.SUBEQUIPAMIENTO.getEjercitos();
+    }
 }

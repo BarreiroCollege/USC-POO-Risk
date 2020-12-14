@@ -10,4 +10,9 @@ public class DeCampanha extends Artilleria {
     public DeCampanha(Pais pais) {
         super(pais, DeCampanha.SUBEQUIPAMIENTO);
     }
+
+    @Override
+    public int obtenerRearme() {
+        return DeCampanha.SUBEQUIPAMIENTO.getEjercitos();
+    }
 }

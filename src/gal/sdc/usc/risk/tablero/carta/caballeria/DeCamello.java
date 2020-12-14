@@ -10,4 +10,9 @@ public class DeCamello extends Caballeria {
     public DeCamello(Pais pais) {
         super(pais, DeCamello.SUBEQUIPAMIENTO);
     }
+
+    @Override
+    public int obtenerRearme() {
+        return DeCamello.SUBEQUIPAMIENTO.getEjercitos();
+    }
 }
