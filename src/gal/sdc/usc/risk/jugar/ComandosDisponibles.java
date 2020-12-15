@@ -121,7 +121,7 @@ public class ComandosDisponibles {
             add(AtacarPaisDados.class);
         } else {
             add(RepartirEjercito.class);
-            add(RepartirEjercitos.class);
+            // add(RepartirEjercitos.class);
         }
     }
 
@@ -129,7 +129,7 @@ public class ComandosDisponibles {
         remove(CambiarCartas.class);
         remove(CambiarCartasTodas.class);
         remove(RepartirEjercito.class);
-        remove(RepartirEjercitos.class);
+        // remove(RepartirEjercitos.class);
         remove(AtacarPais.class);
         remove(AtacarPaisDados.class);
         remove(Rearmar.class);
@@ -178,7 +178,7 @@ public class ComandosDisponibles {
     public void habilitarRepartirEjercitos() {
         this.deshabilitarAsignarPaises();
         add(RepartirEjercito.class);
-        add(RepartirEjercitos.class);
+        // add(RepartirEjercitos.class);
         add(AcabarTurno.class);
     }
 
@@ -192,7 +192,7 @@ public class ComandosDisponibles {
     public void atacando() {
         this.repartiendo();
         remove(RepartirEjercito.class);
-        remove(RepartirEjercitos.class);
+        // remove(RepartirEjercitos.class);
     }
 
     public void atacar() {
