@@ -25,9 +25,17 @@ hs_err_pid*
 # JetBrains IntelliJ
 .idea/
 
+# ShitBeans
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+nbbuild/
+nbdist/
+.nb-gradle/
+
 out/
 build/
-build/sources.txt
+dist/
 
 res/goldstandard.txt
 res/resultado.txt
