@@ -36,7 +36,7 @@ siendo una extensión de la clase abstracta `ExcepcionRISK`.
 
 La clase abstracta `Carta` se encuentra en el paquete `gal.sdc.usc.risk.tablero`, teniendo un constructor tipo
 _Builder_ para facilitar su inicialización. Las cartas se pueden crear mediante
-`new Carta.Builder().withPais(pais).withSubEquipamiento(SubEquipamiento.).builder()`.  
+`new Carta.Builder().withPais(pais).withSubEquipamiento(SubEquipamientos.X).builder()`.  
 Esto creará una instancia de `Carta` con el país y subtipo especificado.
 
 Esta clase es extendida por las subclases `Infanteria`, `Caballeria` y `Artilleria`, las cuales se encuentran en
