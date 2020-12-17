@@ -191,7 +191,6 @@ public abstract class Partida {
 
         // Cuando se cambian las cartas, si el país asociado a la carta es un país que pertenece al jugador,
         // se pondrá un ejército adicional en dicho país.
-        // TODO
         /* for (Carta carta : this.getJugadorTurno().getCartas()) {
             if (carta.getPais().getJugador().equals(this.getJugadorTurno())) {
                 carta.getPais().getEjercito().recibir(new Ejercito(1));

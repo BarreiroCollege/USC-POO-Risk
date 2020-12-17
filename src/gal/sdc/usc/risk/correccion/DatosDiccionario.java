@@ -123,7 +123,7 @@ public class DatosDiccionario {
     public String imprimirError(Object r2) {
         if (r2 instanceof DatosDiccionario) {
             DatosDiccionario t = (DatosDiccionario) r2;
-            StringBuilder out = new StringBuilder("     {\n");
+            StringBuilder out = new StringBuilder("{\n");
 
             List<DatosTexto> claves2 = new ArrayList<>(t.valores.keySet());
             Iterator<Map.Entry<DatosTexto, Object>> it = valores.entrySet().iterator();
@@ -139,7 +139,6 @@ public class DatosDiccionario {
                             .append(Ajustes.Colores.RESET);
                 } else {
                     Object valor2 = t.valores.get(entrada.getKey());
-                    // TODO: Comprobar clave
                     int puntos = 1 + Comparador.puntuacion(entrada.getValue(), valor2);
                     out.append(puntos == max ? Ajustes.Colores.VERDE.getTexto() : Ajustes.Colores.AMARILLO.getTexto())
                             .append(String.format("[%2d]    %s: %s%s\n", puntos, entrada.getKey().toString(), valor2, it.hasNext() ? "," : ""))
@@ -153,7 +152,7 @@ public class DatosDiccionario {
                             .append(Ajustes.Colores.RESET);
                 }
             }
-            out.append("     }");
+            out.append("}");
             return out.toString();
         }
         return "";

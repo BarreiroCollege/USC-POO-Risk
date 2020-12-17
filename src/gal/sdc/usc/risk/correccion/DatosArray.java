@@ -83,7 +83,7 @@ public class DatosArray implements Iterable<Object> {
             for (Object entrada : t.valores) {
                 int valor1 = this.valores.indexOf(entrada);
                 if (valor1 == -1) {
-                    sum -= 1;
+                    // sum -= 1;
                 }
             }
             return sum;
