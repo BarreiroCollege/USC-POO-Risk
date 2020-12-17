@@ -52,7 +52,7 @@ código de error: 116,
 descripción: "La misión no existe"
 }
 {
-nombre: Lonnegan,
+nombre: "Lonnegan",
 mision: "Destruir el ejército AZUL"
 }
 
@@ -539,7 +539,7 @@ $> DESCRIBIR JUGADOR Gondorff
 nombre: "Gondorff",
 color: "VERDE",
 numeroEjercitos: 38,
-paises: [ "Alaska", "Territorios del Noroeste", "Groenlandia", "Islandia", "Escandinavia", "Siberia", "Yakustsk", "Kamchatka", "Alberta", "Ontario", "Quebec", "Grand Bretaña", "Europa del Norte", "Rusia", "Estados Unidos del Oeste" ],
+paises: [ "Alaska", "Territorios del Noroeste", "Groenlandia", "Islandia", "Escandinavia", "Siberia", "Yakustsk", "Kamchatka", "Alberta", "Ontario", "Quebec", "Gran Bretaña", "Europa del Norte", "Rusia", "Estados Unidos del Oeste" ],
 continentes: [ ],
 cartas: [ Infantería&Alaska" ],
 numeroEjercitosRearmar: 5
