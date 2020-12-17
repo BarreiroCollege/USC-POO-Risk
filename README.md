@@ -3,6 +3,33 @@
 - Diego Barreiro Pérez ([diego.barreiro.perez@rai.usc.es](mailto:diego.barreiro.perez@rai.usc.es))
 - Miguel Bugarín Carreira ([miguel.bugarin@rai.usc.es](mailto:miguel.bugarin@rai.usc.es))
 
+## Estructura del Proyecto
+
+El proyecto se compone de los siguientes paquetes:
+
+* **`gal.sdc.usc.risk.comandos`**: Clases con los comandos y su respectiva ejecución. Todos ellos implementan la interfaz
+`IComando` en el mismo paquete, y se agrupan según su estado en comandos genéricos, ya jugando (partida) y de
+preparación. Los comandos además tienen la anotación `Comando`, en la cual se especifica el estado de la partida en el
+que se puede ejecutar el comando del enum `Estado`, y su respectiva expresión regular que lo lanzará, especificado en
+el enum `Comandos`.  
+Además, en este mismo paquete se encuentra una clase `Ejecutor`. Este ejecutor es el encargado de ejecutar los comandos,
+tal como su nombre indica. Esta clase es una implementación de `Callable`, permitiendo ejecutar las clases como si
+fuesen métodos, y devolver un valor (un `Boolean` en este caso, indicando si hubo éxito o no). El `Ejecutor`, al llamar
+a procesar un comando, creará un nuevo thread y ejecutará el comando ahí. Todos los comandos se ejecutan llamando a su
+método `ejecutar()`.
+
+* **`gal.sdc.usc.risk.excepciones`**: Clases con todas las posibles excepciones. Además, se encuentra el enum `Errores`,
+en el cual se especifican todos los posibles errores y su tipo, con el que se lanzará la respectiva excepción, siempre
+siendo una extensión de la clase abstracta `ExcepcionRISK`.
+
+* **`gal.sdc.usc.risk.jugar`**:
+
+* **`gal.sdc.usc.risk.salida`**:
+
+* **`gal.sdc.usc.risk.tablero`**:
+
+* **`gal.sdc.usc.risk.util`**:
+
 ## Requisitos Parte 2
 
 ### Jerarquía de cartas
