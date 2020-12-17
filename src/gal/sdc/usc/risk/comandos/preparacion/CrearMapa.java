@@ -36,7 +36,7 @@ public class CrearMapa extends Partida implements IComando {
 
             // Luego países del continente
             for (Paises pais : Paises.values()) {
-                if (pais.getContinente().equals(continente)) {
+                if (pais.getContinente() != continente) {
                     continue;
                 }
 
