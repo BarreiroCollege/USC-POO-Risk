@@ -7,6 +7,7 @@ import gal.sdc.usc.risk.util.Recursos;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -49,6 +50,8 @@ public class Menu extends Partida {
                 }
             }
             bufferLector.close();
+        } catch (FileNotFoundException e ) {
+            System.err.println("Archivo de comandos no encontrado, usando consola...");
         } catch (IOException e) {
             e.printStackTrace();
         }
