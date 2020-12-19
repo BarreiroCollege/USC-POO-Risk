@@ -1,37 +1,110 @@
+crear JT VERDE
+crear jugadores jugadores.csv
+asignar mision Hooker M32
+asignar misiones misiones.csv
+
 crear mapa
 crear mapa
+obtener frontera GBretaña
+obtener frontera Atlantis
+obtener continente GBretaña
+obtener continente Atlantis
+obtener color GBretaña
+obtener color Atlantis
+obtener paises África
+obtener paises Mercurio
+
+crear JT VERDE
+crear JT VERDE
+crear Pepe ROSA
+
 crear jugadores jugadores.csv
 crear Gondorff AZUL
 crear JT VERDE
+
+asignar pais Hooker Siberia
 asignar paises paises.csv
-asignar misiones misiones.csv
-crear JT CYAN
-asignar paises paises.csv
+
 asignar mision Hooker M32
+asignar mision JT M32
+asignar mision Lonnegan M100000
+asignar mision Lonnegan M32
+asignar mision Hooker M40
+asignar mision asddas M31
+asignar mision Hooker M1
+asignar misiones misiones.csv
+
+asignar pais Hooker Siberia
+asignar pais Lonnegan Siberia
+asignar pais Hooker Atlantis
+asignar pais sadfsaf Brasil
+
 asignar paises paises.csv
-asignar pais Gondorff Rusia
+
+asignar pais Hooker Rusia
+asignar pais Lonnegan Rusia
+asignar pais asdfsdafasf Siberia
+asignar pais Hooker Atlantis
+
+repartir ejercitos 8 Atlantis
 repartir ejercitos 8 Alaska
+repartir ejercitos 5 Rusia
 repartir ejercitos 5 Groenlan
 repartir ejercitos 5 Urales
 repartir ejercitos 3 Quebec
 repartir ejercitos 7 Ontario
+repartir ejercitos 8 Ontario
+atacar Ontario 5x1x1 USAEste 4
 acabar turno
+
 repartir ejercitos 10 Venezuela
 repartir ejercitos 5 ANorte
 repartir ejercitos 6 Egipto
 repartir ejercitos 5 India
 acabar turno
+
 repartir ejercitos 15 Indonesia
 repartir ejercitos 6 NGuinea
 acabar turno
+
 repartir ejercitos 4 Islandia
-describir pais USAEste
 atacar Ontario 5x1x1 USAEste 4
 describir pais USAEste
 describir pais Ontario
 rearmar Alaska 4 Alberta
+cambiar cartas todas
 asignar carta Fusilero&Alaska
+asignar carta Fusilero&Quebec
+cambiar cartas Caballería&USAEste Infantería&China Artillería&India
 atacar GBretaña 3 EurSur 4
 acabar turno
-describir jugador Gondorff
+
+describir jugador JT
+describir jugador asdfsdada
+jugador
+describir pais Rusia
+describir pais Atlantis
+describir continente Brasil
 describir continente AméricaNorte
+repartir ejercitos 4 China
+atacar Atlantis Perú
+atacar Perú Atlantis
+atacar USAEste Ontario
+atacar Venezuela AmeCentra
+atacar Venezuela Brasil
+atacar AmeCentra USAEste
+atacar Venezuela Perú
+
+asignar carta Caballería&Atlantis
+
+rearmar Venezuela 3 Brasil
+rearmar asdfas 3 AmeCentra
+rearmar Venezuela 3 asdfsdaf
+rearmar AmeCentra 3 Venezuela
+rearmar Venezuela 2 ANorte
+rearmar Venezuela 3 AmeCentra
+asignar carta Infantería&Perú
+rearmar ANorte 2 Egipto
+atacar Eqipto OMedio
+
+ver mapa
