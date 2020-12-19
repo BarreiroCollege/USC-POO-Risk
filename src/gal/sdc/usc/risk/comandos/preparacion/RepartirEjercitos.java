@@ -37,12 +37,12 @@ public class RepartirEjercitos extends Partida implements IComando {
             return;
         }
 
-        if (super.getJugadores().values().stream().noneMatch(p -> p.getMision() == null)) {
+        if (super.getJugadores().values().stream().anyMatch(p -> p.getMision() == null)) {
             Resultado.error(Errores.MISIONES_NO_ASIGNADAS);
             return;
         }
 
-        if (super.getMapa().getPaisesPorCeldas().values().stream().noneMatch(p -> p.getJugador() == null)) {
+        if (super.getMapa().getPaisesPorCeldas().values().stream().anyMatch(p -> p.getJugador() == null)) {
             Resultado.error(Errores.COMANDO_NO_PERMITIDO);
             return;
         }
