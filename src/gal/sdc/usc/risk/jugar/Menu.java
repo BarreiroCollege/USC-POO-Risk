@@ -32,7 +32,7 @@ public class Menu extends Partida {
             hayFichero = true;
 
             while ((orden = bufferLector.readLine()) != null) {
-                if (orden.startsWith("#") || orden.startsWith("//")) {
+                if (orden.startsWith("#") || orden.startsWith("//") || orden.isEmpty()) {
                     continue;
                 }
 
@@ -45,12 +45,10 @@ public class Menu extends Partida {
                 super.getConsola().imprimir(orden);
                 super.getConsola().imprimirSalto();
 
-                if (!orden.isEmpty()) {
-                    Ejecutor.comando(orden);
-                }
+                Ejecutor.comando(orden);
             }
             bufferLector.close();
-        } catch (FileNotFoundException e ) {
+        } catch (FileNotFoundException e) {
             System.err.println("Archivo de comandos no encontrado, usando consola...");
         } catch (IOException e) {
             e.printStackTrace();
