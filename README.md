@@ -42,8 +42,8 @@ partida. Se encuentra la clase de `ComandosDisponibles`, la cual es la encargada
 ejecutar. En la lista `lista` se encuentran las clases que se permiten ejecutar, y luego están unos métodos para
 gestionar que comandos se activan y desactivan. En la clase `Menu`, es donde tiene lugar la lectura de los comandos, y
 donde luego se redirige al `Ejecutor` para ser procesado. Y en la clase abstracta `Partida` se encuentran todos los
-datos relacionados con la partida, y los métodos para modificarse. Por ejemplo, se encuentra una lista de Paises, de
-Continentes, de Jugadores (y su cola de turnos), etc.
+datos relacionados con la partida, y los métodos para modificarse. Todos los datos almacenados son estáticos,
+para así guardar su estado a lo largo de las múltiples invocaciones, garantizando su unicidad.
 
 * **`gal.sdc.usc.risk.salida`**: Este paquete es el encargado de gestionar las salidas de los resultados de las
 ejecuciones. La interfaz `Consola` y la clase `ConsolaNormal` son las encargadas de sacar los resultados por consola.
@@ -55,7 +55,13 @@ array de datos, y `SalidaObjeto` como un diccionario de datos con sus claves. `S
 se obtiene la representación como string de estos objetos, en caso de haber más de un nivel hasta encontrar una cadena
 de texto.
 
-* **`gal.sdc.usc.risk.tablero`**:
+* **`gal.sdc.usc.risk.tablero`**: Aquí se encuentran todos los objetos de la partida, del "tablero". Está una clase
+abstracta `Carta` (con sus subtipos en el paquete `gal.sdc.usc.risk.tablero.carta`) para las cartas de equipamiento,
+una clase `Celda` con los datos de una casilla del mapa, los objetos `Continente` y `Pais`, el cual utiliza la clase
+`Frontera`. De los jugadores, está la clase base `Jugador`, con sus respectivos datos, y la clase `Mision` indicando
+cuando un jugador puede obtener la victoria. También está la clase de `Ejercito`, que es usada tanto por `Pais` como
+por `Jugador` (en el caso de los paises, se utiliza un constructor tipo _Builder_ para crear un ejército sin color). Y
+finalmente, la clase `Mapa` viene siendo el tablero de juego, almacenando los paises y continentes, principalmente.
 
 * **`gal.sdc.usc.risk.util`**: Paquete con una serie de utilidades, como la gestión de `Colores` para imprimir por
 consola y del juego, una clase `Dado` para generar números aleatorios del 1 al 6, y una clase de `Recursos` para
