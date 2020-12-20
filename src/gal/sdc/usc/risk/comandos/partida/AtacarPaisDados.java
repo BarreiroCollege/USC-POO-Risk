@@ -17,13 +17,13 @@ import java.util.List;
 
 @Comando(estado = Estado.JUGANDO, comando = Comandos.ATACAR_PAIS_DADOS)
 public class AtacarPaisDados extends Partida implements IComando {
-    private static List<Integer> generarCombate(String[] dados, Pais pais) {
+    private static List<Integer> generarCombate(String[] dados, Pais pais, boolean atacante) {
         int[] prim = new int[dados.length];
         for (int i = 0; i < dados.length; i++) {
             prim[i] = Integer.parseInt(dados[i]);
         }
         List<Integer> resultado = new ArrayList<>();
-        for (int ejercito : pais.getJugador().getEjercitosPendientes().ataque(prim)) {
+        for (int ejercito : atacante ? pais.getJugador().getEjercitosPendientes().ataque(prim) : prim) {
             resultado.add(ejercito);
         }
         resultado.sort(Collections.reverseOrder());
@@ -60,8 +60,8 @@ public class AtacarPaisDados extends Partida implements IComando {
         }
         super.getComandos().atacando();
 
-        List<Integer> atacante = AtacarPaisDados.generarCombate(dadosAtacante, pais1);
-        List<Integer> defensor = AtacarPaisDados.generarCombate(dadosDefensor, pais2);
+        List<Integer> atacante = AtacarPaisDados.generarCombate(dadosAtacante, pais1, true);
+        List<Integer> defensor = AtacarPaisDados.generarCombate(dadosDefensor, pais2, false);
 
         // Jugador jugadorDefensor = pais2.getJugador();
         int atacanteOriginal = pais1.getEjercito().toInt();
