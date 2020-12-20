@@ -1,4 +1,4 @@
-package gal.sdc.usc.risk.jugar;
+package gal.sdc.usc.risk.salida;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;

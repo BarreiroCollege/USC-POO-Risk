@@ -1,7 +1,7 @@
 package gal.sdc.usc.risk.tablero;
 
 import gal.sdc.usc.risk.excepciones.Errores;
-import gal.sdc.usc.risk.jugar.Resultado;
+import gal.sdc.usc.risk.salida.Resultado;
 import gal.sdc.usc.risk.tablero.ejercito.EjercitoNuevo;
 import gal.sdc.usc.risk.tablero.ejercito.base.EjercitoAmarillo;
 import gal.sdc.usc.risk.tablero.ejercito.base.EjercitoAzul;

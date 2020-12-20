@@ -1,8 +1,8 @@
-package gal.sdc.usc.risk.jugar;
+package gal.sdc.usc.risk.salida;
 
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
-import gal.sdc.usc.risk.salida.SalidaObjeto;
+import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.util.Colores;

@@ -6,7 +6,7 @@ import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.jugar.Resultado;
+import gal.sdc.usc.risk.salida.Resultado;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Pais;

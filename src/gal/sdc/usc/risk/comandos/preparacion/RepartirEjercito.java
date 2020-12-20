@@ -5,7 +5,7 @@ import gal.sdc.usc.risk.comandos.Comandos;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.jugar.Resultado;
+import gal.sdc.usc.risk.salida.Resultado;
 import gal.sdc.usc.risk.salida.SalidaDupla;
 import gal.sdc.usc.risk.salida.SalidaObjeto;
 import gal.sdc.usc.risk.tablero.Jugador;

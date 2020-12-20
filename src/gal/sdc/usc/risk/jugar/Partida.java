@@ -1,14 +1,14 @@
 package gal.sdc.usc.risk.jugar;
 
 import gal.sdc.usc.risk.comandos.Ejecutor;
+import gal.sdc.usc.risk.salida.Consola;
+import gal.sdc.usc.risk.salida.ConsolaNormal;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
-import gal.sdc.usc.risk.tablero.Mision;
 import gal.sdc.usc.risk.tablero.Pais;
-import gal.sdc.usc.risk.tablero.ejercito.EjercitoNuevo;
 import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 import gal.sdc.usc.risk.util.Colores;
 

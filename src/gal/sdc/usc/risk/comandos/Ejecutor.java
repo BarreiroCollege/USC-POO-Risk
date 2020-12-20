@@ -3,7 +3,7 @@ package gal.sdc.usc.risk.comandos;
 import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.jugar.Resultado;
+import gal.sdc.usc.risk.salida.Resultado;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

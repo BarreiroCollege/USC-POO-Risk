@@ -5,7 +5,7 @@ import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Pais;
 
-public abstract class SalidaUtils {
+public class SalidaUtils {
     private SalidaUtils() {
     }
 

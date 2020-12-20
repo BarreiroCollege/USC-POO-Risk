@@ -1,6 +1,6 @@
 package gal.sdc.usc.risk.util;
 
-import gal.sdc.usc.risk.jugar.Resultado;
+import gal.sdc.usc.risk.salida.Resultado;
 
 import java.security.Permission;
 
