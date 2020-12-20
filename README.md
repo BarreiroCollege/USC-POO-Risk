@@ -11,6 +11,10 @@ Para compilar el proyecto, se puede **ejecutar el script `build.sh`** que se enc
 generará todos bytecodes necesarios, y luego los empaquetará en un JAR disponible dentro de la carpeta `build/`.  
 Para ejecutarlo, basta con escribir `java -jar build/risk.jar`.
 
+```
+./build.sh && java -jar build/risk.jar
+```
+
 En cuanto a los archivos de comandos, estos se encuentran en el directorio `res/`, a modo de "_resources_" disponibles
 en todo momento.
 
