@@ -139,8 +139,8 @@ $> asignar mision Hooker M32
 
 $> asignar mision JT M32
 {
-  nombre: "JT",
-  mision: "Conquistar Asia y África"
+  código de error: 115,
+  descripción: "La misión ya está asignada"
 }
 
 $> asignar mision Lonnegan M100000
@@ -151,8 +151,8 @@ $> asignar mision Lonnegan M100000
 
 $> asignar mision Lonnegan M32
 {
-  nombre: "Lonnegan",
-  mision: "Conquistar Asia y África"
+  código de error: 115,
+  descripción: "La misión ya está asignada"
 }
 
 $> asignar mision Hooker M40
@@ -175,8 +175,8 @@ $> asignar mision Hooker M1
 
 $> asignar misiones misiones.csv
 {
-  código de error: 103,
-  descripción: "El jugador no existe"
+  nombre: "JT",
+  mision: "Conquistar 24 países de la preferencia del jugador"
 }
 
 {
@@ -185,8 +185,8 @@ $> asignar misiones misiones.csv
 }
 
 {
-  código de error: 117,
-  descripción: "El jugador ya tiene asignada misión"
+  nombre: "Lonnegan",
+  mision: "Destruir el ejército AZUL"
 }
 
 $> asignar pais Hooker Siberia
