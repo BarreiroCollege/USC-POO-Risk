@@ -79,7 +79,7 @@ public abstract class Partida {
         return jugadores;
     }
 
-    protected HashMap<Mision, Jugador> getJugadoresPorMision() {
+    /* protected HashMap<Mision, Jugador> getJugadoresPorMision() {
         HashMap<Mision, Jugador> jugadores = new HashMap<>();
         for (Jugador jugador : Partida.jugadores.values()) {
             if (jugador.getMision() != null) {
@@ -87,7 +87,7 @@ public abstract class Partida {
             }
         }
         return jugadores;
-    }
+    } */
 
     protected boolean isJugando() {
         return Partida.jugando;
