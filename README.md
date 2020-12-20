@@ -37,9 +37,23 @@ método `ejecutar()`.
 en el cual se especifican todos los posibles errores y su tipo, con el que se lanzará la respectiva excepción, siempre
 siendo una extensión de la clase abstracta `ExcepcionRISK`.
 
-* **`gal.sdc.usc.risk.jugar`**:
+* **`gal.sdc.usc.risk.jugar`**: En este paquete se encuentran una serie de clases vitales para el desarrollo de la
+partida. Se encuentra la clase de `ComandosDisponibles`, la cual es la encargada de gestionar que comandos se pueden
+ejecutar. En la lista `lista` se encuentran las clases que se permiten ejecutar, y luego están unos métodos para
+gestionar que comandos se activan y desactivan. En la clase `Menu`, es donde tiene lugar la lectura de los comandos, y
+donde luego se redirige al `Ejecutor` para ser procesado. Y en la clase abstracta `Partida` se encuentran todos los
+datos relacionados con la partida, y los métodos para modificarse. Por ejemplo, se encuentra una lista de Paises, de
+Continentes, de Jugadores (y su cola de turnos), etc.
 
-* **`gal.sdc.usc.risk.salida`**:
+* **`gal.sdc.usc.risk.salida`**: Este paquete es el encargado de gestionar las salidas de los resultados de las
+ejecuciones. La interfaz `Consola` y la clase `ConsolaNormal` son las encargadas de sacar los resultados por consola.
+A continuación, `Resultado`, contiene una serie de métodos estáticos que son llamados por los comandos, los cuales
+procesan la información y los imprimen llamando a `Consola`.  
+Las otras cuatro clases son objetos que son válidos para ser impresos. Están inspirados en el paquete `org.json` de Java
+con el que se puede estandarizar una salida. Existen `SalidaDupla` para representar una tupla, `SalidaLista` como
+array de datos, y `SalidaObjeto` como un diccionario de datos con sus claves. `SalidaUtils` es una clase con la que
+se obtiene la representación como string de estos objetos, en caso de haber más de un nivel hasta encontrar una cadena
+de texto.
 
 * **`gal.sdc.usc.risk.tablero`**:
 
