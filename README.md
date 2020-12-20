@@ -57,7 +57,9 @@ de texto.
 
 * **`gal.sdc.usc.risk.tablero`**:
 
-* **`gal.sdc.usc.risk.util`**:
+* **`gal.sdc.usc.risk.util`**: Paquete con una serie de utilidades, como la gestión de `Colores` para imprimir por
+consola y del juego, una clase `Dado` para generar números aleatorios del 1 al 6, y una clase de `Recursos` para
+obtener los archivos de la carpeta `res/`.
 
 ## Requisitos Parte 2
 
