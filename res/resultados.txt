@@ -815,7 +815,7 @@ $> describir continente AméricaNorte
 {
   nombre: "América del Norte",
   abreviatura: "AméricaNorte",
-  jugadores: [ { "JT", 23 }, { "Hooker", 2 } ],
+  jugadores: [ { "Hooker", 2 }, { "JT", 23 } ],
   numeroEjercitos: 25,
   rearmeContinente: 5
 }
@@ -865,7 +865,6 @@ $> atacar AmeCentra USAEste
   descripción: "No hay ejércitos suficientes"
 }
 
-$> atacar Venezuela Perú
 $> atacar Venezuela 4x4x5 Perú 2
 {
   dadosAtaque: [ 6, 4, 4 ],
