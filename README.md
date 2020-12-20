@@ -60,8 +60,11 @@ abstracta `Carta` (con sus subtipos en el paquete `gal.sdc.usc.risk.tablero.cart
 una clase `Celda` con los datos de una casilla del mapa, los objetos `Continente` y `Pais`, el cual utiliza la clase
 `Frontera`. De los jugadores, está la clase base `Jugador`, con sus respectivos datos, y la clase `Mision` indicando
 cuando un jugador puede obtener la victoria. También está la clase de `Ejercito`, que es usada tanto por `Pais` como
-por `Jugador` (en el caso de los paises, se utiliza un constructor tipo _Builder_ para crear un ejército sin color). Y
-finalmente, la clase `Mapa` viene siendo el tablero de juego, almacenando los paises y continentes, principalmente.
+por `Jugador` (en el caso de los paises, se utiliza un constructor tipo _Builder_ para crear un ejército sin color), y
+sus colores en su paquete `gal.sdc.usc.risk.tablero.ejercito`. Y finalmente, la clase `Mapa` viene siendo el tablero de
+juego, almacenando los paises y continentes, principalmente.  
+En cuanto al paquete `gal.sdc.usc.risk.tablero.valores`, aquí se almacena una serie de enums con constantes del juego,
+como los paises y sus posiciones, continentes, misiones, cartas de equipamiento y fronteras marítimas disponibles.
 
 * **`gal.sdc.usc.risk.util`**: Paquete con una serie de utilidades, como la gestión de `Colores` para imprimir por
 consola y del juego, una clase `Dado` para generar números aleatorios del 1 al 6, y una clase de `Recursos` para
