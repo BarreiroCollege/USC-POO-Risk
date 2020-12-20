@@ -70,7 +70,7 @@ public class Menu extends Partida {
             }
         }
 
-        System.exit(-1);
+        System.exit(0);
     }
 
     private void entrada() {
