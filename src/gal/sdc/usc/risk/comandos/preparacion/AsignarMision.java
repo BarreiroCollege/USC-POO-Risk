@@ -47,7 +47,7 @@ public class AsignarMision extends Partida implements IComando {
         }
         Mision misionFinal = new Mision.Builder(misiones).build();
         if (super.getJugadoresPorMision().containsKey(misionFinal)) {
-            Resultado.error(Errores.JUGADOR_NO_EXISTE);
+            Resultado.error(Errores.MISION_YA_ASIGNADA);
             return;
         }
 
