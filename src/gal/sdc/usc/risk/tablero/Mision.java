@@ -50,4 +50,10 @@ public class Mision {
             return null;
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Mision)) return false;
+        return ((Mision) obj).identificador.equals(this.identificador);
+    }
 }
