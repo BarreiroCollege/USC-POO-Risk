@@ -3,6 +3,17 @@
 - Diego Barreiro Pérez ([diego.barreiro.perez@rai.usc.es](mailto:diego.barreiro.perez@rai.usc.es))
 - Miguel Bugarín Carreira ([miguel.bugarin@rai.usc.es](mailto:miguel.bugarin@rai.usc.es))
 
+![Ejemplo](https://i.imgur.com/wXqjwl2.png)
+
+## Juego
+
+Para compilar el proyecto, se puede **ejecutar el script `build.sh`** que se encuentra en la raiz del proyecto, el cual
+generará todos bytecodes necesarios, y luego los empaquetará en un JAR disponible dentro de la carpeta `build/`.  
+Para ejecutarlo, basta con escribir `java -jar build/risk.jar`.
+
+En cuanto a los archivos de comandos, estos se encuentran en el directorio `res/`, a modo de "_resources_" disponibles
+en todo momento.
+
 ## Estructura del Proyecto
 
 El proyecto se compone de los siguientes paquetes:
