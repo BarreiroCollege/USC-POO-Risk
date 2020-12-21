@@ -2,8 +2,11 @@ package gal.sdc.usc.risk.comandos;
 
 import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
+import gal.sdc.usc.risk.jugar.Menu;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.salida.Resultado;
+import gal.sdc.usc.risk.util.Colores;
+import javafx.application.Platform;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,22 +17,50 @@ import java.util.concurrent.Future;
 
 
 public class Ejecutor extends Partida implements Callable<Boolean> {
-    private static String comando;
+    private final String comando;
 
-    private Ejecutor() {
+    private Ejecutor(String comando) {
+        this.comando = comando;
+    }
+
+    public static void comando(String comando, boolean imprimir, EjecutorListener listener) {
+        if (listener != null) Ejecutor.ejecutarComando(comando, imprimir, listener);
+        else Ejecutor.ejecutarComando(comando, imprimir);
+    }
+
+    public static void comando(String comando, EjecutorListener listener) {
+        Ejecutor.comando(comando, true, listener);
     }
 
     public static void comando(String comando, boolean imprimir) {
-        Ejecutor.comando = comando;
-        Ejecutor.comando(imprimir);
+        Ejecutor.comando(comando, imprimir, null);
     }
 
     public static void comando(String comando) {
         Ejecutor.comando(comando, true);
     }
 
-    public static void comando(boolean imprimir) {
-        Ejecutor ejecutor = new Ejecutor();
+    private static void ejecutarComando(String comando, boolean imprimir, EjecutorListener listener) {
+        new Thread(() -> {
+            Ejecutor ejecutor = new Ejecutor(comando);
+            ejecutor.entrada();
+            if (imprimir) {
+                Resultado.Escritor.comando(comando);
+            }
+            try {
+                ejecutor.call();
+            } catch (ExcepcionRISK e) {
+                Resultado.error(e);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                Platform.runLater(listener::onComandoEjecutado);
+            }
+        }).start();
+    }
+
+    private static void ejecutarComando(String comando, boolean imprimir) {
+        Ejecutor ejecutor = new Ejecutor(comando);
         Future<Boolean> executor = Executors.newSingleThreadExecutor().submit(ejecutor);
         if (imprimir) {
             Resultado.Escritor.comando(comando);
@@ -51,8 +82,15 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         }
     }
 
-    private String getComando() {
-        return Ejecutor.comando;
+    private void entrada() {
+        String out = "";
+        if (super.isJugando() || super.getComandos().isPaisesAsignados(super.getMapa())) {
+            out += "[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] ";
+        }
+        out += new Colores("$> ", Colores.Color.AMARILLO);
+        super.getConsola().imprimir(out);
+        super.getConsola().imprimir(comando);
+        super.getConsola().imprimirSalto();
     }
 
     @Override
@@ -62,7 +100,7 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         for (Class<? extends IComando> comandoI : super.getComandos().getLista()) {
             if (comandoI.isAnnotationPresent(Comando.class)) {
                 Comando comandoA = comandoI.getAnnotation(Comando.class);
-                if (this.getComando().toLowerCase().matches(comandoA.comando().getRegex())) {
+                if (this.comando.toLowerCase().matches(comandoA.comando().getRegex())) {
                     comando = comandoI;
                     break;
                 }
@@ -73,7 +111,7 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         if (comando == null) {
             boolean existe = false;
             for (Comandos regex : Comandos.values()) {
-                if (this.getComando().toLowerCase().matches(regex.getRegex())) {
+                if (this.comando.toLowerCase().matches(regex.getRegex())) {
                     existe = true;
                     break;
                 }
@@ -90,7 +128,7 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         Object comandoObject;
         comandoObject = comando.newInstance();
         Method ejecutar = comando.getMethod("ejecutar", String[].class);
-        ejecutar.invoke(comandoObject, new Object[]{this.getComando().trim().split(" ")});
+        ejecutar.invoke(comandoObject, new Object[]{this.comando.trim().split(" ")});
         return true;
     }
 }
