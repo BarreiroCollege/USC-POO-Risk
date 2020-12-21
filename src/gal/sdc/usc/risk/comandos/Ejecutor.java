@@ -2,7 +2,6 @@ package gal.sdc.usc.risk.comandos;
 
 import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
-import gal.sdc.usc.risk.jugar.Menu;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.salida.Resultado;
 import gal.sdc.usc.risk.util.Colores;

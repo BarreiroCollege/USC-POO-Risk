@@ -1,5 +1,6 @@
 package gal.sdc.usc.risk.tablero;
 
+import gal.sdc.usc.risk.Risk;
 import gal.sdc.usc.risk.tablero.valores.EnlacesMaritimos;
 import gal.sdc.usc.risk.util.Colores;
 
@@ -122,42 +123,42 @@ public class Mapa {
         for (int j = 0; j < Mapa.MAX_PAISES_X; j++) {
             if (i == 0) {
                 if (j == 0) {
-                    out.append("╔");
+                    out.append(Risk.netbeans ? "=" : "╔");
                 }
-                out.append("════════════");
+                out.append(Risk.netbeans ? "============" : "════════════");
                 if ((j + 1) == Mapa.MAX_PAISES_X) {
-                    out.append("╗");
+                    out.append(Risk.netbeans ? "=" : "╗");
                 } else {
-                    out.append("╤");
+                    out.append(Risk.netbeans ? "=" : "╤");
                 }
             } else if (i == Mapa.MAX_PAISES_Y) {
                 if (j == 0) {
-                    out.append("╚");
+                    out.append(Risk.netbeans ? "=" : "╚");
                 }
-                out.append("════════════");
+                out.append(Risk.netbeans ? "============" : "════════════");
                 if ((j + 1) == Mapa.MAX_PAISES_X) {
-                    out.append("╝");
+                    out.append(Risk.netbeans ? "=" : "╝");
                 } else {
-                    out.append("╧");
+                    out.append(Risk.netbeans ? "=" : "╧");
                 }
             } else {
                 if (j == 0) {
-                    out.append("╟");
+                    out.append(Risk.netbeans ? "|" : "╟");
                 }
-                out.append("──────");
+                out.append(Risk.netbeans ? "------" : "──────");
                 if (((i == 3 || i == 4) && (j == 5 || j == 6)) || ((i == 5 || i == 6) && j == 9)) {
-                    out.append(new Colores("┃", Colores.Color.ROJO));
+                    out.append(new Colores(Risk.netbeans ? "|" : "┃", Colores.Color.ROJO));
                 } else {
-                    out.append("─");
+                    out.append(Risk.netbeans ? "-" : "─");
                 }
-                out.append("─────");
+                out.append(Risk.netbeans ? "-----" : "─────");
                 if ((j + 1) == Mapa.MAX_PAISES_X) {
-                    out.append("╢");
+                    out.append(Risk.netbeans ? "|" : "╢");
                 } else {
                     if (i == 5 && j == 3) {
-                        out.append(new Colores("┃", Colores.Color.ROJO));
+                        out.append(new Colores(Risk.netbeans ? "|" : "┃", Colores.Color.ROJO));
                     } else {
-                        out.append("┼");
+                        out.append(Risk.netbeans ? "-" : "┼");
                     }
                 }
             }
@@ -185,22 +186,22 @@ public class Mapa {
                 pais = this.paises.get(celda);
 
                 if ((i == 0 && (j == 0 || j == 3 || j == 4 || j == 9 || j == 10)) || (i == 4 && j == 5) || (i == 5 && j == 3)) {
-                    texto = new Colores("━", Colores.Color.ROJO).toString();
+                    texto = new Colores(Risk.netbeans ? "-" : "━", Colores.Color.ROJO).toString();
                 } else if ((i == 4 && j == 4)) {
-                    texto = new Colores("┏", Colores.Color.ROJO).toString();
+                    texto = new Colores(Risk.netbeans ? "|" : "┏", Colores.Color.ROJO).toString();
                 } else if ((i == 5 && j == 4)) {
-                    texto = new Colores("┛", Colores.Color.ROJO).toString();
+                    texto = new Colores(Risk.netbeans ? "|" : "┛", Colores.Color.ROJO).toString();
                 } else if (j == 0) {
-                    texto = "║";
+                    texto = Risk.netbeans ? "|" : "║";
                 } else {
-                    texto = "│";
+                    texto = Risk.netbeans ? "|" : "│";
                 }
 
                 if (pais == null) {
                     if ((i == 0 && (j == 3 || j == 9 || j == 10)) || (i == 4 && j == 4) || (i == 5 && j == 3)) {
-                        texto += new Colores("━━━━━━━━━━━━", Colores.Color.ROJO);
+                        texto += new Colores(Risk.netbeans ? "------------" : "━━━━━━━━━━━━", Colores.Color.ROJO);
                     } else if ((i == 3 && (j == 5 || j == 6)) || (i == 5 && j == 9)) {
-                        texto += new Colores("      ┃     ", Colores.Color.ROJO);
+                        texto += new Colores("      " + (Risk.netbeans ? "|" : "┃") + "     ", Colores.Color.ROJO);
                     } else {
                         texto += String.format(" %-18s ", new Colores(""));
                     }
@@ -214,9 +215,9 @@ public class Mapa {
 
                 if ((j + 1) == Mapa.MAX_PAISES_X) {
                     if (i == 0) {
-                        texto += new Colores("━", Colores.Color.ROJO).toString() + "\n";
+                        texto += new Colores(Risk.netbeans ? "-" : "━", Colores.Color.ROJO).toString() + "\n";
                     } else {
-                        texto += "║\n";
+                        texto += (Risk.netbeans ? "|" : "║") + "\n";
                     }
                 }
 
@@ -228,16 +229,16 @@ public class Mapa {
                 pais = this.paises.get(celda);
 
                 if ((i == 4 && j == 4)) {
-                    texto = new Colores("┃", Colores.Color.ROJO).toString();
+                    texto = new Colores(Risk.netbeans ? "|" : "┃", Colores.Color.ROJO).toString();
                 } else if (j == 0) {
-                    texto = "║";
+                    texto = Risk.netbeans ? "|" : "║";
                 } else {
-                    texto = "│";
+                    texto = Risk.netbeans ? "|" : "│";
                 }
 
                 if (pais == null || pais.getJugador() == null) {
                     if ((i == 3 && (j == 5 || j == 6)) || (i == 5 && j == 9)) {
-                        texto += new Colores("      ┃     ", Colores.Color.ROJO);
+                        texto += new Colores("      " + (Risk.netbeans ? "|" : "┃") + "     ", Colores.Color.ROJO);
                     } else {
                         texto += String.format(" %-18s ", new Colores(""));
                     }
@@ -250,7 +251,7 @@ public class Mapa {
                 }
 
                 if ((j + 1) == Mapa.MAX_PAISES_X) {
-                    texto += "║\n";
+                    texto += (Risk.netbeans ? "|" : "║") + "\n";
                 }
 
                 out.append(texto);
