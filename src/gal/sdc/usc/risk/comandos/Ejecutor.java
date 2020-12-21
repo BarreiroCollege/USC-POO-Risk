@@ -4,8 +4,6 @@ import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.salida.Resultado;
-import gal.sdc.usc.risk.util.Colores;
-import javafx.application.Platform;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,40 +20,12 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         this.comando = comando;
     }
 
-    public static void comando(String comando, boolean imprimir, EjecutorListener listener) {
-        if (listener != null) Ejecutor.ejecutarComando(comando, imprimir, listener);
-        else Ejecutor.ejecutarComando(comando, imprimir);
-    }
-
-    public static void comando(String comando, EjecutorListener listener) {
-        Ejecutor.comando(comando, true, listener);
-    }
-
     public static void comando(String comando, boolean imprimir) {
-        Ejecutor.comando(comando, imprimir, null);
+        Ejecutor.ejecutarComando(comando, imprimir);
     }
 
     public static void comando(String comando) {
         Ejecutor.comando(comando, true);
-    }
-
-    private static void ejecutarComando(String comando, boolean imprimir, EjecutorListener listener) {
-        new Thread(() -> {
-            Ejecutor ejecutor = new Ejecutor(comando);
-            ejecutor.entrada();
-            if (imprimir) {
-                Resultado.Escritor.comando(comando);
-            }
-            try {
-                ejecutor.call();
-            } catch (ExcepcionRISK e) {
-                Resultado.error(e);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                Platform.runLater(listener::onComandoEjecutado);
-            }
-        }).start();
     }
 
     private static void ejecutarComando(String comando, boolean imprimir) {
@@ -79,17 +49,6 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    private void entrada() {
-        String out = "";
-        if (super.isJugando() || super.getComandos().isPaisesAsignados(super.getMapa())) {
-            out += "[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] ";
-        }
-        out += new Colores("$> ", Colores.Color.AMARILLO);
-        super.getConsola().imprimir(out);
-        super.getConsola().imprimir(comando);
-        super.getConsola().imprimirSalto();
     }
 
     @Override
