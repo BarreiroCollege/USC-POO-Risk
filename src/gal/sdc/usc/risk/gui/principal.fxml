@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gal.sdc.usc.risk.gui.VistaPrincipal"
-            maxWidth="Infinity" maxHeight="Infinity">
-    <fx:include source="mapa/mapa.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-</AnchorPane>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="gal.sdc.usc.risk.gui.VistaPrincipal"
+           maxWidth="Infinity" maxHeight="Infinity"
+           fx:id="stackPane">
+    <VBox fx:id="contenedor" id="contenedor">
+        <HBox fx:id="contenedorVertical" id="contenedorVertical" VBox.vgrow="ALWAYS">
+            <VBox fx:id="mapa" id="mapa" HBox.hgrow="ALWAYS">
+                <fx:include source="componentes/mapa/mapa.fxml" VBox.vgrow="ALWAYS"/>
+            </VBox>
+            <VBox fx:id="controlesVertical" id="controlesVertical" HBox.hgrow="ALWAYS">
+                <fx:include source="componentes/controles/vertical.fxml" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </HBox>
+        <VBox fx:id="controlesHorizontal" id="controlesHorizontal" VBox.vgrow="ALWAYS">
+            <fx:include source="componentes/controles/horizontal.fxml"/>
+        </VBox>
+    </VBox>
+</StackPane>

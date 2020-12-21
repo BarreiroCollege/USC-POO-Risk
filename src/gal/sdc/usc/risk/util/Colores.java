@@ -83,14 +83,30 @@ public class Colores {
 
     // Lista de colores disponibles
     public enum Color {
-        NEGRO,
-        ROJO,
-        VERDE,
-        AMARILLO,
-        AZUL,
-        VIOLETA,
-        CELESTE,
-        BLANCO;
+        NEGRO("0", "212121"),
+        ROJO("1", "f44336"),
+        VERDE("2", "4caf50"),
+        AMARILLO("3", "ffc107"),
+        AZUL("4", "03a9f4"),
+        VIOLETA("5", "9c27b0"),
+        CELESTE("6", "00bcd4"),
+        BLANCO("7", "fafafa");
+
+        private final String ascii;
+        private final String hex;
+
+        Color(String ascii, String hex) {
+            this.ascii = ascii;
+            this.hex = hex;
+        }
+
+        public String getAscii() {
+            return ascii;
+        }
+
+        public String getHex() {
+            return "#" + hex;
+        }
 
         public static Color toColor(String color) {
             Color resultado;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import com.jfoenix.controls.JFXButton?>
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gal.sdc.usc.risk.gui.componentes.controles.ControlesController"
+            maxWidth="Infinity" maxHeight="Infinity" minWidth="0" minHeight="0">
+    <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0">
+        <JFXButton fx:id="test">Click</JFXButton>
+    </VBox>
+</AnchorPane>
