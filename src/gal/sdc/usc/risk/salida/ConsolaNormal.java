@@ -4,6 +4,7 @@ import gal.sdc.usc.risk.Risk;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +23,7 @@ public class ConsolaNormal implements Consola {
 
         PrintStream psTemp;
         try {
-            psTemp = new PrintStream(System.out, true, StandardCharsets.UTF_8.name());
+            psTemp = new PrintStream(System.out, true, new OutputStreamWriter(System.out).getEncoding());
         } catch (UnsupportedEncodingException e) {
             psTemp = null;
         }

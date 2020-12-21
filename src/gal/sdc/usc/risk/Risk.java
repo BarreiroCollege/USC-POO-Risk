@@ -11,7 +11,7 @@ public class Risk {
         for (String arg : args) {
             if ("netbeans".equals(arg)) {
                 netbeans = true;
-                System.err.println("Se ha detectado NetBeans; se recomienda usar IntelliJ o una consola normal.");
+                System.err.println("Se ha detectado NetBeans; se recomienda usar IntelliJ o una consola con bash.");
                 break;
             }
         }
