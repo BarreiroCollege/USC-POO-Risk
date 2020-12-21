@@ -5,6 +5,10 @@
 
 ![Ejemplo](https://i.imgur.com/wXqjwl2.png)
 
+> **NOTA:** Para ejecutar el proyecto, se recomienda usar IntelliJ, o utilizar un terminal Linux. Otros entornos, como
+> NetBeans permitirán ejecutarlo (aunque con un mapa más simple), pero otros como CMD y CygWin no soportan ciertos
+> caracteres.
+
 ## Juego
 
 Para compilar el proyecto, se puede **ejecutar el script `build.sh`** que se encuentra en la raiz del proyecto, el cual
