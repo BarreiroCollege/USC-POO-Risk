@@ -9,6 +9,10 @@
 > NetBeans permitirán ejecutarlo (aunque con un mapa más simple), pero otros como CMD y CygWin no soportan ciertos
 > caracteres.
 
+**CorreccionRISK**  
+Además, se ha hecho un comparador de salidas para el Risk, disponible en
+[barreeeiroo/CorreccionRISK](https://github.com/barreeeiroo/CorreccionRISK).
+
 ## Juego
 
 Para compilar el proyecto, se puede **ejecutar el script `build.sh`** que se encuentra en la raiz del proyecto, el cual
