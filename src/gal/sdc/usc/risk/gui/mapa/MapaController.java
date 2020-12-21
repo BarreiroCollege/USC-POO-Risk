@@ -27,20 +27,15 @@ public class MapaController extends Partida {
         Ejecutor.comando("crear mapa", () -> {
             HashMap<Celda, Pais> paises = super.getMapa().getPaisesPorCeldas();
             for (int i = 0; i < MAX_PAISES_Y; i++) {
-                HBox hbox = new HBox();
                 for (int j = 0; j < MAX_PAISES_X; j++) {
                     Celda celda = new Celda.Builder().withX(j).withY(i).build();
-                    JFXButton button = new JFXButton();
+                    JFXButton button = (JFXButton) contenedor.getScene().lookup("#" + i + "-" + j);
                     button.setDisable(true);
-                    button.setPrefWidth((float) contenedor.getWidth() / MAX_PAISES_X);
                     if (paises.containsKey(celda)) {
                         button.setDisable(false);
                         button.setText(paises.get(celda).getAbreviatura());
                     }
-                    HBox.setHgrow(button, Priority.ALWAYS);
-                    hbox.getChildren().add(button);
                 }
-                contenedor.getChildren().add(hbox);
             }
         });
     }
