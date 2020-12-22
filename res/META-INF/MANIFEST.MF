@@ -1,3 +1,2 @@
 Manifest-Version: 1.0
 Main-Class: gal.sdc.usc.risk.Risk
-Class-Path:
