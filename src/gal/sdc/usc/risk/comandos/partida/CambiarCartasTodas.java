@@ -11,6 +11,7 @@ import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.excepciones.Errores;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -55,6 +56,10 @@ public class CambiarCartasTodas extends Partida implements IComando {
                         valor = 12;
                     } else {
                         continue;
+                    }
+
+                    for (Carta carta : Arrays.asList(c1, c2, c3)) {
+                        valor += carta.obtenerRearme();
                     }
 
                     combinacion = new ArrayList<>();
