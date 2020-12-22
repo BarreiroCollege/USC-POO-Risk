@@ -12,3 +12,7 @@
     -fx-font-weight: normal;
     -fx-font-size: 12.5;
 }
+
+.error {
+    -fx-text-fill: #d32f2f;
+}

@@ -13,12 +13,15 @@ import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.util.Colores;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -62,6 +65,19 @@ public class ControlesController extends Partida {
 
             contenedor.getChildren().add(boton);
         }
+    }
+
+    @FXML
+    public void indirectas() {
+        FXMLLoader loader = new FXMLLoader();
+        try {
+            loader.load(MapaController.class.getResource("mapa.fxml").openStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MapaController controller = loader.getController();
+        controller.cambiarFronteras();
+        controller.actualizar(contenedor.getScene());
     }
 
     @FXML
@@ -117,8 +133,34 @@ public class ControlesController extends Partida {
         comandoTexto.textProperty().addListener((o) -> comandoTexto.validate());
         contenedor.getChildren().add(comandoTexto);
 
+        VBox errorContenedor = new VBox();
+        errorContenedor.setStyle(errorContenedor.getStyle() + "-fx-padding: 15pt 0 10pt 0;");
+        errorContenedor.setPrefWidth(Float.MAX_VALUE);
+        errorContenedor.setVisible(false);
+        errorContenedor.setManaged(false);
+
+        HBox error = new HBox();
+        error.setPrefWidth(Float.MAX_VALUE);
+        error.setStyle(error.getStyle() +  "-fx-padding: 10pt 5pt 10pt 5pt; "
+                +"-fx-border-width: 1pt; "
+                + "-fx-border-radius: 5pt;"
+                + "-fx-border-color: #d32f2f;");
+        HBox.setHgrow(error, Priority.ALWAYS);
+        Label errorTitulo = new Label("Error");
+        errorTitulo.getStyleClass().add("dialogo-titulo");
+        errorTitulo.getStyleClass().add("error");
+        error.getChildren().add(errorTitulo);
+        Label errorValor = new Label();
+        HBox.setHgrow(errorValor, Priority.ALWAYS);
+        errorValor.getStyleClass().add("dialogo-valor");
+        error.getChildren().add(errorValor);
+        errorContenedor.getChildren().add(error);
+        contenedor.getChildren().add(errorContenedor);
+
         comboComando.getSelectionModel().selectedItemProperty().addListener((o, oldV, newV) -> {
             comandoTexto.setDisable(false);
+            errorContenedor.setVisible(false);
+            errorContenedor.setManaged(false);
             try {
                 Class<? extends IComando> comando = (Class<? extends IComando>) Class.forName(newV.getId());
                 IComando comandoObj = comando.newInstance();
@@ -132,30 +174,35 @@ public class ControlesController extends Partida {
             }
         });
 
-
-
         layout.setBody(contenedor);
 
         JFXButton ejecutar = new JFXButton("Ejecutar");
         ejecutar.disableProperty().bind(comandoTexto.getValidators().get(0).hasErrorsProperty());
-        ejecutar.setOnAction(event -> Ejecutor.comando(comandoTexto.getText(), new EjecutorListener() {
-            @Override
-            public void onComandoError(ExcepcionRISK e) {
-                System.err.println(e.getMensaje());
-            }
-
-            @Override
-            public void onComandoEjecutado() {
-                FXMLLoader loader = new FXMLLoader();
-                try {
-                    loader.load(MapaController.class.getResource("mapa.fxml").openStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
+        ejecutar.setOnAction(event -> {
+            errorContenedor.setVisible(false);
+            errorContenedor.setManaged(false);
+            Ejecutor.comando(comandoTexto.getText(), new EjecutorListener() {
+                @Override
+                public void onComandoError(ExcepcionRISK e) {
+                    errorTitulo.setText("Error " + e.getCodigo());
+                    errorValor.setText(e.getMensaje());
+                    errorContenedor.setVisible(true);
+                    errorContenedor.setManaged(true);
                 }
-                ((MapaController) loader.getController()).actualizar(contenedor.getScene());
-                dialog.close();
-            }
-        }));
+
+                @Override
+                public void onComandoEjecutado() {
+                    FXMLLoader loader = new FXMLLoader();
+                    try {
+                        loader.load(MapaController.class.getResource("mapa.fxml").openStream());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ((MapaController) loader.getController()).actualizar(contenedor.getScene());
+                    dialog.close();
+                }
+            });
+        });
 
         JFXButton cerrar = new JFXButton("Cerrar");
         cerrar.setOnAction(event -> dialog.close());

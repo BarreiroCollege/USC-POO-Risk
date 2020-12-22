@@ -48,6 +48,7 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
             }
             try {
                 ejecutor.call();
+                Platform.runLater(listener::onComandoEjecutado);
             } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
                 Throwable t = e.getCause();
                 while (t != null) {
@@ -59,8 +60,6 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
                     }
                     t = t.getCause();
                 }
-            } finally {
-                Platform.runLater(listener::onComandoEjecutado);
             }
         }).start();
     }

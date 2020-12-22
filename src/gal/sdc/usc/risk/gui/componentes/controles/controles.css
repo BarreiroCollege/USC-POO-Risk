@@ -1,5 +1,5 @@
 .contenedor-comando {
-    -fx-padding: 10 10 10 10;
+    -fx-padding: 0 10 15 10;
 }
 
 .btn-comando {
@@ -8,4 +8,10 @@
     -fx-text-fill: #fafafa;
     -fx-background-color: #303f9f;
     -fx-pref-height: 40;
+}
+
+.custom-jfx-toggle {
+    -jfx-toggle-color: #303f9f;
+    -jfx-toggle-line-color: #9fa8da;
+    -fx-font-size: 14;
 }

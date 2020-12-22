@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class Mapa {
     public static int MAX_PAISES_X = 11;
     public static int MAX_PAISES_Y = 8;
+    public static int MAX_ENLACES_MARITIMOS = 6;
 
     private final HashMap<String, Continente> continentes;
     private final HashMap<Celda, Pais> paises;

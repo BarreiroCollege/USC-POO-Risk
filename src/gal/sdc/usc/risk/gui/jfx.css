@@ -73,3 +73,21 @@
 .jfx-snackbar-toast {
     -fx-text-fill: white;
 }
+
+.container {
+    -fx-padding: 16px 16px 16px 16px;
+    -fx-background-color: #b3e5fc;
+}
+
+.card {
+    -fx-border-radius: 5 5 5 5;
+    -fx-background-radius: 5 5 5 5;
+    -fx-background-color: #fafafa;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 10.0, 0.0, 0.0, 0.0);
+    -fx-transition: 0.3s;
+    -fx-padding: 8px 5px 8px 5px;
+}
+
+.card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 15.0, 0.0, 0.0, 0.0);
+}
