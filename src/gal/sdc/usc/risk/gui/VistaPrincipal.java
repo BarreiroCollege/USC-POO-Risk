@@ -1,10 +1,10 @@
 package gal.sdc.usc.risk.gui;
 
+import gal.sdc.usc.risk.gui.componentes.controles.ControlesController;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.FloatBinding;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,6 +41,26 @@ public class VistaPrincipal extends Application {
     public void initialize() {
         BooleanBinding pequeno = contenedor.widthProperty().lessThan(900);
 
+        contenedor.widthProperty().addListener(((observable, oldValue, newValue) -> {
+            FXMLLoader loader = new FXMLLoader();
+
+            try {
+                if (newValue.doubleValue() >= 900 && oldValue.doubleValue() < 900) {
+                    controlesVertical.setVisible(true);
+                    controlesHorizontal.setVisible(false);
+                    loader.load(ControlesController.class.getResource("vertical.fxml").openStream());
+                    ((ControlesController) loader.getController()).actualizar();
+                } else if (newValue.doubleValue() < 900 && oldValue.doubleValue() >= 900) {
+                    controlesVertical.setVisible(false);
+                    controlesHorizontal.setVisible(true);
+                    loader.load(ControlesController.class.getResource("horizontal.fxml").openStream());
+                    ((ControlesController) loader.getController()).actualizar();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+
         // Contenedor vertical con mapa y controles en vertical
 
         FloatBinding contenedorVerticalHeight = Bindings.createFloatBinding(() -> {
@@ -71,11 +91,6 @@ public class VistaPrincipal extends Application {
         }, contenedor.widthProperty(), pequeno);
         controlesVertical.prefWidthProperty().bind(controlesVerticalWidth);
 
-        // TODO: Si se cambia la visibilidad, se pierde la visibilidad de los elementos dentro
-        SimpleBooleanProperty verticalVisible = new SimpleBooleanProperty();
-        verticalVisible.isEqualTo(pequeno.not());
-        controlesVertical.visibleProperty().bind(verticalVisible);
-
         // Controles en horizontal
 
         FloatBinding controlesHorizontalHeight = Bindings.createFloatBinding(() -> {
@@ -85,10 +100,6 @@ public class VistaPrincipal extends Application {
             return contenedor.heightProperty().multiply(0).divide(100).floatValue();
         }, contenedor.heightProperty(), pequeno);
         controlesHorizontal.prefHeightProperty().bind(controlesHorizontalHeight);
-
-        SimpleBooleanProperty horizontalVisible = new SimpleBooleanProperty();
-        horizontalVisible.isEqualTo(pequeno);
-        controlesHorizontal.visibleProperty().bind(horizontalVisible);
     }
 
     @Override

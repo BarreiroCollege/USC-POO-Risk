@@ -16,7 +16,7 @@
         <Float fx:id="columnas" fx:value="11"/>
         <Float fx:id="filas" fx:value="8"/>
         <Float fx:id="wMargen" fx:value="20"/>
-        <Float fx:id="hMargen" fx:value="15"/>
+        <Float fx:id="hMargen" fx:value="18"/>
     </fx:define>
 
     <VBox fx:id="contenedor" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"

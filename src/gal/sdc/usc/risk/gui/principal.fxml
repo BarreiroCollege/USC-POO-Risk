@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
+<?import javafx.scene.control.Button?>
 <StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
            fx:controller="gal.sdc.usc.risk.gui.VistaPrincipal"
            maxWidth="Infinity" maxHeight="Infinity"
@@ -13,7 +14,7 @@
         <URL value="@jfx.css"/>
         <URL value="@principal.css"/>
     </stylesheets>
-    <VBox fx:id="contenedor">
+    <VBox fx:id="contenedor" style="-fx-background-color: #eeeeee">
         <HBox fx:id="contenedorVertical" VBox.vgrow="ALWAYS">
             <VBox fx:id="mapa" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                 <fx:include source="componentes/mapa/mapa.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
@@ -23,7 +24,7 @@
             </VBox>
         </HBox>
         <VBox fx:id="controlesHorizontal" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
-            <fx:include source="componentes/controles/horizontal.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+            <fx:include fx:id="" source="componentes/controles/horizontal.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
         </VBox>
     </VBox>
 </StackPane>

@@ -48,10 +48,17 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
             }
             try {
                 ejecutor.call();
-            } catch (ExcepcionRISK e) {
-                Resultado.error(e);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+                Throwable t = e.getCause();
+                while (t != null) {
+                    if (t instanceof ExcepcionRISK) {
+                        ExcepcionRISK finalT = (ExcepcionRISK) t;
+                        Platform.runLater(() -> listener.onComandoError(finalT));
+                        Resultado.error(finalT);
+                        break;
+                    }
+                    t = t.getCause();
+                }
             } finally {
                 Platform.runLater(listener::onComandoEjecutado);
             }
