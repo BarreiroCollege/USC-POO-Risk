@@ -9,9 +9,10 @@ import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Pais;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.util.HashMap;
 
@@ -20,6 +21,8 @@ import static gal.sdc.usc.risk.tablero.Mapa.MAX_PAISES_Y;
 
 public class MapaController extends Partida {
     @FXML
+    private AnchorPane anchor;
+    @FXML
     private VBox contenedor;
 
     public MapaController() {
@@ -27,15 +30,16 @@ public class MapaController extends Partida {
 
     @FXML
     private void initialize() {
-        Ejecutor.comando("crear mapa", new EjecutorListener() {
+        anchor.getStylesheets().add(MapaController.class.getResource("mapa.css").toExternalForm());
+        /* Ejecutor.comando("crear mapa", new EjecutorListener() {
             @Override
             public void onComandoEjecutado() {
                 actualizar();
             }
-        });
+        }); */
     }
 
-    public void actualizar() {
+    public void actualizar(Scene scene) {
         HashMap<Celda, Pais> paises = super.getMapa().getPaisesPorCeldas();
         for (int i = 0; i < MAX_PAISES_Y; i++) {
             for (int j = 0; j < MAX_PAISES_X; j++) {
@@ -47,7 +51,7 @@ public class MapaController extends Partida {
                 Pais oeste = paises.get(new Celda.Builder().withX(j + 1).withY(i).build());
                 Pais sombra = paises.get(new Celda.Builder().withX(j + 1).withY(i + 1).build());
 
-                JFXButton button = (JFXButton) contenedor.getScene().lookup("#" + i + "-" + j);
+                JFXButton button = (JFXButton) scene.lookup("#" + i + "-" + j);
                 button.setDisable(true);
                 if (paises.containsKey(celda)) {
                     button.setDisable(false);

@@ -6,12 +6,12 @@
 <?import com.jfoenix.controls.JFXButton?>
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="gal.sdc.usc.risk.gui.componentes.controles.ControlesController"
-            maxWidth="Infinity" maxHeight="Infinity" minWidth="0" minHeight="0">
+            maxWidth="Infinity" maxHeight="Infinity" minWidth="0" minHeight="0" fx:id="anchor">
     <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" fx:id="parent">
-        <HBox fx:id="contenedor" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" prefHeight="${parent.width * 90 / 100}"/>
-        <HBox HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" prefHeight="${parent.width * 10 / 100}">
-            <JFXButton onAction="#comandos">Comandos</JFXButton>
+        <HBox fx:id="contenedor" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+        <HBox fx:id="comandos" VBox.vgrow="ALWAYS" styleClass="contenedor-comando">
+            <JFXButton onAction="#comandos" prefWidth="Infinity" styleClass="btn-comando">Introducir Comando</JFXButton>
         </HBox>
     </HBox>
 </AnchorPane>

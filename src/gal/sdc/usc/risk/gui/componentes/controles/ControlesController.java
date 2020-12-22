@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -32,17 +33,19 @@ public class ControlesController extends Partida {
     private Pane parent;
     @FXML
     private Pane contenedor;
+    @FXML
+    private AnchorPane anchor;
 
     public ControlesController() {
     }
 
     @FXML
     private void initialize() {
+        anchor.getStylesheets().add(ControlesController.class.getResource("controles.css").toExternalForm());
         this.actualizar();
     }
 
     public void actualizar() {
-        System.out.println("actualizar");
         contenedor.getChildren().clear();
         for (Class<? extends IComando> comando : super.getComandos().getLista()) {
             JFXButton boton = new JFXButton();
@@ -135,26 +138,24 @@ public class ControlesController extends Partida {
 
         JFXButton ejecutar = new JFXButton("Ejecutar");
         ejecutar.disableProperty().bind(comandoTexto.getValidators().get(0).hasErrorsProperty());
-        ejecutar.setOnAction(event -> {
-                Ejecutor.comando(comandoTexto.getText(), new EjecutorListener() {
-                    @Override
-                    public void onComandoError(ExcepcionRISK e) {
-                        System.err.println(e.getMensaje());
-                    }
+        ejecutar.setOnAction(event -> Ejecutor.comando(comandoTexto.getText(), new EjecutorListener() {
+            @Override
+            public void onComandoError(ExcepcionRISK e) {
+                System.err.println(e.getMensaje());
+            }
 
-                    @Override
-                    public void onComandoEjecutado() {
-                        FXMLLoader loader = new FXMLLoader();
-                        try {
-                            loader.load(MapaController.class.getResource("mapa.fxml").openStream());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        ((MapaController) loader.getController()).actualizar();
-                        dialog.close();
-                    }
-                });
-        });
+            @Override
+            public void onComandoEjecutado() {
+                FXMLLoader loader = new FXMLLoader();
+                try {
+                    loader.load(MapaController.class.getResource("mapa.fxml").openStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ((MapaController) loader.getController()).actualizar(contenedor.getScene());
+                dialog.close();
+            }
+        }));
 
         JFXButton cerrar = new JFXButton("Cerrar");
         cerrar.setOnAction(event -> dialog.close());

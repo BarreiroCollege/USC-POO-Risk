@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbarLayout;
 import com.jfoenix.controls.JFXTabPane;
 import gal.sdc.usc.risk.comandos.Ejecutor;
+import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -40,7 +41,7 @@ public class InfoPais {
 
         Tab tabPais = generarPais(pais);
         // TODO
-        tabPais.setOnSelectionChanged(event -> {
+        /* tabPais.setOnSelectionChanged(event -> {
             if (event.getTarget() instanceof Tab) {
                 String comando;
 
@@ -62,12 +63,15 @@ public class InfoPais {
                         comando = "";
                         break;
                 }
-                Ejecutor.comando(comando, () -> {
-                    JFXSnackbar bar = new JFXSnackbar(stackPane);
-                    bar.fireEvent(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout(comando)));
+                Ejecutor.comando(comando, new EjecutorListener() {
+                    @Override
+                    public void onComandoEjecutado() {
+                        JFXSnackbar bar = new JFXSnackbar(stackPane);
+                        bar.fireEvent(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout(comando)));
+                    }
                 });
             }
-        });
+        }); */
         tabs.getTabs().add(TAB_PAIS_I, tabPais);
 
         Tab tabContinente = generarContinente(pais.getContinente());
@@ -254,7 +258,7 @@ public class InfoPais {
         label = new Label("Rearme");
         label.getStyleClass().add("dialogo-titulo");
         fila.getChildren().add(label);
-        label = new Label("" + continente.getEjercitosRearme() + " ejércitos");
+        label = new Label("" + continente.getEjercitosRearme() + " ejércitos por turno");
         label.getStyleClass().add("dialogo-valor");
         fila.getChildren().add(label);
         contenido.getChildren().add(fila);

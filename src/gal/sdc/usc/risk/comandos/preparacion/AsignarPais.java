@@ -28,12 +28,13 @@ public class AsignarPais extends Partida implements IComando {
             Resultado.error(Errores.JUGADORES_NO_CREADOS);
             return;
         }
-        if (!super.getJugadores().containsKey(jugador)) {
+
+        Jugador jugadorFinal = super.getJugadorPorNombre(jugador);
+        if (jugadorFinal == null) {
             Resultado.error(Errores.JUGADOR_NO_EXISTE);
             return;
         }
 
-        Jugador jugadorFinal = super.getJugadores().get(jugador);
         if (jugadorFinal.getMision() == null) {
             Resultado.error(Errores.MISIONES_NO_ASIGNADAS);
             return;
@@ -77,6 +78,7 @@ public class AsignarPais extends Partida implements IComando {
         }
 
         if (tieneJugador) {
+            super.getComandos().habilitarRepartirEjercitos();
             super.getComandos().habilitarAcabarTurno();
             // Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
         }

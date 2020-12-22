@@ -29,12 +29,13 @@ public class AsignarMision extends Partida implements IComando {
             Resultado.error(Errores.JUGADORES_NO_CREADOS);
             return;
         }
-        if (!super.getJugadores().containsKey(nombre)) {
+
+        Jugador jugador = super.getJugadorPorNombre(nombre);
+        if (jugador == null) {
             Resultado.error(Errores.JUGADOR_NO_EXISTE);
             return;
         }
 
-        Jugador jugador = super.getJugadores().get(nombre);
         if (jugador.getMision() != null) {
             Resultado.error(Errores.JUGADOR_YA_MISION);
             return;
@@ -74,7 +75,7 @@ public class AsignarMision extends Partida implements IComando {
         }
 
         if (tienenMisiones) {
-            // super.getComandos().habilitarAsignarPaises();
+            super.getComandos().habilitarAsignarPaises();
             for (Jugador j : super.getJugadores().values()) {
                 j.getEjercitosPendientes().recibir(new Ejercito.Builder().withCantidad(super.getEjercitosIniciales()).build());
             }

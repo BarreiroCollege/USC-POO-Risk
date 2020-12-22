@@ -5,13 +5,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.Float?>
-<?import java.net.URL?>
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="gal.sdc.usc.risk.gui.componentes.mapa.MapaController"
-            maxWidth="Infinity" maxHeight="Infinity">
-    <stylesheets>
-        <URL value="@mapa.css"/>
-    </stylesheets>
+            maxWidth="Infinity" maxHeight="Infinity" fx:id="anchor">
     <fx:define>
         <Float fx:id="columnas" fx:value="11"/>
         <Float fx:id="filas" fx:value="8"/>

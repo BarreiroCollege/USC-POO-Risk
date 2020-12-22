@@ -65,7 +65,7 @@ public class CrearMapa extends Partida implements IComando {
 
         super.setMapa(preMapa.build());
         super.getConsola().imprimir(super.getMapa());
-        // super.getComandos().mapaCreado();
+        super.getComandos().mapaCreado();
     }
 
     @Override

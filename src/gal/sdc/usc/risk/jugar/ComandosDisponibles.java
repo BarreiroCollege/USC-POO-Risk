@@ -66,14 +66,14 @@ public class ComandosDisponibles {
 
     public void iniciarPreparacion() {
         add(CrearMapa.class);
-        add(CrearJugador.class);
+        /* add(CrearJugador.class);
         add(CrearJugadores.class);
         add(AsignarMision.class);
         add(AsignarMisiones.class);
         add(AsignarPais.class);
         add(AsignarPaises.class);
         add(RepartirEjercito.class);
-        add(RepartirEjercitos.class);
+        add(RepartirEjercitos.class); */
     }
 
     public void habilitarAcabarTurno() {
@@ -178,7 +178,7 @@ public class ComandosDisponibles {
     public void habilitarRepartirEjercitos() {
         this.deshabilitarAsignarPaises();
         add(RepartirEjercito.class);
-        // add(RepartirEjercitos.class);
+        add(RepartirEjercitos.class);
         add(AcabarTurno.class);
     }
 
@@ -192,7 +192,7 @@ public class ComandosDisponibles {
     public void atacando() {
         this.repartiendo();
         remove(RepartirEjercito.class);
-        // remove(RepartirEjercitos.class);
+        remove(RepartirEjercitos.class);
     }
 
     public void atacar() {
