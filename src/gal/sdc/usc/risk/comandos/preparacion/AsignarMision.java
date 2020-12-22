@@ -83,6 +83,6 @@ public class AsignarMision extends Partida implements IComando {
 
     @Override
     public String ayuda() {
-        return "asignar <nombre_jugador> <identificador_misión>";
+        return "asignar mision <nombre_jugador> <identificador_misión>";
     }
 }

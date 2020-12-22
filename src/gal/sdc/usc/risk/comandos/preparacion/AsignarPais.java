@@ -84,6 +84,6 @@ public class AsignarPais extends Partida implements IComando {
 
     @Override
     public String ayuda() {
-        return "asignar <nombre_jugador> <abreviatura_país>";
+        return "asignar pais <nombre_jugador> <abreviatura_país>";
     }
 }
