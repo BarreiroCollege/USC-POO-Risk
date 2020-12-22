@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 
 public class ControlesController {
+    @FXML
     public JFXButton test;
 
 

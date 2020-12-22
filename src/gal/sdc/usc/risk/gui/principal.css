@@ -1,0 +1,14 @@
+.dialogo-contenido {
+    -fx-padding: 16 0 0 0;
+}
+
+.dialogo-titulo {
+    -fx-font-weight: bold;
+    -fx-font-size: 12.5;
+    -fx-pref-width: 100;
+}
+
+.dialogo-valor {
+    -fx-font-weight: normal;
+    -fx-font-size: 12.5;
+}

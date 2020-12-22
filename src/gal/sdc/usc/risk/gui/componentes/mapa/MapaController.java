@@ -1,20 +1,15 @@
 package gal.sdc.usc.risk.gui.componentes.mapa;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import gal.sdc.usc.risk.comandos.Ejecutor;
+import gal.sdc.usc.risk.gui.componentes.infopais.InfoPais;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Pais;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 import java.util.HashMap;
 
@@ -55,7 +50,7 @@ public class MapaController extends Partida {
                                 + "-fx-background-radius: " + bordes + ";");
 
                         if (sur == null || oeste == null || sombra == null) {
-                            button.setStyle(button.getStyle() + "-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 10.0, 0.0, 8.0, 8.0);");
+                            button.getStyleClass().add("pais-sombra");
                         }
 
                         button.getStyleClass().add("pais");
@@ -65,29 +60,12 @@ public class MapaController extends Partida {
                             Parent parent = button;
                             while (parent.getParent() != null) parent = parent.getParent();
                             assert parent instanceof StackPane;
-                            dialog((StackPane) parent, pais).show();
+                            InfoPais.dialogo((StackPane) parent, pais).show();
                         });
                     }
                 }
             }
         });
-    }
-
-    private JFXDialog dialog(StackPane stackPane, Pais pais) {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.setDialogContainer(stackPane);
-
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Label(pais.getNombre()));
-        content.setBody(new Text("Datos del pais...."));
-
-        JFXButton cerrar = new JFXButton("Cerrar");
-        cerrar.setOnAction(event -> dialog.close());
-        content.setActions(cerrar);
-
-        dialog.setContent(content);
-        return dialog;
     }
 
     private String bordes(boolean norte, boolean sur, boolean este, boolean oeste) {

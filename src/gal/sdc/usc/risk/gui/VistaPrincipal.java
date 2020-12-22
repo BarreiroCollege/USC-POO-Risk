@@ -71,9 +71,9 @@ public class VistaPrincipal extends Application {
         }, contenedor.widthProperty(), pequeno);
         controlesVertical.prefWidthProperty().bind(controlesVerticalWidth);
 
+        // TODO: Si se cambia la visibilidad, se pierde la visibilidad de los elementos dentro
         SimpleBooleanProperty verticalVisible = new SimpleBooleanProperty();
         verticalVisible.isEqualTo(pequeno.not());
-        controlesVertical.visibleProperty().unbind();
         controlesVertical.visibleProperty().bind(verticalVisible);
 
         // Controles en horizontal
@@ -84,11 +84,10 @@ public class VistaPrincipal extends Application {
             }
             return contenedor.heightProperty().multiply(0).divide(100).floatValue();
         }, contenedor.heightProperty(), pequeno);
-        controlesVertical.prefHeightProperty().bind(controlesHorizontalHeight);
+        controlesHorizontal.prefHeightProperty().bind(controlesHorizontalHeight);
 
         SimpleBooleanProperty horizontalVisible = new SimpleBooleanProperty();
         horizontalVisible.isEqualTo(pequeno);
-        controlesHorizontal.visibleProperty().unbind();
         controlesHorizontal.visibleProperty().bind(horizontalVisible);
     }
 
@@ -104,40 +103,5 @@ public class VistaPrincipal extends Application {
         stage.setTitle("RISK");
         stage.setScene(scene);
         stage.show();
-
-        // stage.widthProperty().addListener((obs, oldVal, newVal) -> this.gestionarControles(oldVal, newVal));
     }
-
-    /* public void gestionarControles(Number viejo, Number nuevo) {
-        float ROMPER = 1080;
-
-        VBox contenedor = (VBox) scene.lookup("#contenedor");
-        HBox contenedorVertical = (HBox) scene.lookup("#contenedorVertical");
-        VBox mapa = (VBox) scene.lookup("#mapa");
-        VBox controlesVertical = (VBox) scene.lookup("#controlesVertical");
-        VBox controlesHorizontal = (VBox) scene.lookup("#controlesHorizontal");
-
-        SimpleFloatProperty mapaWidth = new SimpleFloatProperty();
-        SimpleFloatProperty contenedorVerticalHeight = new SimpleFloatProperty();
-
-        if (nuevo.doubleValue() > ROMPER && viejo.doubleValue() < ROMPER) {
-            mapaWidth.add(contenedor.widthProperty().multiply(80).divide(100));
-            controlesVertical.setVisible(true);
-
-            contenedorVerticalHeight.add(contenedor.heightProperty().multiply(100).divide(100));
-            controlesHorizontal.setVisible(false);
-        } else if (nuevo.doubleValue() < ROMPER && viejo.doubleValue() > ROMPER) {
-            mapaWidth.add(contenedor.widthProperty().multiply(100).divide(100));
-            controlesVertical.setVisible(false);
-
-            contenedorVerticalHeight.add(contenedor.heightProperty().multiply(80).divide(100));
-            controlesHorizontal.setVisible(true);
-        }
-
-        mapa.prefWidthProperty().unbind();
-        mapa.prefWidthProperty().bind(mapaWidth);
-
-        contenedorVertical.prefHeightProperty().unbind();
-        contenedorVertical.prefHeightProperty().bind(contenedorVerticalHeight);
-    } */
 }

@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
 <StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
            fx:controller="gal.sdc.usc.risk.gui.VistaPrincipal"
            maxWidth="Infinity" maxHeight="Infinity"
            fx:id="stackPane">
-    <VBox fx:id="contenedor" id="contenedor">
-        <HBox fx:id="contenedorVertical" id="contenedorVertical" VBox.vgrow="ALWAYS">
-            <VBox fx:id="mapa" id="mapa" HBox.hgrow="ALWAYS">
-                <fx:include source="componentes/mapa/mapa.fxml" VBox.vgrow="ALWAYS"/>
+    <stylesheets>
+        <URL value="@jfx.css"/>
+        <URL value="@principal.css"/>
+    </stylesheets>
+    <VBox fx:id="contenedor">
+        <HBox fx:id="contenedorVertical" VBox.vgrow="ALWAYS">
+            <VBox fx:id="mapa" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                <fx:include source="componentes/mapa/mapa.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
             </VBox>
-            <VBox fx:id="controlesVertical" id="controlesVertical" HBox.hgrow="ALWAYS">
-                <fx:include source="componentes/controles/vertical.fxml" VBox.vgrow="ALWAYS"/>
+            <VBox fx:id="controlesVertical" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                <fx:include source="componentes/controles/vertical.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
             </VBox>
         </HBox>
-        <VBox fx:id="controlesHorizontal" id="controlesHorizontal" VBox.vgrow="ALWAYS">
-            <fx:include source="componentes/controles/horizontal.fxml"/>
+        <VBox fx:id="controlesHorizontal" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <fx:include source="componentes/controles/horizontal.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
         </VBox>
     </VBox>
 </StackPane>
