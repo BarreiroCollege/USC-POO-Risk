@@ -5,18 +5,21 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.validation.RegexValidator;
 import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
+import gal.sdc.usc.risk.gui.componentes.infopais.InfoJugador;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.util.Colores;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -24,6 +27,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -35,20 +39,19 @@ public class ControlesController extends Partida {
     @FXML
     private Pane parent;
     @FXML
-    private Pane contenedor;
+    private Pane contenedorComandos;
     @FXML
     private AnchorPane anchor;
+    @FXML
+    public JFXToggleButton toogleIndirectas;
+    @FXML
+    public VBox contenedorJugador;
 
     public ControlesController() {
     }
 
-    @FXML
-    private void initialize() {
-        anchor.getStylesheets().add(ControlesController.class.getResource("controles.css").toExternalForm());
-        this.actualizar();
-    }
-
-    public void actualizar() {
+    public void actualizarComandos(Scene scene) {
+        Pane contenedor = (Pane) scene.lookup("#contenedor-comandos");
         contenedor.getChildren().clear();
         for (Class<? extends IComando> comando : super.getComandos().getLista()) {
             JFXButton boton = new JFXButton();
@@ -67,6 +70,41 @@ public class ControlesController extends Partida {
         }
     }
 
+    public void actualizarJugador(Scene scene) {
+        VBox jugadores = (VBox) scene.lookup("#contenedor-jugador");
+        jugadores.getChildren().clear();
+
+        if (super.getJugadores().size() > 0) {
+            VBox contenedor = new VBox();
+            contenedor.setFillWidth(true);
+            contenedor.setPrefWidth(Double.MAX_VALUE);
+            JFXButton button = new JFXButton(" " + super.getJugadorTurno().getNombre() + " ");
+            HBox.setHgrow(button, Priority.ALWAYS);
+            button.prefWidthProperty().bind(((VBox) scene.lookup("#parent-control")).widthProperty());
+            button.setTextAlignment(TextAlignment.CENTER);
+            button.setStyle(button.getStyle() + "-fx-text-fill: " + super.getJugadorTurno().getColor().getHex() + "; "
+                    + "-fx-border-width: 3; "
+                    + "-fx-border-radius: 5; "
+                    + "-fx-border-color: " + super.getJugadorTurno().getColor().getHex() + "; "
+                    + "-fx-font-weight: bold; "
+                    + "-fx-font-size: 14; "
+                    + "-fx-min-height: 20;");
+            button.setOnAction((event -> {
+                // TODO
+            }));
+            contenedor.getChildren().add(button);
+            contenedor.getChildren().add(new InfoJugador().generarJugadorCorto(super.getJugadorTurno()));
+            jugadores.getChildren().add(contenedor);
+        } else {
+            jugadores.getChildren().add(new Label("Sin Jugadores"));
+        }
+    }
+
+    @FXML
+    private void initialize() {
+        anchor.getStylesheets().add(ControlesController.class.getResource("controles.css").toExternalForm());
+    }
+
     @FXML
     public void indirectas() {
         FXMLLoader loader = new FXMLLoader();
@@ -76,8 +114,7 @@ public class ControlesController extends Partida {
             e.printStackTrace();
         }
         MapaController controller = loader.getController();
-        controller.cambiarFronteras();
-        controller.actualizar(contenedor.getScene());
+        controller.actualizarFronteras(contenedorComandos.getScene(), toogleIndirectas.isSelected());
     }
 
     @FXML
@@ -141,8 +178,8 @@ public class ControlesController extends Partida {
 
         HBox error = new HBox();
         error.setPrefWidth(Float.MAX_VALUE);
-        error.setStyle(error.getStyle() +  "-fx-padding: 10pt 5pt 10pt 5pt; "
-                +"-fx-border-width: 1pt; "
+        error.setStyle(error.getStyle() + "-fx-padding: 10pt 5pt 10pt 5pt; "
+                + "-fx-border-width: 1pt; "
                 + "-fx-border-radius: 5pt;"
                 + "-fx-border-color: #d32f2f;");
         HBox.setHgrow(error, Priority.ALWAYS);
@@ -199,6 +236,16 @@ public class ControlesController extends Partida {
                         e.printStackTrace();
                     }
                     ((MapaController) loader.getController()).actualizar(contenedor.getScene());
+
+                    loader = new FXMLLoader();
+                    try {
+                        loader.load(ControlesController.class.getResource("vertical.fxml").openStream());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ((ControlesController) loader.getController()).actualizarJugador(contenedor.getScene());
+                    ((ControlesController) loader.getController()).actualizarComandos(contenedor.getScene());
+
                     dialog.close();
                 }
             });

@@ -9,14 +9,18 @@
             fx:controller="gal.sdc.usc.risk.gui.componentes.controles.ControlesController"
             maxWidth="Infinity" maxHeight="Infinity" minWidth="0" minHeight="0" fx:id="anchor">
     <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-          AnchorPane.bottomAnchor="0.0" fx:id="parent" styleClass="container">
+          AnchorPane.bottomAnchor="0.0" fx:id="parent" id="parent-control" styleClass="container">
         <VBox HBox.hgrow="ALWAYS" styleClass="card">
-            <VBox fx:id="contenedor"/>
+            <VBox HBox.hgrow="ALWAYS" fx:id="contenedorJugador" id="contenedor-jugador"/>
+        </VBox>
+        <VBox minHeight="20"/>
+        <VBox HBox.hgrow="ALWAYS" styleClass="card">
+            <VBox fx:id="contenedorComandos" id="contenedor-comandos"/>
         </VBox>
         <VBox VBox.vgrow="ALWAYS"/>
         <VBox HBox.hgrow="ALWAYS" styleClass="card">
             <VBox HBox.hgrow="ALWAYS">
-                <JFXToggleButton onAction="#indirectas" styleClass="custom-jfx-toggle"
+                <JFXToggleButton fx:id="toogleIndirectas" onAction="#indirectas" styleClass="custom-jfx-toggle"
                                  text="Mostrar fronteras indirectas" selected="true"/>
             </VBox>
             <VBox fx:id="comandos" HBox.hgrow="ALWAYS" styleClass="contenedor-comando">

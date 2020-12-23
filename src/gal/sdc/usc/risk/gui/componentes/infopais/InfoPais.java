@@ -3,17 +3,15 @@ package gal.sdc.usc.risk.gui.componentes.infopais;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXSnackbar;
-import com.jfoenix.controls.JFXSnackbarLayout;
 import com.jfoenix.controls.JFXTabPane;
-import gal.sdc.usc.risk.comandos.Ejecutor;
-import gal.sdc.usc.risk.comandos.EjecutorListener;
+import gal.sdc.usc.risk.gui.componentes.Utils;
+import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,7 +19,7 @@ import javafx.scene.layout.VBox;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InfoPais {
+public class InfoPais extends Partida {
     private static final String TAB_PAIS = "País";
     private static final String TAB_CONTINENTE = "Continente";
     private static final String TAB_JUGADOR = "Jugador";
@@ -29,7 +27,7 @@ public class InfoPais {
     private static final Integer TAB_CONTINENTE_I = 1;
     private static final Integer TAB_JUGADOR_I = 2;
 
-    public static JFXDialog dialogo(StackPane stackPane, Pais pais) {
+    public JFXDialog dialogo(StackPane stackPane, Pais pais) {
         JFXDialog dialog = new JFXDialog();
         dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         dialog.setDialogContainer(stackPane);
@@ -78,7 +76,7 @@ public class InfoPais {
         tabs.getTabs().add(TAB_CONTINENTE_I, tabContinente);
 
         if (pais.getJugador() != null) {
-            Tab tabJugador = new Tab(TAB_JUGADOR);
+            Tab tabJugador = generarJugador(pais);
             tabs.getTabs().add(TAB_JUGADOR_I, tabJugador);
         }
 
@@ -109,7 +107,7 @@ public class InfoPais {
         fila.getChildren().add(label);
         contenido.getChildren().add(fila);
 
-        contenido.getChildren().add(separadorEntrada());
+        contenido.getChildren().add(Utils.separadorEntrada());
 
         fila = new HBox();
         label = new Label("Abreviatura");
@@ -120,17 +118,17 @@ public class InfoPais {
         fila.getChildren().add(label);
         contenido.getChildren().add(fila);
 
-        contenido.getChildren().add(separadorEntrada());
+        contenido.getChildren().add(Utils.separadorEntrada());
 
         fila = new HBox();
         label = new Label("Continente");
         label.getStyleClass().add("dialogo-titulo");
         fila.getChildren().add(label);
-        label = labelColor(pais.getContinente().getNombre(), pais.getContinente().getColor().getHex());
+        label = Utils.labelColor(pais.getContinente().getNombre(), pais.getContinente().getColor().getHex());
         fila.getChildren().add(label);
         contenido.getChildren().add(fila);
 
-        contenido.getChildren().add(separadorEntrada());
+        contenido.getChildren().add(Utils.separadorEntrada());
 
         fila = new HBox();
         label = new Label("Fronteras");
@@ -147,7 +145,7 @@ public class InfoPais {
         }
         for (Pais frontera : pais.getFronteras().getTodas()) {
             if (!frontera.getContinente().equals(pais.getContinente())) {
-                label = labelColor(frontera.getNombre(), frontera.getColor().getHex());
+                label = Utils.labelColor(frontera.getNombre(), frontera.getColor().getHex());
                 // TODO: Icono para marítimas
                 paises.getChildren().add(label);
             }
@@ -155,18 +153,18 @@ public class InfoPais {
         fila.getChildren().add(paises);
         contenido.getChildren().add(fila);
 
-        contenido.getChildren().add(separadorEntrada());
+        contenido.getChildren().add(Utils.separadorEntrada());
 
         if (pais.getJugador() != null) {
             fila = new HBox();
             label = new Label("Jugador");
             label.getStyleClass().add("dialogo-titulo");
             fila.getChildren().add(label);
-            label = labelColor(pais.getJugador().getNombre(), pais.getJugador().getColor().getHex());
+            label = Utils.labelColor(pais.getJugador().getNombre(), pais.getJugador().getColor().getHex());
             fila.getChildren().add(label);
             contenido.getChildren().add(fila);
 
-            contenido.getChildren().add(separadorEntrada());
+            contenido.getChildren().add(Utils.separadorEntrada());
         }
 
         fila = new HBox();
@@ -178,7 +176,7 @@ public class InfoPais {
         fila.getChildren().add(label);
         contenido.getChildren().add(fila);
 
-        contenido.getChildren().add(separadorEntrada());
+        contenido.getChildren().add(Utils.separadorEntrada());
 
         fila = new HBox();
         label = new Label("# Ocupaciones");
@@ -205,12 +203,11 @@ public class InfoPais {
         label = new Label("Nombre");
         label.getStyleClass().add("dialogo-titulo");
         fila.getChildren().add(label);
-        label = new Label(continente.getNombre());
-        label.getStyleClass().add("dialogo-valor");
+        label = Utils.labelColor(continente.getNombre(), continente.getColor().getHex());
         fila.getChildren().add(label);
         contenido.getChildren().add(fila);
 
-        contenido.getChildren().add(separadorEntrada());
+        contenido.getChildren().add(Utils.separadorEntrada());
 
         fila = new HBox();
         label = new Label("Abreviatura");
@@ -221,7 +218,7 @@ public class InfoPais {
         fila.getChildren().add(label);
         contenido.getChildren().add(fila);
 
-        contenido.getChildren().add(separadorEntrada());
+        contenido.getChildren().add(Utils.separadorEntrada());
 
         fila = new HBox();
         label = new Label("Jugadores");
@@ -235,12 +232,12 @@ public class InfoPais {
             jugadoresEjercitos.put(pais.getJugador(), jugadoresEjercitos.get(pais.getJugador()) + pais.getEjercito().toInt());
         }
         for (Map.Entry<Jugador, Integer> jugador : jugadoresEjercitos.entrySet()) {
-            valores.getChildren().add(labelColor(jugador.getKey().getNombre() + ": " + jugador.getValue() + " ejércitos", jugador.getKey().getColor().getHex()));
+            valores.getChildren().add(Utils.labelColor(jugador.getKey().getNombre() + ": " + jugador.getValue() + " ejércitos", jugador.getKey().getColor().getHex()));
         }
         fila.getChildren().add(valores);
         if (valores.getChildren().size() > 0) {
             contenido.getChildren().add(fila);
-            contenido.getChildren().add(separadorEntrada());
+            contenido.getChildren().add(Utils.separadorEntrada());
         }
 
         fila = new HBox();
@@ -252,7 +249,7 @@ public class InfoPais {
         fila.getChildren().add(label);
         contenido.getChildren().add(fila);
 
-        contenido.getChildren().add(separadorEntrada());
+        contenido.getChildren().add(Utils.separadorEntrada());
 
         fila = new HBox();
         label = new Label("Rearme");
@@ -267,17 +264,9 @@ public class InfoPais {
         return tab;
     }
 
-    private static Label labelColor(String valor, String hex) {
-        Label label = new Label(" " + valor + " ");
-        label.setStyle(label.getStyle() + "-fx-text-fill: " + hex + ";" +
-                "-fx-border-width: 1; -fx-border-radius: 5; -fx-border-color: " + hex + ";");
-        label.getStyleClass().add("dialogo-valor");
-        return label;
-    }
-
-    private static HBox separadorEntrada() {
-        HBox sep = new HBox();
-        sep.setPrefHeight(8);
-        return sep;
+    private Tab generarJugador(Pais pais) {
+        Tab tab = new Tab(TAB_JUGADOR);
+        tab.setContent(new InfoJugador().generarJugador(pais.getJugador()));
+        return tab;
     }
 }

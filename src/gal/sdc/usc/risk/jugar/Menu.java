@@ -1,7 +1,7 @@
 package gal.sdc.usc.risk.jugar;
 
 import gal.sdc.usc.risk.comandos.Ejecutor;
-import gal.sdc.usc.risk.gui.VistaPrincipal;
+import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.util.Colores;
 import gal.sdc.usc.risk.util.Colores.Color;
 import gal.sdc.usc.risk.util.Recursos;
@@ -19,7 +19,7 @@ public class Menu extends Partida {
     }
 
     public static void jugarConGui() {
-        VistaPrincipal.crear();
+        PrincipalController.crear();
     }
 
     private Menu() {

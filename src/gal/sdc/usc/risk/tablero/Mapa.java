@@ -65,7 +65,7 @@ public class Mapa {
     }
 
     public List<Pais> getPaisesPorJugador(Jugador jugador) {
-        return this.paises.values().stream().filter(pais -> pais.getJugador().equals(jugador)).collect(Collectors.toList());
+        return this.paises.values().stream().filter(pais -> jugador.equals(pais.getJugador())).collect(Collectors.toList());
     }
 
     private void asignarFronteras() {

@@ -7,7 +7,7 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-           fx:controller="gal.sdc.usc.risk.gui.VistaPrincipal"
+           fx:controller="gal.sdc.usc.risk.gui.PrincipalController"
            maxWidth="Infinity" maxHeight="Infinity"
            fx:id="stackPane">
     <stylesheets>

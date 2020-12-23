@@ -4,14 +4,14 @@
 
 .btn-comando {
     -fx-font-size: 16;
-    -fx-font-family: Consolas;
+    -fx-font-weight: bold;
     -fx-text-fill: #fafafa;
-    -fx-background-color: #303f9f;
+    -fx-background-color: -fx-accent;
     -fx-pref-height: 40;
 }
 
 .custom-jfx-toggle {
-    -jfx-toggle-color: #303f9f;
+    -jfx-toggle-color: -fx-accent;
     -jfx-toggle-line-color: #9fa8da;
     -fx-font-size: 14;
 }

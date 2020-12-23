@@ -10,6 +10,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -31,83 +32,28 @@ public class MapaController extends Partida {
     @FXML
     private AnchorPane anchor;
 
-    private static boolean fronteras = true;
-
     public MapaController() {
     }
 
     @FXML
     private void initialize() {
         anchor.getStylesheets().add(MapaController.class.getResource("mapa.css").toExternalForm());
-        /* Ejecutor.comando("crear mapa", new EjecutorListener() {
-            @Override
-            public void onComandoEjecutado() {
-                actualizar();
-            }
-        }); */
     }
 
-    public void actualizar(Scene scene) {
-        HashMap<Celda, Pais> paises = super.getMapa().getPaisesPorCeldas();
-        for (int i = 0; i < MAX_PAISES_Y; i++) {
-            for (int j = 0; j < MAX_PAISES_X; j++) {
-                Celda celda = new Celda.Builder().withX(j).withY(i).build();
-
-                Pais norte = paises.get(new Celda.Builder().withX(j).withY(i - 1).build());
-                Pais sur = paises.get(new Celda.Builder().withX(j).withY(i + 1).build());
-                Pais este = paises.get(new Celda.Builder().withX(j - 1).withY(i).build());
-                Pais oeste = paises.get(new Celda.Builder().withX(j + 1).withY(i).build());
-                Pais sombra = paises.get(new Celda.Builder().withX(j + 1).withY(i + 1).build());
-
-                JFXButton button = (JFXButton) scene.lookup("#" + i + "-" + j);
-                button.setDisable(true);
-                if (paises.containsKey(celda)) {
-                    button.setDisable(false);
-                    Pais pais = paises.get(celda);
-                    if (pais.getJugador() != null) {
-                        button.setStyle(button.getStyle() + "-fx-background-color: linear-gradient("
-                                + "from 0px .75em to .75em 0px, repeat,"
-                                + pais.getJugador().getColor().getHex() + " 0%,"
-                                + pais.getJugador().getColor().getHex() + " 49%,"
-                                + "derive(" + pais.getJugador().getColor().getHex() + ", 30%) 50%,"
-                                + "derive(" + pais.getJugador().getColor().getHex() + ", 30%) 99%"
-                                + ");");
-                    } else {
-                        button.setStyle(button.getStyle() + "-fx-background-color: #fafafa;");
-                    }
-
-                    String bordes = bordes(norte != null, sur != null, este != null, oeste != null);
-                    String bordesContinente = fronterasContinente(norte == null || !norte.getContinente().equals(pais.getContinente()),
-                            sur == null || !sur.getContinente().equals(pais.getContinente()),
-                            este == null || !este.getContinente().equals(pais.getContinente()),
-                            oeste == null || !oeste.getContinente().equals(pais.getContinente()));
-                    button.setStyle(button.getStyle()
-                            + "-fx-border-radius: " + bordes.replace("5", "3") + ";"
-                            + "-fx-background-radius: " + bordes + ";"
-                            + "-fx-border-color: " + pais.getColor().getHex() + ";"
-                            + "-fx-border-width: " + bordesContinente + ";");
-
-                    if (sur == null || oeste == null || sombra == null) {
-                        button.getStyleClass().add("pais-sombra");
-                    }
-
-                    button.getStyleClass().add("pais");
-                    button.setText(pais.getAbreviatura());
-
-                    button.setOnAction(action -> {
-                        Parent parent = button;
-                        while (parent.getParent() != null) parent = parent.getParent();
-                        assert parent instanceof StackPane;
-                        InfoPais.dialogo((StackPane) parent, pais).show();
-                    });
-                }
+    public void actualizarFronteras(Scene scene, boolean mostrar) {
+        Pane mapaContainer = (Pane) scene.lookup("#pane-mapa");
+        for (Node node: mapaContainer.getChildren()) {
+            if (node instanceof Line) {
+                node.setVisible(mostrar);
             }
         }
+    }
 
+    public void actualizarFronteras(Scene scene) {
         Pane mapaContainer = (Pane) scene.lookup("#pane-mapa");
         mapaContainer.getChildren().removeIf(node -> node instanceof Line);
 
-        if (super.getMapa() == null || !fronteras) return;
+        if (super.getMapa() == null) return;
 
         for (EnlacesMaritimos enlace : EnlacesMaritimos.values()) {
             Pais pais1 = super.getMapa().getPaisPorNombre(enlace.getPais1().getNombre());
@@ -116,7 +62,6 @@ public class MapaController extends Partida {
             JFXButton button2 = (JFXButton) scene.lookup("#" + pais2.getCelda().getY() + "-" + pais2.getCelda().getX());
 
             Line linea = new Line();
-
             linea.setStrokeWidth(4);
             linea.setFill(new Color(.0, .0, .0, .0));
             linea.setStroke(new Color(13. / 255., 71. / 255., 161. / 255., .6));
@@ -184,8 +129,64 @@ public class MapaController extends Partida {
         }
     }
 
-    public void cambiarFronteras() {
-        MapaController.fronteras = !MapaController.fronteras;
+    public void actualizar(Scene scene) {
+        HashMap<Celda, Pais> paises = super.getMapa().getPaisesPorCeldas();
+        for (int i = 0; i < MAX_PAISES_Y; i++) {
+            for (int j = 0; j < MAX_PAISES_X; j++) {
+                Celda celda = new Celda.Builder().withX(j).withY(i).build();
+
+                Pais norte = paises.get(new Celda.Builder().withX(j).withY(i - 1).build());
+                Pais sur = paises.get(new Celda.Builder().withX(j).withY(i + 1).build());
+                Pais este = paises.get(new Celda.Builder().withX(j - 1).withY(i).build());
+                Pais oeste = paises.get(new Celda.Builder().withX(j + 1).withY(i).build());
+                Pais sombra = paises.get(new Celda.Builder().withX(j + 1).withY(i + 1).build());
+
+                JFXButton button = (JFXButton) scene.lookup("#" + i + "-" + j);
+                button.setDisable(true);
+                if (paises.containsKey(celda)) {
+                    button.setDisable(false);
+                    Pais pais = paises.get(celda);
+                    if (pais.getJugador() != null) {
+                        button.setStyle(button.getStyle() + "-fx-background-color: linear-gradient("
+                                + "from 0px .75em to .75em 0px, repeat,"
+                                + pais.getJugador().getColor().getHex() + " 0%,"
+                                + pais.getJugador().getColor().getHex() + " 49%,"
+                                + "derive(" + pais.getJugador().getColor().getHex() + ", 30%) 50%,"
+                                + "derive(" + pais.getJugador().getColor().getHex() + ", 30%) 99%"
+                                + ");");
+                    } else {
+                        button.setStyle(button.getStyle() + "-fx-background-color: #fafafa;");
+                    }
+
+                    String bordes = bordes(norte != null, sur != null, este != null, oeste != null);
+                    String bordesContinente = fronterasContinente(norte == null || !norte.getContinente().equals(pais.getContinente()),
+                            sur == null || !sur.getContinente().equals(pais.getContinente()),
+                            este == null || !este.getContinente().equals(pais.getContinente()),
+                            oeste == null || !oeste.getContinente().equals(pais.getContinente()));
+                    button.setStyle(button.getStyle()
+                            + "-fx-border-radius: " + bordes.replace("5", "3") + ";"
+                            + "-fx-background-radius: " + bordes + ";"
+                            + "-fx-border-color: " + pais.getColor().getHex() + ";"
+                            + "-fx-border-width: " + bordesContinente + ";");
+
+                    if (sur == null || oeste == null || sombra == null) {
+                        button.getStyleClass().add("pais-sombra");
+                    }
+
+                    button.getStyleClass().add("pais");
+                    button.setText(pais.getAbreviatura());
+
+                    button.setOnAction(action -> {
+                        Parent parent = button;
+                        while (parent.getParent() != null) parent = parent.getParent();
+                        assert parent instanceof StackPane;
+                        new InfoPais().dialogo((StackPane) parent, pais).show();
+                    });
+                }
+            }
+        }
+
+        this.actualizarFronteras(scene);
     }
 
     private String bordes(boolean norte, boolean sur, boolean este, boolean oeste) {
@@ -211,13 +212,13 @@ public class MapaController extends Partida {
     private String fronterasContinente(boolean norte, boolean sur, boolean este, boolean oeste) {
         StringBuilder out = new StringBuilder();
 
-        if (norte) out.append("5 ");
+        if (norte) out.append("8 ");
         else out.append("0 ");
-        if (oeste) out.append("5 ");
+        if (oeste) out.append("8 ");
         else out.append("0 ");
-        if (sur) out.append("5 ");
+        if (sur) out.append("8 ");
         else out.append("0 ");
-        if (este) out.append("5 ");
+        if (este) out.append("8 ");
         else out.append("0 ");
 
         return out.toString();

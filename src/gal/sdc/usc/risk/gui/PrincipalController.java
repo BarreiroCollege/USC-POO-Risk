@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class VistaPrincipal extends Application {
+public class PrincipalController extends Application {
     @FXML
     public StackPane stackPane;
     @FXML
@@ -30,7 +30,7 @@ public class VistaPrincipal extends Application {
     @FXML
     public VBox controlesHorizontal;
 
-    public VistaPrincipal() {
+    public PrincipalController() {
     }
 
     public static void crear() {
@@ -39,22 +39,24 @@ public class VistaPrincipal extends Application {
 
     @FXML
     public void initialize() {
-        BooleanBinding pequeno = contenedor.widthProperty().lessThan(900);
+        BooleanBinding pequeno = contenedor.widthProperty().lessThan(990);
 
         contenedor.widthProperty().addListener(((observable, oldValue, newValue) -> {
             FXMLLoader loader = new FXMLLoader();
 
             try {
-                if (newValue.doubleValue() >= 900 && oldValue.doubleValue() < 900) {
+                if (newValue.doubleValue() >= 990 && oldValue.doubleValue() < 990) {
                     controlesVertical.setVisible(true);
                     controlesHorizontal.setVisible(false);
                     loader.load(ControlesController.class.getResource("vertical.fxml").openStream());
-                    ((ControlesController) loader.getController()).actualizar();
-                } else if (newValue.doubleValue() < 900 && oldValue.doubleValue() >= 900) {
+                    ((ControlesController) loader.getController()).actualizarComandos(contenedor.getScene());
+                    ((ControlesController) loader.getController()).actualizarJugador(contenedor.getScene());
+                } else if (newValue.doubleValue() < 990 && oldValue.doubleValue() >= 990) {
                     controlesVertical.setVisible(false);
                     controlesHorizontal.setVisible(true);
                     loader.load(ControlesController.class.getResource("horizontal.fxml").openStream());
-                    ((ControlesController) loader.getController()).actualizar();
+                    ((ControlesController) loader.getController()).actualizarComandos(contenedor.getScene());
+                    ((ControlesController) loader.getController()).actualizarJugador(contenedor.getScene());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -106,11 +108,11 @@ public class VistaPrincipal extends Application {
     public void start(Stage stage) throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("principal.fxml"));
-        Scene scene = new Scene(root, 720, 480);
+        Scene scene = new Scene(root, 720, 600);
 
         stage.setMaximized(true);
         stage.setMinWidth(720);
-        stage.setMinHeight(360);
+        stage.setMinHeight(600);
         stage.setTitle("RISK");
         stage.setScene(scene);
         stage.show();
