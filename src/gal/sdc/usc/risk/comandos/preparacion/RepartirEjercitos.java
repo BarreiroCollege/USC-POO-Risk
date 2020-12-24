@@ -5,13 +5,13 @@ import gal.sdc.usc.risk.comandos.Comandos;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
+import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.salida.Resultado;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.Continentes;
-import gal.sdc.usc.risk.excepciones.Errores;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +59,11 @@ public class RepartirEjercitos extends Partida implements IComando {
         if (super.isJugando()) {
             super.getComandos().atacar();
         } else {
-            super.iniciar();
+            super.getComandos().deshabilitarRepartirEjercitosAuto();
+            if (super.getJugadorTurno().getEjercitosPendientes().toInt() == 0) {
+                super.getComandos().deshabilitarRepartirEjercitos();
+                super.getComandos().habilitarAcabarTurno();
+            }
         }
     }
 
@@ -179,7 +183,7 @@ public class RepartirEjercitos extends Partida implements IComando {
             for (Jugador jugador : jugadores) {
                 numEjercitos = Math.toIntExact(Math.round(jugador.getEjercitosPendientes().toInt() / (factor * continente.getPaisesPorJugador(jugador).size())));
                 for (Pais pais : continente.getPaisesPorJugador(jugador)) {
-                    pais.getEjercito().recibir(jugador.getEjercitosPendientes(), numEjercitos, true);
+                    RepartirEjercitos.repartir(pais, super.getJugadorTurno(), numEjercitos);
                 }
             }
         }
@@ -191,7 +195,7 @@ public class RepartirEjercitos extends Partida implements IComando {
             for (Jugador jugador : jugadores) {
                 numEjercitos = Math.toIntExact(Math.round(jugador.getEjercitosPendientes().toInt() / (2.0 * continente.getPaisesPorJugador(jugador).size())));
                 for (Pais pais : continente.getPaisesPorJugador(jugador)) {
-                    pais.getEjercito().recibir(jugador.getEjercitosPendientes(), numEjercitos, true);
+                    RepartirEjercitos.repartir(pais, super.getJugadorTurno(), numEjercitos);
                 }
             }
         }
@@ -215,7 +219,7 @@ public class RepartirEjercitos extends Partida implements IComando {
         for (Jugador jugador : this.jugadoresR7) {
             for (Pais pais : jugador.getPaises()) {
                 numEjercitos = Math.toIntExact(Math.round(jugador.getEjercitosPendientes().toInt() / (factor * pais.getContinente().getPaisesPorJugador(jugador).size())));
-                pais.getEjercito().recibir(jugador.getEjercitosPendientes(), numEjercitos, true);
+                RepartirEjercitos.repartir(pais, super.getJugadorTurno(), numEjercitos);
             }
         }
     }
@@ -229,7 +233,7 @@ public class RepartirEjercitos extends Partida implements IComando {
                         break;
                     }
                     if (pais.getEjercito().toInt() == 1) {
-                        pais.getEjercito().recibir(jugador.getEjercitosPendientes(), 1, true);
+                        RepartirEjercitos.repartir(pais, super.getJugadorTurno(), 1);
                     }
                 }
             }
@@ -242,7 +246,7 @@ public class RepartirEjercitos extends Partida implements IComando {
                         break;
                     }
                     if (pais.getEjercito().toInt() == 1) {
-                        pais.getEjercito().recibir(jugador.getEjercitosPendientes(), 1, true);
+                        RepartirEjercitos.repartir(pais, super.getJugadorTurno(), 1);
                     }
                 }
             }
@@ -254,9 +258,15 @@ public class RepartirEjercitos extends Partida implements IComando {
                     break;
                 }
                 if (pais.getEjercito().toInt() == 1) {
-                    pais.getEjercito().recibir(jugador.getEjercitosPendientes(), 1, true);
+                    RepartirEjercitos.repartir(pais, super.getJugadorTurno(), 1);
                 }
             }
+        }
+    }
+
+    private static void repartir(Pais pais, Jugador turno, int num) {
+        if (turno.equals(pais.getJugador())) {
+            pais.getEjercito().recibir(pais.getJugador().getEjercitosPendientes(), num, true);
         }
     }
 

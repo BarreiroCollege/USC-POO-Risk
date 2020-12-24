@@ -1,7 +1,14 @@
 package gal.sdc.usc.risk.gui.componentes.mapa;
 
 import com.jfoenix.controls.JFXButton;
-import gal.sdc.usc.risk.gui.componentes.infopais.InfoPais;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXTabPane;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import gal.sdc.usc.risk.gui.componentes.info.InfoContinente;
+import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
+import gal.sdc.usc.risk.gui.componentes.info.InfoPais;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -10,15 +17,21 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 
 import java.util.HashMap;
@@ -27,6 +40,10 @@ import static gal.sdc.usc.risk.tablero.Mapa.MAX_PAISES_X;
 import static gal.sdc.usc.risk.tablero.Mapa.MAX_PAISES_Y;
 
 public class MapaController extends Partida {
+    private final Integer TAB_PAIS = 0;
+    private final Integer TAB_CONTINENTE = 1;
+    private final Integer TAB_JUGADOR = 2;
+
     @FXML
     public VBox contenedor;
     @FXML
@@ -169,24 +186,129 @@ public class MapaController extends Partida {
                             + "-fx-border-color: " + pais.getColor().getHex() + ";"
                             + "-fx-border-width: " + bordesContinente + ";");
 
+                    ContextMenu contextMenu = new ContextMenu();
+                    contextMenu.getItems().add(new MenuItem("Probando"));
+                    button.setContextMenu(contextMenu);
+
                     if (sur == null || oeste == null || sombra == null) {
                         button.getStyleClass().add("pais-sombra");
                     }
 
                     button.getStyleClass().add("pais");
-                    button.setText(pais.getAbreviatura());
+                    button.setText(null);
 
-                    button.setOnAction(action -> {
-                        Parent parent = button;
-                        while (parent.getParent() != null) parent = parent.getParent();
-                        assert parent instanceof StackPane;
-                        new InfoPais().dialogo((StackPane) parent, pais).show();
-                    });
+                    Parent parent = button;
+                    while (parent.getParent() != null) parent = parent.getParent();
+                    assert parent instanceof StackPane;
+                    StackPane finalParent = (StackPane) parent;
+
+                    button.setGraphic(this.contenidoBoton(pais));
+                    button.setContextMenu(this.menuPais(finalParent, pais));
+                    button.setOnAction(action -> this.generarDialogo(finalParent, pais).show());
                 }
             }
         }
 
         this.actualizarFronteras(scene);
+    }
+
+    private VBox contenidoBoton(Pais pais) {
+        VBox contenedor = new VBox();
+        HBox.setHgrow(contenedor, Priority.ALWAYS);
+        contenedor.setAlignment(Pos.CENTER);
+
+        Label lblPais = new Label(pais.getAbreviatura());
+        lblPais.getStyleClass().add("btn-pais-pais");
+        lblPais.setWrapText(true);
+        HBox.setHgrow(lblPais, Priority.ALWAYS);
+        contenedor.getChildren().add(lblPais);
+
+        if (pais.getJugador() != null) {
+            VBox spacer = new VBox();
+            spacer.setPrefHeight(15);
+            contenedor.getChildren().add(spacer);
+
+            HBox contJugador = new HBox();
+            HBox.setHgrow(contJugador, Priority.ALWAYS);
+            contJugador.setAlignment(Pos.CENTER);
+
+            FontAwesomeIconView fontAwesomeIconView = new FontAwesomeIconView(FontAwesomeIcon.USERS);
+            fontAwesomeIconView.setSize("16px");
+            contJugador.getChildren().add(fontAwesomeIconView);
+
+            Label lblJugador = new Label(" x" + pais.getEjercito().toInt());
+            lblJugador.getStyleClass().add("btn-pais-jugador");
+            contJugador.getChildren().add(lblJugador);
+
+            contenedor.getChildren().add(contJugador);
+        }
+
+        return contenedor;
+    }
+
+    private ContextMenu menuPais(StackPane parent, Pais pais) {
+        ContextMenu context = new ContextMenu();
+
+        MenuItem verPais = new MenuItem("Ver País");
+        verPais.setOnAction(action -> this.generarDialogo(parent, pais, TAB_PAIS).show());
+        context.getItems().add(verPais);
+
+        MenuItem verContinente = new MenuItem("Ver Continente");
+        verContinente.setOnAction(action -> this.generarDialogo(parent, pais, TAB_CONTINENTE).show());
+        context.getItems().add(verContinente);
+
+        if (pais.getJugador() != null) {
+            MenuItem verJugador = new MenuItem("Ver Jugador");
+            verJugador.setOnAction(action -> this.generarDialogo(parent, pais, TAB_JUGADOR).show());
+            context.getItems().add(verJugador);
+        }
+
+        return context;
+    }
+
+    private JFXDialog generarDialogo(StackPane stackPane, Pais pais) {
+        return this.generarDialogo(stackPane, pais, null);
+    }
+
+    private JFXDialog generarDialogo(StackPane stackPane, Pais pais, Integer seleccionado) {
+        JFXDialog dialog = new JFXDialog();
+        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        dialog.setDialogContainer(stackPane);
+
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Label(pais.getNombre()));
+
+        JFXTabPane tabs = new JFXTabPane();
+
+        Tab tabPais = new Tab();
+        tabPais.setText("País");
+        tabPais.setContent(InfoPais.generarDialogo(pais));
+        tabs.getTabs().add(TAB_PAIS, tabPais);
+
+        Tab tabContinente = new Tab();
+        tabContinente.setText("Continente");
+        tabContinente.setContent(InfoContinente.generarContinente(pais.getContinente()));
+        tabs.getTabs().add(TAB_CONTINENTE, tabContinente);
+
+        if (pais.getJugador() != null) {
+            Tab tabJugador = new Tab();
+            tabJugador.setText("Jugador");
+            tabJugador.setContent(InfoJugador.generarJugador(pais));
+            tabs.getTabs().add(TAB_JUGADOR, tabJugador);
+        }
+
+        if (seleccionado != null) {
+            tabs.getSelectionModel().select(seleccionado);
+        }
+
+        content.setBody(tabs);
+
+        JFXButton cerrar = new JFXButton("Cerrar");
+        cerrar.setOnAction(event -> dialog.close());
+        content.setActions(cerrar);
+
+        dialog.setContent(content);
+        return dialog;
     }
 
     private String bordes(boolean norte, boolean sur, boolean este, boolean oeste) {
@@ -212,13 +334,13 @@ public class MapaController extends Partida {
     private String fronterasContinente(boolean norte, boolean sur, boolean este, boolean oeste) {
         StringBuilder out = new StringBuilder();
 
-        if (norte) out.append("8 ");
+        if (norte) out.append("6 ");
         else out.append("0 ");
-        if (oeste) out.append("8 ");
+        if (oeste) out.append("6 ");
         else out.append("0 ");
-        if (sur) out.append("8 ");
+        if (sur) out.append("6 ");
         else out.append("0 ");
-        if (este) out.append("8 ");
+        if (este) out.append("6 ");
         else out.append("0 ");
 
         return out.toString();

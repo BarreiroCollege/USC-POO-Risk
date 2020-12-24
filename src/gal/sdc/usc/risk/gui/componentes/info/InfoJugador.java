@@ -1,4 +1,4 @@
-package gal.sdc.usc.risk.gui.componentes.infopais;
+package gal.sdc.usc.risk.gui.componentes.info;
 
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.jugar.Partida;
@@ -13,8 +13,23 @@ import javafx.scene.layout.VBox;
 public class InfoJugador extends Partida {
     private Jugador jugador;
 
-    public VBox generarJugador(Jugador jugador) {
-        return this.generarJugador(jugador, null);
+    public static VBox generarJugadorCorto(Jugador jugador) {
+        return new InfoJugador().generar(jugador);
+    }
+
+    public static VBox generarJugador(Pais pais) {
+        return generarJugador(pais.getJugador(), pais);
+    }
+
+    public static VBox generarJugador(Jugador jugador) {
+        return generarJugador(jugador, null);
+    }
+
+    public static VBox generarJugador(Jugador jugador, Pais pais) {
+        return new InfoJugador().generar(jugador, pais);
+    }
+
+    private InfoJugador() {
     }
 
     private HBox nombre() {
@@ -50,7 +65,7 @@ public class InfoJugador extends Partida {
         label = new Label("# Ejércitos");
         label.getStyleClass().add("dialogo-titulo");
         fila.getChildren().add(label);
-        label = new Label("" + jugador.getNumEjercitos() + " ejércitos en total");
+        label = new Label("" + jugador.getNumEjercitos() + " ejército" + (jugador.getNumEjercitos() != 1 ? "s" : "") + " en total");
         label.getStyleClass().add("dialogo-valor");
         fila.getChildren().add(label);
         return fila;
@@ -82,13 +97,13 @@ public class InfoJugador extends Partida {
         label = new Label("Rearme");
         label.getStyleClass().add("dialogo-titulo");
         fila.getChildren().add(label);
-        label = new Label("" + jugador.getEjercitosPendientes().toInt() + " ejércitos pendientes de asignar");
+        label = new Label("" + jugador.getEjercitosPendientes().toInt() + " ejército" + (jugador.getEjercitosPendientes().toInt() != 1 ? "s" : "") + " pendientes de asignar");
         label.getStyleClass().add("dialogo-valor");
         fila.getChildren().add(label);
         return fila;
     }
 
-    public VBox generarJugadorCorto(Jugador jugador) {
+    private VBox generar(Jugador jugador) {
         this.jugador = jugador;
 
         VBox contenido = new VBox();
@@ -112,7 +127,7 @@ public class InfoJugador extends Partida {
         return contenido;
     }
 
-    public VBox generarJugador(Jugador jugador, Pais pais) {
+    private VBox generar(Jugador jugador, Pais pais) {
         this.jugador = jugador;
 
         VBox contenido = new VBox();
@@ -180,8 +195,6 @@ public class InfoJugador extends Partida {
             contenido.getChildren().add(fila);
             contenido.getChildren().add(Utils.separadorEntrada());
         }
-
-        contenido.getChildren().add(Utils.separadorEntrada());
 
         if (this.cartas() != null) {
             contenido.getChildren().add(this.cartas());

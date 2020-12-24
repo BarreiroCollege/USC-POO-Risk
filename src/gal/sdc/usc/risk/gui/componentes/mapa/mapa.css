@@ -8,3 +8,13 @@
     -fx-border-width: 10 10 10 10;
     -fx-border-radius: 10;
 }
+
+.btn-pais-pais {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+.btn-pais-pais {
+    -fx-font-size: 14;
+}

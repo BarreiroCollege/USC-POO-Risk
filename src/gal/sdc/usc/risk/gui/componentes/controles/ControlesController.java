@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.validation.RegexValidator;
@@ -11,16 +12,22 @@ import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.comandos.IComando;
+import gal.sdc.usc.risk.comandos.partida.AcabarTurno;
+import gal.sdc.usc.risk.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
-import gal.sdc.usc.risk.gui.componentes.infopais.InfoJugador;
+import gal.sdc.usc.risk.gui.componentes.info.InfoContinente;
+import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
+import gal.sdc.usc.risk.gui.componentes.info.InfoPais;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.tablero.Jugador;
+import gal.sdc.usc.risk.tablero.Pais;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -74,7 +81,7 @@ public class ControlesController extends Partida {
         VBox jugadores = (VBox) scene.lookup("#contenedor-jugador");
         jugadores.getChildren().clear();
 
-        if (super.getJugadores().size() > 0) {
+        if (super.isJugando() || super.getComandos().getLista().contains(AcabarTurno.class)) {
             VBox contenedor = new VBox();
             contenedor.setFillWidth(true);
             contenedor.setPrefWidth(Double.MAX_VALUE);
@@ -89,15 +96,38 @@ public class ControlesController extends Partida {
                     + "-fx-font-weight: bold; "
                     + "-fx-font-size: 14; "
                     + "-fx-min-height: 20;");
-            button.setOnAction((event -> {
-                // TODO
-            }));
+
+            Parent parent = jugadores;
+            while (parent.getParent() != null) parent = parent.getParent();
+            assert parent instanceof StackPane;
+            StackPane finalParent = (StackPane) parent;
+            button.setOnAction((event -> this.generarDialogo(finalParent).show()));
+
             contenedor.getChildren().add(button);
-            contenedor.getChildren().add(new InfoJugador().generarJugadorCorto(super.getJugadorTurno()));
+            contenedor.getChildren().add(InfoJugador.generarJugadorCorto(super.getJugadorTurno()));
             jugadores.getChildren().add(contenedor);
         } else {
+            if (super.getComandos().getLista().contains(CrearMapa.class)) {
+            }
             jugadores.getChildren().add(new Label("Sin Jugadores"));
         }
+    }
+
+    private JFXDialog generarDialogo(StackPane stackPane) {
+        JFXDialog dialog = new JFXDialog();
+        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        dialog.setDialogContainer(stackPane);
+
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Label(super.getJugadorTurno().getNombre()));
+        content.setBody(InfoJugador.generarJugador(super.getJugadorTurno()));
+
+        JFXButton cerrar = new JFXButton("Cerrar");
+        cerrar.setOnAction(event -> dialog.close());
+        content.setActions(cerrar);
+
+        dialog.setContent(content);
+        return dialog;
     }
 
     @FXML

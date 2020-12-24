@@ -1,3 +1,5 @@
 Manifest-Version: 1.0
 Main-Class: gal.sdc.usc.risk.RiskGUI
-Class-Path: lib/jfoenix-8.0.10.jar lib/jfxrt.jar
+Class-Path: lib/jfxrt.jar lib/jfoenix-8.0.10.jar lib/fontawesomefx-8.9.j
+ ar
+

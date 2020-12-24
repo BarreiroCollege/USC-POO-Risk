@@ -14,6 +14,7 @@ import gal.sdc.usc.risk.util.Colores;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -23,7 +24,7 @@ public abstract class Partida {
     private static final Consola consola = new ConsolaNormal();
 
     private static final Queue<Jugador> ordenJugadores = new LinkedList<>();
-    private static final HashMap<String, Jugador> jugadores = new HashMap<>();
+    private static final HashMap<String, Jugador> jugadores = new LinkedHashMap<>();
     private static final List<Carta> cartasMonton = new ArrayList<>();
     private static Mapa mapa;
     private static boolean haConquistadoPais = false;
@@ -114,7 +115,7 @@ public abstract class Partida {
         }
 
         this.getComandos().iniciarPartida(this.getJugadorTurno());
-        // this.comprobacionesTurno();
+        this.comprobacionesTurno();
         return true;
     }
 

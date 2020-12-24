@@ -39,7 +39,7 @@ public class PrincipalController extends Application {
 
     @FXML
     public void initialize() {
-        BooleanBinding pequeno = contenedor.widthProperty().lessThan(990);
+        BooleanBinding pequeno = contenedor.widthProperty().lessThan(1000);
 
         contenedor.widthProperty().addListener(((observable, oldValue, newValue) -> {
             FXMLLoader loader = new FXMLLoader();
@@ -108,11 +108,11 @@ public class PrincipalController extends Application {
     public void start(Stage stage) throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("principal.fxml"));
-        Scene scene = new Scene(root, 720, 600);
+        Scene scene = new Scene(root, 810, 720);
 
         stage.setMaximized(true);
-        stage.setMinWidth(720);
-        stage.setMinHeight(600);
+        stage.setMinWidth(810);
+        stage.setMinHeight(720);
         stage.setTitle("RISK");
         stage.setScene(scene);
         stage.show();

@@ -13,6 +13,8 @@ import gal.sdc.usc.risk.tablero.valores.Continentes;
 import gal.sdc.usc.risk.tablero.valores.Misiones;
 import gal.sdc.usc.risk.util.Colores;
 
+import java.util.Map;
+
 @Comando(estado = Estado.JUGANDO, comando = Comandos.ACABAR_TURNO)
 public class AcabarTurno extends Partida implements IComando {
     @Override
@@ -23,9 +25,22 @@ public class AcabarTurno extends Partida implements IComando {
             return;
         }
 
+        boolean finPrimeraRonda = true;
+        for (Map.Entry<String, Jugador> stringJugadorEntry : super.getJugadores().entrySet()) {
+            if (stringJugadorEntry.getValue().getEjercitosPendientes().toInt() != 0) {
+                finPrimeraRonda = false;
+            }
+        }
+        if (finPrimeraRonda) {
+            super.iniciar();
+        }
+
         super.moverTurno();
         if (super.isJugando()) {
             super.getComandos().iniciarTurno(super.getJugadorTurno());
+        } else {
+            super.getComandos().habilitarRepartirEjercitos();
+            super.getComandos().deshabilitarAcabarTurno();
         }
 
         SalidaObjeto salida = new SalidaObjeto();

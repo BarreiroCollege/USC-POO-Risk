@@ -80,6 +80,10 @@ public class ComandosDisponibles {
         add(AcabarTurno.class);
     }
 
+    public void deshabilitarAcabarTurno() {
+        remove(AcabarTurno.class);
+    }
+
     public void acabarPreparacion() {
         remove(CrearMapa.class);
         remove(CrearJugador.class);
@@ -121,7 +125,7 @@ public class ComandosDisponibles {
             add(AtacarPaisDados.class);
         } else {
             add(RepartirEjercito.class);
-            // add(RepartirEjercitos.class);
+            add(RepartirEjercitos.class);
         }
     }
 
@@ -129,7 +133,7 @@ public class ComandosDisponibles {
         remove(CambiarCartas.class);
         remove(CambiarCartasTodas.class);
         remove(RepartirEjercito.class);
-        // remove(RepartirEjercitos.class);
+        remove(RepartirEjercitos.class);
         remove(AtacarPais.class);
         remove(AtacarPaisDados.class);
         remove(Rearmar.class);
@@ -179,7 +183,14 @@ public class ComandosDisponibles {
         this.deshabilitarAsignarPaises();
         add(RepartirEjercito.class);
         add(RepartirEjercitos.class);
-        add(AcabarTurno.class);
+    }
+
+    public void deshabilitarRepartirEjercitosAuto() {
+        remove(RepartirEjercitos.class);
+    }
+
+    public void deshabilitarRepartirEjercitos() {
+        remove(RepartirEjercito.class);
     }
 
     /* --- */

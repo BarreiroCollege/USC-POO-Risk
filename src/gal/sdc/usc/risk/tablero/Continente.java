@@ -73,7 +73,7 @@ public class Continente extends Partida {
         for (Pais pais : this.getPaises().values()) {
             if (jugador == null) {
                 jugador = pais.getJugador();
-            } else if (!pais.getJugador().equals(jugador)) {
+            } else if (!jugador.equals(pais.getJugador())) {
                 return null;
             }
         }
