@@ -98,6 +98,13 @@ public class NuevoEjercitoAsignado extends Partida {
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
+
+            int ejercitos = Integer.parseInt(numEjercitos.getText());
+            if (ejercitos > super.getJugadorTurno().getEjercitosPendientes().toInt()) {
+                ejercitos = super.getJugadorTurno().getEjercitosPendientes().toInt();
+            }
+            int finalEjercitos = ejercitos;
+
             Ejecutor.comando(
                     "repartir ejercito "
                             + numEjercitos.getText() + " "
@@ -116,8 +123,8 @@ public class NuevoEjercitoAsignado extends Partida {
                             Utils.actualizar(contenedor.getScene());
                             dialog.close();
 
-                            PrincipalController.mensaje("Repartidos " + numEjercitos.getText() + " ejército"
-                                    + (Integer.parseInt(numEjercitos.getText()) == 1 ? "" : "s") + " a "
+                            PrincipalController.mensaje("Repartidos " + finalEjercitos + " ejército"
+                                    + (finalEjercitos == 1 ? "" : "s") + " a "
                                     + pais.getNombre());
                         }
                     });
