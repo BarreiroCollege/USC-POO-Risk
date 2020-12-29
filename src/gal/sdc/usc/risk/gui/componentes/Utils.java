@@ -1,7 +1,13 @@
 package gal.sdc.usc.risk.gui.componentes;
 
+import gal.sdc.usc.risk.gui.componentes.controles.ControlesController;
+import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+
+import java.io.IOException;
 
 public class Utils {
     public static Label labelColor(String valor, String hex) {
@@ -18,5 +24,24 @@ public class Utils {
         HBox sep = new HBox();
         sep.setPrefHeight(8);
         return sep;
+    }
+
+    public static void actualizar(Scene scene) {
+        FXMLLoader loader = new FXMLLoader();
+        try {
+            loader.load(MapaController.class.getResource("mapa.fxml").openStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ((MapaController) loader.getController()).actualizar(scene);
+
+        loader = new FXMLLoader();
+        try {
+            loader.load(ControlesController.class.getResource("vertical.fxml").openStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ((ControlesController) loader.getController()).actualizarJugador(scene);
+        ((ControlesController) loader.getController()).actualizarComandos(scene);
     }
 }

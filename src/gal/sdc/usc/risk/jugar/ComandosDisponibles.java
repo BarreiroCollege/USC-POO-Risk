@@ -28,6 +28,7 @@ import gal.sdc.usc.risk.comandos.preparacion.CrearJugadores;
 import gal.sdc.usc.risk.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercito;
 import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercitos;
+import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.tablero.Mapa;
 
 import java.util.ArrayList;
@@ -172,11 +173,13 @@ public class ComandosDisponibles {
         this.deshabilitarAsignarMisiones();
         add(AsignarPais.class);
         add(AsignarPaises.class);
+        MapaController.setSeleccionar(true);
     }
 
     public void deshabilitarAsignarPaises() {
         remove(AsignarPais.class);
         remove(AsignarPaises.class);
+        MapaController.setSeleccionar(false);
     }
 
     public void habilitarRepartirEjercitos() {

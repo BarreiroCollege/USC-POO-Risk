@@ -9,6 +9,7 @@ import gal.sdc.usc.risk.tablero.Ejercito;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Pais;
+import gal.sdc.usc.risk.tablero.valores.Misiones;
 import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 import gal.sdc.usc.risk.util.Colores;
 
@@ -76,6 +77,16 @@ public abstract class Partida {
         HashMap<Colores.Color, Jugador> jugadores = new HashMap<>();
         for (Jugador jugador : Partida.jugadores.values()) {
             jugadores.put(jugador.getColor(), jugador);
+        }
+        return jugadores;
+    }
+
+    protected HashMap<Misiones, Jugador> getJugadoresPorMision() {
+        HashMap<Misiones, Jugador> jugadores = new HashMap<>();
+        for (Jugador jugador : Partida.jugadores.values()) {
+            if (jugador.getMision() != null) {
+                jugadores.put(jugador.getMision().getIdentificador(), jugador);
+            }
         }
         return jugadores;
     }

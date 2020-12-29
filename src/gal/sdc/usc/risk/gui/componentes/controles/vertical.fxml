@@ -9,7 +9,7 @@
             fx:controller="gal.sdc.usc.risk.gui.componentes.controles.ControlesController"
             maxWidth="Infinity" maxHeight="Infinity" minWidth="0" minHeight="0" fx:id="anchor">
     <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-          AnchorPane.bottomAnchor="0.0" fx:id="parent" id="parent-control" styleClass="container">
+          AnchorPane.bottomAnchor="0.0" fx:id="parent" id="parent-control" styleClass="ctrl-container">
         <VBox HBox.hgrow="ALWAYS" styleClass="card">
             <VBox HBox.hgrow="ALWAYS" fx:id="contenedorJugador" id="contenedor-jugador"/>
         </VBox>

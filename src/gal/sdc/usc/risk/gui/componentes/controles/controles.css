@@ -15,3 +15,11 @@
     -jfx-toggle-line-color: #9fa8da;
     -fx-font-size: 14;
 }
+
+.btn-pais {
+    -jfx-rippler-fill: -fx-accent;
+}
+
+.btn-pais-label {
+    -fx-font-size: 14;
+}

@@ -4,8 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTabPane;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.info.InfoContinente;
 import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
 import gal.sdc.usc.risk.gui.componentes.info.InfoPais;
@@ -13,19 +14,31 @@ import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.EnlacesMaritimos;
+import javafx.animation.Animation;
+import javafx.animation.FillTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -33,8 +46,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import static gal.sdc.usc.risk.tablero.Mapa.MAX_PAISES_X;
 import static gal.sdc.usc.risk.tablero.Mapa.MAX_PAISES_Y;
@@ -44,12 +61,27 @@ public class MapaController extends Partida {
     private final Integer TAB_CONTINENTE = 1;
     private final Integer TAB_JUGADOR = 2;
 
+    private final static HashMap<Button, Animation> animacionesSeleccion = new HashMap<>();
+    private final static List<Pais> paisesSeleccionados = new LinkedList<>();
+    private static boolean seleccionar = false;
+
     @FXML
     public VBox contenedor;
     @FXML
     private AnchorPane anchor;
 
     public MapaController() {
+    }
+
+    public static List<Pais> getPaisesSeleccionados() {
+        return paisesSeleccionados;
+    }
+
+    public static void setSeleccionar(boolean seleccionar) {
+        if (!seleccionar) {
+            paisesSeleccionados.clear();
+        }
+        MapaController.seleccionar = seleccionar;
     }
 
     @FXML
@@ -59,7 +91,7 @@ public class MapaController extends Partida {
 
     public void actualizarFronteras(Scene scene, boolean mostrar) {
         Pane mapaContainer = (Pane) scene.lookup("#pane-mapa");
-        for (Node node: mapaContainer.getChildren()) {
+        for (Node node : mapaContainer.getChildren()) {
             if (node instanceof Line) {
                 node.setVisible(mostrar);
             }
@@ -160,6 +192,7 @@ public class MapaController extends Partida {
 
                 JFXButton button = (JFXButton) scene.lookup("#" + i + "-" + j);
                 button.setDisable(true);
+                button.setBackground(null);
                 if (paises.containsKey(celda)) {
                     button.setDisable(false);
                     Pais pais = paises.get(celda);
@@ -202,9 +235,45 @@ public class MapaController extends Partida {
                     assert parent instanceof StackPane;
                     StackPane finalParent = (StackPane) parent;
 
+                    if (!animacionesSeleccion.containsKey(button)) {
+                        Animation animacion = new Transition() {
+                            {
+                                setCycleDuration(Duration.millis(1000));
+                                setInterpolator(Interpolator.EASE_OUT);
+                                setAutoReverse(true);
+                                setCycleCount(Timeline.INDEFINITE);
+                            }
+
+                            @Override
+                            protected void interpolate(double frac) {
+                                Color vColor = new Color(1, 1, 1, 1 - frac);
+                                button.setBackground(new Background(new BackgroundFill(vColor, CornerRadii.EMPTY, Insets.EMPTY)));
+                            }
+                        };
+                        animacionesSeleccion.put(button, animacion);
+                    }
+
+                    if (paisesSeleccionados.contains(pais)) {
+                        animacionesSeleccion.get(button).play();
+                    } else {
+                        animacionesSeleccion.get(button).stop();
+                        button.setBackground(null);
+                    }
+
                     button.setGraphic(this.contenidoBoton(pais));
                     button.setContextMenu(this.menuPais(finalParent, pais));
-                    button.setOnAction(action -> this.generarDialogo(finalParent, pais).show());
+                    button.setOnAction(action -> {
+                        if (!seleccionar) {
+                            this.generarDialogo(finalParent, pais).show();
+                        } else {
+                            if (paisesSeleccionados.contains(pais)) {
+                                paisesSeleccionados.remove(pais);
+                            } else {
+                                paisesSeleccionados.add(pais);
+                            }
+                            Utils.actualizar(scene);
+                        }
+                    });
                 }
             }
         }
@@ -232,9 +301,9 @@ public class MapaController extends Partida {
             HBox.setHgrow(contJugador, Priority.ALWAYS);
             contJugador.setAlignment(Pos.CENTER);
 
-            FontAwesomeIconView fontAwesomeIconView = new FontAwesomeIconView(FontAwesomeIcon.USERS);
-            fontAwesomeIconView.setSize("16px");
-            contJugador.getChildren().add(fontAwesomeIconView);
+            MaterialDesignIconView icono = new MaterialDesignIconView(MaterialDesignIcon.ACCOUNT_MULTIPLE);
+            icono.setSize("16px");
+            contJugador.getChildren().add(icono);
 
             Label lblJugador = new Label(" x" + pais.getEjercito().toInt());
             lblJugador.getStyleClass().add("btn-pais-jugador");

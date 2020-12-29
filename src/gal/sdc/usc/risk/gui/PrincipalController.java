@@ -1,5 +1,7 @@
 package gal.sdc.usc.risk.gui;
 
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSnackbarLayout;
 import gal.sdc.usc.risk.gui.componentes.controles.ControlesController;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -35,6 +37,16 @@ public class PrincipalController extends Application {
 
     public static void crear() {
         launch();
+    }
+
+    private static JFXSnackbar snackbar;
+
+    public static void mensaje(String mensaje) {
+        mensaje(new JFXSnackbarLayout(mensaje));
+    }
+
+    public static void mensaje(JFXSnackbarLayout layout) {
+        snackbar.enqueue(new JFXSnackbar.SnackbarEvent(layout));
     }
 
     @FXML
@@ -109,6 +121,8 @@ public class PrincipalController extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("principal.fxml"));
         Scene scene = new Scene(root, 810, 720);
+
+        snackbar = new JFXSnackbar((StackPane) root);
 
         stage.setMaximized(true);
         stage.setMinWidth(810);

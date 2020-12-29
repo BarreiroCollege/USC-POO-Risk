@@ -4,36 +4,45 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSnackbarLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.validation.RegexValidator;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Ejecutor;
+import gal.sdc.usc.risk.comandos.EjecutorAccion;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.comandos.partida.AcabarTurno;
+import gal.sdc.usc.risk.comandos.preparacion.AsignarMision;
+import gal.sdc.usc.risk.comandos.preparacion.AsignarPais;
+import gal.sdc.usc.risk.comandos.preparacion.CrearJugador;
 import gal.sdc.usc.risk.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
-import gal.sdc.usc.risk.gui.componentes.info.InfoContinente;
+import gal.sdc.usc.risk.gui.PrincipalController;
+import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
-import gal.sdc.usc.risk.gui.componentes.info.InfoPais;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevaMisionAsignada;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoJugador;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoPaisAsignado;
 import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.tablero.Jugador;
-import gal.sdc.usc.risk.tablero.Pais;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
@@ -81,6 +90,11 @@ public class ControlesController extends Partida {
         VBox jugadores = (VBox) scene.lookup("#contenedor-jugador");
         jugadores.getChildren().clear();
 
+        Parent parent = jugadores;
+        while (parent.getParent() != null) parent = parent.getParent();
+        assert parent instanceof StackPane;
+        StackPane finalParent = (StackPane) parent;
+
         if (super.isJugando() || super.getComandos().getLista().contains(AcabarTurno.class)) {
             VBox contenedor = new VBox();
             contenedor.setFillWidth(true);
@@ -97,10 +111,6 @@ public class ControlesController extends Partida {
                     + "-fx-font-size: 14; "
                     + "-fx-min-height: 20;");
 
-            Parent parent = jugadores;
-            while (parent.getParent() != null) parent = parent.getParent();
-            assert parent instanceof StackPane;
-            StackPane finalParent = (StackPane) parent;
             button.setOnAction((event -> this.generarDialogo(finalParent).show()));
 
             contenedor.getChildren().add(button);
@@ -108,8 +118,53 @@ public class ControlesController extends Partida {
             jugadores.getChildren().add(contenedor);
         } else {
             if (super.getComandos().getLista().contains(CrearMapa.class)) {
+                jugadores.getChildren().add(this.crearPreControl("Crear Mapa", MaterialDesignIcon.MAP, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        Ejecutor.comando("crear mapa", new EjecutorListener() {
+                            @Override
+                            public void onComandoEjecutado() {
+                                Utils.actualizar(scene);
+                                PrincipalController.mensaje("Mapa creado");
+                            }
+
+                            @Override
+                            public void onComandoError(ExcepcionRISK e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }));
             }
-            jugadores.getChildren().add(new Label("Sin Jugadores"));
+
+            if (super.getComandos().getLista().contains(CrearJugador.class)) {
+                jugadores.getChildren().add(this.crearPreControl("Nuevo Jugador", MaterialDesignIcon.ACCOUNT_PLUS, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        NuevoJugador.generarDialogo(finalParent);
+                    }
+                }));
+            }
+
+            if (super.getComandos().getLista().contains(AsignarMision.class)) {
+                jugadores.getChildren().add(this.crearPreControl("Asignar Misión", MaterialDesignIcon.ACCOUNT_CHECK, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        NuevaMisionAsignada.generarDialogo(finalParent);
+                    }
+                }));
+            }
+
+            if (super.getComandos().getLista().contains(AsignarPais.class)) {
+                jugadores.getChildren().add(this.crearPreControl("Asignar Paises", MaterialDesignIcon.MAP_MARKER, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        NuevoPaisAsignado.generarDialogo(finalParent);
+                    }
+                }));
+            }
+
+            // TODO: Asignar países
         }
     }
 
@@ -128,6 +183,27 @@ public class ControlesController extends Partida {
 
         dialog.setContent(content);
         return dialog;
+    }
+
+    private JFXButton crearPreControl(String nombre, MaterialDesignIcon ic, EjecutorAccion accion) {
+        JFXButton boton = new JFXButton();
+        boton.setRipplerFill(Paint.valueOf("black"));
+
+        HBox contenedor = new HBox();
+        contenedor.setPrefWidth(Double.MAX_VALUE);
+        contenedor.setAlignment(Pos.CENTER);
+
+        MaterialDesignIconView icono = new MaterialDesignIconView(ic);
+        icono.setSize("24px");
+        Label label = new Label("   " + nombre);
+        label.getStyleClass().add("btn-pais-label");
+
+        contenedor.getChildren().add(icono);
+        contenedor.getChildren().add(label);
+
+        boton.setGraphic(contenedor);
+        boton.setOnAction(e -> accion.onClick(null));
+        return boton;
     }
 
     @FXML
@@ -259,24 +335,10 @@ public class ControlesController extends Partida {
 
                 @Override
                 public void onComandoEjecutado() {
-                    FXMLLoader loader = new FXMLLoader();
-                    try {
-                        loader.load(MapaController.class.getResource("mapa.fxml").openStream());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    ((MapaController) loader.getController()).actualizar(contenedor.getScene());
-
-                    loader = new FXMLLoader();
-                    try {
-                        loader.load(ControlesController.class.getResource("vertical.fxml").openStream());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    ((ControlesController) loader.getController()).actualizarJugador(contenedor.getScene());
-                    ((ControlesController) loader.getController()).actualizarComandos(contenedor.getScene());
-
+                    Utils.actualizar(contenedor.getScene());
                     dialog.close();
+
+                    PrincipalController.mensaje("[OK] " + comandoTexto.getText());
                 }
             });
         });
