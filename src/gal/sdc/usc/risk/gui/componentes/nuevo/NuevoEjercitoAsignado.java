@@ -1,34 +1,35 @@
 package gal.sdc.usc.risk.gui.componentes.nuevo;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RegexValidator;
+import com.jfoenix.validation.RequiredFieldValidator;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.tablero.Jugador;
-import gal.sdc.usc.risk.tablero.valores.Misiones;
+import gal.sdc.usc.risk.tablero.Pais;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import java.util.HashMap;
-
-public class NuevaMisionAsignada extends Partida {
+public class NuevoEjercitoAsignado extends Partida {
     private final StackPane parent;
+    private final Pais pais;
 
-    public static void generarDialogo(StackPane parent) {
-        new NuevaMisionAsignada(parent).generar();
+    public static void generarDialogo(StackPane parent, Pais pais) {
+        new NuevoEjercitoAsignado(parent, pais).generar();
     }
 
-    private NuevaMisionAsignada(StackPane parent) {
+    private NuevoEjercitoAsignado(StackPane parent, Pais pais) {
         this.parent = parent;
+        this.pais = pais;
     }
 
     private void generar() {
@@ -37,35 +38,33 @@ public class NuevaMisionAsignada extends Partida {
         dialog.setDialogContainer(parent);
 
         JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Asignar Misión"));
+        layout.setHeading(new Label("Repartir Ejército"));
 
         VBox contenedor = new VBox();
 
-        JFXComboBox<Label> comboJugadores = new JFXComboBox<>();
-        comboJugadores.setPrefWidth(Float.MAX_VALUE);
-        for (Jugador jugador : super.getJugadores().values()) {
-            if (jugador.getMision() == null) {
-                Label label = Utils.labelColor(jugador.getNombre(), jugador.getColor().getHex());
-                label.setId(jugador.getNombre());
-                comboJugadores.getItems().add(label);
-            }
+        HBox fila = new HBox();
+        Label labelPais = new Label("Pais");
+        labelPais.getStyleClass().add("dialogo-titulo");
+        fila.getChildren().add(labelPais);
+        VBox valores = new VBox();
+        valores.getChildren().add(Utils.labelColor(pais.getNombre(), pais.getColor().getHex()));
+        fila.getChildren().add(valores);
+        if (valores.getChildren().size() > 0) {
+            contenedor.getChildren().add(fila);
+            contenedor.getChildren().add(Utils.separadorEntrada());
         }
-        comboJugadores.setPromptText("Jugador");
-        contenedor.getChildren().add(comboJugadores);
 
-        JFXComboBox<Label> comboMisiones = new JFXComboBox<>();
-        comboMisiones.setStyle(comboMisiones.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
-        comboMisiones.setPrefWidth(Float.MAX_VALUE);
-        HashMap<Misiones, Jugador> jugadoresColores = super.getJugadoresPorMision();
-        for (Misiones mision : Misiones.values()) {
-            if (!jugadoresColores.containsKey(mision)) {
-                Label label = new Label(mision.getNombre());
-                label.setId(mision.getId());
-                comboMisiones.getItems().add(label);
-            }
-        }
-        comboMisiones.setPromptText("Misión del jugador");
-        contenedor.getChildren().add(comboMisiones);
+        JFXTextField numEjercitos = new JFXTextField();
+        numEjercitos.setLabelFloat(true);
+        numEjercitos.setStyle(numEjercitos.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
+        numEjercitos.setPromptText("Número de ejércitos");
+        RegexValidator validadorRegex = new RegexValidator();
+        validadorRegex.setRegexPattern("([0-9]+)");
+        validadorRegex.setMessage("Introduce un número positivo");
+        numEjercitos.getValidators().add(validadorRegex);
+        numEjercitos.textProperty().addListener((o) -> numEjercitos.validate());
+        numEjercitos.validate();
+        contenedor.getChildren().add(numEjercitos);
 
         VBox errorContenedor = new VBox();
         errorContenedor.setStyle(errorContenedor.getStyle() + "-fx-padding: 15pt 0 10pt 0;");
@@ -95,15 +94,14 @@ public class NuevaMisionAsignada extends Partida {
 
         JFXButton ejecutar = new JFXButton("Asignar");
         ejecutar.setDisable(true);
-        ejecutar.disableProperty().bind(comboJugadores.getSelectionModel().selectedItemProperty().isNull()
-                .or(comboMisiones.getSelectionModel().selectedItemProperty().isNull()));
+        ejecutar.disableProperty().bind(numEjercitos.getValidators().get(0).hasErrorsProperty());
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
             Ejecutor.comando(
-                    "asignar mision "
-                            + comboJugadores.getSelectionModel().getSelectedItem().getId() + " "
-                            + comboMisiones.getSelectionModel().getSelectedItem().getId(),
+                    "repartir ejercito "
+                            + numEjercitos.getText() + " "
+                            + pais.getAbreviatura(),
                     new EjecutorListener() {
                         @Override
                         public void onComandoError(ExcepcionRISK e) {
@@ -118,9 +116,9 @@ public class NuevaMisionAsignada extends Partida {
                             Utils.actualizar(contenedor.getScene());
                             dialog.close();
 
-                            PrincipalController.mensaje("Misión "
-                                    + comboMisiones.getSelectionModel().getSelectedItem().getId() + " asignada a "
-                                    + comboJugadores.getSelectionModel().getSelectedItem().getId());
+                            PrincipalController.mensaje("Repartidos " + numEjercitos.getText() + " ejército"
+                                    + (Integer.parseInt(numEjercitos.getText()) == 1 ? "" : "s") + " a "
+                                    + pais.getNombre());
                         }
                     });
         });

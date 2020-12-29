@@ -2,6 +2,7 @@ package gal.sdc.usc.risk.gui;
 
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbarLayout;
+import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.componentes.controles.ControlesController;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -32,6 +33,10 @@ public class PrincipalController extends Application {
     @FXML
     public VBox controlesHorizontal;
 
+    private static JFXSnackbar snackbar;
+
+    private static Scene scene;
+
     public PrincipalController() {
     }
 
@@ -39,14 +44,16 @@ public class PrincipalController extends Application {
         launch();
     }
 
-    private static JFXSnackbar snackbar;
-
     public static void mensaje(String mensaje) {
         mensaje(new JFXSnackbarLayout(mensaje));
     }
 
     public static void mensaje(JFXSnackbarLayout layout) {
         snackbar.enqueue(new JFXSnackbar.SnackbarEvent(layout));
+    }
+
+    public static Scene getScene() {
+        return scene;
     }
 
     @FXML
@@ -118,9 +125,17 @@ public class PrincipalController extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
+            if (throwable instanceof ExcepcionRISK) {
+                ExcepcionRISK e = (ExcepcionRISK) throwable;
+                mensaje("[" + e.getCodigo() + "] " + e.getMensaje());
+            } else {
+                mensaje("[ERROR] " + throwable.getLocalizedMessage());
+            }
+        });
 
         Parent root = FXMLLoader.load(getClass().getResource("principal.fxml"));
-        Scene scene = new Scene(root, 810, 720);
+        PrincipalController.scene = new Scene(root, 810, 720);
 
         snackbar = new JFXSnackbar((StackPane) root);
 
@@ -128,7 +143,7 @@ public class PrincipalController extends Application {
         stage.setMinWidth(810);
         stage.setMinHeight(720);
         stage.setTitle("RISK");
-        stage.setScene(scene);
+        stage.setScene(PrincipalController.scene);
         stage.show();
     }
 }

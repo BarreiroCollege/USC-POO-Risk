@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTabPane;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import gal.sdc.usc.risk.comandos.EjecutorAccion;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.info.InfoContinente;
 import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
@@ -15,14 +16,13 @@ import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.tablero.valores.EnlacesMaritimos;
 import javafx.animation.Animation;
-import javafx.animation.FillTransition;
 import javafx.animation.Interpolator;
-import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
-import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -35,6 +35,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -46,12 +48,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static gal.sdc.usc.risk.tablero.Mapa.MAX_PAISES_X;
 import static gal.sdc.usc.risk.tablero.Mapa.MAX_PAISES_Y;
@@ -62,8 +65,11 @@ public class MapaController extends Partida {
     private final Integer TAB_JUGADOR = 2;
 
     private final static HashMap<Button, Animation> animacionesSeleccion = new HashMap<>();
+    private final static HashMap<Button, EventHandler<MouseEvent>> handlersBotones = new HashMap<>();
     private final static List<Pais> paisesSeleccionados = new LinkedList<>();
     private static boolean seleccionar = false;
+
+    private static EjecutorAccion accion;
 
     @FXML
     public VBox contenedor;
@@ -82,6 +88,10 @@ public class MapaController extends Partida {
             paisesSeleccionados.clear();
         }
         MapaController.seleccionar = seleccionar;
+    }
+
+    public static void setAccion(EjecutorAccion accion) {
+        MapaController.accion = accion;
     }
 
     @FXML
@@ -262,18 +272,61 @@ public class MapaController extends Partida {
 
                     button.setGraphic(this.contenidoBoton(pais));
                     button.setContextMenu(this.menuPais(finalParent, pais));
-                    button.setOnAction(action -> {
-                        if (!seleccionar) {
-                            this.generarDialogo(finalParent, pais).show();
-                        } else {
-                            if (paisesSeleccionados.contains(pais)) {
-                                paisesSeleccionados.remove(pais);
-                            } else {
-                                paisesSeleccionados.add(pais);
-                            }
-                            Utils.actualizar(scene);
+
+                    if (accion != null) {
+                        button.setOnAction(null);
+                        if (!handlersBotones.containsKey(button)) {
+                            EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
+                                Timer timer = null;
+
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    if (event.getButton().equals(MouseButton.PRIMARY) && event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+                                        if (timer == null) {
+                                            timer = new Timer();
+                                            timer.schedule(new TimerTask() {
+                                                @Override
+                                                public void run() {
+                                                    timer = null;
+                                                    Platform.runLater(() -> {
+                                                        accion.onLongClick(pais);
+                                                        Utils.actualizar(scene);
+                                                    });
+                                                }
+                                            }, 500);
+                                        }
+                                    } else if (event.getButton().equals(MouseButton.PRIMARY) && event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
+                                        if (timer != null) {
+                                            timer.cancel();
+                                            timer = null;
+                                            accion.onClick(pais);
+                                            Utils.actualizar(scene);
+                                        }
+                                    }
+                                }
+                            };
+                            button.addEventFilter(MouseEvent.ANY, handler);
+                            handlersBotones.put(button, handler);
                         }
-                    });
+                    } else {
+                        if (handlersBotones.containsKey(button)) {
+                            handlersBotones.remove(button);
+                            button.removeEventFilter(MouseEvent.ANY, handlersBotones.get(button));
+                        }
+                        button.setOnAction(action -> {
+                            if (seleccionar) {
+                                if (paisesSeleccionados.contains(pais)) {
+                                    paisesSeleccionados.remove(pais);
+                                } else {
+                                    paisesSeleccionados.add(pais);
+                                }
+                            } else {
+                                this.generarDialogo(finalParent, pais).show();
+                            }
+
+                            Utils.actualizar(scene);
+                        });
+                    }
                 }
             }
         }

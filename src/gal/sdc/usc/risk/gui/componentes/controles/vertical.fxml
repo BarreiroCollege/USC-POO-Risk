@@ -14,7 +14,7 @@
             <VBox HBox.hgrow="ALWAYS" fx:id="contenedorJugador" id="contenedor-jugador"/>
         </VBox>
         <VBox minHeight="20"/>
-        <VBox HBox.hgrow="ALWAYS" styleClass="card">
+        <VBox HBox.hgrow="ALWAYS" styleClass="card" id="super-contenedor-comandos">
             <VBox fx:id="contenedorComandos" id="contenedor-comandos"/>
         </VBox>
         <VBox VBox.vgrow="ALWAYS"/>

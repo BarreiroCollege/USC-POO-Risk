@@ -70,12 +70,7 @@ public class NuevoJugador extends Partida {
                 comboColores.getItems().add(label);
             }
         }
-        RequiredFieldValidator validadorRequerido2 = new RequiredFieldValidator();
-        validadorRequerido2.setMessage("Selecciona el color del jugador");
-        comboColores.getValidators().add(validadorRequerido2);
         comboColores.setPromptText("Color del jugador");
-        comboColores.selectionModelProperty().addListener((o) -> comboColores.validate());
-        comboColores.validate();
         contenedor.getChildren().add(comboColores);
 
         VBox errorContenedor = new VBox();
@@ -107,7 +102,7 @@ public class NuevoJugador extends Partida {
         JFXButton ejecutar = new JFXButton("Crear");
         ejecutar.disableProperty().bind(jugadorNombre.getValidators().get(0).hasErrorsProperty()
                 .or(jugadorNombre.getValidators().get(1).hasErrorsProperty()
-                        .or(comboColores.getValidators().get(0).hasErrorsProperty())));
+                        .or(comboColores.getSelectionModel().selectedItemProperty().isNull())));
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);

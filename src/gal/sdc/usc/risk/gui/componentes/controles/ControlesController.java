@@ -22,6 +22,7 @@ import gal.sdc.usc.risk.comandos.preparacion.AsignarMision;
 import gal.sdc.usc.risk.comandos.preparacion.AsignarPais;
 import gal.sdc.usc.risk.comandos.preparacion.CrearJugador;
 import gal.sdc.usc.risk.comandos.preparacion.CrearMapa;
+import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercito;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
@@ -67,23 +68,39 @@ public class ControlesController extends Partida {
     public ControlesController() {
     }
 
+    private boolean simularJugando() {
+        return super.isJugando()
+                || super.getComandos().getLista().contains(AcabarTurno.class)
+                || super.getComandos().getLista().contains(RepartirEjercito.class);
+    }
+
     public void actualizarComandos(Scene scene) {
         Pane contenedor = (Pane) scene.lookup("#contenedor-comandos");
         contenedor.getChildren().clear();
-        for (Class<? extends IComando> comando : super.getComandos().getLista()) {
-            JFXButton boton = new JFXButton();
-            boton.setText(comando.getName());
+        VBox superContenedor = (VBox) scene.lookup("#super-contenedor-comandos");
 
-            try {
-                Object comandoObject;
-                comandoObject = comando.newInstance();
-                Method ejecutar = comando.getMethod("nombre");
-                boton.setText((String) ejecutar.invoke(comandoObject));
-            } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
+        if (!this.simularJugando()) {
+            superContenedor.setVisible(false);
+            superContenedor.setManaged(false);
+        } else {
+            superContenedor.setVisible(true);
+            superContenedor.setManaged(true);
+
+            for (Class<? extends IComando> comando : super.getComandos().getLista()) {
+                JFXButton boton = new JFXButton();
+                boton.setText(comando.getName());
+
+                try {
+                    Object comandoObject;
+                    comandoObject = comando.newInstance();
+                    Method ejecutar = comando.getMethod("nombre");
+                    boton.setText((String) ejecutar.invoke(comandoObject));
+                } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+
+                contenedor.getChildren().add(boton);
             }
-
-            contenedor.getChildren().add(boton);
         }
     }
 
@@ -96,7 +113,7 @@ public class ControlesController extends Partida {
         assert parent instanceof StackPane;
         StackPane finalParent = (StackPane) parent;
 
-        if (super.isJugando() || super.getComandos().getLista().contains(AcabarTurno.class)) {
+        if (this.simularJugando()) {
             VBox contenedor = new VBox();
             contenedor.setFillWidth(true);
             contenedor.setPrefWidth(Double.MAX_VALUE);
@@ -240,9 +257,6 @@ public class ControlesController extends Partida {
         VBox contenedor = new VBox();
 
         JFXComboBox<Label> comboComando = new JFXComboBox<>();
-        RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
-        requiredFieldValidator.setMessage("Selecciona el comando");
-        comboComando.getValidators().add(requiredFieldValidator);
         comboComando.setPrefWidth(Float.MAX_VALUE);
         List<Class<? extends IComando>> comandos = super.getComandos().getLista();
         comandos.sort(Comparator.comparing(Class::getName));
@@ -267,7 +281,6 @@ public class ControlesController extends Partida {
             }
         }
         comboComando.setPromptText("Seleccionar comando");
-        comboComando.validate();
         contenedor.getChildren().add(comboComando);
 
         JFXTextField comandoTexto = new JFXTextField();
@@ -309,7 +322,6 @@ public class ControlesController extends Partida {
             comandoTexto.setDisable(false);
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
-            comboComando.validate();
             try {
                 Class<? extends IComando> comando = (Class<? extends IComando>) Class.forName(newV.getId());
                 IComando comandoObj = comando.newInstance();
@@ -326,7 +338,7 @@ public class ControlesController extends Partida {
         layout.setBody(contenedor);
 
         JFXButton ejecutar = new JFXButton("Ejecutar");
-        ejecutar.disableProperty().bind(comboComando.getValidators().get(0).hasErrorsProperty()
+        ejecutar.disableProperty().bind(comboComando.getSelectionModel().selectedItemProperty().isNull()
                 .or(comandoTexto.getValidators().get(0).hasErrorsProperty()));
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);

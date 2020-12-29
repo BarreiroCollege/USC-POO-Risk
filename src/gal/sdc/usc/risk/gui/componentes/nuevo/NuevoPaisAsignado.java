@@ -63,12 +63,7 @@ public class NuevoPaisAsignado extends Partida {
             label.setId(jugador.getNombre());
             comboJugadores.getItems().add(label);
         }
-        RequiredFieldValidator validadorRequerido1 = new RequiredFieldValidator();
-        validadorRequerido1.setMessage("Selecciona el jugador");
-        comboJugadores.getValidators().add(validadorRequerido1);
         comboJugadores.setPromptText("Jugador");
-        comboJugadores.selectionModelProperty().addListener((o) -> comboJugadores.validate());
-        comboJugadores.validate();
         contenedor.getChildren().add(comboJugadores);
 
         VBox errorContenedor = new VBox();
@@ -100,7 +95,7 @@ public class NuevoPaisAsignado extends Partida {
         JFXButton ejecutar = new JFXButton("Asignar");
         ejecutar.setDisable(true);
         if (MapaController.getPaisesSeleccionados().size() > 0) {
-            ejecutar.disableProperty().bind(comboJugadores.getValidators().get(0).hasErrorsProperty());
+            ejecutar.disableProperty().bind(comboJugadores.getSelectionModel().selectedItemProperty().isNull());
         }
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
@@ -139,7 +134,7 @@ public class NuevoPaisAsignado extends Partida {
             contenedor.getChildren().add(errorContenedor);
 
             errorTitulo.setText("Error");
-            errorValor.setText("Selecciona en el mapa los países a asignar");
+            errorValor.setText("Primero selecciona en el mapa los países a asignar");
             errorContenedor.setVisible(true);
             errorContenedor.setManaged(true);
         }

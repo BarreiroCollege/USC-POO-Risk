@@ -1,5 +1,7 @@
 package gal.sdc.usc.risk.jugar;
 
+import gal.sdc.usc.risk.comandos.Ejecutor;
+import gal.sdc.usc.risk.comandos.EjecutorAccion;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.comandos.generico.Ayuda;
 import gal.sdc.usc.risk.comandos.generico.ObtenerColor;
@@ -28,8 +30,14 @@ import gal.sdc.usc.risk.comandos.preparacion.CrearJugadores;
 import gal.sdc.usc.risk.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercito;
 import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercitos;
+import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoEjercitoAsignado;
 import gal.sdc.usc.risk.tablero.Mapa;
+import gal.sdc.usc.risk.tablero.Pais;
+import javafx.scene.Parent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,10 +190,33 @@ public class ComandosDisponibles {
         MapaController.setSeleccionar(false);
     }
 
-    public void habilitarRepartirEjercitos() {
+    public void habilitarRepartirEjercitos(gal.sdc.usc.risk.tablero.Jugador jugadorTurno) {
         this.deshabilitarAsignarPaises();
         add(RepartirEjercito.class);
         add(RepartirEjercitos.class);
+
+        StackPane parent = (StackPane) PrincipalController.getScene().lookup("#stack-pane");
+        MapaController.setAccion(new EjecutorAccion() {
+            @Override
+            public void onClick(Object o) {
+                Pais pais = (Pais) o;
+                if (pais.getJugador().equals(jugadorTurno)) {
+                    Ejecutor.comando("repartir ejercito 1 " + pais.getAbreviatura(), null);
+                } else {
+                    PrincipalController.mensaje("Este país no es del jugador actual");
+                }
+            }
+
+            @Override
+            public void onLongClick(Object o) {
+                Pais pais = (Pais) o;
+                if (pais.getJugador().equals(jugadorTurno)) {
+                    NuevoEjercitoAsignado.generarDialogo(parent, pais);
+                } else {
+                    PrincipalController.mensaje("Este país no es del jugador actual");
+                }
+            }
+        });
     }
 
     public void deshabilitarRepartirEjercitosAuto() {

@@ -1,5 +1,10 @@
 package gal.sdc.usc.risk.comandos.partida;
 
+import gal.sdc.usc.risk.comandos.Ejecutor;
+import gal.sdc.usc.risk.comandos.EjecutorAccion;
+import gal.sdc.usc.risk.gui.PrincipalController;
+import gal.sdc.usc.risk.gui.componentes.Utils;
+import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.salida.Resultado;
 import gal.sdc.usc.risk.comandos.Comando;
@@ -39,7 +44,7 @@ public class AcabarTurno extends Partida implements IComando {
         if (super.isJugando()) {
             super.getComandos().iniciarTurno(super.getJugadorTurno());
         } else {
-            super.getComandos().habilitarRepartirEjercitos();
+            super.getComandos().habilitarRepartirEjercitos(super.getJugadorTurno());
             super.getComandos().deshabilitarAcabarTurno();
         }
 

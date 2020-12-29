@@ -1,5 +1,9 @@
 package gal.sdc.usc.risk.comandos.preparacion;
 
+import gal.sdc.usc.risk.comandos.EjecutorAccion;
+import gal.sdc.usc.risk.comandos.partida.AcabarTurno;
+import gal.sdc.usc.risk.gui.PrincipalController;
+import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.salida.Resultado;
 import gal.sdc.usc.risk.comandos.Comando;
@@ -78,7 +82,7 @@ public class AsignarPais extends Partida implements IComando {
         }
 
         if (tieneJugador) {
-            super.getComandos().habilitarRepartirEjercitos();
+            super.getComandos().habilitarRepartirEjercitos(super.getJugadorTurno());
             // super.getComandos().habilitarAcabarTurno();
             // Resultado.out("[" + new Colores(super.getJugadorTurno().getNombre(), super.getJugadorTurno().getColor()) + "] Repartiendo ejércitos...");
         }
