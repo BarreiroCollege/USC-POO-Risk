@@ -224,6 +224,7 @@ public class ComandosDisponibles {
     }
 
     public void deshabilitarRepartirEjercitos() {
+        MapaController.setAccion(null);
         remove(RepartirEjercito.class);
     }
 
