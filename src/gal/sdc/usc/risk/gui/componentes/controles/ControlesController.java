@@ -241,6 +241,7 @@ public class ControlesController extends Partida {
 
         JFXComboBox<Label> comboComando = new JFXComboBox<>();
         RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
+        requiredFieldValidator.setMessage("Selecciona el comando");
         comboComando.getValidators().add(requiredFieldValidator);
         comboComando.setPrefWidth(Float.MAX_VALUE);
         List<Class<? extends IComando>> comandos = super.getComandos().getLista();
@@ -308,6 +309,7 @@ public class ControlesController extends Partida {
             comandoTexto.setDisable(false);
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
+            comboComando.validate();
             try {
                 Class<? extends IComando> comando = (Class<? extends IComando>) Class.forName(newV.getId());
                 IComando comandoObj = comando.newInstance();
