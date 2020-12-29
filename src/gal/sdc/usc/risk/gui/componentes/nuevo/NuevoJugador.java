@@ -55,6 +55,7 @@ public class NuevoJugador extends Partida {
         validadorRegex.setMessage("Sólo se permiten caracteres alfanuméricos");
         jugadorNombre.getValidators().add(validadorRegex);
         jugadorNombre.textProperty().addListener((o) -> jugadorNombre.validate());
+        jugadorNombre.validate();
         contenedor.getChildren().add(jugadorNombre);
 
         JFXComboBox<Label> comboColores = new JFXComboBox<>();
@@ -74,6 +75,7 @@ public class NuevoJugador extends Partida {
         comboColores.getValidators().add(validadorRequerido2);
         comboColores.setPromptText("Color del jugador");
         comboColores.selectionModelProperty().addListener((o) -> comboColores.validate());
+        comboColores.validate();
         contenedor.getChildren().add(comboColores);
 
         VBox errorContenedor = new VBox();
@@ -103,7 +105,6 @@ public class NuevoJugador extends Partida {
         layout.setBody(contenedor);
 
         JFXButton ejecutar = new JFXButton("Crear");
-        ejecutar.setDisable(true);
         ejecutar.disableProperty().bind(jugadorNombre.getValidators().get(0).hasErrorsProperty()
                 .or(jugadorNombre.getValidators().get(1).hasErrorsProperty()
                         .or(comboColores.getValidators().get(0).hasErrorsProperty())));

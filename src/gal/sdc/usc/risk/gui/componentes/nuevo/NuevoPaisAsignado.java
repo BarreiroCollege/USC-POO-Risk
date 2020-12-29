@@ -68,6 +68,7 @@ public class NuevoPaisAsignado extends Partida {
         comboJugadores.getValidators().add(validadorRequerido1);
         comboJugadores.setPromptText("Jugador");
         comboJugadores.selectionModelProperty().addListener((o) -> comboJugadores.validate());
+        comboJugadores.validate();
         contenedor.getChildren().add(comboJugadores);
 
         VBox errorContenedor = new VBox();

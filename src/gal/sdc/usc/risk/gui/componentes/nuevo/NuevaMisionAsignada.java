@@ -56,6 +56,7 @@ public class NuevaMisionAsignada extends Partida {
         comboJugadores.getValidators().add(validadorRequerido1);
         comboJugadores.setPromptText("Jugador");
         comboJugadores.selectionModelProperty().addListener((o) -> comboJugadores.validate());
+        comboJugadores.validate();
         contenedor.getChildren().add(comboJugadores);
 
         JFXComboBox<Label> comboMisiones = new JFXComboBox<>();
@@ -74,6 +75,7 @@ public class NuevaMisionAsignada extends Partida {
         comboMisiones.getValidators().add(validadorRequerido2);
         comboMisiones.setPromptText("Misión del jugador");
         comboMisiones.selectionModelProperty().addListener((o) -> comboMisiones.validate());
+        comboMisiones.validate();
         contenedor.getChildren().add(comboMisiones);
 
         VBox errorContenedor = new VBox();

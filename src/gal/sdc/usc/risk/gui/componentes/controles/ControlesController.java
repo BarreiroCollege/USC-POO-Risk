@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXSnackbarLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.validation.RegexValidator;
+import com.jfoenix.validation.RequiredFieldValidator;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import gal.sdc.usc.risk.comandos.Comando;
@@ -239,6 +240,8 @@ public class ControlesController extends Partida {
         VBox contenedor = new VBox();
 
         JFXComboBox<Label> comboComando = new JFXComboBox<>();
+        RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
+        comboComando.getValidators().add(requiredFieldValidator);
         comboComando.setPrefWidth(Float.MAX_VALUE);
         List<Class<? extends IComando>> comandos = super.getComandos().getLista();
         comandos.sort(Comparator.comparing(Class::getName));
@@ -263,6 +266,7 @@ public class ControlesController extends Partida {
             }
         }
         comboComando.setPromptText("Seleccionar comando");
+        comboComando.validate();
         contenedor.getChildren().add(comboComando);
 
         JFXTextField comandoTexto = new JFXTextField();
@@ -320,7 +324,8 @@ public class ControlesController extends Partida {
         layout.setBody(contenedor);
 
         JFXButton ejecutar = new JFXButton("Ejecutar");
-        ejecutar.disableProperty().bind(comandoTexto.getValidators().get(0).hasErrorsProperty());
+        ejecutar.disableProperty().bind(comboComando.getValidators().get(0).hasErrorsProperty()
+                .or(comandoTexto.getValidators().get(0).hasErrorsProperty()));
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
