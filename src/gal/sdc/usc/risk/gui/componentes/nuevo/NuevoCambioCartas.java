@@ -46,7 +46,7 @@ public class NuevoCambioCartas extends Partida {
         dialog.setDialogContainer(parent);
 
         JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Rearmar Países"));
+        layout.setHeading(new Label("Cambiar Cartas a Ejércitos"));
 
         VBox contenedor = new VBox();
 

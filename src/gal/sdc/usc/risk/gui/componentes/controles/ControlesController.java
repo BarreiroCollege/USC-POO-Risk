@@ -352,7 +352,7 @@ public class ControlesController extends Partida {
                     || comando.getName().toLowerCase().contains("ayuda")
                     || comando.getName().toLowerCase().contains("ver")
                     || comando.getName().toLowerCase().contains("salir")
-                    || comando.getName().toLowerCase().contains("jugador")) {
+                    || comando.getName().toLowerCase().equals("jugador")) {
                 continue;
             }
 

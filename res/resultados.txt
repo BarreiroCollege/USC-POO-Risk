@@ -350,59 +350,51 @@ $> acabar turno
   numeroEjercitosRearmar: 4
 }
 
-$> repartir ejercito 1 Ontario
+$> repartir ejercito 1 GBretaña
 {
-  pais: "Ontario",
+  pais: "Gran Bretaña",
   jugador: "JT",
   numeroEjercitosAsignados: 1,
   numeroEjercitosTotales: 2,
-  paisesOcupadosContinente: [ { "Quebec", 2 }, { "Alaska", 1 }, { "Alberta", 1 }, { "Territorios del Noroeste", 1 }, { "Ontario", 2 }, { "Groenlandia", 1 } ]
+  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 2 }, { "Europa del Norte", 1 }, { "Islandia", 1 } ]
 }
 
-$> repartir ejercito 1 Ontario
+$> repartir ejercito 1 GBretaña
 {
-  pais: "Ontario",
+  pais: "Gran Bretaña",
   jugador: "JT",
   numeroEjercitosAsignados: 1,
   numeroEjercitosTotales: 3,
-  paisesOcupadosContinente: [ { "Quebec", 2 }, { "Alaska", 1 }, { "Alberta", 1 }, { "Territorios del Noroeste", 1 }, { "Ontario", 3 }, { "Groenlandia", 1 } ]
+  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 3 }, { "Europa del Norte", 1 }, { "Islandia", 1 } ]
 }
 
-$> repartir ejercito 1 Ontario
+$> repartir ejercito 1 GBretaña
 {
-  pais: "Ontario",
+  pais: "Gran Bretaña",
   jugador: "JT",
   numeroEjercitosAsignados: 1,
   numeroEjercitosTotales: 4,
-  paisesOcupadosContinente: [ { "Quebec", 2 }, { "Alaska", 1 }, { "Alberta", 1 }, { "Territorios del Noroeste", 1 }, { "Ontario", 4 }, { "Groenlandia", 1 } ]
+  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 4 }, { "Europa del Norte", 1 }, { "Islandia", 1 } ]
 }
 
-$> repartir ejercito 1 Ontario
+$> repartir ejercito 1 GBretaña
 {
-  pais: "Ontario",
+  pais: "Gran Bretaña",
   jugador: "JT",
   numeroEjercitosAsignados: 1,
   numeroEjercitosTotales: 5,
-  paisesOcupadosContinente: [ { "Quebec", 2 }, { "Alaska", 1 }, { "Alberta", 1 }, { "Territorios del Noroeste", 1 }, { "Ontario", 5 }, { "Groenlandia", 1 } ]
+  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 5 }, { "Europa del Norte", 1 }, { "Islandia", 1 } ]
 }
 
-$> atacar Ontario 2x3x6 USAEste 6
+$> atacar GBretaña 4x5x4 EurOcc 5
 {
-  dadosAtaque: [ 7, 3, 2 ],
-  dadosDefensa: [ 6 ],
+  dadosAtaque: [ 6, 4, 4 ],
+  dadosDefensa: [ 5 ],
   ejercitosPaisAtaque: [ 5, 2 ],
   ejercitosPaisDefensa: [ 1, 3 ],
   paisAtaquePerteneceA: "JT",
   paisDefensaPerteneceA: "JT",
   continenteConquistado: "null"
-}
-
-$> rearmar Ontario 2 USAEste
-{
-  numeroEjercitosInicialesOrigen: 2,
-  numeroEjercitosInicialesDestino: 3,
-  numeroEjercitosFinalesOrigen: 1,
-  numeroEjercitosFinalesDestino: 4
 }
 
 $> asignar carta DeCamello&Quebec
@@ -413,8 +405,25 @@ $> asignar carta DeCamello&Quebec
   ejercitosDeRearme: 1
 }
 
-$> jugador
-$> describir jugador JT
+$> acabar turno
+{
+  nombre: "Hooker",
+  numeroEjercitosRearmar: 4
+}
+
+$> acabar turno
+{
+  nombre: "Lonnegan",
+  numeroEjercitosRearmar: 12
+}
+
+$> acabar turno
 {
   nombre: "JT",
-  color
+  numeroEjercitosRearmar: 5
+}
+
+$> repartir ejercito 1 EurNorte
+{
+  pais: "Europa del Norte",
+  jug

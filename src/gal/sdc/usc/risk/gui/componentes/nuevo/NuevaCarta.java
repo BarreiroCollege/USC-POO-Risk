@@ -68,12 +68,11 @@ public class NuevaCarta extends Partida {
     private List<Label> subequipamientosDisponibles(Label paisLabel) {
         Pais pais = null;
         if (paisLabel != null) {
-            pais = super.getMapa().getPaisPorNombre(paisLabel.getText());
+            pais = super.getMapa().getPaisPorNombre(paisLabel.getText().trim());
         }
         HashMap<String, SubEquipamientos> subequipamientos = new HashMap<>();
         for (Carta carta : super.getCartasMonton()) {
             if (pais != null && !carta.getPais().equals(pais)) continue;
-            // todo: salen todas las cartas
             System.out.println(carta.getNombre());
             subequipamientos.put(carta.getEquipamiento().getNombre() + " / " + carta.getSubEquipamiento().getNombre(), carta.getSubEquipamiento());
         }
