@@ -97,6 +97,17 @@ public class ControlesController extends Partida {
             superContenedor.setVisible(true);
             superContenedor.setManaged(true);
 
+            if (super.getComandos().getLista().contains(CambiarCartas.class)) {
+                Button cambiar = this.crearPreControl("Cambiar Cartas", MaterialDesignIcon.SWAP_HORIZONTAL, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        NuevoCambioCartas.generarDialogo(finalParent);
+                    }
+                });
+                cambiar.setDisable(MapaController.isAtacar() || MapaController.isRearmar() || MapaController.isRepartir());
+                contenedor.getChildren().add(cambiar);
+            }
+
             if (super.getComandos().getLista().contains(RepartirEjercito.class)) {
                 Button repartir = this.crearPreControl("Repartir Ejércitos", MaterialDesignIcon.CLIPBOARD_ARROW_DOWN, new EjecutorAccion() {
                     @Override
@@ -162,17 +173,6 @@ public class ControlesController extends Partida {
                 });
                 asignar.setDisable(MapaController.isAtacar() || MapaController.isRearmar() || MapaController.isRepartir());
                 contenedor.getChildren().add(asignar);
-            }
-
-            if (super.getComandos().getLista().contains(CambiarCartas.class)) {
-                Button cambiar = this.crearPreControl("Cambiar Cartas", MaterialDesignIcon.SWAP_HORIZONTAL, new EjecutorAccion() {
-                    @Override
-                    public void onClick(Object o) {
-                        NuevoCambioCartas.generarDialogo(finalParent);
-                    }
-                });
-                cambiar.setDisable(MapaController.isAtacar() || MapaController.isRearmar() || MapaController.isRepartir());
-                contenedor.getChildren().add(cambiar);
             }
         }
     }
@@ -269,8 +269,6 @@ public class ControlesController extends Partida {
                     }
                 }));
             }
-
-            // TODO: Asignar países
         }
     }
 
@@ -353,7 +351,8 @@ public class ControlesController extends Partida {
                     || comando.getName().toLowerCase().contains("describir")
                     || comando.getName().toLowerCase().contains("ayuda")
                     || comando.getName().toLowerCase().contains("ver")
-                    || comando.getName().toLowerCase().contains("salir")) {
+                    || comando.getName().toLowerCase().contains("salir")
+                    || comando.getName().toLowerCase().contains("jugador")) {
                 continue;
             }
 

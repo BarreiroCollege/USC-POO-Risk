@@ -4,20 +4,30 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RegexValidator;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
+import gal.sdc.usc.risk.comandos.partida.CambiarCartas;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
+import gal.sdc.usc.risk.util.Colores;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class NuevoCambioCartas extends Partida {
     private final StackPane parent;
@@ -36,34 +46,68 @@ public class NuevoCambioCartas extends Partida {
         dialog.setDialogContainer(parent);
 
         JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Asignar Paises"));
+        layout.setHeading(new Label("Rearmar Países"));
 
         VBox contenedor = new VBox();
 
-        HBox fila = new HBox();
-        Label labelPais = new Label("Países");
-        labelPais.getStyleClass().add("dialogo-titulo");
-        fila.getChildren().add(labelPais);
-        VBox valores = new VBox();
-        for (Pais pais : MapaController.getPaisesSeleccionados()) {
-            valores.getChildren().add(Utils.labelColor(pais.getNombre(), pais.getColor().getHex()));
-        }
-        fila.getChildren().add(valores);
-        if (valores.getChildren().size() > 0) {
-            contenedor.getChildren().add(fila);
-            contenedor.getChildren().add(Utils.separadorEntrada());
-        }
+        List<Carta> cartas = super.getJugadorTurno().getCartas();
 
-        JFXComboBox<Label> comboJugadores = new JFXComboBox<>();
-        comboJugadores.setStyle(comboJugadores.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
-        comboJugadores.setPrefWidth(Float.MAX_VALUE);
-        for (Jugador jugador : super.getJugadores().values()) {
-            Label label = Utils.labelColor(jugador.getNombre(), jugador.getColor().getHex());
-            label.setId(jugador.getNombre());
-            comboJugadores.getItems().add(label);
+        JFXComboBox<Label> comboCarta1 = new JFXComboBox<>();
+        JFXComboBox<Label> comboCarta2 = new JFXComboBox<>();
+        JFXComboBox<Label> comboCarta3 = new JFXComboBox<>();
+        JFXButton ejecutar = new JFXButton("Cambiar");
+
+        comboCarta1.setPrefWidth(Float.MAX_VALUE);
+        for (Carta carta : cartas) {
+                comboCarta1.getItems().add(new Label(carta.getNombre()));
         }
-        comboJugadores.setPromptText("Jugador");
-        contenedor.getChildren().add(comboJugadores);
+        comboCarta1.setPromptText("Carta 1");
+        comboCarta1.getSelectionModel().selectedItemProperty().addListener((o, oldValue, newValue) -> {
+            comboCarta2.getItems().clear();
+            comboCarta3.getItems().clear();
+
+            for (Carta carta : cartas) {
+                if (!comboCarta1.getSelectionModel().getSelectedItem().getText().equals(carta.getNombre())) {
+                    comboCarta2.getItems().add(new Label(carta.getNombre()));
+                }
+            }
+        });
+        contenedor.getChildren().add(comboCarta1);
+
+        comboCarta2.disableProperty().bind(comboCarta1.getSelectionModel().selectedItemProperty().isNull());
+        comboCarta2.setStyle(comboCarta2.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
+        comboCarta2.setPrefWidth(Float.MAX_VALUE);
+        comboCarta2.setPromptText("Carta 2");
+        comboCarta2.getSelectionModel().selectedItemProperty().addListener((o, oldValue, newValue) -> {
+            comboCarta3.getItems().clear();
+
+            for (Carta carta : cartas) {
+                if (!comboCarta1.getSelectionModel().getSelectedItem().getText().equals(carta.getNombre())
+                && !comboCarta2.getSelectionModel().getSelectedItem().getText().equals(carta.getNombre())) {
+                    comboCarta3.getItems().add(new Label(carta.getNombre()));
+                }
+            }
+        });
+        contenedor.getChildren().add(comboCarta2);
+
+        comboCarta3.disableProperty().bind(comboCarta1.getSelectionModel().selectedItemProperty().isNull());
+        comboCarta3.setStyle(comboCarta3.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
+        comboCarta3.setPrefWidth(Float.MAX_VALUE);
+        comboCarta3.setPromptText("Carta 3");
+        comboCarta3.getSelectionModel().selectedItemProperty().addListener((o, oldValue, newValue) -> {
+            if (newValue == null) {
+                ejecutar.setText("Cambiar");
+            } else {
+                List<String> cartasCambio = Arrays.asList(
+                        comboCarta1.getSelectionModel().getSelectedItem().getText(),
+                        comboCarta2.getSelectionModel().getSelectedItem().getText(),
+                        comboCarta3.getSelectionModel().getSelectedItem().getText()
+                );
+                int ejercitos = CambiarCartas.calcularCambiosString(cartasCambio, super.getJugadorTurno(), super.getMapa());
+                ejecutar.setText("Cambiar x" + ejercitos);
+            }
+        });
+        contenedor.getChildren().add(comboCarta3);
 
         VBox errorContenedor = new VBox();
         errorContenedor.setStyle(errorContenedor.getStyle() + "-fx-padding: 15pt 0 10pt 0;");
@@ -91,50 +135,30 @@ public class NuevoCambioCartas extends Partida {
 
         layout.setBody(contenedor);
 
-        JFXButton ejecutar = new JFXButton("Asignar");
-        ejecutar.setDisable(true);
-        if (MapaController.getPaisesSeleccionados().size() > 0) {
-            ejecutar.disableProperty().bind(comboJugadores.getSelectionModel().selectedItemProperty().isNull());
-        }
+        ejecutar.disableProperty().bind(comboCarta3.getSelectionModel().selectedItemProperty().isNull());
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
-            for (Pais pais : MapaController.getPaisesSeleccionados()) {
-                Ejecutor.comando(
-                        "asignar pais "
-                                + comboJugadores.getSelectionModel().getSelectedItem().getId() + " "
-                                + pais.getAbreviatura(),
-                        new EjecutorListener() {
-                            @Override
-                            public void onComandoError(ExcepcionRISK e) {
-                                errorTitulo.setText("Error " + e.getCodigo());
-                                errorValor.setText(e.getMensaje());
-                                errorContenedor.setVisible(true);
-                                errorContenedor.setManaged(true);
-                            }
 
-                            @Override
-                            public void onComandoEjecutado() {
-                                MapaController.getPaisesSeleccionados().remove(pais);
-                                if (MapaController.getPaisesSeleccionados().size() == 0) {
-                                    dialog.close();
-                                    PrincipalController.mensaje("Paises asignados a "
-                                            + comboJugadores.getSelectionModel().getSelectedItem().getId());
-                                }
-                            }
-                        });
-            }
+            Ejecutor.comando("cambiar cartas " + comboCarta1.getSelectionModel().getSelectedItem().getText()
+                            + " " + comboCarta2.getSelectionModel().getSelectedItem().getText()
+                            + " " + comboCarta3.getSelectionModel().getSelectedItem().getText(),
+                    new EjecutorListener() {
+                        @Override
+                        public void onComandoError(ExcepcionRISK e) {
+                            errorTitulo.setText("Error " + e.getCodigo());
+                            errorValor.setText(e.getMensaje());
+                            errorContenedor.setVisible(true);
+                            errorContenedor.setManaged(true);
+                        }
+
+                        @Override
+                        public void onComandoEjecutado() {
+                            dialog.close();
+                            PrincipalController.mensaje("Se han cambiado las cartas, ya puedes repartir los ejércitos");
+                        }
+                    });
         });
-
-        if (MapaController.getPaisesSeleccionados().size() == 0) {
-            contenedor.getChildren().clear();
-            contenedor.getChildren().add(errorContenedor);
-
-            errorTitulo.setText("Error");
-            errorValor.setText("Primero selecciona en el mapa los países a asignar");
-            errorContenedor.setVisible(true);
-            errorContenedor.setManaged(true);
-        }
 
         JFXButton cerrar = new JFXButton("Cancelar");
         cerrar.setOnAction(event -> dialog.close());

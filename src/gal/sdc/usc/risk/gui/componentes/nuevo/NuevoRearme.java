@@ -47,7 +47,7 @@ public class NuevoRearme extends Partida {
         Label labelPais1 = new Label("Pais donante");
         labelPais1.getStyleClass().add("dialogo-titulo");
         fila1.getChildren().add(labelPais1);
-        fila1.getChildren().add(Utils.labelColor(pais1.getNombre(), pais1.getJugador().getColor().getHex()));
+        fila1.getChildren().add(Utils.labelColor(pais1.getNombre(), pais1.getColor().getHex()));
         contenedor.getChildren().add(fila1);
         contenedor.getChildren().add(Utils.separadorEntrada());
 
@@ -55,7 +55,7 @@ public class NuevoRearme extends Partida {
         Label labelPais2 = new Label("Pais receptor");
         labelPais2.getStyleClass().add("dialogo-titulo");
         fila2.getChildren().add(labelPais2);
-        fila2.getChildren().add(Utils.labelColor(pais2.getNombre(), pais2.getJugador().getColor().getHex()));
+        fila2.getChildren().add(Utils.labelColor(pais2.getNombre(), pais2.getColor().getHex()));
         contenedor.getChildren().add(fila2);
         contenedor.getChildren().add(Utils.separadorEntrada());
 
@@ -98,13 +98,14 @@ public class NuevoRearme extends Partida {
         layout.setBody(contenedor);
 
         JFXButton ejecutar = new JFXButton("Rearmar");
+        ejecutar.disableProperty().bind(numEjercitos.getValidators().get(0).hasErrorsProperty());
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
 
             int ejercitos = Integer.parseInt(numEjercitos.getText());
-            if (ejercitos > super.getJugadorTurno().getEjercitosPendientes().toInt()) {
-                ejercitos = super.getJugadorTurno().getEjercitosPendientes().toInt();
+            if ((pais1.getEjercito().toInt() - ejercitos) < 1) {
+                ejercitos = pais1.getEjercito().toInt() - 1;
             }
             int finalEjercitos = ejercitos;
 
