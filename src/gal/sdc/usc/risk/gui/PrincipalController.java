@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.Label;
 import java.io.IOException;
 
 public class PrincipalController extends Application {
@@ -53,11 +54,12 @@ public class PrincipalController extends Application {
         mensaje(new JFXSnackbarLayout(mensaje), duracion);
     }
 
-    public static void mensaje(JFXSnackbarLayout layout, Integer duracion) {
+    private static void mensaje(JFXSnackbarLayout layout, Integer duracion) {
+        JFXSnackbarLayout finalLayout = new JFXSnackbarLayout(layout.getToast(), "Cerrar", e -> snackbar.close());
         if (duracion != null) {
-            snackbar.enqueue(new JFXSnackbar.SnackbarEvent(layout, Duration.seconds(duracion)));
+            snackbar.enqueue(new JFXSnackbar.SnackbarEvent(finalLayout, Duration.seconds(duracion)));
         } else {
-            snackbar.enqueue(new JFXSnackbar.SnackbarEvent(layout));
+            snackbar.enqueue(new JFXSnackbar.SnackbarEvent(finalLayout));
         }
     }
 

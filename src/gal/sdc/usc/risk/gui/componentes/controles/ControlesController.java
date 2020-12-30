@@ -29,7 +29,6 @@ import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
-import gal.sdc.usc.risk.gui.componentes.mapa.MapaSeleccion;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevaCarta;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevaMisionAsignada;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoCambioCartas;
@@ -99,12 +98,12 @@ public class ControlesController extends Partida {
             superContenedor.setManaged(true);
 
             if (super.getComandos().getLista().contains(RepartirEjercito.class)) {
-                contenedor.getChildren().add(this.crearPreControl("Repartir Ejércitos", MaterialDesignIcon.CLIPBOARD_ARROW_DOWN, new EjecutorAccion() {
+                Button repartir = this.crearPreControl("Repartir Ejércitos", MaterialDesignIcon.CLIPBOARD_ARROW_DOWN, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
                         if (MapaController.cambiarRepartir()) {
-                            PrincipalController.mensaje("Para repartir ejércitos, puedes hacer un click simple en el país para asignarle " +
-                                    "un ejército, o mantener pulsado para asignar el número deseado.", 8);
+                            PrincipalController.mensaje("Clica en el país para asignar un ejército, o mantén pulsado para " +
+                                    "asignar más de uno. Para cancelar, pulsa de nuevo el botón de Repartir.", 10);
                             MapaController.setAccion(new EjecutorAccion() {
                                 @Override
                                 public void onClick(Object o) {
@@ -121,11 +120,13 @@ public class ControlesController extends Partida {
                         }
                         Utils.actualizar();
                     }
-                }));
+                });
+                repartir.setDisable(MapaController.isRearmar() || MapaController.isAtacar());
+                contenedor.getChildren().add(repartir);
             }
 
             if (super.getComandos().getLista().contains(AtacarPais.class)) {
-                contenedor.getChildren().add(this.crearPreControl("Atacar País", MaterialDesignIcon.TARGET, new EjecutorAccion() {
+                Button atacar = this.crearPreControl("Atacar País", MaterialDesignIcon.TARGET, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
                         if (MapaController.cambiarAtacar()) {
@@ -133,11 +134,13 @@ public class ControlesController extends Partida {
                         }
                         Utils.actualizar();
                     }
-                }));
+                });
+                atacar.setDisable(MapaController.isRearmar() || MapaController.isRepartir());
+                contenedor.getChildren().add(atacar);
             }
 
             if (super.getComandos().getLista().contains(Rearmar.class)) {
-                contenedor.getChildren().add(this.crearPreControl("Rearmar", MaterialDesignIcon.ACCOUNT_MULTIPLE_PLUS, new EjecutorAccion() {
+                Button rearmar = this.crearPreControl("Rearmar", MaterialDesignIcon.ACCOUNT_MULTIPLE_PLUS, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
                         if (MapaController.cambiarRearmar()) {
@@ -145,25 +148,31 @@ public class ControlesController extends Partida {
                         }
                         Utils.actualizar();
                     }
-                }));
+                });
+                rearmar.setDisable(MapaController.isAtacar() || MapaController.isRepartir());
+                contenedor.getChildren().add(rearmar);
             }
 
             if (super.getComandos().getLista().contains(AsignarCarta.class)) {
-                contenedor.getChildren().add(this.crearPreControl("Coger Carta", MaterialDesignIcon.BOOKMARK_PLUS, new EjecutorAccion() {
+                Button asignar = this.crearPreControl("Coger Carta", MaterialDesignIcon.BOOKMARK_PLUS, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
                         NuevaCarta.generarDialogo(finalParent);
                     }
-                }));
+                });
+                asignar.setDisable(MapaController.isAtacar() || MapaController.isRearmar() || MapaController.isRepartir());
+                contenedor.getChildren().add(asignar);
             }
 
             if (super.getComandos().getLista().contains(CambiarCartas.class)) {
-                contenedor.getChildren().add(this.crearPreControl("Cambiar Cartas", MaterialDesignIcon.SWAP_HORIZONTAL, new EjecutorAccion() {
+                Button cambiar = this.crearPreControl("Cambiar Cartas", MaterialDesignIcon.SWAP_HORIZONTAL, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
                         NuevoCambioCartas.generarDialogo(finalParent);
                     }
-                }));
+                });
+                cambiar.setDisable(MapaController.isAtacar() || MapaController.isRearmar() || MapaController.isRepartir());
+                contenedor.getChildren().add(cambiar);
             }
         }
     }
@@ -209,6 +218,7 @@ public class ControlesController extends Partida {
                         Ejecutor.comando("acabar turno", null);
                     }
                 });
+                acabarTurno.setDisable(MapaController.isAtacar() || MapaController.isRearmar() || MapaController.isRepartir());
                 contenedor.getChildren().add(acabarTurno);
             }
 

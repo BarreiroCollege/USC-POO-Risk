@@ -148,6 +148,10 @@ public abstract class Partida {
         return null;
     }
 
+    protected List<Carta> getCartasMonton() {
+        return Partida.cartasMonton;
+    }
+
     protected boolean isHaConquistadoPais() {
         return Partida.haConquistadoPais;
     }

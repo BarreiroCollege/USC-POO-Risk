@@ -1,0 +1,417 @@
+$> crear mapa
+$> crear jugadores jugadores.csv
+{
+  nombre: "JT",
+  color: "VERDE"
+}
+
+{
+  nombre: "Hooker",
+  color: "AZUL"
+}
+
+{
+  nombre: "Lonnegan",
+  color: "ROJO"
+}
+
+$> asignar misiones misiones.csv
+{
+  nombre: "JT",
+  mision: "Conquistar 24 países de la preferencia del jugador"
+}
+
+{
+  nombre: "Hooker",
+  mision: "Conquistar América del Norte y África"
+}
+
+{
+  nombre: "Lonnegan",
+  mision: "Destruir el ejército AZUL"
+}
+
+$> asignar paises paises.csv
+{
+  nombre: "JT",
+  pais: "Alaska",
+  continente: "América del Norte",
+  frontera: [ "Alberta", "Territorios del Noroeste", "Kamchatka" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Territorios del Noroeste",
+  continente: "América del Norte",
+  frontera: [ "Ontario", "Groenlandia", "Alaska" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Groenlandia",
+  continente: "América del Norte",
+  frontera: [ "Quebec", "Territorios del Noroeste", "Islandia" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Islandia",
+  continente: "Europa",
+  frontera: [ "Escandinavia", "Groenlandia" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Escandinavia",
+  continente: "Europa",
+  frontera: [ "Gran Bretaña", "Siberia", "Islandia" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Siberia",
+  continente: "Asia",
+  frontera: [ "Europa del Norte", "Yakustsk", "Escandinavia" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Yakustsk",
+  continente: "Asia",
+  frontera: [ "Rusia", "Kamchatka", "Siberia" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Kamchatka",
+  continente: "Asia",
+  frontera: [ "Irkutsk", "Yakustsk", "Alaska" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Alberta",
+  continente: "América del Norte",
+  frontera: [ "Alaska", "Estados Unidos del Oeste", "Ontario" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Ontario",
+  continente: "América del Norte",
+  frontera: [ "Territorios del Noroeste", "Estados Unidos del Este", "Quebec", "Alberta" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Quebec",
+  continente: "América del Norte",
+  frontera: [ "Groenlandia", "Ontario" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Gran Bretaña",
+  continente: "Europa",
+  frontera: [ "Escandinavia", "Europa Occidental", "Europa del Norte" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Europa del Norte",
+  continente: "Europa",
+  frontera: [ "Siberia", "Europa del Sur", "Rusia", "Gran Bretaña" ]
+}
+
+{
+  nombre: "JT",
+  pais: "Rusia",
+  continente: "Europa",
+  frontera: [ "Yakustsk", "Urales", "Irkutsk", "Europa del Norte" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Irkutsk",
+  continente: "Asia",
+  frontera: [ "Kamchatka", "Mongolia", "Rusia" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Estados Unidos del Oeste",
+  continente: "América del Norte",
+  frontera: [ "Alberta", "Estados Unidos del Este" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Estados Unidos del Este",
+  continente: "América del Norte",
+  frontera: [ "Ontario", "América Central", "Estados Unidos del Oeste" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Europa Occidental",
+  continente: "Europa",
+  frontera: [ "Gran Bretaña", "Europa del Sur", "África del Norte" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Europa del Sur",
+  continente: "Europa",
+  frontera: [ "Europa del Norte", "Urales", "Europa Occidental", "Egipto" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Urales",
+  continente: "Asia",
+  frontera: [ "Rusia", "Afganistán", "Mongolia", "Europa del Sur" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Mongolia",
+  continente: "Asia",
+  frontera: [ "Irkutsk", "China", "Japón", "Urales" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Japón",
+  continente: "Asia",
+  frontera: [ "Mongolia" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "América Central",
+  continente: "América del Norte",
+  frontera: [ "Estados Unidos del Este", "Venezuela" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Afganistán",
+  continente: "Asia",
+  frontera: [ "Urales", "Oriente Medio", "China" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "China",
+  continente: "Asia",
+  frontera: [ "Mongolia", "India", "Afganistán" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Venezuela",
+  continente: "América del Sur",
+  frontera: [ "América Central", "Perú" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "África del Norte",
+  continente: "África",
+  frontera: [ "Congo", "Egipto", "Brasil", "Europa Occidental" ]
+}
+
+{
+  nombre: "Hooker",
+  pais: "Egipto",
+  continente: "África",
+  frontera: [ "África Oriental", "Oriente Medio", "África del Norte", "Europa del Sur" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Oriente Medio",
+  continente: "Asia",
+  frontera: [ "Afganistán", "India", "Egipto" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "India",
+  continente: "Asia",
+  frontera: [ "China", "Sureste Asiático", "Oriente Medio" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Sureste Asiático",
+  continente: "Asia",
+  frontera: [ "India", "Indonesia" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Perú",
+  continente: "América del Sur",
+  frontera: [ "Venezuela", "Argentina", "Brasil" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Brasil",
+  continente: "América del Sur",
+  frontera: [ "Perú", "África del Norte" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Congo",
+  continente: "África",
+  frontera: [ "África del Norte", "África Oriental" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "África Oriental",
+  continente: "África",
+  frontera: [ "Egipto", "Sudáfrica", "Congo" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Argentina",
+  continente: "América del Sur",
+  frontera: [ "Perú" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Sudáfrica",
+  continente: "África",
+  frontera: [ "África Oriental", "Madagascar" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Madagascar",
+  continente: "África",
+  frontera: [ "Sudáfrica" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Indonesia",
+  continente: "Oceanía",
+  frontera: [ "Australia Occidental", "Nueva Guinea", "Sureste Asiático" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Nueva Guinea",
+  continente: "Oceanía",
+  frontera: [ "Australia Oriental", "Indonesia" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Australia Occidental",
+  continente: "Oceanía",
+  frontera: [ "Indonesia", "Australia Oriental" ]
+}
+
+{
+  nombre: "Lonnegan",
+  pais: "Australia Oriental",
+  continente: "Oceanía",
+  frontera: [ "Nueva Guinea", "Australia Occidental" ]
+}
+
+$> repartir ejercitos
+$> ver mapa
+$> acabar turno
+{
+  nombre: "Hooker",
+  numeroEjercitosRearmar: 21
+}
+
+$> repartir ejercitos
+$> ver mapa
+$> acabar turno
+{
+  nombre: "Lonnegan",
+  numeroEjercitosRearmar: 21
+}
+
+$> repartir ejercitos
+$> ver mapa
+$> acabar turno
+{
+  nombre: "JT",
+  numeroEjercitosRearmar: 4
+}
+
+$> repartir ejercito 1 EurNorte
+{
+  pais: "Europa del Norte",
+  jugador: "JT",
+  numeroEjercitosAsignados: 1,
+  numeroEjercitosTotales: 2,
+  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 1 }, { "Europa del Norte", 2 }, { "Islandia", 1 } ]
+}
+
+$> repartir ejercito 1 EurNorte
+{
+  pais: "Europa del Norte",
+  jugador: "JT",
+  numeroEjercitosAsignados: 1,
+  numeroEjercitosTotales: 3,
+  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 1 }, { "Europa del Norte", 3 }, { "Islandia", 1 } ]
+}
+
+$> repartir ejercito 1 EurNorte
+{
+  pais: "Europa del Norte",
+  jugador: "JT",
+  numeroEjercitosAsignados: 1,
+  numeroEjercitosTotales: 4,
+  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 1 }, { "Europa del Norte", 4 }, { "Islandia", 1 } ]
+}
+
+$> repartir ejercito 1 EurNorte
+{
+  pais: "Europa del Norte",
+  jugador: "JT",
+  numeroEjercitosAsignados: 1,
+  numeroEjercitosTotales: 5,
+  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 1 }, { "Europa del Norte", 5 }, { "Islandia", 1 } ]
+}
+
+$> atacar EurNorte 2x3x2 EurSur 5
+{
+  dadosAtaque: [ 4, 2, 2 ],
+  dadosDefensa: [ 5 ],
+  ejercitosPaisAtaque: [ 5, 4 ],
+  ejercitosPaisDefensa: [ 1, 1 ],
+  paisAtaquePerteneceA: "JT",
+  paisDefensaPerteneceA: "Hooker",
+  continenteConquistado: "null"
+}
+
+$> atacar EurNorte 3x1x3 EurSur 6
+{
+  dadosAtaque: [ 4, 3, 1 ],
+  dadosDefensa: [ 6 ],
+  ejercitosPaisAtaque: [ 4, 3 ],
+  ejercitosPaisDefensa: [ 1, 1 ],
+  paisAtaquePerteneceA: "JT",
+  paisDefensaPerteneceA: "Hooker",
+  continenteConquistado: "null"
+}
+
+$> atacar EurNorte 2x3 EurSur 1
+{
+  dadosAtaque: [ 4, 2 ],
+  dadosDefensa: [ 1 ],
+  ejercitosPaisAtaque: [ 3, 1 ],
+  ejercitosPaisDefensa: [ 1, 2 ],
+  paisAta

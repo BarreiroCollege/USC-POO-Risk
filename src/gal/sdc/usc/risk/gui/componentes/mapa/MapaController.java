@@ -101,33 +101,45 @@ public class MapaController extends Partida {
     }
 
     public static boolean cambiarRepartir() {
-        if (MapaController.repartir) {
+        MapaController.repartir = !MapaController.repartir;
+        if (!MapaController.repartir) {
             MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
         } else {
             MapaController.setSeleccionar(MapaSeleccion.JUGADOR);
         }
-        MapaController.repartir = !MapaController.repartir;
         return MapaController.repartir;
     }
 
     public static boolean cambiarAtacar() {
-        if (MapaController.atacar) {
+        MapaController.atacar = !MapaController.atacar;
+        if (!MapaController.atacar) {
             MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
         } else {
             MapaController.setSeleccionar(MapaSeleccion.JUGADOR);
         }
-        MapaController.atacar = !MapaController.atacar;
         return MapaController.atacar;
     }
 
     public static boolean cambiarRearmar() {
-        if (MapaController.rearmar) {
+        MapaController.rearmar = !MapaController.rearmar;
+        if (!MapaController.rearmar) {
             MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
         } else {
             MapaController.setSeleccionar(MapaSeleccion.JUGADOR);
         }
-        MapaController.rearmar = !MapaController.rearmar;
         return MapaController.rearmar;
+    }
+
+    public static boolean isAtacar() {
+        return MapaController.atacar;
+    }
+
+    public static boolean isRearmar() {
+        return MapaController.rearmar;
+    }
+
+    public static boolean isRepartir() {
+        return MapaController.repartir;
     }
 
     @FXML
@@ -364,7 +376,9 @@ public class MapaController extends Partida {
                                 if (paisesSeleccionados.contains(pais)) {
                                     paisesSeleccionados.remove(pais);
                                 } else {
-                                    paisesSeleccionados.add(pais);
+                                    if (paisesSeleccionados.size() != 2 || (!atacar && !rearmar)) {
+                                        paisesSeleccionados.add(pais);
+                                    }
                                 }
 
                                 if (atacar) {
@@ -381,11 +395,11 @@ public class MapaController extends Partida {
                                         NuevoRearme.generarDialogo(finalParent);
                                     }
                                 }
+
+                                Utils.actualizar();
                             } else {
                                 this.generarDialogo(finalParent, pais).show();
                             }
-
-                            // Utils.actualizar();
                         });
                     }
                 }

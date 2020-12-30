@@ -1,7 +1,6 @@
 package gal.sdc.usc.risk.gui.componentes.nuevo;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import gal.sdc.usc.risk.comandos.Ejecutor;
@@ -11,13 +10,16 @@ import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
+import gal.sdc.usc.risk.util.Dado;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NuevoAtaque extends Partida {
     private final StackPane parent;
@@ -36,34 +38,28 @@ public class NuevoAtaque extends Partida {
         dialog.setDialogContainer(parent);
 
         JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Asignar Paises"));
+        layout.setHeading(new Label("Atacar Paises"));
 
         VBox contenedor = new VBox();
 
-        HBox fila = new HBox();
-        Label labelPais = new Label("Países");
-        labelPais.getStyleClass().add("dialogo-titulo");
-        fila.getChildren().add(labelPais);
-        VBox valores = new VBox();
-        for (Pais pais : MapaController.getPaisesSeleccionados()) {
-            valores.getChildren().add(Utils.labelColor(pais.getNombre(), pais.getColor().getHex()));
-        }
-        fila.getChildren().add(valores);
-        if (valores.getChildren().size() > 0) {
-            contenedor.getChildren().add(fila);
-            contenedor.getChildren().add(Utils.separadorEntrada());
-        }
+        Pais pais1 = MapaController.getPaisesSeleccionados().get(0);
+        Pais pais2 = MapaController.getPaisesSeleccionados().get(1);
 
-        JFXComboBox<Label> comboJugadores = new JFXComboBox<>();
-        comboJugadores.setStyle(comboJugadores.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
-        comboJugadores.setPrefWidth(Float.MAX_VALUE);
-        for (Jugador jugador : super.getJugadores().values()) {
-            Label label = Utils.labelColor(jugador.getNombre(), jugador.getColor().getHex());
-            label.setId(jugador.getNombre());
-            comboJugadores.getItems().add(label);
-        }
-        comboJugadores.setPromptText("Jugador");
-        contenedor.getChildren().add(comboJugadores);
+        HBox fila1 = new HBox();
+        Label labelPais1 = new Label("Pais atacante");
+        labelPais1.getStyleClass().add("dialogo-titulo");
+        fila1.getChildren().add(labelPais1);
+        fila1.getChildren().add(Utils.labelColor(pais1.getNombre(), pais1.getJugador().getColor().getHex()));
+        contenedor.getChildren().add(fila1);
+        contenedor.getChildren().add(Utils.separadorEntrada());
+
+        HBox fila2 = new HBox();
+        Label labelPais2 = new Label("Pais defensor");
+        labelPais2.getStyleClass().add("dialogo-titulo");
+        fila2.getChildren().add(labelPais2);
+        fila2.getChildren().add(Utils.labelColor(pais2.getNombre(), pais2.getJugador().getColor().getHex()));
+        contenedor.getChildren().add(fila2);
+        contenedor.getChildren().add(Utils.separadorEntrada());
 
         VBox errorContenedor = new VBox();
         errorContenedor.setStyle(errorContenedor.getStyle() + "-fx-padding: 15pt 0 10pt 0;");
@@ -91,39 +87,68 @@ public class NuevoAtaque extends Partida {
 
         layout.setBody(contenedor);
 
-        JFXButton ejecutar = new JFXButton("Asignar");
-        ejecutar.setDisable(true);
-        if (MapaController.getPaisesSeleccionados().size() > 0) {
-            ejecutar.disableProperty().bind(comboJugadores.getSelectionModel().selectedItemProperty().isNull());
-        }
+        JFXButton ejecutar = new JFXButton("Atacar");
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
-            for (Pais pais : MapaController.getPaisesSeleccionados()) {
-                Ejecutor.comando(
-                        "asignar pais "
-                                + comboJugadores.getSelectionModel().getSelectedItem().getId() + " "
-                                + pais.getAbreviatura(),
-                        new EjecutorListener() {
-                            @Override
-                            public void onComandoError(ExcepcionRISK e) {
-                                errorTitulo.setText("Error " + e.getCodigo());
-                                errorValor.setText(e.getMensaje());
-                                errorContenedor.setVisible(true);
-                                errorContenedor.setManaged(true);
+
+            List<String> atacante = new ArrayList<>();
+            List<String> defensor = new ArrayList<>();
+
+            int atacantes;
+            if (pais1.getEjercito().toInt() == 2) {
+                atacantes = 1;
+            } else if (pais1.getEjercito().toInt() == 3) {
+                atacantes = 2;
+            } else {
+                atacantes = 3;
+            }
+
+            int defensores;
+            if (pais2.getEjercito().toInt() == 1) {
+                defensores = 1;
+            } else {
+                defensores = 2;
+            }
+
+            for (int i = 0; i < atacantes; i++) {
+                atacante.add("" + Dado.tirar());
+            }
+            for (int i = 0; i < defensores; i++) {
+                defensor.add("" + Dado.tirar());
+            }
+
+            List<String> comando = new ArrayList<>();
+            comando.add("atacar");
+            comando.add(pais1.getAbreviatura());
+            comando.add(String.join("x", atacante));
+            comando.add(pais2.getAbreviatura());
+            comando.add(String.join("x", defensor));
+
+            Ejecutor.comando(String.join(" ", comando),
+                    new EjecutorListener() {
+                        @Override
+                        public void onComandoError(ExcepcionRISK e) {
+                            errorTitulo.setText("Error " + e.getCodigo());
+                            errorValor.setText(e.getMensaje());
+                            errorContenedor.setVisible(true);
+                            errorContenedor.setManaged(true);
+                        }
+
+                        @Override
+                        public void onComandoEjecutado() {
+                            MapaController.cambiarAtacar();
+                            dialog.close();
+
+                            if (pais2.getJugador().equals(pais1.getJugador())) {
+                                PrincipalController.mensaje("El país ha sido conquistado");
                             }
 
-                            @Override
-                            public void onComandoEjecutado() {
-                                MapaController.getPaisesSeleccionados().remove(pais);
-                                if (MapaController.getPaisesSeleccionados().size() == 0) {
-                                    dialog.close();
-                                    PrincipalController.mensaje("Paises asignados a "
-                                            + comboJugadores.getSelectionModel().getSelectedItem().getId());
-                                }
-                            }
-                        });
-            }
+                            PrincipalController.mensaje("Se han tirado los dados " + String.join("x", atacante)
+                                    + " [" + pais1.getNombre() + "] frente a " + String.join("x", defensor)
+                                    + " [" + pais2.getNombre() + "]");
+                        }
+                    });
         });
 
         if (MapaController.getPaisesSeleccionados().size() == 0) {

@@ -28,3 +28,14 @@
 .error {
     -fx-text-fill: #d32f2f;
 }
+
+.jfx-snackbar-toast {
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+}
+
+.jfx-snackbar-action {
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d81b60;
+}

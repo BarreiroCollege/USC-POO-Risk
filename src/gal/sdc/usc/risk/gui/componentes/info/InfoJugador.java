@@ -6,6 +6,7 @@ import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
+import gal.sdc.usc.risk.util.Colores;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -72,17 +73,13 @@ public class InfoJugador extends Partida {
     }
 
     private HBox cartas() {
-        Label label;
-        VBox valores;
         HBox fila = new HBox();
-        label = new Label("Cartas");
+        Label label = new Label("Cartas");
         label.getStyleClass().add("dialogo-titulo");
         fila.getChildren().add(label);
-        valores = new VBox();
+        VBox valores = new VBox();
         for (Carta carta : jugador.getCartas()) {
-            label = new Label(carta.getNombre());
-            label.getStyleClass().add("dialogo-valor");
-            valores.getChildren().add(label);
+            valores.getChildren().add(Utils.labelColor(carta.getNombre(), Colores.Color.NEGRO.getHex()));
         }
         fila.getChildren().add(valores);
         if (valores.getChildren().size() > 0) {

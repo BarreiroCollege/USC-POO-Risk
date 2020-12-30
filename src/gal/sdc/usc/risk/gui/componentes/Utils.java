@@ -3,6 +3,7 @@ package gal.sdc.usc.risk.gui.componentes;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.controles.ControlesController;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -28,6 +29,10 @@ public class Utils {
     }
 
     public static void actualizar() {
+        Platform.runLater(Utils::actualizarTodo);
+    }
+
+    public static void actualizarTodo() {
         final Scene scene = PrincipalController.getScene();
 
         FXMLLoader loader = new FXMLLoader();

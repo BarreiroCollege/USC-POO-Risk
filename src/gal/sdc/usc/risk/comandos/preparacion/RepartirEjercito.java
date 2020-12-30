@@ -4,6 +4,7 @@ import gal.sdc.usc.risk.comandos.Comando;
 import gal.sdc.usc.risk.comandos.Comandos;
 import gal.sdc.usc.risk.comandos.Estado;
 import gal.sdc.usc.risk.comandos.IComando;
+import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.salida.Resultado;
 import gal.sdc.usc.risk.salida.SalidaDupla;
@@ -86,6 +87,9 @@ public class RepartirEjercito extends Partida implements IComando {
             super.getComandos().repartiendo();
 
             if (super.getJugadorTurno().getEjercitosPendientes().toInt() == 0) {
+                if (MapaController.isRepartir()) {
+                    MapaController.cambiarRepartir();
+                }
                 super.getComandos().atacar();
             }
         } else {

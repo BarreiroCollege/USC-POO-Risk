@@ -9,15 +9,23 @@ import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
-import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.tablero.Jugador;
+import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Pais;
+import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class NuevaCarta extends Partida {
     private final StackPane parent;
@@ -30,40 +38,85 @@ public class NuevaCarta extends Partida {
         this.parent = parent;
     }
 
+    private List<Label> paisesDisponibles(Label subequipamientoLabel) {
+        SubEquipamientos subequipamiento = null;
+        if (subequipamientoLabel != null) {
+            subequipamiento = SubEquipamientos.toSubEquipamientos(subequipamientoLabel.getText());
+        }
+        Set<Pais> paises = new LinkedHashSet<>();
+        for (Carta carta : super.getCartasMonton()) {
+            if (subequipamiento != null && !carta.getSubEquipamiento().equals(subequipamiento)) continue;
+            if (!carta.getPais().getJugador().equals(super.getJugadorTurno())) continue;
+            paises.add(carta.getPais());
+        }
+        for (Carta carta : super.getCartasMonton()) {
+            if (subequipamiento != null && !carta.getSubEquipamiento().equals(subequipamiento)) continue;
+            if (carta.getPais().getJugador().equals(super.getJugadorTurno())) continue;
+            paises.add(carta.getPais());
+        }
+
+        List<Label> labels = new LinkedList<>();
+        for (Pais pais : paises) {
+            Label label = Utils.labelColor(pais.getNombre(), pais.getJugador().getColor().getHex());
+            label.setId(pais.getAbreviatura());
+            labels.add(label);
+        }
+
+        return labels;
+    }
+
+    private List<Label> subequipamientosDisponibles(Label paisLabel) {
+        Pais pais = null;
+        if (paisLabel != null) {
+            pais = super.getMapa().getPaisPorNombre(paisLabel.getText());
+        }
+        HashMap<String, SubEquipamientos> subequipamientos = new HashMap<>();
+        for (Carta carta : super.getCartasMonton()) {
+            if (pais != null && !carta.getPais().equals(pais)) continue;
+            subequipamientos.put(carta.getEquipamiento().getNombre() + " / " + carta.getSubEquipamiento().getNombre(), carta.getSubEquipamiento());
+        }
+
+        List<Label> labels = new ArrayList<>();
+        for (Map.Entry<String, SubEquipamientos> e : subequipamientos.entrySet()) {
+            Label label = new Label(e.getKey());
+            label.setId(e.getValue().getNombre());
+            labels.add(label);
+        }
+
+        return labels;
+    }
+
     private void generar() {
         JFXDialog dialog = new JFXDialog();
         dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         dialog.setDialogContainer(parent);
 
         JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Asignar Paises"));
+        layout.setHeading(new Label("Seleccionar Carta"));
 
         VBox contenedor = new VBox();
 
-        HBox fila = new HBox();
-        Label labelPais = new Label("Países");
-        labelPais.getStyleClass().add("dialogo-titulo");
-        fila.getChildren().add(labelPais);
-        VBox valores = new VBox();
-        for (Pais pais : MapaController.getPaisesSeleccionados()) {
-            valores.getChildren().add(Utils.labelColor(pais.getNombre(), pais.getColor().getHex()));
-        }
-        fila.getChildren().add(valores);
-        if (valores.getChildren().size() > 0) {
-            contenedor.getChildren().add(fila);
-            contenedor.getChildren().add(Utils.separadorEntrada());
-        }
+        JFXComboBox<Label> comboPaises = new JFXComboBox<>();
+        JFXComboBox<Label> comboSubequipamientos = new JFXComboBox<>();
+        comboSubequipamientos.setStyle(comboSubequipamientos.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
+        comboSubequipamientos.disableProperty().bind(comboPaises.getSelectionModel().selectedItemProperty().isNull());
 
-        JFXComboBox<Label> comboJugadores = new JFXComboBox<>();
-        comboJugadores.setStyle(comboJugadores.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
-        comboJugadores.setPrefWidth(Float.MAX_VALUE);
-        for (Jugador jugador : super.getJugadores().values()) {
-            Label label = Utils.labelColor(jugador.getNombre(), jugador.getColor().getHex());
-            label.setId(jugador.getNombre());
-            comboJugadores.getItems().add(label);
-        }
-        comboJugadores.setPromptText("Jugador");
-        contenedor.getChildren().add(comboJugadores);
+        comboPaises.setPrefWidth(Float.MAX_VALUE);
+        comboPaises.getItems().addAll(paisesDisponibles(null));
+        comboPaises.setPromptText("Pais");
+        contenedor.getChildren().add(comboPaises);
+
+        comboSubequipamientos.setPrefWidth(Float.MAX_VALUE);
+        comboSubequipamientos.getItems().addAll(subequipamientosDisponibles(null));
+        comboSubequipamientos.setPromptText("Equipamiento");
+        contenedor.getChildren().add(comboSubequipamientos);
+
+        comboPaises.getSelectionModel().selectedItemProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal.equals(oldVal)) {
+                comboSubequipamientos.getItems().clear();
+                comboSubequipamientos.getItems().addAll(subequipamientosDisponibles(newVal));
+            }
+        });
 
         VBox errorContenedor = new VBox();
         errorContenedor.setStyle(errorContenedor.getStyle() + "-fx-padding: 15pt 0 10pt 0;");
@@ -93,48 +146,34 @@ public class NuevaCarta extends Partida {
 
         JFXButton ejecutar = new JFXButton("Asignar");
         ejecutar.setDisable(true);
-        if (MapaController.getPaisesSeleccionados().size() > 0) {
-            ejecutar.disableProperty().bind(comboJugadores.getSelectionModel().selectedItemProperty().isNull());
-        }
+        ejecutar.disableProperty().bind(comboPaises.getSelectionModel().selectedItemProperty().isNull()
+                .or(comboSubequipamientos.getSelectionModel().selectedItemProperty().isNull()));
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
-            for (Pais pais : MapaController.getPaisesSeleccionados()) {
-                Ejecutor.comando(
-                        "asignar pais "
-                                + comboJugadores.getSelectionModel().getSelectedItem().getId() + " "
-                                + pais.getAbreviatura(),
-                        new EjecutorListener() {
-                            @Override
-                            public void onComandoError(ExcepcionRISK e) {
-                                errorTitulo.setText("Error " + e.getCodigo());
-                                errorValor.setText(e.getMensaje());
-                                errorContenedor.setVisible(true);
-                                errorContenedor.setManaged(true);
-                            }
+            Ejecutor.comando(
+                    "asignar carta "
+                            + comboSubequipamientos.getSelectionModel().getSelectedItem().getId() + "&"
+                            + comboPaises.getSelectionModel().getSelectedItem().getId(),
+                    new EjecutorListener() {
+                        @Override
+                        public void onComandoError(ExcepcionRISK e) {
+                            errorTitulo.setText("Error " + e.getCodigo());
+                            errorValor.setText(e.getMensaje());
+                            errorContenedor.setVisible(true);
+                            errorContenedor.setManaged(true);
+                        }
 
-                            @Override
-                            public void onComandoEjecutado() {
-                                MapaController.getPaisesSeleccionados().remove(pais);
-                                if (MapaController.getPaisesSeleccionados().size() == 0) {
-                                    dialog.close();
-                                    PrincipalController.mensaje("Paises asignados a "
-                                            + comboJugadores.getSelectionModel().getSelectedItem().getId());
-                                }
-                            }
-                        });
-            }
+                        @Override
+                        public void onComandoEjecutado() {
+                            dialog.close();
+                            PrincipalController.mensaje("La carta "
+                                    + comboPaises.getSelectionModel().getSelectedItem().getId() + "&"
+                                    + comboSubequipamientos.getSelectionModel().getSelectedItem().getId()
+                                    + " ha sido asignada");
+                        }
+                    });
         });
-
-        if (MapaController.getPaisesSeleccionados().size() == 0) {
-            contenedor.getChildren().clear();
-            contenedor.getChildren().add(errorContenedor);
-
-            errorTitulo.setText("Error");
-            errorValor.setText("Primero selecciona en el mapa los países a asignar");
-            errorContenedor.setVisible(true);
-            errorContenedor.setManaged(true);
-        }
 
         JFXButton cerrar = new JFXButton("Cancelar");
         cerrar.setOnAction(event -> dialog.close());

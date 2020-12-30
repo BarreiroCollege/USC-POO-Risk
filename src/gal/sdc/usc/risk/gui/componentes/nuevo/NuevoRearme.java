@@ -1,9 +1,10 @@
 package gal.sdc.usc.risk.gui.componentes.nuevo;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RegexValidator;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
@@ -11,7 +12,6 @@ import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.jugar.Partida;
-import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -36,34 +36,40 @@ public class NuevoRearme extends Partida {
         dialog.setDialogContainer(parent);
 
         JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Asignar Paises"));
+        layout.setHeading(new Label("Rearmar Países"));
 
         VBox contenedor = new VBox();
 
-        HBox fila = new HBox();
-        Label labelPais = new Label("Países");
-        labelPais.getStyleClass().add("dialogo-titulo");
-        fila.getChildren().add(labelPais);
-        VBox valores = new VBox();
-        for (Pais pais : MapaController.getPaisesSeleccionados()) {
-            valores.getChildren().add(Utils.labelColor(pais.getNombre(), pais.getColor().getHex()));
-        }
-        fila.getChildren().add(valores);
-        if (valores.getChildren().size() > 0) {
-            contenedor.getChildren().add(fila);
-            contenedor.getChildren().add(Utils.separadorEntrada());
-        }
+        Pais pais1 = MapaController.getPaisesSeleccionados().get(0);
+        Pais pais2 = MapaController.getPaisesSeleccionados().get(1);
 
-        JFXComboBox<Label> comboJugadores = new JFXComboBox<>();
-        comboJugadores.setStyle(comboJugadores.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
-        comboJugadores.setPrefWidth(Float.MAX_VALUE);
-        for (Jugador jugador : super.getJugadores().values()) {
-            Label label = Utils.labelColor(jugador.getNombre(), jugador.getColor().getHex());
-            label.setId(jugador.getNombre());
-            comboJugadores.getItems().add(label);
-        }
-        comboJugadores.setPromptText("Jugador");
-        contenedor.getChildren().add(comboJugadores);
+        HBox fila1 = new HBox();
+        Label labelPais1 = new Label("Pais donante");
+        labelPais1.getStyleClass().add("dialogo-titulo");
+        fila1.getChildren().add(labelPais1);
+        fila1.getChildren().add(Utils.labelColor(pais1.getNombre(), pais1.getJugador().getColor().getHex()));
+        contenedor.getChildren().add(fila1);
+        contenedor.getChildren().add(Utils.separadorEntrada());
+
+        HBox fila2 = new HBox();
+        Label labelPais2 = new Label("Pais receptor");
+        labelPais2.getStyleClass().add("dialogo-titulo");
+        fila2.getChildren().add(labelPais2);
+        fila2.getChildren().add(Utils.labelColor(pais2.getNombre(), pais2.getJugador().getColor().getHex()));
+        contenedor.getChildren().add(fila2);
+        contenedor.getChildren().add(Utils.separadorEntrada());
+
+        JFXTextField numEjercitos = new JFXTextField();
+        numEjercitos.setLabelFloat(true);
+        numEjercitos.setStyle(numEjercitos.getStyle() + "-fx-padding: 20pt 0 5pt 0;");
+        numEjercitos.setPromptText("Número de ejércitos");
+        RegexValidator validadorRegex = new RegexValidator();
+        validadorRegex.setRegexPattern("([0-9]+)");
+        validadorRegex.setMessage("Introduce un número positivo");
+        numEjercitos.getValidators().add(validadorRegex);
+        numEjercitos.textProperty().addListener((o) -> numEjercitos.validate());
+        numEjercitos.validate();
+        contenedor.getChildren().add(numEjercitos);
 
         VBox errorContenedor = new VBox();
         errorContenedor.setStyle(errorContenedor.getStyle() + "-fx-padding: 15pt 0 10pt 0;");
@@ -91,50 +97,35 @@ public class NuevoRearme extends Partida {
 
         layout.setBody(contenedor);
 
-        JFXButton ejecutar = new JFXButton("Asignar");
-        ejecutar.setDisable(true);
-        if (MapaController.getPaisesSeleccionados().size() > 0) {
-            ejecutar.disableProperty().bind(comboJugadores.getSelectionModel().selectedItemProperty().isNull());
-        }
+        JFXButton ejecutar = new JFXButton("Rearmar");
         ejecutar.setOnAction(event -> {
             errorContenedor.setVisible(false);
             errorContenedor.setManaged(false);
-            for (Pais pais : MapaController.getPaisesSeleccionados()) {
-                Ejecutor.comando(
-                        "asignar pais "
-                                + comboJugadores.getSelectionModel().getSelectedItem().getId() + " "
-                                + pais.getAbreviatura(),
-                        new EjecutorListener() {
-                            @Override
-                            public void onComandoError(ExcepcionRISK e) {
-                                errorTitulo.setText("Error " + e.getCodigo());
-                                errorValor.setText(e.getMensaje());
-                                errorContenedor.setVisible(true);
-                                errorContenedor.setManaged(true);
-                            }
 
-                            @Override
-                            public void onComandoEjecutado() {
-                                MapaController.getPaisesSeleccionados().remove(pais);
-                                if (MapaController.getPaisesSeleccionados().size() == 0) {
-                                    dialog.close();
-                                    PrincipalController.mensaje("Paises asignados a "
-                                            + comboJugadores.getSelectionModel().getSelectedItem().getId());
-                                }
-                            }
-                        });
+            int ejercitos = Integer.parseInt(numEjercitos.getText());
+            if (ejercitos > super.getJugadorTurno().getEjercitosPendientes().toInt()) {
+                ejercitos = super.getJugadorTurno().getEjercitosPendientes().toInt();
             }
+            int finalEjercitos = ejercitos;
+
+            Ejecutor.comando("rearmar " + pais1.getAbreviatura() + " " + numEjercitos.getText() + " " + pais2.getAbreviatura(),
+                    new EjecutorListener() {
+                        @Override
+                        public void onComandoError(ExcepcionRISK e) {
+                            errorTitulo.setText("Error " + e.getCodigo());
+                            errorValor.setText(e.getMensaje());
+                            errorContenedor.setVisible(true);
+                            errorContenedor.setManaged(true);
+                        }
+
+                        @Override
+                        public void onComandoEjecutado() {
+                            MapaController.cambiarRearmar();
+                            dialog.close();
+                            PrincipalController.mensaje("Se han asignado " + finalEjercitos + " a " + pais2.getNombre());
+                        }
+                    });
         });
-
-        if (MapaController.getPaisesSeleccionados().size() == 0) {
-            contenedor.getChildren().clear();
-            contenedor.getChildren().add(errorContenedor);
-
-            errorTitulo.setText("Error");
-            errorValor.setText("Primero selecciona en el mapa los países a asignar");
-            errorContenedor.setVisible(true);
-            errorContenedor.setManaged(true);
-        }
 
         JFXButton cerrar = new JFXButton("Cancelar");
         cerrar.setOnAction(event -> dialog.close());
