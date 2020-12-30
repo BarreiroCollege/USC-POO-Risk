@@ -4,14 +4,30 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="gal.sdc.usc.risk.gui.componentes.controles.ControlesController"
             maxWidth="Infinity" maxHeight="Infinity" minWidth="0" minHeight="0" fx:id="anchor">
     <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-          AnchorPane.bottomAnchor="0.0" fx:id="parent">
-        <HBox fx:id="contenedor" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
-        <HBox fx:id="comandos" VBox.vgrow="ALWAYS" styleClass="contenedor-comando">
-            <JFXButton onAction="#comandos" prefWidth="Infinity" styleClass="btn-comando">Introducir Comando</JFXButton>
-        </HBox>
+          AnchorPane.bottomAnchor="0.0" fx:id="parent" id="parent-control" styleClass="ctrl-container">
+        <VBox VBox.vgrow="ALWAYS" styleClass="card">
+            <VBox VBox.vgrow="ALWAYS" fx:id="contenedorJugador" id="contenedor-jugador"/>
+        </VBox>
+        <VBox minWidth="20"/>
+        <VBox VBox.vgrow="ALWAYS" styleClass="card" id="super-contenedor-comandos">
+            <VBox fx:id="contenedorComandos" id="contenedor-comandos"/>
+        </VBox>
+        <VBox HBox.hgrow="ALWAYS"/>
+        <VBox VBox.vgrow="ALWAYS" styleClass="card">
+            <VBox VBox.vgrow="ALWAYS">
+                <JFXToggleButton fx:id="toogleIndirectas" onAction="#indirectas" styleClass="custom-jfx-toggle"
+                                 text="Mostrar fronteras indirectas" selected="true"/>
+            </VBox>
+            <VBox fx:id="comandos" VBox.vgrow="ALWAYS" styleClass="contenedor-comando">
+                <JFXButton onAction="#comandos" prefWidth="Infinity" styleClass="btn-comando" buttonType="RAISED">
+                    Introducir Comando
+                </JFXButton>
+            </VBox>
+        </VBox>
     </HBox>
 </AnchorPane>

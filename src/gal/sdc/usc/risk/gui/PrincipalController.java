@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -34,8 +35,8 @@ public class PrincipalController extends Application {
     public VBox controlesHorizontal;
 
     private static JFXSnackbar snackbar;
-
     private static Scene scene;
+    private static StackPane parent;
 
     public PrincipalController() {
     }
@@ -45,32 +46,45 @@ public class PrincipalController extends Application {
     }
 
     public static void mensaje(String mensaje) {
-        mensaje(new JFXSnackbarLayout(mensaje));
+        mensaje(mensaje, null);
     }
 
-    public static void mensaje(JFXSnackbarLayout layout) {
-        snackbar.enqueue(new JFXSnackbar.SnackbarEvent(layout));
+    public static void mensaje(String mensaje, Integer duracion) {
+        mensaje(new JFXSnackbarLayout(mensaje), duracion);
+    }
+
+    public static void mensaje(JFXSnackbarLayout layout, Integer duracion) {
+        if (duracion != null) {
+            snackbar.enqueue(new JFXSnackbar.SnackbarEvent(layout, Duration.seconds(duracion)));
+        } else {
+            snackbar.enqueue(new JFXSnackbar.SnackbarEvent(layout));
+        }
     }
 
     public static Scene getScene() {
         return scene;
     }
 
+    public static StackPane getParent() {
+        return parent;
+    }
+
     @FXML
     public void initialize() {
-        BooleanBinding pequeno = contenedor.widthProperty().lessThan(1000);
+        final int pequenoInt = 900;
+        BooleanBinding pequeno = contenedor.widthProperty().lessThan(pequenoInt);
 
         contenedor.widthProperty().addListener(((observable, oldValue, newValue) -> {
             FXMLLoader loader = new FXMLLoader();
 
             try {
-                if (newValue.doubleValue() >= 990 && oldValue.doubleValue() < 990) {
+                if (newValue.doubleValue() >= pequenoInt && oldValue.doubleValue() < pequenoInt) {
                     controlesVertical.setVisible(true);
                     controlesHorizontal.setVisible(false);
                     loader.load(ControlesController.class.getResource("vertical.fxml").openStream());
                     ((ControlesController) loader.getController()).actualizarComandos(contenedor.getScene());
                     ((ControlesController) loader.getController()).actualizarJugador(contenedor.getScene());
-                } else if (newValue.doubleValue() < 990 && oldValue.doubleValue() >= 990) {
+                } else if (newValue.doubleValue() < pequenoInt && oldValue.doubleValue() >= pequenoInt) {
                     controlesVertical.setVisible(false);
                     controlesHorizontal.setVisible(true);
                     loader.load(ControlesController.class.getResource("horizontal.fxml").openStream());
@@ -136,12 +150,13 @@ public class PrincipalController extends Application {
         });
 
         Parent root = FXMLLoader.load(getClass().getResource("principal.fxml"));
-        PrincipalController.scene = new Scene(root, 810, 720);
+        PrincipalController.scene = new Scene(root, 1001, 720);
 
         snackbar = new JFXSnackbar((StackPane) root);
+        parent = stackPane;
 
         stage.setMaximized(true);
-        stage.setMinWidth(810);
+        stage.setMinWidth(1001);
         stage.setMinHeight(720);
         stage.setTitle("RISK");
         stage.setScene(PrincipalController.scene);

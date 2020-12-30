@@ -7,10 +7,13 @@ import com.jfoenix.controls.JFXTabPane;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import gal.sdc.usc.risk.comandos.EjecutorAccion;
+import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.info.InfoContinente;
 import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
 import gal.sdc.usc.risk.gui.componentes.info.InfoPais;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoAtaque;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoRearme;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Celda;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -68,6 +71,9 @@ public class MapaController extends Partida {
     private final static HashMap<Button, EventHandler<MouseEvent>> handlersBotones = new HashMap<>();
     private final static List<Pais> paisesSeleccionados = new LinkedList<>();
     private static MapaSeleccion seleccionar = MapaSeleccion.NINGUNO;
+    private static boolean atacar = false;
+    private static boolean rearmar = false;
+    private static boolean repartir = false;
 
     private static EjecutorAccion accion;
 
@@ -84,7 +90,7 @@ public class MapaController extends Partida {
     }
 
     public static void setSeleccionar(MapaSeleccion seleccionar) {
-        if (seleccionar.equals(MapaSeleccion.NINGUNO)) {
+        if (seleccionar.equals(MapaSeleccion.NINGUNO) && !atacar && !rearmar) {
             paisesSeleccionados.clear();
         }
         MapaController.seleccionar = seleccionar;
@@ -92,6 +98,36 @@ public class MapaController extends Partida {
 
     public static void setAccion(EjecutorAccion accion) {
         MapaController.accion = accion;
+    }
+
+    public static boolean cambiarRepartir() {
+        if (MapaController.repartir) {
+            MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
+        } else {
+            MapaController.setSeleccionar(MapaSeleccion.JUGADOR);
+        }
+        MapaController.repartir = !MapaController.repartir;
+        return MapaController.repartir;
+    }
+
+    public static boolean cambiarAtacar() {
+        if (MapaController.atacar) {
+            MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
+        } else {
+            MapaController.setSeleccionar(MapaSeleccion.JUGADOR);
+        }
+        MapaController.atacar = !MapaController.atacar;
+        return MapaController.atacar;
+    }
+
+    public static boolean cambiarRearmar() {
+        if (MapaController.rearmar) {
+            MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
+        } else {
+            MapaController.setSeleccionar(MapaSeleccion.JUGADOR);
+        }
+        MapaController.rearmar = !MapaController.rearmar;
+        return MapaController.rearmar;
     }
 
     @FXML
@@ -300,7 +336,7 @@ public class MapaController extends Partida {
                                                     timer = null;
                                                     Platform.runLater(() -> {
                                                         accion.onLongClick(pais);
-                                                        Utils.actualizar(scene);
+                                                        // Utils.actualizar();
                                                     });
                                                 }
                                             }, 500);
@@ -310,7 +346,7 @@ public class MapaController extends Partida {
                                             timer.cancel();
                                             timer = null;
                                             accion.onClick(pais);
-                                            Utils.actualizar(scene);
+                                            // Utils.actualizar();
                                         }
                                     }
                                 }
@@ -330,11 +366,26 @@ public class MapaController extends Partida {
                                 } else {
                                     paisesSeleccionados.add(pais);
                                 }
+
+                                if (atacar) {
+                                    if (paisesSeleccionados.size() == 1) {
+                                        MapaController.setSeleccionar(MapaSeleccion.OTROS);
+                                        PrincipalController.mensaje("Selecciona el país a atacar");
+                                    } else if (paisesSeleccionados.size() == 2) {
+                                        NuevoAtaque.generarDialogo(finalParent);
+                                    }
+                                } else if (rearmar) {
+                                    if (paisesSeleccionados.size() == 1) {
+                                        PrincipalController.mensaje("Selecciona el país de destino");
+                                    } else if (paisesSeleccionados.size() == 2) {
+                                        NuevoRearme.generarDialogo(finalParent);
+                                    }
+                                }
                             } else {
                                 this.generarDialogo(finalParent, pais).show();
                             }
 
-                            Utils.actualizar(scene);
+                            // Utils.actualizar();
                         });
                     }
                 }

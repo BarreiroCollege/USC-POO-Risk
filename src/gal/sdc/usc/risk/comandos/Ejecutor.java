@@ -2,6 +2,7 @@ package gal.sdc.usc.risk.comandos;
 
 import gal.sdc.usc.risk.excepciones.Errores;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
+import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.salida.Resultado;
 import gal.sdc.usc.risk.util.Colores;
@@ -22,12 +23,16 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
         this.comando = comando;
     }
 
-    public static void comando(String comando, boolean imprimir, EjecutorListener listener) {
+    private static void comando(String comando, boolean imprimir, EjecutorListener listener) {
         if (listener != null) Ejecutor.ejecutarComando(comando, imprimir, listener);
         else Ejecutor.ejecutarComando(comando, imprimir);
     }
 
     public static void comando(String comando, EjecutorListener listener) {
+        if (listener == null) {
+            listener = new EjecutorListener() {
+            };
+        }
         Ejecutor.comando(comando, true, listener);
     }
 
@@ -48,7 +53,10 @@ public class Ejecutor extends Partida implements Callable<Boolean> {
             }
             try {
                 ejecutor.call();
-                Platform.runLater(listener::onComandoEjecutado);
+                Platform.runLater(() -> {
+                    listener.onComandoEjecutado();
+                    Utils.actualizar();
+                });
             } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
                 Throwable t = e.getCause();
                 while (t != null) {

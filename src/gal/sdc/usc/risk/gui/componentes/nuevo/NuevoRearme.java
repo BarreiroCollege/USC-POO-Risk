@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.validation.RequiredFieldValidator;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
@@ -20,14 +19,14 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class NuevoPaisAsignado extends Partida {
+public class NuevoRearme extends Partida {
     private final StackPane parent;
 
     public static void generarDialogo(StackPane parent) {
-        new NuevoPaisAsignado(parent).generar();
+        new NuevoRearme(parent).generar();
     }
 
-    private NuevoPaisAsignado(StackPane parent) {
+    private NuevoRearme(StackPane parent) {
         this.parent = parent;
     }
 

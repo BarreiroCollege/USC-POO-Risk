@@ -1,5 +1,6 @@
 package gal.sdc.usc.risk.gui.componentes;
 
+import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.controles.ControlesController;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,9 @@ public class Utils {
         return sep;
     }
 
-    public static void actualizar(Scene scene) {
+    public static void actualizar() {
+        final Scene scene = PrincipalController.getScene();
+
         FXMLLoader loader = new FXMLLoader();
         try {
             loader.load(MapaController.class.getResource("mapa.fxml").openStream());

@@ -31,14 +31,13 @@ import gal.sdc.usc.risk.comandos.preparacion.CrearMapa;
 import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercito;
 import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercitos;
 import gal.sdc.usc.risk.gui.PrincipalController;
+import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaSeleccion;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoEjercitoAsignado;
 import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Pais;
-import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +103,7 @@ public class ComandosDisponibles {
         remove(AsignarPaises.class);
         remove(RepartirEjercito.class);
         remove(RepartirEjercitos.class);
+        MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
     }
 
     public boolean isPaisesAsignados(Mapa mapa) {
@@ -184,15 +184,13 @@ public class ComandosDisponibles {
         add(AsignarPaises.class);
         MapaController.setSeleccionar(MapaSeleccion.VACIO);
         PrincipalController.mensaje("Para repartir los países, selecciona en el mapa los que quieras asignar, y luego " +
-                "clica en el botón.");
+                "clica en el botón.", 5);
     }
 
     public void deshabilitarAsignarPaises() {
         remove(AsignarPais.class);
         remove(AsignarPaises.class);
         MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
-        PrincipalController.mensaje("Para repartir ejércitos, puedes hacer un click simple en el país para asignarle " +
-                "un ejército, o mantener pulsado para asignar el número deseado.");
     }
 
     public void habilitarRepartirEjercitos(gal.sdc.usc.risk.tablero.Jugador jugadorTurno) {
@@ -202,25 +200,17 @@ public class ComandosDisponibles {
 
         StackPane parent = (StackPane) PrincipalController.getScene().lookup("#stack-pane");
         MapaController.setSeleccionar(MapaSeleccion.JUGADOR);
+        PrincipalController.mensaje("Para repartir ejércitos, puedes hacer un click simple en el país para asignarle " +
+                "un ejército, o mantener pulsado para asignar el número deseado.", 8);
         MapaController.setAccion(new EjecutorAccion() {
             @Override
             public void onClick(Object o) {
-                Pais pais = (Pais) o;
-                if (pais.getJugador().equals(jugadorTurno)) {
-                    Ejecutor.comando("repartir ejercito 1 " + pais.getAbreviatura(), null);
-                } else {
-                    PrincipalController.mensaje("Este país no es del jugador actual");
-                }
+                Ejecutor.comando("repartir ejercito 1 " + ((Pais) o).getAbreviatura(), null);
             }
 
             @Override
             public void onLongClick(Object o) {
-                Pais pais = (Pais) o;
-                if (pais.getJugador().equals(jugadorTurno)) {
-                    NuevoEjercitoAsignado.generarDialogo(parent, pais);
-                } else {
-                    PrincipalController.mensaje("Este país no es del jugador actual");
-                }
+                NuevoEjercitoAsignado.generarDialogo(parent, (Pais) o);
             }
         });
     }
@@ -245,6 +235,9 @@ public class ComandosDisponibles {
     public void atacando() {
         this.repartiendo();
         remove(RepartirEjercito.class);
+        MapaController.setAccion(null);
+        MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
+        Utils.actualizar();
         remove(RepartirEjercitos.class);
     }
 

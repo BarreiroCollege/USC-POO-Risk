@@ -119,9 +119,7 @@ public class NuevoJugador extends Partida {
 
                         @Override
                         public void onComandoEjecutado() {
-                            Utils.actualizar(contenedor.getScene());
                             dialog.close();
-
                             PrincipalController.mensaje("Creado el jugador "
                                     + jugadorNombre.getText() + " con color "
                                     + comboColores.getSelectionModel().getSelectedItem().getId());

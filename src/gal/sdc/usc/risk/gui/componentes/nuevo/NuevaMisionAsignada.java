@@ -115,9 +115,7 @@ public class NuevaMisionAsignada extends Partida {
 
                         @Override
                         public void onComandoEjecutado() {
-                            Utils.actualizar(contenedor.getScene());
                             dialog.close();
-
                             PrincipalController.mensaje("Misión "
                                     + comboMisiones.getSelectionModel().getSelectedItem().getId() + " asignada a "
                                     + comboJugadores.getSelectionModel().getSelectedItem().getId());

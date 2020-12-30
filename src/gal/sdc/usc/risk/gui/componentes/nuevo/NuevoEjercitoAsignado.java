@@ -118,9 +118,7 @@ public class NuevoEjercitoAsignado extends Partida {
 
                         @Override
                         public void onComandoEjecutado() {
-                            Utils.actualizar(contenedor.getScene());
                             dialog.close();
-
                             PrincipalController.mensaje("Repartidos " + finalEjercitos + " ejército"
                                     + (finalEjercitos == 1 ? "" : "s") + " a "
                                     + pais.getNombre());

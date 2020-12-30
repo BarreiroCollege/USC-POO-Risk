@@ -4,12 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXSnackbar;
-import com.jfoenix.controls.JFXSnackbarLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.validation.RegexValidator;
-import com.jfoenix.validation.RequiredFieldValidator;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import gal.sdc.usc.risk.comandos.Comando;
@@ -18,6 +15,10 @@ import gal.sdc.usc.risk.comandos.EjecutorAccion;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.comandos.IComando;
 import gal.sdc.usc.risk.comandos.partida.AcabarTurno;
+import gal.sdc.usc.risk.comandos.partida.AsignarCarta;
+import gal.sdc.usc.risk.comandos.partida.AtacarPais;
+import gal.sdc.usc.risk.comandos.partida.CambiarCartas;
+import gal.sdc.usc.risk.comandos.partida.Rearmar;
 import gal.sdc.usc.risk.comandos.preparacion.AsignarMision;
 import gal.sdc.usc.risk.comandos.preparacion.AsignarPais;
 import gal.sdc.usc.risk.comandos.preparacion.CrearJugador;
@@ -28,10 +29,15 @@ import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import gal.sdc.usc.risk.gui.componentes.mapa.MapaSeleccion;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevaCarta;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevaMisionAsignada;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoCambioCartas;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoEjercitoAsignado;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoJugador;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoPaisAsignado;
 import gal.sdc.usc.risk.jugar.Partida;
+import gal.sdc.usc.risk.tablero.Pais;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -80,27 +86,84 @@ public class ControlesController extends Partida {
         contenedor.getChildren().clear();
         VBox superContenedor = (VBox) scene.lookup("#super-contenedor-comandos");
 
-        if (!this.simularJugando()) {
+        Parent parent = superContenedor;
+        while (parent.getParent() != null) parent = parent.getParent();
+        assert parent instanceof StackPane;
+        StackPane finalParent = (StackPane) parent;
+
+        if (!super.isJugando()) {
             superContenedor.setVisible(false);
             superContenedor.setManaged(false);
         } else {
             superContenedor.setVisible(true);
             superContenedor.setManaged(true);
 
-            for (Class<? extends IComando> comando : super.getComandos().getLista()) {
-                JFXButton boton = new JFXButton();
-                boton.setText(comando.getName());
+            if (super.getComandos().getLista().contains(RepartirEjercito.class)) {
+                contenedor.getChildren().add(this.crearPreControl("Repartir Ejércitos", MaterialDesignIcon.CLIPBOARD_ARROW_DOWN, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        if (MapaController.cambiarRepartir()) {
+                            PrincipalController.mensaje("Para repartir ejércitos, puedes hacer un click simple en el país para asignarle " +
+                                    "un ejército, o mantener pulsado para asignar el número deseado.", 8);
+                            MapaController.setAccion(new EjecutorAccion() {
+                                @Override
+                                public void onClick(Object o) {
+                                    Ejecutor.comando("repartir ejercito 1 " + ((Pais) o).getAbreviatura(), null);
+                                }
 
-                try {
-                    Object comandoObject;
-                    comandoObject = comando.newInstance();
-                    Method ejecutar = comando.getMethod("nombre");
-                    boton.setText((String) ejecutar.invoke(comandoObject));
-                } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                                @Override
+                                public void onLongClick(Object o) {
+                                    NuevoEjercitoAsignado.generarDialogo(finalParent, (Pais) o);
+                                }
+                            });
+                        } else {
+                            MapaController.setAccion(null);
+                        }
+                        Utils.actualizar();
+                    }
+                }));
+            }
 
-                contenedor.getChildren().add(boton);
+            if (super.getComandos().getLista().contains(AtacarPais.class)) {
+                contenedor.getChildren().add(this.crearPreControl("Atacar País", MaterialDesignIcon.TARGET, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        if (MapaController.cambiarAtacar()) {
+                            PrincipalController.mensaje("Selecciona el país con el que atacar");
+                        }
+                        Utils.actualizar();
+                    }
+                }));
+            }
+
+            if (super.getComandos().getLista().contains(Rearmar.class)) {
+                contenedor.getChildren().add(this.crearPreControl("Rearmar", MaterialDesignIcon.ACCOUNT_MULTIPLE_PLUS, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        if (MapaController.cambiarRearmar()) {
+                            PrincipalController.mensaje("Selecciona el país del que dar ejércitos");
+                        }
+                        Utils.actualizar();
+                    }
+                }));
+            }
+
+            if (super.getComandos().getLista().contains(AsignarCarta.class)) {
+                contenedor.getChildren().add(this.crearPreControl("Coger Carta", MaterialDesignIcon.BOOKMARK_PLUS, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        NuevaCarta.generarDialogo(finalParent);
+                    }
+                }));
+            }
+
+            if (super.getComandos().getLista().contains(CambiarCartas.class)) {
+                contenedor.getChildren().add(this.crearPreControl("Cambiar Cartas", MaterialDesignIcon.SWAP_HORIZONTAL, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        NuevoCambioCartas.generarDialogo(finalParent);
+                    }
+                }));
             }
         }
     }
@@ -120,7 +183,7 @@ public class ControlesController extends Partida {
             contenedor.setPrefWidth(Double.MAX_VALUE);
             JFXButton button = new JFXButton(" " + super.getJugadorTurno().getNombre() + " ");
             HBox.setHgrow(button, Priority.ALWAYS);
-            button.prefWidthProperty().bind(((VBox) scene.lookup("#parent-control")).widthProperty());
+            button.prefWidthProperty().bind(((Pane) scene.lookup("#parent-control")).widthProperty());
             button.setTextAlignment(TextAlignment.CENTER);
             button.setStyle(button.getStyle() + "-fx-text-fill: " + super.getJugadorTurno().getColor().getHex() + "; "
                     + "-fx-border-width: 3; "
@@ -143,12 +206,7 @@ public class ControlesController extends Partida {
                 Button acabarTurno = this.crearPreControl("Siguiente Turno", MaterialDesignIcon.CHEVRON_RIGHT, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
-                        Ejecutor.comando("acabar turno", new EjecutorListener() {
-                            @Override
-                            public void onComandoEjecutado() {
-                                Utils.actualizar(scene);
-                            }
-                        });
+                        Ejecutor.comando("acabar turno", null);
                     }
                 });
                 contenedor.getChildren().add(acabarTurno);
@@ -163,7 +221,6 @@ public class ControlesController extends Partida {
                         Ejecutor.comando("crear mapa", new EjecutorListener() {
                             @Override
                             public void onComandoEjecutado() {
-                                Utils.actualizar(scene);
                                 PrincipalController.mensaje("Mapa creado");
                             }
 
@@ -375,9 +432,7 @@ public class ControlesController extends Partida {
 
                 @Override
                 public void onComandoEjecutado() {
-                    Utils.actualizar(contenedor.getScene());
                     dialog.close();
-
                     PrincipalController.mensaje("[OK] " + comandoTexto.getText());
                 }
             });
