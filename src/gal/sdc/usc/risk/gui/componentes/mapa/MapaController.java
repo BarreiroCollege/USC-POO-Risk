@@ -67,7 +67,7 @@ public class MapaController extends Partida {
     private final static HashMap<Button, Animation> animacionesSeleccion = new HashMap<>();
     private final static HashMap<Button, EventHandler<MouseEvent>> handlersBotones = new HashMap<>();
     private final static List<Pais> paisesSeleccionados = new LinkedList<>();
-    private static boolean seleccionar = false;
+    private static MapaSeleccion seleccionar = MapaSeleccion.NINGUNO;
 
     private static EjecutorAccion accion;
 
@@ -83,8 +83,8 @@ public class MapaController extends Partida {
         return paisesSeleccionados;
     }
 
-    public static void setSeleccionar(boolean seleccionar) {
-        if (!seleccionar) {
+    public static void setSeleccionar(MapaSeleccion seleccionar) {
+        if (seleccionar.equals(MapaSeleccion.NINGUNO)) {
             paisesSeleccionados.clear();
         }
         MapaController.seleccionar = seleccionar;
@@ -273,6 +273,16 @@ public class MapaController extends Partida {
                     button.setGraphic(this.contenidoBoton(pais));
                     button.setContextMenu(this.menuPais(finalParent, pais));
 
+                    if (seleccionar.equals(MapaSeleccion.VACIO)) {
+                        button.setMouseTransparent(pais.getJugador() != null);
+                    } else if (seleccionar.equals(MapaSeleccion.JUGADOR)) {
+                        button.setMouseTransparent(!pais.getJugador().equals(super.getJugadorTurno()));
+                    } else if (seleccionar.equals(MapaSeleccion.OTROS)) {
+                        button.setMouseTransparent(pais.getJugador().equals(super.getJugadorTurno()));
+                    } else {
+                        button.setMouseTransparent(false);
+                    }
+
                     if (accion != null) {
                         button.setOnAction(null);
                         if (!handlersBotones.containsKey(button)) {
@@ -310,11 +320,11 @@ public class MapaController extends Partida {
                         }
                     } else {
                         if (handlersBotones.containsKey(button)) {
-                            handlersBotones.remove(button);
                             button.removeEventFilter(MouseEvent.ANY, handlersBotones.get(button));
+                            handlersBotones.remove(button);
                         }
                         button.setOnAction(action -> {
-                            if (seleccionar) {
+                            if (!seleccionar.equals(MapaSeleccion.NINGUNO)) {
                                 if (paisesSeleccionados.contains(pais)) {
                                     paisesSeleccionados.remove(pais);
                                 } else {

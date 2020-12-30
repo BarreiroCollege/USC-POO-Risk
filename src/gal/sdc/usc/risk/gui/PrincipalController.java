@@ -130,6 +130,7 @@ public class PrincipalController extends Application {
                 ExcepcionRISK e = (ExcepcionRISK) throwable;
                 mensaje("[" + e.getCodigo() + "] " + e.getMensaje());
             } else {
+                throwable.printStackTrace();
                 mensaje("[ERROR] " + throwable.getLocalizedMessage());
             }
         });

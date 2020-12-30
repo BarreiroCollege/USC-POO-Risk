@@ -32,6 +32,7 @@ import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercito;
 import gal.sdc.usc.risk.comandos.preparacion.RepartirEjercitos;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import gal.sdc.usc.risk.gui.componentes.mapa.MapaSeleccion;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoEjercitoAsignado;
 import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -181,13 +182,13 @@ public class ComandosDisponibles {
         this.deshabilitarAsignarMisiones();
         add(AsignarPais.class);
         add(AsignarPaises.class);
-        MapaController.setSeleccionar(true);
+        MapaController.setSeleccionar(MapaSeleccion.VACIO);
     }
 
     public void deshabilitarAsignarPaises() {
         remove(AsignarPais.class);
         remove(AsignarPaises.class);
-        MapaController.setSeleccionar(false);
+        MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
     }
 
     public void habilitarRepartirEjercitos(gal.sdc.usc.risk.tablero.Jugador jugadorTurno) {
@@ -196,6 +197,7 @@ public class ComandosDisponibles {
         add(RepartirEjercitos.class);
 
         StackPane parent = (StackPane) PrincipalController.getScene().lookup("#stack-pane");
+        MapaController.setSeleccionar(MapaSeleccion.JUGADOR);
         MapaController.setAccion(new EjecutorAccion() {
             @Override
             public void onClick(Object o) {
@@ -225,6 +227,7 @@ public class ComandosDisponibles {
 
     public void deshabilitarRepartirEjercitos() {
         MapaController.setAccion(null);
+        MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
         remove(RepartirEjercito.class);
     }
 

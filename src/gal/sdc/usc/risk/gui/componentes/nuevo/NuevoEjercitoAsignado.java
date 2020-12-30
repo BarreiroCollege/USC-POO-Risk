@@ -106,9 +106,7 @@ public class NuevoEjercitoAsignado extends Partida {
             int finalEjercitos = ejercitos;
 
             Ejecutor.comando(
-                    "repartir ejercito "
-                            + numEjercitos.getText() + " "
-                            + pais.getAbreviatura(),
+                    "repartir ejercito " + numEjercitos.getText() + " " + pais.getAbreviatura(),
                     new EjecutorListener() {
                         @Override
                         public void onComandoError(ExcepcionRISK e) {
