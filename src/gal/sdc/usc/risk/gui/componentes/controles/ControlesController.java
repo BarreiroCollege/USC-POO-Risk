@@ -37,6 +37,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -133,6 +134,26 @@ public class ControlesController extends Partida {
 
             contenedor.getChildren().add(button);
             contenedor.getChildren().add(InfoJugador.generarJugadorCorto(super.getJugadorTurno()));
+
+            if (super.getComandos().getLista().contains(AcabarTurno.class)) {
+                VBox spacer = new VBox();
+                spacer.setStyle(spacer.getStyle() + "-fx-padding: 10pt 0pt 0pt 0pt;");
+                contenedor.getChildren().add(spacer);
+
+                Button acabarTurno = this.crearPreControl("Siguiente Turno", MaterialDesignIcon.CHEVRON_RIGHT, new EjecutorAccion() {
+                    @Override
+                    public void onClick(Object o) {
+                        Ejecutor.comando("acabar turno", new EjecutorListener() {
+                            @Override
+                            public void onComandoEjecutado() {
+                                Utils.actualizar(scene);
+                            }
+                        });
+                    }
+                });
+                contenedor.getChildren().add(acabarTurno);
+            }
+
             jugadores.getChildren().add(contenedor);
         } else {
             if (super.getComandos().getLista().contains(CrearMapa.class)) {

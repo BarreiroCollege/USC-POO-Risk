@@ -3,9 +3,9 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.Float?>
-<?import javafx.scene.layout.Pane?>
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="gal.sdc.usc.risk.gui.componentes.mapa.MapaController"
             maxWidth="Infinity" maxHeight="Infinity" fx:id="anchor">
@@ -19,7 +19,9 @@
     <Pane fx:id="paneMapa" id="pane-mapa" prefWidth="${anchor.width}" prefHeight="${anchor.height}"
           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
           AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
-        <VBox fx:id="contenedor"  styleClass="oceano" prefWidth="${paneMapa.width}" prefHeight="${paneMapa.height}">
+        <!-- Este botón está aquí para evitar el focus automático a varios otros botones -->
+        <JFXButton managed="false" maxWidth="0" minWidth="0"/>
+        <VBox fx:id="contenedor" styleClass="oceano" prefWidth="${paneMapa.width}" prefHeight="${paneMapa.height}">
             <Pane minHeight="$hMargen"/>
             <HBox prefHeight="${(contenedor.height - (hMargen * 2)) / filas}" prefWidth="${contenedor.width}">
                 <Pane minWidth="$wMargen"/>

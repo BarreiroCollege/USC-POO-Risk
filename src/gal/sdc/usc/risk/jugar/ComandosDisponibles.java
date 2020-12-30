@@ -183,12 +183,16 @@ public class ComandosDisponibles {
         add(AsignarPais.class);
         add(AsignarPaises.class);
         MapaController.setSeleccionar(MapaSeleccion.VACIO);
+        PrincipalController.mensaje("Para repartir los países, selecciona en el mapa los que quieras asignar, y luego " +
+                "clica en el botón.");
     }
 
     public void deshabilitarAsignarPaises() {
         remove(AsignarPais.class);
         remove(AsignarPaises.class);
         MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
+        PrincipalController.mensaje("Para repartir ejércitos, puedes hacer un click simple en el país para asignarle " +
+                "un ejército, o mantener pulsado para asignar el número deseado.");
     }
 
     public void habilitarRepartirEjercitos(gal.sdc.usc.risk.tablero.Jugador jugadorTurno) {
