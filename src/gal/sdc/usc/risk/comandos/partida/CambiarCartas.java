@@ -25,7 +25,6 @@ public class CambiarCartas extends Partida implements IComando {
     private static int calcularCambios(List<Carta> cartas, Jugador jugador) {
         int caballeria = 0, infanteria = 0, artilleria = 0; // 10
         for (Carta cartaT : cartas) {
-            System.out.println(cartaT.getNombre());
             if (cartaT.getEquipamiento().equals(Equipamientos.CABALLERIA)) {
                 caballeria++;
             } else if (cartaT.getEquipamiento().equals(Equipamientos.INFANTERIA)) {

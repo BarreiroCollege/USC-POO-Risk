@@ -73,7 +73,6 @@ public class NuevaCarta extends Partida {
         HashMap<String, SubEquipamientos> subequipamientos = new HashMap<>();
         for (Carta carta : super.getCartasMonton()) {
             if (pais != null && !carta.getPais().equals(pais)) continue;
-            System.out.println(carta.getNombre());
             subequipamientos.put(carta.getEquipamiento().getNombre() + " / " + carta.getSubEquipamiento().getNombre(), carta.getSubEquipamiento());
         }
 
