@@ -147,9 +147,10 @@ public class PrincipalController extends Application {
 
         JFXButton button = new JFXButton("Personalizar");
         button.setOnAction(e -> {
-            MapaController.cambiarCreando();
+            /* MapaController.cambiarCreando();
             Utils.actualizar();
-            PrincipalController.mensaje("Selecciona una casilla para asignar un país");
+            PrincipalController.mensaje("Selecciona una casilla para asignar un país"); */
+            PrincipalController.mensaje("Todavía en progreso... Pulsa el botón de arriba a la derecha.");
             dialogo.close();
         });
 

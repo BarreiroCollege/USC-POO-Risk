@@ -1,0 +1,12 @@
+Vídeo de YouTube con la GUI
+> https://kodul.ar/lS3zBD
+
+En ese enlace (acortador de URLs) se encuentra el vídeo de YouTube. Por falta de tiempo no se ha
+podido realizar totalmente la creación de mapa personalizado (bordes, curvaturas, sombras son
+ya dinámicas, solo faltaría escoger la posición personalizada de los países).
+
+Lo bueno de esta implementación es que todas las acciones acaban ejecutando un comando por consola.
+Es decir, aunque se ejecute algo por la interfaz gráfica (ya sea seleccionando países o atacando
+sin la ejecución de comandos), el resultado aparece por consola, ya que la interfaz gráfica construye
+el comando de texto "atacar ..." y lo manda a un Thread para ejecutar el código de la anterior
+entrega.
