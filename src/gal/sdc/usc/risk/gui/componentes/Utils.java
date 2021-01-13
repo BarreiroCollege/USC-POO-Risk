@@ -32,7 +32,7 @@ public class Utils {
         Platform.runLater(Utils::actualizarTodo);
     }
 
-    public static void actualizarTodo() {
+    private static void actualizarTodo() {
         final Scene scene = PrincipalController.getScene();
 
         FXMLLoader loader = new FXMLLoader();

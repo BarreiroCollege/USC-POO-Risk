@@ -14,6 +14,12 @@ public class Mapa {
     public static int MAX_PAISES_Y = 8;
     public static int MAX_ENLACES_MARITIMOS = 6;
 
+    public static int CONTINENTES_CON_4_PAISES = 2;
+    public static int CONTINENTES_CON_6_PAISES = 1;
+    public static int CONTINENTES_CON_7_PAISES = 1;
+    public static int CONTINENTES_CON_9_PAISES = 1;
+    public static int CONTINENTES_CON_12_PAISES = 1;
+
     private final HashMap<String, Continente> continentes;
     private final HashMap<Celda, Pais> paises;
 
@@ -282,8 +288,14 @@ public class Mapa {
         }
 
         public Mapa build() {
+            return this.build(false);
+        }
+
+        public Mapa build(boolean manual) {
             Mapa mapa = new Mapa(continentes, paises);
-            mapa.asignarFronteras();
+            if (!manual) {
+                mapa.asignarFronteras();
+            }
             return mapa;
         }
     }

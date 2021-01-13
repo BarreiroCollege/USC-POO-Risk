@@ -130,6 +130,10 @@ public class Continente extends Partida {
             return this;
         }
 
+        public int totalPaises() {
+            return this.paises.size();
+        }
+
         public Continente build() {
             if (continente == null) {
                 System.err.println("Continente.Builder continente=null");

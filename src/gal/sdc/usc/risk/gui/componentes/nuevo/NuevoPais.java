@@ -7,10 +7,13 @@ import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
+import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Carta;
+import gal.sdc.usc.risk.tablero.Continente;
 import gal.sdc.usc.risk.tablero.Pais;
+import gal.sdc.usc.risk.tablero.valores.Continentes;
 import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -25,33 +28,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class NuevaCarta extends Partida {
-    public static void generarDialogo() {
-        new NuevaCarta().generar();
+// TODO
+public class NuevoPais extends Partida {
+    private final int x;
+    private final int y;
+
+    public static void generarDialogo(int x, int y) {
+        new NuevoPais(x, y).generar();
     }
 
-    private NuevaCarta() {
+    private NuevoPais(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    private List<Label> paisesDisponibles() {
-        Set<Pais> paises = new LinkedHashSet<>();
-        for (Carta carta : super.getCartasMonton()) {
-            if (!carta.getPais().getJugador().equals(super.getJugadorTurno())) continue;
-            paises.add(carta.getPais());
-        }
-        for (Carta carta : super.getCartasMonton()) {
-            if (carta.getPais().getJugador().equals(super.getJugadorTurno())) continue;
-            paises.add(carta.getPais());
-        }
-
-        List<Label> labels = new LinkedList<>();
-        for (Pais pais : paises) {
-            Label label = Utils.labelColor(pais.getNombre(), pais.getJugador().getColor().getHex());
-            label.setId(pais.getAbreviatura());
-            labels.add(label);
+    private List<Label> continentesDisponibles() {
+        int numPaises4 = 0, numPaises6 = 0, numPaises7 = 0, numPaises9 = 0, numPaises12 = 0;
+        for (Continente.Builder continente : MapaController.getPreContinentes().values()) {
+            if (continente.totalPaises() >= 12) numPaises12++;
+            else if (continente.totalPaises() >= 9) numPaises9++;
+            else if (continente.totalPaises() >= 7) numPaises7++;
+            else if (continente.totalPaises() >= 6) numPaises6++;
+            else if (continente.totalPaises() >= 4) numPaises4++;
         }
 
-        return labels;
+        return null;
     }
 
     private List<Label> subequipamientosDisponibles(Label paisLabel) {
@@ -88,7 +89,7 @@ public class NuevaCarta extends Partida {
         comboSubequipamientos.disableProperty().bind(comboPaises.getSelectionModel().selectedItemProperty().isNull());
 
         comboPaises.setPrefWidth(Float.MAX_VALUE);
-        comboPaises.getItems().addAll(paisesDisponibles());
+        comboPaises.getItems().addAll(continentesDisponibles());
         comboPaises.setPromptText("Pais");
         contenedor.getChildren().add(comboPaises);
 

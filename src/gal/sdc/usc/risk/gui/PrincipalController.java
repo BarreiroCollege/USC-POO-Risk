@@ -1,9 +1,12 @@
 package gal.sdc.usc.risk.gui;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbarLayout;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
+import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.controles.ControlesController;
+import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
 import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -13,14 +16,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.Dialog;
-import java.awt.Label;
 import java.io.IOException;
 
 public class PrincipalController extends Application {
@@ -134,6 +136,27 @@ public class PrincipalController extends Application {
         controlesHorizontal.prefHeightProperty().bind(controlesHorizontalHeight);
     }
 
+    private void tipoMapa() {
+        Dialogo dialogo = new Dialogo()
+                .setHeading("Bienvenido")
+                .setCloseText("Mapa Clásico");
+
+        Label label = new Label("Para empezar, puedes escoger si quieres crear un mapa personalozado o usar el " +
+                "clásico ya predefinido.");
+        dialogo.setContent(label);
+
+        JFXButton button = new JFXButton("Personalizar");
+        button.setOnAction(e -> {
+            MapaController.cambiarCreando();
+            Utils.actualizar();
+            PrincipalController.mensaje("Selecciona una casilla para asignar un país");
+            dialogo.close();
+        });
+
+        dialogo.setExtra(button);
+        dialogo.show();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
@@ -158,5 +181,7 @@ public class PrincipalController extends Application {
         stage.setTitle("RISK");
         stage.setScene(PrincipalController.scene);
         stage.show();
+
+        this.tipoMapa();
     }
 }

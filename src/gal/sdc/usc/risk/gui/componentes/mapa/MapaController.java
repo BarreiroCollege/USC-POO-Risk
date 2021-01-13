@@ -11,11 +11,16 @@ import gal.sdc.usc.risk.gui.componentes.info.InfoContinente;
 import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
 import gal.sdc.usc.risk.gui.componentes.info.InfoPais;
 import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevaFrontera;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoAtaque;
+import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoPais;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoRearme;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Celda;
+import gal.sdc.usc.risk.tablero.Continente;
+import gal.sdc.usc.risk.tablero.Mapa;
 import gal.sdc.usc.risk.tablero.Pais;
+import gal.sdc.usc.risk.tablero.valores.Continentes;
 import gal.sdc.usc.risk.tablero.valores.EnlacesMaritimos;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
@@ -30,7 +35,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
@@ -46,7 +50,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -66,6 +69,11 @@ public class MapaController extends Partida {
     private final Integer TAB_CONTINENTE = 1;
     private final Integer TAB_JUGADOR = 2;
 
+    private static Mapa.Builder preMapa = null;
+    private static HashMap<Continentes, Continente.Builder> preContinentes = null;
+    private static boolean creando = false;
+    private static boolean fronteras = false;
+
     private final static HashMap<Button, Animation> animacionesSeleccion = new HashMap<>();
     private final static HashMap<Button, EventHandler<MouseEvent>> handlersBotones = new HashMap<>();
     private final static List<Pais> paisesSeleccionados = new LinkedList<>();
@@ -84,12 +92,63 @@ public class MapaController extends Partida {
     public MapaController() {
     }
 
+    // TODO >>>
+
+    public static Mapa.Builder getPreMapa() {
+        return preMapa;
+    }
+
+    public static HashMap<Continentes, Continente.Builder> getPreContinentes() {
+        return preContinentes;
+    }
+
+    public static void cambiarCreando() {
+        MapaController.creando = !MapaController.creando;
+        if (creando) {
+            MapaController.setSeleccionar(MapaSeleccion.VACIO);
+            preMapa = new Mapa.Builder();
+            preContinentes = new HashMap<>();
+
+            for (Continentes continente : Continentes.values()) {
+                Continente.Builder preContinente = new Continente.Builder(continente)
+                        .withNombre(continente.getNombre())
+                        .withAbreviatura(continente.getAbreviatura())
+                        .withColor(continente.getColor())
+                        .withEjercitosRearme(continente.getEjercitos());
+                preContinentes.put(continente, preContinente);
+            }
+        } else {
+            MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
+            preMapa = null;
+            preContinentes = null;
+        }
+    }
+
+    public static boolean isCreando() {
+        return creando;
+    }
+
+    public static void cambiarFronteras() {
+        MapaController.fronteras = !MapaController.fronteras;
+        if (creando) {
+            MapaController.setSeleccionar(MapaSeleccion.CUALQUIERA);
+        } else {
+            MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
+        }
+    }
+
+    public static boolean isFronteras() {
+        return fronteras;
+    }
+
+    // TODO <<<
+
     public static List<Pais> getPaisesSeleccionados() {
         return paisesSeleccionados;
     }
 
     public static void setSeleccionar(MapaSeleccion seleccionar) {
-        if (seleccionar.equals(MapaSeleccion.NINGUNO) && !atacar && !rearmar) {
+        if (seleccionar.equals(MapaSeleccion.NINGUNO) && !atacar && !rearmar && !fronteras) {
             paisesSeleccionados.clear();
         }
         MapaController.seleccionar = seleccionar;
@@ -365,28 +424,40 @@ public class MapaController extends Partida {
                             button.removeEventFilter(MouseEvent.ANY, handlersBotones.get(button));
                             handlersBotones.remove(button);
                         }
+
+                        final int finalI = i, finalJ = j;
                         button.setOnAction(action -> {
                             if (!seleccionar.equals(MapaSeleccion.NINGUNO)) {
-                                if (paisesSeleccionados.contains(pais)) {
-                                    paisesSeleccionados.remove(pais);
+                                if (creando) {
+                                    NuevoPais.generarDialogo(finalI, finalJ);
                                 } else {
-                                    if (paisesSeleccionados.size() != 2 || (!atacar && !rearmar)) {
-                                        paisesSeleccionados.add(pais);
+                                    if (paisesSeleccionados.contains(pais)) {
+                                        paisesSeleccionados.remove(pais);
+                                    } else {
+                                        if (paisesSeleccionados.size() != 2 || (!atacar && !rearmar)) {
+                                            paisesSeleccionados.add(pais);
+                                        }
                                     }
-                                }
 
-                                if (atacar) {
-                                    if (paisesSeleccionados.size() == 1) {
-                                        MapaController.setSeleccionar(MapaSeleccion.OTROS);
-                                        PrincipalController.mensaje("Selecciona el país a atacar");
-                                    } else if (paisesSeleccionados.size() == 2) {
-                                        NuevoAtaque.generarDialogo();
-                                    }
-                                } else if (rearmar) {
-                                    if (paisesSeleccionados.size() == 1) {
-                                        PrincipalController.mensaje("Selecciona el país de destino");
-                                    } else if (paisesSeleccionados.size() == 2) {
-                                        NuevoRearme.generarDialogo();
+                                    if (atacar) {
+                                        if (paisesSeleccionados.size() == 1) {
+                                            MapaController.setSeleccionar(MapaSeleccion.OTROS);
+                                            PrincipalController.mensaje("Selecciona el país a atacar");
+                                        } else if (paisesSeleccionados.size() == 2) {
+                                            NuevoAtaque.generarDialogo();
+                                        }
+                                    } else if (rearmar) {
+                                        if (paisesSeleccionados.size() == 1) {
+                                            PrincipalController.mensaje("Selecciona el país de destino");
+                                        } else if (paisesSeleccionados.size() == 2) {
+                                            NuevoRearme.generarDialogo();
+                                        }
+                                    } else if (fronteras) {
+                                        if (paisesSeleccionados.size() == 1) {
+                                            PrincipalController.mensaje("Selecciona el segundo país a enlazar");
+                                        } else if (paisesSeleccionados.size() == 2) {
+                                            NuevaFrontera.generarDialogo();
+                                        }
                                     }
                                 }
 
