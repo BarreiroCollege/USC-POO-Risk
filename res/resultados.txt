@@ -1,429 +1,392 @@
 $> crear mapa
-$> crear jugadores jugadores.csv
+$> crear Probando1 VERDE
 {
-  nombre: "JT",
+  nombre: "Probando1",
   color: "VERDE"
 }
 
+$> crear Probando2 AMARILLO
 {
-  nombre: "Hooker",
+  nombre: "Probando2",
+  color: "AMARILLO"
+}
+
+$> crear Probando3 AZUL
+{
+  nombre: "Probando3",
   color: "AZUL"
 }
 
+$> crear Probando4 VIOLETA
 {
-  nombre: "Lonnegan",
-  color: "ROJO"
+  nombre: "Probando4",
+  color: "VIOLETA"
 }
 
-$> asignar misiones misiones.csv
+$> asignar mision Probando1 M1
 {
-  nombre: "JT",
+  nombre: "Probando1",
   mision: "Conquistar 24 países de la preferencia del jugador"
 }
 
+$> asignar mision Probando2 M2
 {
-  nombre: "Hooker",
-  mision: "Conquistar América del Norte y África"
+  nombre: "Probando2",
+  mision: "Conquistar 18 países de la preferencia del jugador con un mínimo de 2 ejércitos"
 }
 
+$> asignar mision Probando3 M31
 {
-  nombre: "Lonnegan",
-  mision: "Destruir el ejército AZUL"
+  nombre: "Probando3",
+  mision: "Conquistar Asia y América del Sur"
 }
 
-$> asignar paises paises.csv
+$> asignar mision Probando4 M32
 {
-  nombre: "JT",
-  pais: "Alaska",
-  continente: "América del Norte",
-  frontera: [ "Alberta", "Territorios del Noroeste", "Kamchatka" ]
+  nombre: "Probando4",
+  mision: "Conquistar Asia y África"
 }
 
+$> asignar pais Probando1 EurSur
+$> asignar pais Probando1 EurNorte
+$> asignar pais Probando1 TNoroeste
+$> asignar pais Probando1 Groenlan
+$> asignar pais Probando1 Alberta
+$> asignar pais Probando1 GBretaña
+$> asignar pais Probando1 Alaska
+$> asignar pais Probando1 Quebec
+$> asignar pais Probando1 Escandina
+$> asignar pais Probando1 Islandia
+$> asignar pais Probando1 EurOcc
+$> asignar pais Probando1 Ontario
 {
-  nombre: "JT",
-  pais: "Territorios del Noroeste",
-  continente: "América del Norte",
-  frontera: [ "Ontario", "Groenlandia", "Alaska" ]
-}
-
-{
-  nombre: "JT",
-  pais: "Groenlandia",
-  continente: "América del Norte",
-  frontera: [ "Quebec", "Territorios del Noroeste", "Islandia" ]
-}
-
-{
-  nombre: "JT",
-  pais: "Islandia",
+  nombre: "Probando1",
+  pais: "Europa del Sur",
   continente: "Europa",
-  frontera: [ "Escandinavia", "Groenlandia" ]
-}
-
-{
-  nombre: "JT",
-  pais: "Escandinavia",
-  continente: "Europa",
-  frontera: [ "Gran Bretaña", "Siberia", "Islandia" ]
-}
-
-{
-  nombre: "JT",
-  pais: "Siberia",
-  continente: "Asia",
-  frontera: [ "Europa del Norte", "Yakustsk", "Escandinavia" ]
-}
-
-{
-  nombre: "JT",
-  pais: "Yakustsk",
-  continente: "Asia",
-  frontera: [ "Rusia", "Kamchatka", "Siberia" ]
-}
-
-{
-  nombre: "JT",
-  pais: "Kamchatka",
-  continente: "Asia",
-  frontera: [ "Irkutsk", "Yakustsk", "Alaska" ]
-}
-
-{
-  nombre: "JT",
+  frontera: [ "Europa del Norte", "Urales", "Europa Occidental", "Egipto" ]
+}{
+  nombre: "Probando1",
   pais: "Alberta",
   continente: "América del Norte",
   frontera: [ "Alaska", "Estados Unidos del Oeste", "Ontario" ]
 }
 
-{
-  nombre: "JT",
-  pais: "Ontario",
-  continente: "América del Norte",
-  frontera: [ "Territorios del Noroeste", "Estados Unidos del Este", "Quebec", "Alberta" ]
-}
+
 
 {
-  nombre: "JT",
-  pais: "Quebec",
-  continente: "América del Norte",
-  frontera: [ "Groenlandia", "Ontario" ]
-}
-
-{
-  nombre: "JT",
+  nombre: "Probando1",
   pais: "Gran Bretaña",
   continente: "Europa",
   frontera: [ "Escandinavia", "Europa Occidental", "Europa del Norte" ]
 }
 
 {
-  nombre: "JT",
-  pais: "Europa del Norte",
-  continente: "Europa",
-  frontera: [ "Siberia", "Europa del Sur", "Rusia", "Gran Bretaña" ]
-}
-
-{
-  nombre: "JT",
-  pais: "Rusia",
-  continente: "Europa",
-  frontera: [ "Yakustsk", "Urales", "Irkutsk", "Europa del Norte" ]
-}
-
-{
-  nombre: "Hooker",
-  pais: "Irkutsk",
-  continente: "Asia",
-  frontera: [ "Kamchatka", "Mongolia", "Rusia" ]
-}
-
-{
-  nombre: "Hooker",
-  pais: "Estados Unidos del Oeste",
+  nombre: "Probando1",
+  pais: "Ontario",
   continente: "América del Norte",
-  frontera: [ "Alberta", "Estados Unidos del Este" ]
+  frontera: [ "Territorios del Noroeste", "Estados Unidos del Este", "Quebec", "Alberta" ]
 }
 
 {
-  nombre: "Hooker",
-  pais: "Estados Unidos del Este",
+  nombre: "Probando1",
+  pais: "Quebec",
   continente: "América del Norte",
-  frontera: [ "Ontario", "América Central", "Estados Unidos del Oeste" ]
+  frontera: [ "Groenlandia", "Ontario" ]
 }
 
 {
-  nombre: "Hooker",
+  nombre: "Probando1",
+  pais: "Islandia",
+  continente: "Europa",
+  frontera: [ "Escandinavia", "Groenlandia" ]
+}
+
+{
+  nombre: "Probando1",
+  pais: "Territorios del Noroeste",
+  continente: "América del Norte",
+  frontera: [ "Ontario", "Groenlandia", "Alaska" ]
+}
+
+{
+  nombre: "Probando1",
+  pais: "Groenlandia",
+  continente: "América del Norte",
+  frontera: [ "Quebec", "Territorios del Noroeste", "Islandia" ]
+}
+
+{
+  nombre: "Probando1",
+  pais: "Alaska",
+  continente: "América del Norte",
+  frontera: [ "Alberta", "Territorios del Noroeste", "Kamchatka" ]
+}
+
+{
+  nombre: "Probando1",
   pais: "Europa Occidental",
   continente: "Europa",
   frontera: [ "Gran Bretaña", "Europa del Sur", "África del Norte" ]
 }
 
 {
-  nombre: "Hooker",
-  pais: "Europa del Sur",
+  nombre: "Probando1",
+  pais: "Escandinavia",
   continente: "Europa",
-  frontera: [ "Europa del Norte", "Urales", "Europa Occidental", "Egipto" ]
+  frontera: [ "Gran Bretaña", "Siberia", "Islandia" ]
 }
 
 {
-  nombre: "Hooker",
-  pais: "Urales",
-  continente: "Asia",
-  frontera: [ "Rusia", "Afganistán", "Mongolia", "Europa del Sur" ]
+  nombre: "Probando1",
+  pais: "Europa del Norte",
+  continente: "Europa",
+  frontera: [ "Siberia", "Europa del Sur", "Rusia", "Gran Bretaña" ]
+}
+
+$> asignar pais Probando2 USAOeste
+$> asignar pais Probando2 USAEste
+{
+  nombre: "Probando2",
+  pais: "Estados Unidos del Oeste",
+  continente: "América del Norte",
+  frontera: [ "Alberta", "Estados Unidos del Este" ]
 }
 
 {
-  nombre: "Hooker",
-  pais: "Mongolia",
-  continente: "Asia",
-  frontera: [ "Irkutsk", "China", "Japón", "Urales" ]
+  nombre: "Probando2",
+  pais: "Estados Unidos del Este",
+  continente: "América del Norte",
+  frontera: [ "Ontario", "América Central", "Estados Unidos del Oeste" ]
 }
 
+$> asignar pais Probando2 AmeCentra
+$> asignar pais Probando2 Sudáfrica
 {
-  nombre: "Hooker",
-  pais: "Japón",
-  continente: "Asia",
-  frontera: [ "Mongolia" ]
-}
-
-{
-  nombre: "Hooker",
+  nombre: "Probando2",
   pais: "América Central",
   continente: "América del Norte",
   frontera: [ "Estados Unidos del Este", "Venezuela" ]
 }
 
 {
-  nombre: "Hooker",
-  pais: "Afganistán",
-  continente: "Asia",
-  frontera: [ "Urales", "Oriente Medio", "China" ]
-}
-
-{
-  nombre: "Hooker",
-  pais: "China",
-  continente: "Asia",
-  frontera: [ "Mongolia", "India", "Afganistán" ]
-}
-
-{
-  nombre: "Hooker",
-  pais: "Venezuela",
-  continente: "América del Sur",
-  frontera: [ "América Central", "Perú" ]
-}
-
-{
-  nombre: "Hooker",
-  pais: "África del Norte",
+  nombre: "Probando2",
+  pais: "Sudáfrica",
   continente: "África",
-  frontera: [ "Congo", "Egipto", "Brasil", "Europa Occidental" ]
+  frontera: [ "África Oriental", "Madagascar" ]
 }
 
+$> asignar pais Probando2 AOriental
+$> asignar pais Probando2 Venezuela
+$> asignar pais Probando2 Perú
 {
-  nombre: "Hooker",
-  pais: "Egipto",
-  continente: "África",
-  frontera: [ "África Oriental", "Oriente Medio", "África del Norte", "Europa del Sur" ]
-}
-
-{
-  nombre: "Lonnegan",
-  pais: "Oriente Medio",
-  continente: "Asia",
-  frontera: [ "Afganistán", "India", "Egipto" ]
-}
-
-{
-  nombre: "Lonnegan",
-  pais: "India",
-  continente: "Asia",
-  frontera: [ "China", "Sureste Asiático", "Oriente Medio" ]
-}
-
-{
-  nombre: "Lonnegan",
-  pais: "Sureste Asiático",
-  continente: "Asia",
-  frontera: [ "India", "Indonesia" ]
-}
-
-{
-  nombre: "Lonnegan",
-  pais: "Perú",
-  continente: "América del Sur",
-  frontera: [ "Venezuela", "Argentina", "Brasil" ]
-}
-
-{
-  nombre: "Lonnegan",
-  pais: "Brasil",
-  continente: "América del Sur",
-  frontera: [ "Perú", "África del Norte" ]
-}
-
-{
-  nombre: "Lonnegan",
-  pais: "Congo",
-  continente: "África",
-  frontera: [ "África del Norte", "África Oriental" ]
-}
-
-{
-  nombre: "Lonnegan",
+  nombre: "Probando2",
   pais: "África Oriental",
   continente: "África",
   frontera: [ "Egipto", "Sudáfrica", "Congo" ]
 }
 
 {
-  nombre: "Lonnegan",
+  nombre: "Probando2",
+  pais: "Venezuela",
+  continente: "América del Sur",
+  frontera: [ "América Central", "Perú" ]
+}
+
+$> asignar pais Probando2 Brasil
+$> asignar pais Probando2 Congo
+$> asignar pais Probando2 Argentina
+{
+  nombre: "Probando2",
+  pais: "Perú",
+  continente: "América del Sur",
+  frontera: [ "Venezuela", "Argentina", "Brasil" ]
+}
+
+{
+  nombre: "Probando2",
+  pais: "Congo",
+  continente: "África",
+  frontera: [ "África del Norte", "África Oriental" ]
+}
+
+{
+  nombre: "Probando2",
+  pais: "Brasil",
+  continente: "América del Sur",
+  frontera: [ "Perú", "África del Norte" ]
+}
+
+{
+  nombre: "Probando2",
   pais: "Argentina",
   continente: "América del Sur",
   frontera: [ "Perú" ]
 }
 
+$> asignar pais Probando3 Afgan
+$> asignar pais Probando3 Rusia
 {
-  nombre: "Lonnegan",
-  pais: "Sudáfrica",
-  continente: "África",
-  frontera: [ "África Oriental", "Madagascar" ]
+  nombre: "Probando3",
+  pais: "Afganistán",
+  continente: "Asia",
+  frontera: [ "Urales", "Oriente Medio", "China" ]
+}{
+  nombre: "Probando3",
+  pais: "Rusia",
+  continente: "Europa",
+  frontera: [ "Yakustsk", "Urales", "Irkutsk", "Europa del Norte" ]
+}
+
+
+
+$> asignar pais Probando3 Madagasca
+$> asignar pais Probando3 Urales
+{
+  nombre: "Probando3",
+  pais: "Urales",
+  continente: "Asia",
+  frontera: [ "Rusia", "Afganistán", "Mongolia", "Europa del Sur" ]
 }
 
 {
-  nombre: "Lonnegan",
+  nombre: "Probando3",
   pais: "Madagascar",
   continente: "África",
   frontera: [ "Sudáfrica" ]
 }
 
+$> asignar pais Probando3 Siberia
+$> asignar pais Probando3 Yakustsk
+$> asignar pais Probando3 ANorte
+$> asignar pais Probando3 OMedio
 {
-  nombre: "Lonnegan",
+  nombre: "Probando3",
+  pais: "Siberia",
+  continente: "Asia",
+  frontera: [ "Europa del Norte", "Yakustsk", "Escandinavia" ]
+}
+
+{
+  nombre: "Probando3",
+  pais: "Yakustsk",
+  continente: "Asia",
+  frontera: [ "Rusia", "Kamchatka", "Siberia" ]
+}
+
+$> asignar pais Probando3 Irkutsk
+$> asignar pais Probando3 Kamchatka
+{
+  nombre: "Probando3",
+  pais: "África del Norte",
+  continente: "África",
+  frontera: [ "Congo", "Egipto", "Brasil", "Europa Occidental" ]
+}
+
+$> asignar pais Probando3 Egipto
+{
+  nombre: "Probando3",
+  pais: "Oriente Medio",
+  continente: "Asia",
+  frontera: [ "Afganistán", "India", "Egipto" ]
+}
+
+{
+  nombre: "Probando3",
+  pais: "Irkutsk",
+  continente: "Asia",
+  frontera: [ "Kamchatka", "Mongolia", "Rusia" ]
+}
+
+{
+  nombre: "Probando3",
+  pais: "Egipto",
+  continente: "África",
+  frontera: [ "África Oriental", "Oriente Medio", "África del Norte", "Europa del Sur" ]
+}
+
+{
+  nombre: "Probando3",
+  pais: "Kamchatka",
+  continente: "Asia",
+  frontera: [ "Irkutsk", "Yakustsk", "Alaska" ]
+}
+
+$> asignar pais Probando4 China
+$> asignar pais Probando4 Japón
+{
+  nombre: "Probando4",
+  pais: "China",
+  continente: "Asia",
+  frontera: [ "Mongolia", "India", "Afganistán" ]
+}
+
+{
+  nombre: "Probando4",
+  pais: "Japón",
+  continente: "Asia",
+  frontera: [ "Mongolia" ]
+}
+
+$> asignar pais Probando4 India
+{
+  nombre: "Probando4",
+  pais: "India",
+  continente: "Asia",
+  frontera: [ "China", "Sureste Asiático", "Oriente Medio" ]
+}
+
+$> asignar pais Probando4 Mongolia
+$> asignar pais Probando4 SAsiático
+{
+  nombre: "Probando4",
+  pais: "Mongolia",
+  continente: "Asia",
+  frontera: [ "Irkutsk", "China", "Japón", "Urales" ]
+}
+
+$> asignar pais Probando4 Indonesia
+$> asignar pais Probando4 AusOccid
+{
+  nombre: "Probando4",
+  pais: "Sureste Asiático",
+  continente: "Asia",
+  frontera: [ "India", "Indonesia" ]
+}
+
+$> asignar pais Probando4 AusOrient
+{
+  nombre: "Probando4",
   pais: "Indonesia",
   continente: "Oceanía",
   frontera: [ "Australia Occidental", "Nueva Guinea", "Sureste Asiático" ]
 }
 
 {
-  nombre: "Lonnegan",
-  pais: "Nueva Guinea",
+  nombre: "Probando4",
+  pais: "Australia Oriental",
   continente: "Oceanía",
-  frontera: [ "Australia Oriental", "Indonesia" ]
+  frontera: [ "Nueva Guinea", "Australia Occidental" ]
 }
 
+$> asignar pais Probando4 NGuinea
 {
-  nombre: "Lonnegan",
+  nombre: "Probando4",
   pais: "Australia Occidental",
   continente: "Oceanía",
   frontera: [ "Indonesia", "Australia Oriental" ]
 }
 
 {
-  nombre: "Lonnegan",
-  pais: "Australia Oriental",
+  nombre: "Probando4",
+  pais: "Nueva Guinea",
   continente: "Oceanía",
-  frontera: [ "Nueva Guinea", "Australia Occidental" ]
+  frontera: [ "Australia Oriental", "Indonesia" ]
 }
 
-$> repartir ejercitos
-$> ver mapa
-$> acabar turno
+$> repartir ejercito 1 Quebec
 {
-  nombre: "Hooker",
-  numeroEjercitosRearmar: 21
-}
-
-$> repartir ejercitos
-$> ver mapa
-$> acabar turno
-{
-  nombre: "Lonnegan",
-  numeroEjercitosRearmar: 21
-}
-
-$> repartir ejercitos
-$> ver mapa
-$> acabar turno
-{
-  nombre: "JT",
-  numeroEjercitosRearmar: 4
-}
-
-$> repartir ejercito 1 GBretaña
-{
-  pais: "Gran Bretaña",
-  jugador: "JT",
+  pais: "Quebec",
+  jugador: "Probando1",
   numeroEjercitosAsignados: 1,
   numeroEjercitosTotales: 2,
-  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 2 }, { "Europa del Norte", 1 }, { "Islandia", 1 } ]
-}
-
-$> repartir ejercito 1 GBretaña
-{
-  pais: "Gran Bretaña",
-  jugador: "JT",
-  numeroEjercitosAsignados: 1,
-  numeroEjercitosTotales: 3,
-  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 3 }, { "Europa del Norte", 1 }, { "Islandia", 1 } ]
-}
-
-$> repartir ejercito 1 GBretaña
-{
-  pais: "Gran Bretaña",
-  jugador: "JT",
-  numeroEjercitosAsignados: 1,
-  numeroEjercitosTotales: 4,
-  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 4 }, { "Europa del Norte", 1 }, { "Islandia", 1 } ]
-}
-
-$> repartir ejercito 1 GBretaña
-{
-  pais: "Gran Bretaña",
-  jugador: "JT",
-  numeroEjercitosAsignados: 1,
-  numeroEjercitosTotales: 5,
-  paisesOcupadosContinente: [ { "Rusia", 1 }, { "Escandinavia", 1 }, { "Gran Bretaña", 5 }, { "Europa del Norte", 1 }, { "Islandia", 1 } ]
-}
-
-$> atacar GBretaña 4x5x4 EurOcc 5
-{
-  dadosAtaque: [ 6, 4, 4 ],
-  dadosDefensa: [ 5 ],
-  ejercitosPaisAtaque: [ 5, 2 ],
-  ejercitosPaisDefensa: [ 1, 3 ],
-  paisAtaquePerteneceA: "JT",
-  paisDefensaPerteneceA: "JT",
-  continenteConquistado: "null"
-}
-
-$> asignar carta DeCamello&Quebec
-{
-  tipoCarta: "DeCamello",
-  paisAsociado: "Quebec",
-  perteneceAJugador: "JT",
-  ejercitosDeRearme: 1
-}
-
-$> acabar turno
-{
-  nombre: "Hooker",
-  numeroEjercitosRearmar: 4
-}
-
-$> acabar turno
-{
-  nombre: "Lonnegan",
-  numeroEjercitosRearmar: 12
-}
-
-$> acabar turno
-{
-  nombre: "JT",
-  numeroEjercitosRearmar: 5
-}
-
-$> repartir ejercito 1 EurNorte
-{
-  pais: "Europa del Norte",
-  jug
+  paisesOcupadosContinente: [ {
