@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbarLayout;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.componentes.controles.ControlesController;
+import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -18,12 +19,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.Dialog;
 import java.awt.Label;
 import java.io.IOException;
 
 public class PrincipalController extends Application {
-    @FXML
-    public StackPane stackPane;
     @FXML
     public VBox contenedor;
     @FXML
@@ -37,7 +37,6 @@ public class PrincipalController extends Application {
 
     private static JFXSnackbar snackbar;
     private static Scene scene;
-    private static StackPane parent;
 
     public PrincipalController() {
     }
@@ -65,10 +64,6 @@ public class PrincipalController extends Application {
 
     public static Scene getScene() {
         return scene;
-    }
-
-    public static StackPane getParent() {
-        return parent;
     }
 
     @FXML
@@ -155,7 +150,7 @@ public class PrincipalController extends Application {
         PrincipalController.scene = new Scene(root, 1001, 720);
 
         snackbar = new JFXSnackbar((StackPane) root);
-        parent = stackPane;
+        Dialogo.setContainer((StackPane) root);
 
         stage.setMaximized(true);
         stage.setMinWidth(1001);

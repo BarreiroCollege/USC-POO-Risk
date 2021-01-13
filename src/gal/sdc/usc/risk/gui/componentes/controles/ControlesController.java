@@ -2,8 +2,6 @@ package gal.sdc.usc.risk.gui.componentes.controles;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.validation.RegexValidator;
@@ -29,6 +27,7 @@ import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevaCarta;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevaMisionAsignada;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoCambioCartas;
@@ -40,7 +39,6 @@ import gal.sdc.usc.risk.tablero.Pais;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -48,7 +46,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.TextAlignment;
@@ -60,8 +57,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ControlesController extends Partida {
-    @FXML
-    private Pane parent;
     @FXML
     private Pane contenedorComandos;
     @FXML
@@ -85,11 +80,6 @@ public class ControlesController extends Partida {
         contenedor.getChildren().clear();
         VBox superContenedor = (VBox) scene.lookup("#super-contenedor-comandos");
 
-        Parent parent = superContenedor;
-        while (parent.getParent() != null) parent = parent.getParent();
-        assert parent instanceof StackPane;
-        StackPane finalParent = (StackPane) parent;
-
         if (!super.isJugando()) {
             superContenedor.setVisible(false);
             superContenedor.setManaged(false);
@@ -101,7 +91,7 @@ public class ControlesController extends Partida {
                 Button cambiar = this.crearPreControl("Cambiar Cartas", MaterialDesignIcon.SWAP_HORIZONTAL, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
-                        NuevoCambioCartas.generarDialogo(finalParent);
+                        NuevoCambioCartas.generarDialogo();
                     }
                 });
                 cambiar.setDisable(MapaController.isAtacar() || MapaController.isRearmar() || MapaController.isRepartir());
@@ -123,7 +113,7 @@ public class ControlesController extends Partida {
 
                                 @Override
                                 public void onLongClick(Object o) {
-                                    NuevoEjercitoAsignado.generarDialogo(finalParent, (Pais) o);
+                                    NuevoEjercitoAsignado.generarDialogo((Pais) o);
                                 }
                             });
                         } else {
@@ -168,7 +158,7 @@ public class ControlesController extends Partida {
                 Button asignar = this.crearPreControl("Coger Carta", MaterialDesignIcon.BOOKMARK_PLUS, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
-                        NuevaCarta.generarDialogo(finalParent);
+                        NuevaCarta.generarDialogo();
                     }
                 });
                 asignar.setDisable(MapaController.isAtacar() || MapaController.isRearmar() || MapaController.isRepartir());
@@ -180,11 +170,6 @@ public class ControlesController extends Partida {
     public void actualizarJugador(Scene scene) {
         VBox jugadores = (VBox) scene.lookup("#contenedor-jugador");
         jugadores.getChildren().clear();
-
-        Parent parent = jugadores;
-        while (parent.getParent() != null) parent = parent.getParent();
-        assert parent instanceof StackPane;
-        StackPane finalParent = (StackPane) parent;
 
         if (this.simularJugando()) {
             VBox contenedor = new VBox();
@@ -202,7 +187,14 @@ public class ControlesController extends Partida {
                     + "-fx-font-size: 14; "
                     + "-fx-min-height: 20;");
 
-            button.setOnAction((event -> this.generarDialogo(finalParent).show()));
+            button.setOnAction((event -> {
+                Dialogo dialogo = new Dialogo(
+                        super.getJugadorTurno().getNombre(),
+                        InfoJugador.generarJugador(super.getJugadorTurno()),
+                        "Cerrar"
+                );
+                dialogo.show();
+            }));
 
             contenedor.getChildren().add(button);
             contenedor.getChildren().add(InfoJugador.generarJugadorCorto(super.getJugadorTurno()));
@@ -247,7 +239,7 @@ public class ControlesController extends Partida {
                 jugadores.getChildren().add(this.crearPreControl("Nuevo Jugador", MaterialDesignIcon.ACCOUNT_PLUS, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
-                        NuevoJugador.generarDialogo(finalParent);
+                        NuevoJugador.generarDialogo();
                     }
                 }));
             }
@@ -256,7 +248,7 @@ public class ControlesController extends Partida {
                 jugadores.getChildren().add(this.crearPreControl("Asignar Misión", MaterialDesignIcon.ACCOUNT_CHECK, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
-                        NuevaMisionAsignada.generarDialogo(finalParent);
+                        NuevaMisionAsignada.generarDialogo();
                     }
                 }));
             }
@@ -265,28 +257,11 @@ public class ControlesController extends Partida {
                 jugadores.getChildren().add(this.crearPreControl("Asignar Paises", MaterialDesignIcon.MAP_MARKER, new EjecutorAccion() {
                     @Override
                     public void onClick(Object o) {
-                        NuevoPaisAsignado.generarDialogo(finalParent);
+                        NuevoPaisAsignado.generarDialogo();
                     }
                 }));
             }
         }
-    }
-
-    private JFXDialog generarDialogo(StackPane stackPane) {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.setDialogContainer(stackPane);
-
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Label(super.getJugadorTurno().getNombre()));
-        content.setBody(InfoJugador.generarJugador(super.getJugadorTurno()));
-
-        JFXButton cerrar = new JFXButton("Cerrar");
-        cerrar.setOnAction(event -> dialog.close());
-        content.setActions(cerrar);
-
-        dialog.setContent(content);
-        return dialog;
     }
 
     private JFXButton crearPreControl(String nombre, MaterialDesignIcon ic, EjecutorAccion accion) {
@@ -329,16 +304,8 @@ public class ControlesController extends Partida {
 
     @FXML
     public void comandos() {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-
-        Parent parent = this.parent;
-        while (parent.getParent() != null) parent = parent.getParent();
-        assert parent instanceof StackPane;
-        dialog.setDialogContainer((StackPane) parent);
-
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Introducir comando manualmente"));
+        Dialogo dialogo = new Dialogo();
+        dialogo.setHeading("Introducir comando manualmente");
 
         VBox contenedor = new VBox();
 
@@ -422,7 +389,7 @@ public class ControlesController extends Partida {
             }
         });
 
-        layout.setBody(contenedor);
+        dialogo.setContent(contenedor);
 
         JFXButton ejecutar = new JFXButton("Ejecutar");
         ejecutar.disableProperty().bind(comboComando.getSelectionModel().selectedItemProperty().isNull()
@@ -441,18 +408,13 @@ public class ControlesController extends Partida {
 
                 @Override
                 public void onComandoEjecutado() {
-                    dialog.close();
+                    dialogo.close();
                     PrincipalController.mensaje("[OK] " + comandoTexto.getText());
                 }
             });
         });
 
-        JFXButton cerrar = new JFXButton("Cerrar");
-        cerrar.setOnAction(event -> dialog.close());
-
-        layout.setActions(cerrar, ejecutar);
-
-        dialog.setContent(layout);
-        dialog.show();
+        dialogo.setExtra(ejecutar);
+        dialogo.show();
     }
 }

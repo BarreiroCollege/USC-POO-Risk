@@ -2,13 +2,12 @@ package gal.sdc.usc.risk.gui.componentes.nuevo;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
+import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Carta;
 import gal.sdc.usc.risk.tablero.Pais;
@@ -16,7 +15,6 @@ import gal.sdc.usc.risk.tablero.valores.SubEquipamientos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -28,14 +26,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class NuevaCarta extends Partida {
-    private final StackPane parent;
-
-    public static void generarDialogo(StackPane parent) {
-        new NuevaCarta(parent).generar();
+    public static void generarDialogo() {
+        new NuevaCarta().generar();
     }
 
-    private NuevaCarta(StackPane parent) {
-        this.parent = parent;
+    private NuevaCarta() {
     }
 
     private List<Label> paisesDisponibles(Label subequipamientoLabel) {
@@ -87,12 +82,9 @@ public class NuevaCarta extends Partida {
     }
 
     private void generar() {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.setDialogContainer(parent);
-
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Seleccionar Carta"));
+        Dialogo dialogo = new Dialogo()
+                .setHeading("Seleccionar Carta")
+                .setCloseText("Cancelar");
 
         VBox contenedor = new VBox();
 
@@ -142,7 +134,7 @@ public class NuevaCarta extends Partida {
         errorContenedor.getChildren().add(error);
         contenedor.getChildren().add(errorContenedor);
 
-        layout.setBody(contenedor);
+        dialogo.setContent(contenedor);
 
         JFXButton ejecutar = new JFXButton("Asignar");
         ejecutar.setDisable(true);
@@ -166,7 +158,7 @@ public class NuevaCarta extends Partida {
 
                         @Override
                         public void onComandoEjecutado() {
-                            dialog.close();
+                            dialogo.close();
                             PrincipalController.mensaje("La carta "
                                     + comboPaises.getSelectionModel().getSelectedItem().getId() + "&"
                                     + comboSubequipamientos.getSelectionModel().getSelectedItem().getId()
@@ -175,12 +167,7 @@ public class NuevaCarta extends Partida {
                     });
         });
 
-        JFXButton cerrar = new JFXButton("Cancelar");
-        cerrar.setOnAction(event -> dialog.close());
-
-        layout.setActions(cerrar, ejecutar);
-
-        dialog.setContent(layout);
-        dialog.show();
+        dialogo.setExtra(ejecutar);
+        dialogo.show();
     }
 }

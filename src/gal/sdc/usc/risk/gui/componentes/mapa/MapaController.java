@@ -1,8 +1,6 @@
 package gal.sdc.usc.risk.gui.componentes.mapa;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTabPane;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
@@ -12,6 +10,7 @@ import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.info.InfoContinente;
 import gal.sdc.usc.risk.gui.componentes.info.InfoJugador;
 import gal.sdc.usc.risk.gui.componentes.info.InfoPais;
+import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoAtaque;
 import gal.sdc.usc.risk.gui.componentes.nuevo.NuevoRearme;
 import gal.sdc.usc.risk.jugar.Partida;
@@ -288,11 +287,6 @@ public class MapaController extends Partida {
                     button.getStyleClass().add("pais");
                     button.setText(null);
 
-                    Parent parent = button;
-                    while (parent.getParent() != null) parent = parent.getParent();
-                    assert parent instanceof StackPane;
-                    StackPane finalParent = (StackPane) parent;
-
                     if (!animacionesSeleccion.containsKey(button)) {
                         Animation animacion = new Transition() {
                             {
@@ -319,7 +313,7 @@ public class MapaController extends Partida {
                     }
 
                     button.setGraphic(this.contenidoBoton(pais));
-                    button.setContextMenu(this.menuPais(finalParent, pais));
+                    button.setContextMenu(this.menuPais(pais));
 
                     if (seleccionar.equals(MapaSeleccion.VACIO)) {
                         button.setMouseTransparent(pais.getJugador() != null);
@@ -386,19 +380,19 @@ public class MapaController extends Partida {
                                         MapaController.setSeleccionar(MapaSeleccion.OTROS);
                                         PrincipalController.mensaje("Selecciona el país a atacar");
                                     } else if (paisesSeleccionados.size() == 2) {
-                                        NuevoAtaque.generarDialogo(finalParent);
+                                        NuevoAtaque.generarDialogo();
                                     }
                                 } else if (rearmar) {
                                     if (paisesSeleccionados.size() == 1) {
                                         PrincipalController.mensaje("Selecciona el país de destino");
                                     } else if (paisesSeleccionados.size() == 2) {
-                                        NuevoRearme.generarDialogo(finalParent);
+                                        NuevoRearme.generarDialogo();
                                     }
                                 }
 
                                 Utils.actualizar();
                             } else {
-                                this.generarDialogo(finalParent, pais).show();
+                                this.generarDialogo(pais).show();
                             }
                         });
                     }
@@ -443,38 +437,31 @@ public class MapaController extends Partida {
         return contenedor;
     }
 
-    private ContextMenu menuPais(StackPane parent, Pais pais) {
+    private ContextMenu menuPais(Pais pais) {
         ContextMenu context = new ContextMenu();
 
         MenuItem verPais = new MenuItem("Ver País");
-        verPais.setOnAction(action -> this.generarDialogo(parent, pais, TAB_PAIS).show());
+        verPais.setOnAction(action -> this.generarDialogo(pais, TAB_PAIS).show());
         context.getItems().add(verPais);
 
         MenuItem verContinente = new MenuItem("Ver Continente");
-        verContinente.setOnAction(action -> this.generarDialogo(parent, pais, TAB_CONTINENTE).show());
+        verContinente.setOnAction(action -> this.generarDialogo(pais, TAB_CONTINENTE).show());
         context.getItems().add(verContinente);
 
         if (pais.getJugador() != null) {
             MenuItem verJugador = new MenuItem("Ver Jugador");
-            verJugador.setOnAction(action -> this.generarDialogo(parent, pais, TAB_JUGADOR).show());
+            verJugador.setOnAction(action -> this.generarDialogo(pais, TAB_JUGADOR).show());
             context.getItems().add(verJugador);
         }
 
         return context;
     }
 
-    private JFXDialog generarDialogo(StackPane stackPane, Pais pais) {
-        return this.generarDialogo(stackPane, pais, null);
+    private Dialogo generarDialogo(Pais pais) {
+        return this.generarDialogo(pais, null);
     }
 
-    private JFXDialog generarDialogo(StackPane stackPane, Pais pais, Integer seleccionado) {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.setDialogContainer(stackPane);
-
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Label(pais.getNombre()));
-
+    private Dialogo generarDialogo(Pais pais, Integer seleccionado) {
         JFXTabPane tabs = new JFXTabPane();
 
         Tab tabPais = new Tab();
@@ -498,14 +485,7 @@ public class MapaController extends Partida {
             tabs.getSelectionModel().select(seleccionado);
         }
 
-        content.setBody(tabs);
-
-        JFXButton cerrar = new JFXButton("Cerrar");
-        cerrar.setOnAction(event -> dialog.close());
-        content.setActions(cerrar);
-
-        dialog.setContent(content);
-        return dialog;
+        return new Dialogo(pais.getNombre(), tabs, "Cerrar");
     }
 
     private String bordes(boolean norte, boolean sur, boolean este, boolean oeste) {

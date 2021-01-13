@@ -2,51 +2,34 @@ package gal.sdc.usc.risk.gui.componentes.nuevo;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.RegexValidator;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.comandos.partida.CambiarCartas;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
-import gal.sdc.usc.risk.gui.componentes.Utils;
-import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Carta;
-import gal.sdc.usc.risk.tablero.Jugador;
-import gal.sdc.usc.risk.tablero.Pais;
-import gal.sdc.usc.risk.util.Colores;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class NuevoCambioCartas extends Partida {
-    private final StackPane parent;
-
-    public static void generarDialogo(StackPane parent) {
-        new NuevoCambioCartas(parent).generar();
+    public static void generarDialogo() {
+        new NuevoCambioCartas().generar();
     }
 
-    private NuevoCambioCartas(StackPane parent) {
-        this.parent = parent;
+    private NuevoCambioCartas() {
     }
 
     private void generar() {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.setDialogContainer(parent);
-
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Cambiar Cartas a Ejércitos"));
+        Dialogo dialogo = new Dialogo()
+                .setHeading("Cambiar Cartas a Ejércitos")
+                .setCloseText("Cancelar");
 
         VBox contenedor = new VBox();
 
@@ -59,7 +42,7 @@ public class NuevoCambioCartas extends Partida {
 
         comboCarta1.setPrefWidth(Float.MAX_VALUE);
         for (Carta carta : cartas) {
-                comboCarta1.getItems().add(new Label(carta.getNombre()));
+            comboCarta1.getItems().add(new Label(carta.getNombre()));
         }
         comboCarta1.setPromptText("Carta 1");
         comboCarta1.getSelectionModel().selectedItemProperty().addListener((o, oldValue, newValue) -> {
@@ -83,7 +66,7 @@ public class NuevoCambioCartas extends Partida {
 
             for (Carta carta : cartas) {
                 if (!comboCarta1.getSelectionModel().getSelectedItem().getText().equals(carta.getNombre())
-                && !comboCarta2.getSelectionModel().getSelectedItem().getText().equals(carta.getNombre())) {
+                        && !comboCarta2.getSelectionModel().getSelectedItem().getText().equals(carta.getNombre())) {
                     comboCarta3.getItems().add(new Label(carta.getNombre()));
                 }
             }
@@ -133,7 +116,7 @@ public class NuevoCambioCartas extends Partida {
         errorContenedor.getChildren().add(error);
         contenedor.getChildren().add(errorContenedor);
 
-        layout.setBody(contenedor);
+        dialogo.setContent(contenedor);
 
         ejecutar.disableProperty().bind(comboCarta3.getSelectionModel().selectedItemProperty().isNull());
         ejecutar.setOnAction(event -> {
@@ -154,18 +137,13 @@ public class NuevoCambioCartas extends Partida {
 
                         @Override
                         public void onComandoEjecutado() {
-                            dialog.close();
+                            dialogo.close();
                             PrincipalController.mensaje("Se han cambiado las cartas, ya puedes repartir los ejércitos");
                         }
                     });
         });
 
-        JFXButton cerrar = new JFXButton("Cancelar");
-        cerrar.setOnAction(event -> dialog.close());
-
-        layout.setActions(cerrar, ejecutar);
-
-        dialog.setContent(layout);
-        dialog.show();
+        dialogo.setExtra(ejecutar);
+        dialogo.show();
     }
 }

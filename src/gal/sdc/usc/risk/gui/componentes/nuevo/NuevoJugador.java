@@ -2,8 +2,6 @@ package gal.sdc.usc.risk.gui.componentes.nuevo;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -12,35 +10,29 @@ import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
+import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.util.Colores;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
 
 public class NuevoJugador extends Partida {
-    private final StackPane parent;
-
-    public static void generarDialogo(StackPane parent) {
-        new NuevoJugador(parent).generar();
+    public static void generarDialogo() {
+        new NuevoJugador().generar();
     }
 
-    private NuevoJugador(StackPane parent) {
-        this.parent = parent;
+    private NuevoJugador() {
     }
 
     private void generar() {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.setDialogContainer(parent);
-
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Nuevo Jugador"));
+        Dialogo dialogo = new Dialogo()
+                .setHeading("Nuevo Jugador")
+                .setCloseText("Cancelar");
 
         VBox contenedor = new VBox();
 
@@ -97,7 +89,7 @@ public class NuevoJugador extends Partida {
         errorContenedor.getChildren().add(error);
         contenedor.getChildren().add(errorContenedor);
 
-        layout.setBody(contenedor);
+        dialogo.setContent(contenedor);
 
         JFXButton ejecutar = new JFXButton("Crear");
         ejecutar.disableProperty().bind(jugadorNombre.getValidators().get(0).hasErrorsProperty()
@@ -119,7 +111,7 @@ public class NuevoJugador extends Partida {
 
                         @Override
                         public void onComandoEjecutado() {
-                            dialog.close();
+                            dialogo.close();
                             PrincipalController.mensaje("Creado el jugador "
                                     + jugadorNombre.getText() + " con color "
                                     + comboColores.getSelectionModel().getSelectedItem().getId());
@@ -127,12 +119,7 @@ public class NuevoJugador extends Partida {
                     });
         });
 
-        JFXButton cerrar = new JFXButton("Cancelar");
-        cerrar.setOnAction(event -> dialog.close());
-
-        layout.setActions(cerrar, ejecutar);
-
-        dialog.setContent(layout);
-        dialog.show();
+        dialogo.setExtra(ejecutar);
+        dialogo.show();
     }
 }

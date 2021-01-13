@@ -2,42 +2,33 @@ package gal.sdc.usc.risk.gui.componentes.nuevo;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.validation.RequiredFieldValidator;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.Pais;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class NuevoPaisAsignado extends Partida {
-    private final StackPane parent;
-
-    public static void generarDialogo(StackPane parent) {
-        new NuevoPaisAsignado(parent).generar();
+    public static void generarDialogo() {
+        new NuevoPaisAsignado().generar();
     }
 
-    private NuevoPaisAsignado(StackPane parent) {
-        this.parent = parent;
+    private NuevoPaisAsignado() {
     }
 
     private void generar() {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.setDialogContainer(parent);
-
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Asignar Paises"));
+        Dialogo dialogo = new Dialogo()
+                .setHeading("Asignar Paises")
+                .setCloseText("Cancelar");
 
         VBox contenedor = new VBox();
 
@@ -90,7 +81,7 @@ public class NuevoPaisAsignado extends Partida {
         errorContenedor.getChildren().add(error);
         contenedor.getChildren().add(errorContenedor);
 
-        layout.setBody(contenedor);
+        dialogo.setContent(contenedor);
 
         JFXButton ejecutar = new JFXButton("Asignar");
         ejecutar.setDisable(true);
@@ -118,7 +109,7 @@ public class NuevoPaisAsignado extends Partida {
                             public void onComandoEjecutado() {
                                 MapaController.getPaisesSeleccionados().remove(pais);
                                 if (MapaController.getPaisesSeleccionados().size() == 0) {
-                                    dialog.close();
+                                    dialogo.close();
                                     PrincipalController.mensaje("Paises asignados a "
                                             + comboJugadores.getSelectionModel().getSelectedItem().getId());
                                 }
@@ -137,12 +128,7 @@ public class NuevoPaisAsignado extends Partida {
             errorContenedor.setManaged(true);
         }
 
-        JFXButton cerrar = new JFXButton("Cancelar");
-        cerrar.setOnAction(event -> dialog.close());
-
-        layout.setActions(cerrar, ejecutar);
-
-        dialog.setContent(layout);
-        dialog.show();
+        dialogo.setExtra(ejecutar);
+        dialogo.show();
     }
 }

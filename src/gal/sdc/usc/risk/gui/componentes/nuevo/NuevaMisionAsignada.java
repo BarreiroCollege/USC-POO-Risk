@@ -9,35 +9,29 @@ import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
+import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Jugador;
 import gal.sdc.usc.risk.tablero.valores.Misiones;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
 
 public class NuevaMisionAsignada extends Partida {
-    private final StackPane parent;
-
-    public static void generarDialogo(StackPane parent) {
-        new NuevaMisionAsignada(parent).generar();
+    public static void generarDialogo() {
+        new NuevaMisionAsignada().generar();
     }
 
-    private NuevaMisionAsignada(StackPane parent) {
-        this.parent = parent;
+    private NuevaMisionAsignada() {
     }
 
     private void generar() {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.setDialogContainer(parent);
-
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Asignar Misión"));
+        Dialogo dialogo = new Dialogo()
+                .setHeading("Asignar Misión")
+                .setCloseText("Cancelar");
 
         VBox contenedor = new VBox();
 
@@ -91,7 +85,7 @@ public class NuevaMisionAsignada extends Partida {
         errorContenedor.getChildren().add(error);
         contenedor.getChildren().add(errorContenedor);
 
-        layout.setBody(contenedor);
+        dialogo.setContent(contenedor);
 
         JFXButton ejecutar = new JFXButton("Asignar");
         ejecutar.setDisable(true);
@@ -115,7 +109,7 @@ public class NuevaMisionAsignada extends Partida {
 
                         @Override
                         public void onComandoEjecutado() {
-                            dialog.close();
+                            dialogo.close();
                             PrincipalController.mensaje("Misión "
                                     + comboMisiones.getSelectionModel().getSelectedItem().getId() + " asignada a "
                                     + comboJugadores.getSelectionModel().getSelectedItem().getId());
@@ -123,12 +117,7 @@ public class NuevaMisionAsignada extends Partida {
                     });
         });
 
-        JFXButton cerrar = new JFXButton("Cancelar");
-        cerrar.setOnAction(event -> dialog.close());
-
-        layout.setActions(cerrar, ejecutar);
-
-        dialog.setContent(layout);
-        dialog.show();
+        dialogo.setExtra(ejecutar);
+        dialogo.show();
     }
 }

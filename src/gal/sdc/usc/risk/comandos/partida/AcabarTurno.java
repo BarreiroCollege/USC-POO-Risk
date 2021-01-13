@@ -44,7 +44,7 @@ public class AcabarTurno extends Partida implements IComando {
         if (super.isJugando()) {
             super.getComandos().iniciarTurno(super.getJugadorTurno());
         } else {
-            super.getComandos().habilitarRepartirEjercitos(super.getJugadorTurno());
+            super.getComandos().habilitarRepartirEjercitos();
             super.getComandos().deshabilitarAcabarTurno();
         }
 

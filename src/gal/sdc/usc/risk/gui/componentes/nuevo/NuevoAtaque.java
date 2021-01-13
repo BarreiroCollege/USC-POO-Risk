@@ -1,44 +1,36 @@
 package gal.sdc.usc.risk.gui.componentes.nuevo;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import gal.sdc.usc.risk.comandos.Ejecutor;
 import gal.sdc.usc.risk.comandos.EjecutorListener;
 import gal.sdc.usc.risk.excepciones.ExcepcionRISK;
 import gal.sdc.usc.risk.gui.PrincipalController;
 import gal.sdc.usc.risk.gui.componentes.Utils;
 import gal.sdc.usc.risk.gui.componentes.mapa.MapaController;
+import gal.sdc.usc.risk.gui.componentes.modal.Dialogo;
 import gal.sdc.usc.risk.jugar.Partida;
 import gal.sdc.usc.risk.tablero.Pais;
 import gal.sdc.usc.risk.util.Dado;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NuevoAtaque extends Partida {
-    private final StackPane parent;
-
-    public static void generarDialogo(StackPane parent) {
-        new NuevoAtaque(parent).generar();
+    public static void generarDialogo() {
+        new NuevoAtaque().generar();
     }
 
-    private NuevoAtaque(StackPane parent) {
-        this.parent = parent;
+    private NuevoAtaque() {
     }
 
     private void generar() {
-        JFXDialog dialog = new JFXDialog();
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.setDialogContainer(parent);
-
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Atacar Paises"));
+        Dialogo dialogo = new Dialogo()
+                .setHeading("Atacar Paises")
+                .setCloseText("Cancelar");
 
         VBox contenedor = new VBox();
 
@@ -85,7 +77,7 @@ public class NuevoAtaque extends Partida {
         errorContenedor.getChildren().add(error);
         contenedor.getChildren().add(errorContenedor);
 
-        layout.setBody(contenedor);
+        dialogo.setContent(contenedor);
 
         JFXButton ejecutar = new JFXButton("Atacar");
         ejecutar.setOnAction(event -> {
@@ -138,7 +130,7 @@ public class NuevoAtaque extends Partida {
                         @Override
                         public void onComandoEjecutado() {
                             MapaController.cambiarAtacar();
-                            dialog.close();
+                            dialogo.close();
 
                             if (pais2.getJugador().equals(pais1.getJugador())) {
                                 PrincipalController.mensaje("El país ha sido conquistado");
@@ -162,11 +154,9 @@ public class NuevoAtaque extends Partida {
         }
 
         JFXButton cerrar = new JFXButton("Cancelar");
-        cerrar.setOnAction(event -> dialog.close());
+        cerrar.setOnAction(event -> dialogo.close());
 
-        layout.setActions(cerrar, ejecutar);
-
-        dialog.setContent(layout);
-        dialog.show();
+        dialogo.setExtra(ejecutar);
+        dialogo.show();
     }
 }

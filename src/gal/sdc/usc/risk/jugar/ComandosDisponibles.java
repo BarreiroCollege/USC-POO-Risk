@@ -193,12 +193,11 @@ public class ComandosDisponibles {
         MapaController.setSeleccionar(MapaSeleccion.NINGUNO);
     }
 
-    public void habilitarRepartirEjercitos(gal.sdc.usc.risk.tablero.Jugador jugadorTurno) {
+    public void habilitarRepartirEjercitos() {
         this.deshabilitarAsignarPaises();
         add(RepartirEjercito.class);
         add(RepartirEjercitos.class);
 
-        StackPane parent = (StackPane) PrincipalController.getScene().lookup("#stack-pane");
         MapaController.setSeleccionar(MapaSeleccion.JUGADOR);
         PrincipalController.mensaje("Para repartir ejércitos, puedes hacer un click simple en el país para asignarle " +
                 "un ejército, o mantener pulsado para asignar el número deseado.", 8);
@@ -210,7 +209,7 @@ public class ComandosDisponibles {
 
             @Override
             public void onLongClick(Object o) {
-                NuevoEjercitoAsignado.generarDialogo(parent, (Pais) o);
+                NuevoEjercitoAsignado.generarDialogo((Pais) o);
             }
         });
     }
