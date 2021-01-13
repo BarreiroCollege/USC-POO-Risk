@@ -3,6 +3,8 @@
 - Diego Barreiro Pérez ([diego.barreiro.perez@rai.usc.es](mailto:diego.barreiro.perez@rai.usc.es))
 - Miguel Bugarín Carreira ([miguel.bugarin@rai.usc.es](mailto:miguel.bugarin@rai.usc.es))
 
+> Demo de la Interfaz Gráfica disponible [aquí](https://kodul.ar/lS3zBD)
+
 ![Ejemplo](https://i.imgur.com/wXqjwl2.png)
 
 > **NOTA:** Para ejecutar el proyecto, se recomienda usar IntelliJ, o utilizar un terminal Linux. Otros entornos, como
@@ -44,6 +46,8 @@ método `ejecutar()`.
 * **`gal.sdc.usc.risk.excepciones`**: Clases con todas las posibles excepciones. Además, se encuentra el enum `Errores`,
 en el cual se especifican todos los posibles errores y su tipo, con el que se lanzará la respectiva excepción, siempre
 siendo una extensión de la clase abstracta `ExcepcionRISK`.
+
+* **`gal.sdc.usc.risk.gui`**: Contiene todo lo relacionado con la interfaz gráfica. _Se explica más abajo._
 
 * **`gal.sdc.usc.risk.jugar`**: En este paquete se encuentran una serie de clases vitales para el desarrollo de la
 partida. Se encuentra la clase de `ComandosDisponibles`, la cual es la encargada de gestionar que comandos se pueden
@@ -127,3 +131,33 @@ La interfaz `Consola` está en el paquete `gal.sdc.usc.risk.jugar`, la cual, ade
 con el que imprimir una línea en blanco. La clase `ConsolaNormal` que extiende `Consola` está en el mismo paquete.  
 La clase `Partida` (que contiene todos los datos del juego) tiene una instanca estática de `Consola` con la que se
 puede acceder desde cualquier punto del programa.
+
+## Interfaz Gráfica
+
+Para realizar la interfaz gráfica, se ha hecho uso de la librería JavaFX junto con JFoenix para darle un aspecto más
+moderno. Además, también se usa una librería de iconos con la que poder usar Material Design Icons.
+
+### Estructura
+
+Todo el código se ha estructurado en el paquete **`gal.sdc.usc.risk.gui`**. Aquí dentro se pueden encontrar una serie
+de archivos raíz para la interfaz, como es el controlador principal y dos hojas de estilo. El resto de clases necesarias
+se encuentran en el paquete `componentes`, en el cual destacan los siguientes subpaquetes:
+
+* `controles`: Controlador de los controles. Gestiona los paneles del lateral derecho con respecto a la información del
+jugador actual, los controles disponibles e introducir manualmente un comando.
+
+* `info`: Una serie de componentes que crean unos diálogos con información relevante acerca de algún jugador, país o
+continente.
+
+* `mapa`: Contiene todo lo relacionado con el mapa de juego. Necesita una hoja de estilo para funcionar correctamente,
+y se encarga de actualizar las casillas según lo vaya requeriendo el juego.
+
+* `modal`: Componente "diálogo". En vez de crear varias instancias de JFXDialog, se crea una única y se cambia su
+contenido dinámicamente, ahorrando mucha memoria. Antes de realizarse de esta forma, se creaban instancias de JFXDialog
+y se sobrecargaba de una forma bastante importante el uso de memoria por parte de Java.
+
+* `nuevo`: Contenido de los díalogos de comandos "indirectos". Generan el diseño que se inserta en el diálogo cuando
+se realiza alguna acción para simular la ejecución de algún comando.
+
+* `Utils.java`: contiene una serie de utilidades, como refrescar totalmente la pantalla de juego cuando se realicen
+ciertas acciones.
