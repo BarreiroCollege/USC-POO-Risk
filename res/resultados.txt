@@ -1,0 +1,398 @@
+$> crear mapa
+$> crear pepito grillo
+{
+  código de error: 100,
+  descripción: "Color no permitido"
+}
+
+$> crear Prueba1 ROJO
+{
+  nombre: "Prueba1",
+  color: "ROJO"
+}
+
+$> crear Prueba2 VERDE
+{
+  nombre: "Prueba2",
+  color: "VERDE"
+}
+
+$> crear Prueba3 AMARILLO
+{
+  nombre: "Prueba3",
+  color: "AMARILLO"
+}
+
+$> crear Prueba4 AZUL
+{
+  nombre: "Prueba4",
+  color: "AZUL"
+}
+
+$> asignar mision Prueba1 M1
+{
+  nombre: "Prueba1",
+  mision: "Conquistar 24 países de la preferencia del jugador"
+}
+
+$> asignar mision Prueba2 M2
+{
+  nombre: "Prueba2",
+  mision: "Conquistar 18 países de la preferencia del jugador con un mínimo de 2 ejércitos"
+}
+
+$> asignar mision Prueba3 M31
+{
+  nombre: "Prueba3",
+  mision: "Conquistar Asia y América del Sur"
+}
+
+$> asignar mision Prueba4 M32
+{
+  nombre: "Prueba4",
+  mision: "Conquistar Asia y África"
+}
+
+$> asignar pais Prueba1 Islandia
+$> asignar pais Prueba1 Quebec
+$> asignar pais Prueba1 Siberia
+$> asignar pais Prueba1 Escandina
+$> asignar pais Prueba1 Ontario
+$> asignar pais Prueba1 EurNorte
+$> asignar pais Prueba1 TNoroeste
+$> asignar pais Prueba1 Alberta
+$> asignar pais Prueba1 Alaska
+$> asignar pais Prueba1 GBretaña
+$> asignar pais Prueba1 Groenlan
+{
+  nombre: "Prueba1",
+  pais: "Europa del Norte",
+  continente: "Europa",
+  frontera: [ "Siberia", "Europa del Sur", "Rusia", "Gran Bretaña" ]
+}
+
+{
+  nombre: "Prueba1",
+  pais: "Quebec",
+  continente: "América del Norte",
+  frontera: [ "Groenlandia", "Ontario" ]
+}{
+  nombre: "Prueba1",
+  pais: "Gran Bretaña",
+  continente: "Europa",
+  frontera: [ "Escandinavia", "Europa Occidental", "Europa del Norte" ]
+}
+
+
+
+{
+  nombre: "Prueba1",
+  pais: "Territorios del Noroeste",
+  continente: "América del Norte",
+  frontera: [ "Ontario", "Groenlandia", "Alaska" ]
+}
+
+{
+  nombre: "Prueba1",
+  pais: "Groenlandia",
+  continente: "América del Norte",
+  frontera: [ "Quebec", "Territorios del Noroeste", "Islandia" ]
+}
+
+{
+  nombre: "Prueba1",
+  pais: "Alaska",
+  continente: "América del Norte",
+  frontera: [ "Alberta", "Territorios del Noroeste", "Kamchatka" ]
+}
+
+{
+  nombre: "Prueba1",
+  pais: "Ontario",
+  continente: "América del Norte",
+  frontera: [ "Territorios del Noroeste", "Estados Unidos del Este", "Quebec", "Alberta" ]
+}
+
+{
+  nombre: "Prueba1",
+  pais: "Escandinavia",
+  continente: "Europa",
+  frontera: [ "Gran Bretaña", "Siberia", "Islandia" ]
+}
+
+{
+  nombre: "Prueba1",
+  pais: "Alberta",
+  continente: "América del Norte",
+  frontera: [ "Alaska", "Estados Unidos del Oeste", "Ontario" ]
+}
+
+{
+  nombre: "Prueba1",
+  pais: "Islandia",
+  continente: "Europa",
+  frontera: [ "Escandinavia", "Groenlandia" ]
+}
+
+{
+  nombre: "Prueba1",
+  pais: "Siberia",
+  continente: "Asia",
+  frontera: [ "Europa del Norte", "Yakustsk", "Escandinavia" ]
+}
+
+$> asignar pais Prueba2 USAOeste
+$> asignar pais Prueba2 USAEste
+$> asignar pais Prueba2 AmeCentra
+$> asignar pais Prueba2 Venezuela
+{
+  nombre: "Prueba2",
+  pais: "América Central",
+  continente: "América del Norte",
+  frontera: [ "Estados Unidos del Este", "Venezuela" ]
+}
+
+{
+  nombre: "Prueba2",
+  pais: "Estados Unidos del Este",
+  continente: "América del Norte",
+  frontera: [ "Ontario", "América Central", "Estados Unidos del Oeste" ]
+}
+
+{
+  nombre: "Prueba2",
+  pais: "Venezuela",
+  continente: "América del Sur",
+  frontera: [ "América Central", "Perú" ]
+}
+
+{
+  nombre: "Prueba2",
+  pais: "Estados Unidos del Oeste",
+  continente: "América del Norte",
+  frontera: [ "Alberta", "Estados Unidos del Este" ]
+}
+
+$> asignar pais Prueba2 Brasil
+$> asignar pais Prueba2 ANorte
+{
+  nombre: "Prueba2",
+  pais: "Brasil",
+  continente: "América del Sur",
+  frontera: [ "Perú", "África del Norte" ]
+}
+
+{
+  nombre: "Prueba2",
+  pais: "África del Norte",
+  continente: "África",
+  frontera: [ "Congo", "Egipto", "Brasil", "Europa Occidental" ]
+}
+
+$> asignar pais Prueba2 Argentina
+$> asignar pais Prueba2 EurOcc
+{
+  nombre: "Prueba2",
+  pais: "Argentina",
+  continente: "América del Sur",
+  frontera: [ "Perú" ]
+}
+
+$> asignar pais Prueba2 Perú
+{
+  nombre: "Prueba2",
+  pais: "Europa Occidental",
+  continente: "Europa",
+  frontera: [ "Gran Bretaña", "Europa del Sur", "África del Norte" ]
+}
+
+{
+  nombre: "Prueba2",
+  pais: "Perú",
+  continente: "América del Sur",
+  frontera: [ "Venezuela", "Argentina", "Brasil" ]
+}
+
+$> asignar pais Prueba3 Congo
+$> asignar pais Prueba3 AOriental
+$> asignar pais Prueba3 Madagasca
+$> asignar pais Prueba3 Egipto
+$> asignar pais Prueba3 Sudáfrica
+{
+  nombre: "Prueba3",
+  pais: "Congo",
+  continente: "África",
+  frontera: [ "África del Norte", "África Oriental" ]
+}
+
+{
+  nombre: "Prueba3",
+  pais: "África Oriental",
+  continente: "África",
+  frontera: [ "Egipto", "Sudáfrica", "Congo" ]
+}
+
+{
+  nombre: "Prueba3",
+  pais: "Sudáfrica",
+  continente: "África",
+  frontera: [ "África Oriental", "Madagascar" ]
+}
+
+{
+  nombre: "Prueba3",
+  pais: "Egipto",
+  continente: "África",
+  frontera: [ "África Oriental", "Oriente Medio", "África del Norte", "Europa del Sur" ]
+}
+
+{
+  nombre: "Prueba3",
+  pais: "Madagascar",
+  continente: "África",
+  frontera: [ "Sudáfrica" ]
+}
+
+$> asignar pais Prueba3 Irkutsk
+{
+  nombre: "Prueba3",
+  pais: "Irkutsk",
+  continente: "Asia",
+  frontera: [ "Kamchatka", "Mongolia", "Rusia" ]
+}
+
+$> asignar pais Prueba3 Rusia
+$> asignar pais Prueba3 Kamchatka
+{
+  nombre: "Prueba3",
+  pais: "Rusia",
+  continente: "Europa",
+  frontera: [ "Yakustsk", "Urales", "Irkutsk", "Europa del Norte" ]
+}
+
+{
+  nombre: "Prueba3",
+  pais: "Kamchatka",
+  continente: "Asia",
+  frontera: [ "Irkutsk", "Yakustsk", "Alaska" ]
+}
+
+$> asignar pais Prueba3 EurSur
+$> asignar pais Prueba3 Yakustsk
+{
+  nombre: "Prueba3",
+  pais: "Europa del Sur",
+  continente: "Europa",
+  frontera: [ "Europa del Norte", "Urales", "Europa Occidental", "Egipto" ]
+}
+
+{
+  nombre: "Prueba3",
+  pais: "Yakustsk",
+  continente: "Asia",
+  frontera: [ "Rusia", "Kamchatka", "Siberia" ]
+}
+
+$> asignar pais Prueba4 Urales
+$> asignar pais Prueba4 Mongolia
+$> asignar pais Prueba4 Japón
+{
+  nombre: "Prueba4",
+  pais: "Mongolia",
+  continente: "Asia",
+  frontera: [ "Irkutsk", "China", "Japón", "Urales" ]
+}
+
+{
+  nombre: "Prueba4",
+  pais: "Urales",
+  continente: "Asia",
+  frontera: [ "Rusia", "Afganistán", "Mongolia", "Europa del Sur" ]
+}
+
+{
+  nombre: "Prueba4",
+  pais: "Japón",
+  continente: "Asia",
+  frontera: [ "Mongolia" ]
+}
+
+$> asignar pais Prueba4 Afgan
+{
+  nombre: "Prueba4",
+  pais: "Afganistán",
+  continente: "Asia",
+  frontera: [ "Urales", "Oriente Medio", "China" ]
+}
+
+$> asignar pais Prueba4 AusOccid
+$> asignar pais Prueba4 NGuinea
+$> asignar pais Prueba4 SAsiático
+{
+  nombre: "Prueba4",
+  pais: "Australia Occidental",
+  continente: "Oceanía",
+  frontera: [ "Indonesia", "Australia Oriental" ]
+}{
+  nombre: "Prueba4",
+  pais: "Nueva Guinea",
+  continente: "Oceanía",
+  frontera: [ "Australia Oriental", "Indonesia" ]
+}
+
+
+
+{
+  nombre: "Prueba4",
+  pais: "Sureste Asiático",
+  continente: "Asia",
+  frontera: [ "India", "Indonesia" ]
+}
+
+$> asignar pais Prueba4 OMedio
+$> asignar pais Prueba4 Indonesia
+$> asignar pais Prueba4 China
+{
+  nombre: "Prueba4",
+  pais: "Oriente Medio",
+  continente: "Asia",
+  frontera: [ "Afganistán", "India", "Egipto" ]
+}
+
+{
+  nombre: "Prueba4",
+  pais: "Indonesia",
+  continente: "Oceanía",
+  frontera: [ "Australia Occidental", "Nueva Guinea", "Sureste Asiático" ]
+}
+
+{
+  nombre: "Prueba4",
+  pais: "China",
+  continente: "Asia",
+  frontera: [ "Mongolia", "India", "Afganistán" ]
+}
+
+$> asignar pais Prueba4 India
+{
+  nombre: "Prueba4",
+  pais: "India",
+  continente: "Asia",
+  frontera: [ "China", "Sureste Asiático", "Oriente Medio" ]
+}
+
+$> asignar pais Prueba4 AusOrient
+{
+  nombre: "Prueba4",
+  pais: "Australia Oriental",
+  continente: "Oceanía",
+  frontera: [ "Nueva Guinea", "Australia Occidental" ]
+}
+
+$> repartir ejercito 1 Alaska
+{
+  pais: "Alaska",
+  jugador: "Prueba1",
+  numeroEjercitosAsignados: 1,
+  numeroEjercitosTotales: 2,
+  paisesOcupadosContinente: [ { "Quebec", 1 }, { "Alaska", 2 }, { "Alberta", 1 }, { "Territorios del Noroeste", 1 }, { "Ontario", 1 }, { "Groenlan
